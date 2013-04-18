@@ -1,0 +1,45 @@
+\documentclass[11pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Managing Workloads in Public Sector Data Systems}
+\author{Pimin Konstantin Kefaloukos}
+%\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{Introduction}
+We want better performance and higher availability, while spending fewer resources (ultimately danish kroner). It's a holistic optimization problem. It is part of a sustainable future (omstilling Danmark). The vision is environmentally friendly computing, that is actually better.
+
+\section{Flattening out the load curve}
+If we can flatten the workload curve, then we can free up resources needed to serve peak load. A similar problem is tackled in the energy sector. Here the primary tool is \emph{pricing structures}, that give people incentives to consume power during low load (the night).
+
+Fig: show how we redistribute load from the day period to the night period, flattening out the load curve which is high during the day.
+
+For data serving, we suggest a predictive method, that identifies requests that can be pre-computed during low load, freeing up part of the resources used to serve the requests during high load. We essentially pay for the misses.
+
+Here we are trading consistency for performance, but the argument is that public data does not get updated very often (maybe once every 24 hours), and that low load periods predictably happen relatively often (at least once every 24 hours). This is what the \emph{tileheat} project is about.
+
+
+
+\section{Optimizing workload compute}
+The work we definitely need to do, should be done with as few clock cycles and i/o as possible. This is the vectile project.
+
+\section{Managing the infrastructure}
+
+
+
+\section{What to do with the free resources?}
+Give it back to the tax payers, or spent them on improving the feature level, e.g. plugins for data silos.
+
+%\subsection{}
+
+
+
+\end{document}  
