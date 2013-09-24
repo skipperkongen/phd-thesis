@@ -8,7 +8,7 @@
 \usepackage{epstopdf}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 
-\title{Managing Workloads in Public Sector Data Systems}
+\title{Efficient Public Sector GeoData Serving Systems}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}                                           % Activate to display a given date or no date
 
@@ -16,6 +16,18 @@
 \maketitle
 \section{Introduction}
 We want better performance and higher availability, while spending fewer resources (ultimately danish kroner). It's a holistic optimization problem. It is part of a sustainable future (omstilling Danmark). The vision is environmentally friendly computing, that is actually better.
+
+\section{Related, orthogonal stuff: Best practices for data serving systems}
+
+Not directly related to my work, but will help on the same general agenda: Better performance, availability etc. It orthogonal, i.e. it lifts efficiency regardless of whether my work is applied.
+
+\begin{itemize}
+\item infrastructure management, e.g. Google data centers
+\item Software engineering
+\end{itemize}
+
+Chapter 8 of principles of computer systems design: Fault tolerance (replication etc).
+
 
 \section{Flattening out the load curve}
 If we can flatten the workload curve, then we can free up resources needed to serve peak load. A similar problem is tackled in the energy sector. Here the primary tool is \emph{pricing structures}, that give people incentives to consume power during low load (the night).
@@ -26,17 +38,22 @@ For data serving, we suggest a predictive method, that identifies requests that 
 
 Here we are trading consistency for performance, but the argument is that public data does not get updated very often (maybe once every 24 hours), and that low load periods predictably happen relatively often (at least once every 24 hours). This is what the \emph{tileheat} project is about.
 
-
-
 \section{Optimizing workload compute}
 The work we definitely need to do, should be done with as few clock cycles and i/o as possible. This is the vectile project.
 
-\section{Managing the infrastructure}
+\section{Related work}
+% Maybe related working specific to each chapter, and cross-cutting (orthogonal) related work, that relates to the thesis, such as data center management, software engineering etc. These things will improve efficiency regardless of other contributions.
 
+Close flanks by related work. Surveying what are the techniques used in industry. These techniques can complement the techniques I've developed. Question is whether such a survey of best practice already exists, and I can simply refer to that. Be more summarized.
 
+Urs H{\"o}lzle is our man. A book like "The Datacenter as a Computer" is our bible. Websites like highscalability.com are our favorite place to hang out.
 
-\section{What to do with the free resources?}
-Give it back to the tax payers, or spent them on improving the feature level, e.g. plugins for data silos.
+Simian army at Netflix, chaos monkeys etc. 
+
+\section{What to do with the freed up resources?}
+Now that we have an efficient data serving system, that lives up to all the SLAs, while spending fewer resources, what should we do with the freed up resources? We could give the money back to the tax payers, we could hire more people in the Public Sector, or we could spend them on new exciting technological features.
+
+An example of an exciting features that we like to call "plugins for data silos", is what Kristians thesis (supervised by Moi et Marcos) is about.
 
 %\subsection{}
 
