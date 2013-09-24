@@ -1,4 +1,5 @@
-phd_thesis
-==========
+# Phd thesis
 
-My thesis
+* References:
+* Action items
+* Back burner:
