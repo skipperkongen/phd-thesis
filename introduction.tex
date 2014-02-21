@@ -1,0 +1,52 @@
+% !TEX root = ./thesis.tex
+\section{Introduction}
+
+\subsection{The Digital Map Supply}
+In 2001, the Danish government established the Digital Map Supply (KF, danish: Kortforsyningen). The purpose of KF, back then and now, is to make important Danish geospatial data available to the public both through standardized web services as well as allowing download of complete datasets. The data access protocols include Web Map Service (WMS), Web Feature Service (WFS) and other web service standards by the Open Geospatial Agency (OGC). As far as the Digital Map Supply is concerned, this thesis will only focus on the geospatial data web services, henceforth the ``services''
+
+Today, the Digital Map Supply is part of the Danish Geodata Agency (GST, Danish: Geodatastyrelsen), and since 2012, the data has been available to the public free of charge. Making data available free of charge, has resulted in an increased demand from the public, meaning more requests per second for services. TODO: Quantify, how many requests per second?
+
+Maintaining a high level of availability and performance for the services is more crucial than ever, as more and more third party systems are now dependent on them. It is this concern that is the main background and motivation for this thesis.
+
+
+\subsection{Systemic issues}
+\label{sec:systemic:issues}
+In this section I will briefly discuss some systemic issues with the Digital Map Supply, which are partly organizational in nature.
+
+The Danish Geodata Agency (GST), which is a part of the Ministry of the Environment, has the official responsibility for the Digital Map Supply. However, the administration of the physical IT infrastructure behind the services is delegated to Staten IT (SIT), which is a department of the Ministry of Finance. In practice, this means that \emph{system logs} for the services are being captured and stored by two different ministries. This makes it challenging, to the point of being impossible, to get a complete overview of the operation of the Digital Map Supply.
+
+Another issue related to the first, is that all services are running in a \emph{virtualized environment} provided by SIT. Little or no information is available outside of SIT regarding the specifications of physical hardware, the level of multi-tenancy or the virtual-to-physical deployment plan. This makes it difficult to isolate specific problems to specific servers. To the best of my knowledge, the GST (and KF) have a \emph{virtual-only} view of the servers that are running their web services.
+
+To the best of my knowledge, all geo services are physically deployed in a single \emph{server room} in Copenhagen, Denmark. The consequence is that scheduled maintenance usually means scheduled total downtime of the geoservices. During total downtime, the public does not have access to geo data from the Digital Map Supply as there is no fall-back solution.
+
+While these issues are serious enough in themselves, it is beyond the scope of this thesis to analyze and address them.
+
+\subsection{Architectural issues}
+The services of the Digital Map Supply are implemented in a 3-tier architecture. Tier-1 is load balancing, tier-2 is application servers and tier-3 is the database. Not all application servers in tier-2 require access to the database in tier-3, because in some cases data has been replicated locally. Logically, the application servers are completely stateless, and all state is kept exclusively in tier-3, if we regard data stored locally on the application servers as logically belonging to tier-3. 
+
+FIG:ARCHITECTURE
+
+The database in tier-3 is a read-only snapshot of the internal data production system. The database is replicated onto a set of slaves databases which up to a point increased the thoughput of the system. A typical web service request touches a single database server and it is not currently practical to scale the capacity of those servers further. While distributed processing could perhaps address this scalability issue in part, this would require a degree of technical development that is not currently feasible within the Digital Map Supply. A more feasible approach is to make lighter each database request that is happening during peak load. This would make the round robin strategy used more effective.
+
+\subsection{Evidence}
+Database overload seems to be a major cause of downtime and bad performance in the Digital Map Supply, judging from what is communicated by the Digital Map Supply to the public~\cite{twitterfeed}. However, for the organizational reasons discussed in Section~\ref{sec:systemic:issues}, there is only incomplete quantitative evidence to support this. Specifically, it has not been possible to get access to all relevant system logs that could quantitatively show the root cause of downtime.
+
+Part of the evidence is based on a Twitter feed provided by GST, which informs users in case of downtime and performance issues~\cite{twitterfeed}. This feed often mentions database overload as the main cause for downtime or bad performance. However, the feed should be considered both an incomplete and partly unreliable source of information, as it is updated by the staff exactly when they are busy putting out fires. 
+
+Another source of information are a few interviews that I have conducted with the technical staff of the Digital Map Supply. While the GST staff generally consists of people who are very technically skilled, they unfortunately do not have complete information available to them, because of the organizational aspects covered in Section~\ref{sec:systemic:issues}.
+
+During interviews, I asked GST staff to subjectively list what they believe had been the main cause of downtime and performance problems in the recent past. Their statements are supported by their experience and internal communication, but can not be regarded as very reliable information. TODO: find this list (email? it was on geodelivery.org).
+
+\subsubsection{Access log}
+The only quantitative evidence available to me is the service access log kept by the Digital Map Supply. This log shows metrics for each individual requests received by the Digital Map Supply for the past five years. The metrics include the URL and type of service that was called, the response time and size of the response. The advantage is that this log records every single request several years back, which accumulates to billions of log entries! A slight disadvantage is that the method of logging has not been kept entirely consistent during this period, so some data is missing for certain periods.
+
+From the access log there is clear evidence that the load is highly skewed temporally and spatially. Most requests happen during the middle of the day (with a consistent dip during lunch break), and most requests are for geospatial data within confined geographical regions. The period during the middle of the day will be termed \emph{peak load}. These things put together means that requests are relatively predictable, and can theoretically be computed ahead of requests.
+
+From the access logs there is clear evidence that the latency of service responses are heavily correlated with number of concurrent requests. Since the state-less middle-tier can theoretically be scaled out as needed, the brunt of the intra-machine concurrency should theoretically be happening in the data-tier. However, since the servers are running in a virtualized environment with databases potentially being co-resident with application servers on the physical hardware, this observation might not hold in practice.
+
+In Figure~\ref{fig:correlation} it can be seen how average latency varies dramatically with average load, more than doubling in the middle of the day.
+
+FIG:CORRELATION
+
+\subsection{Strategies for decreasing database load}
+It will be my working assumption that database overload is a significant contributor to performance and downtime issues in the Digitial Map Supply. In this thesis, I will explore two strategies for decreasing the load on the database tier during peak load. The first strategy is to rely on predictive caching to avoid hitting tier-3 at all during peak load. The second strategy is to make the database queries that do hit tier-3 a lot simpler and thus more efficient to process.
