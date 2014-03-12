@@ -1,0 +1,25 @@
+Marcos ambitious idea, three parts:
+- (I) Introduction: talk about the two chapters that follow.
+- (P1) Pt 1: bulk: declarative cartography, about PRODUCING maps
+- (P2) Pt 2: about SERVING digital maps
+- Similar structure for both: state of the art, my contributions (advancing the state of the art).  
+
+What-goes-where:
+- I <- Case Study, P1 enables P2
+- P1 <- 
+	Survey generalization, 
+	CVL1 (closing the gap, part a), 
+	CVL2 (closing the gap, part b)
+- P2 <- 
+	Survey on serving maps, getting to keyed data for maps, all this stuff you can use 
+		incl. vectile (step 2), 
+		data partitioning (step 3), 
+		replication (step 4), 
+		consistency, 
+		key-value stores, 
+		classic web serving infrastructures, 
+		papers from seminar
+	Gap between state of the art, and the agency
+	TileHeat (closing the gap, step 1), deploying a caching infrastructure
+	
+	
