@@ -3,68 +3,20 @@
 
 \subsection{Introduction}
 % importance of maps
-Since ancient times, mankind has created maps of the world based on whatever spatial information was available. Now and then, maps have been created for a plethora of purposes. From navigation, to exploration, to showing your friends on social media where you went jogging, maps communicate spatial information in an effective way.
+Since ancient times, mankind has created maps of the world based on whatever spatial information was available. Now and then, maps have been created for a plethora of purposes. From classical tasks such as navigation and geographic education, to modern tasks such as finding shops near you or showing your friends on social media where you went jogging this afternoon.
 
-% scale and omitting information
-A geographical map will represent something as big as planet earth or a country, on something as small as a sheet of paper or a computer screen. Consequently, every person creating a map must choose what information to include and what to leave out, because there is not enough room to include everything. As a rule of thumb, maps at low scale (e.g. world maps) omit more information per square kilometer than maps at high scale (e.g. city maps). Another rule of thumb, known as the principle of constant information density, says that the amount of information per square centimeter of a map (or indeed any visualization) should remain roughly constant regardless of scale.
+% generalization
+Although much has changed, the fundamental challenges posed by map creation remain largely the same. A geographical map will represent something as big as a planet or a country, on something as small as a sheet of paper or a computer screen. Consequently, every person creating a useful map must choose what information to include and what to leave out. That is, if the map is to remain legible to the human eye. The map creator must eliminate information that is not essential to a map, and reduce the complexity of the visual expression. These are the core tasks of what cartographers call generalization. The other major tasks of cartographer are map design, map projection and map editing.
 
-% scale and visual representation
-There is no fixed best way to visually represent spatial information on a map. The best way depends on the scale of the map. For example, a city may be shown as a circular mark on a world map, or as a complex of roads and cities on a city map. Sometimes a distorted visual representation is appropriate, e.g. when drawing a metro train network. Sometimes it is important to draw the map in a way that close to the physical reality, e.g. when creating a mountaineering map.
+% challenge today
+Today, the amount of spatial data available to map creators dwarfs the amounts that were available to map creators just a few decades ago. Furthermore, the frequency at which new maps must be created is higher than ever before, driven largely by the rise of social media and online news platforms. This has motivated many attempts to automate the generalization process. While research projects have achieved partial success in some areas, a definitive and general solution to automated map generalization has not been found yet. 
 
-% challenge
-Generalization is a term that covers two processes; choosing what information to show on a map, and how to visually represent the information. Generalization is guided by the goal of simultaneously optimizing both the legibility and the accuracy of a map. In practice, there is always a trade-off involved when trying to achieve both.
-
-
-As an example, a world map (low scale) omits more information per square kilometer than a map of city (high scale), because streets and buildings that are visible on the city map are not visible on the world map. On the other hand, a world map might include names of countries, which could be omitted on a city map.
-
-
-The salience of pieces of information depends in a non-trivial way to scale.
-
-When choosing what information to omit, the relevance of a given piece of information should be considered in relation to the scale of the map. For example, it might not be relevant to include the country name on a city map, while it is quite relevant on a world map.
-
-A person creating a map must also choose how the information is depicted, for example to visually represent cities by circular dots. 
-
-
-and this will vary according to the scale of the map.
-
-% salience
-
-
-Maps are usually drawn on a medium, such as a sheet of paper or a computer screen, with a limited amount of surface area. This limits the amount of information that can be communicated in a legible manner. A map creator must often sacrifice less salient information in order to make room for the essential information.
+% remainder
+In the remainder of this chapter we survey the field of automated map generalization in general, and recent contributions in particular.
 
 
 
 
-The smaller the scale of the medium, the more information must be left out.
-
-
-
-It is not practical or even desirable to include 
-
-
-
-This is because the surface area of the map medium is limited, whether the map is drawn on a sheet of paper or a computer screen. A computer screen consists of a finite number of pixels, which implies that a finite number of spatial information objects can be depicted on it.
-
-.
-
-
-After choosing what to include on a map, the map creator must decide how to depict the information in an informative way. The scale of the map dictates the choices that are made. A road 
-
-
-
-This is necessary because the surface area of the map medium limitis the amount 
-
-Furthermore, cartographers must choose how to depict the information that is included on the map. In combination, cartographers refer these two tasks as generalization.
-
-The limited real-estate of the map medium, a sheet of paper 
-
-Geographers call this process generalization. 
-
-
-This process sacrifices less important information in order to make room for more important information 
-
-
-The real-estate of maps, the sheet of paper or computer screen, is a limited resource.
 
 
 This is a survey of cartographic generalization methods, in particular automatic methods for spatial data generalization. Cartography is the art of conveying spatial information using maps. Generalization is a subproblem of cartography when creating maps at a given scale. The main problems are to identify data subsets for display, and choosing appropriate rendering methods that effectively convey information at the given scale.
