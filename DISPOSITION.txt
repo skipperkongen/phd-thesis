@@ -1,11 +1,11 @@
 Marcos ambitious idea, three parts:
-- (I) Introduction: talk about the two chapters that follow.
+- (I) Introduction: talk about the two chapters that follow. 
 - (P1) Pt 1: bulk: declarative cartography, about PRODUCING maps
 - (P2) Pt 2: about SERVING digital maps
 - Similar structure for both: state of the art, my contributions (advancing the state of the art).  
 
 What-goes-where:
-- I <- Case Study, P1 enables P2
+- I <- Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
 - P1 <- 
 	Survey generalization, 
 	CVL1 (closing the gap, part a), 
