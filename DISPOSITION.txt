@@ -12,14 +12,24 @@ What-goes-where:
 	CVL2 (closing the gap, part b)
 - P2 <- 
 	Survey on serving maps, getting to keyed data for maps, all this stuff you can use 
-		incl. vectile (step 2), 
+		incl. vectile (step 2),
+		caching,
+		prediction,
 		data partitioning (step 3), 
 		replication (step 4), 
 		consistency, 
 		key-value stores, 
-		classic web serving infrastructures, 
+		classic web serving infrastructures,
 		papers from seminar
 	Gap between state of the art, and the agency
 	TileHeat (closing the gap, step 1), deploying a caching infrastructure
 	
-	
+Publication strategy:
+
+CVL2 (it's a journal thing, not a conference submission):
+Approach: "Make CVL more general (star approach), with comparable performance"
+- GeoInformatica (extended version of CVL), "completeness/thoroughness": repeat experiments, show new use cases (comp. to CVL), illustrate CVL2 with the new use cases 
+- Only conference if "technical fun" or "something new" in compiler, real tech. take-away
+
+
+

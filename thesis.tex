@@ -1,26 +1,58 @@
-\documentclass[11pt]{amsart}
-\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
-%\geometry{landscape}                % Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}
-\usepackage{multirow}
+\documentclass[11pt, oneside]{report}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
 \usepackage{amssymb}
-\usepackage{epstopdf}
 
-\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-
-\title{Thesis title}
+\title{A Declarative Language for Multiscale Data Abstraction of Spatial Datasets}
 \author{Pimin Konstantin Kefaloukos}
-%\date{}                                           % Activate to display a given date or no date
+%\date{}							% Activate to display a given date or no date
 
 \begin{document}
-
 \maketitle
+\part*{Introduction}
 
-%\input{teaser}
-%\input{introduction}
-%\input{casestudy}
-\input{minisurvey}
+\part{Creating Multiscale Digital Maps}
+
+
+\part{Serving Multiscale Digital Maps}
+
+
+Marcos ambitious idea, three parts:
+- (I) Introduction: talk about the two chapters that follow. 
+- (P1) Pt 1: bulk: declarative cartography, about PRODUCING maps
+- (P2) Pt 2: about SERVING digital maps
+- Similar structure for both: state of the art, my contributions (advancing the state of the art).  
+
+What-goes-where:
+- I <- Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
+- P1 <- 
+        Survey generalization, 
+        CVL1 (closing the gap, part a), 
+        CVL2 (closing the gap, part b)
+- P2 <- 
+        Survey on serving maps, getting to keyed data for maps, all this stuff you can use 
+                incl. vectile (step 2),
+                caching,
+                prediction,
+                data partitioning (step 3), 
+                replication (step 4), 
+                consistency, 
+                key-value stores, 
+                classic web serving infrastructures,
+                papers from seminar
+        Gap between state of the art, and the agency
+        TileHeat (closing the gap, step 1), deploying a caching infrastructure
+        
+Publication strategy:
+
+CVL2 (it's a journal thing, not a conference submission):
+Approach: "Make CVL more general (star approach), with comparable performance"
+- GeoInformatica (extended version of CVL), "completeness/thoroughness": repeat experiments, show new use cases (comp. to CVL), illustrate CVL2 with the new use cases 
+- Only conference if "technical fun" or "something new" in compiler, real tech. take-away
 
 \end{document}  
+
