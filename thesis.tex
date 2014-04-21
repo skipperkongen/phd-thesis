@@ -13,33 +13,70 @@
 
 \begin{document}
 \maketitle
-\part*{Introduction}
+
+\tableofcontents
+
+\part{Introduction}
+
+\chapter{History of Data Abstraction}
+
+\section{Foundations}
+On a cave wall in Lascaux, France, a series of dots dating to 16.500 BC have captured the imagination of scholars. These ancient dots are arranged so much like well-known constellations, that some scholars believe them to be a celestial map -- a view of the night sky as seen by stone-age man. On a clear night, the stone-age sky above Lascaux would have contained many visible stars, on the order of thousands. Painting all of those star would have been quite hard, as the sky was presumably not visible from inside the cave. As a consequence, the artist had to choose both which stars to paint and how to paint them. Today, these fundamental problems are still at the core of data visualization, known as \emph{data abstraction} (e.g. selection and aggregation of data points) and \emph{visual abstraction} (e.g. choosing appropriate symbols for data points)~\cite{stolte2003multiscale}.
+
+\section{Modern-age Data Visualization}
 
 \chapter{Multiscale Geographical Maps}
 % section
 Illustrate importance of multiscale visualization via reference to information cartography, data cube visualization, evolutionary timelines, social network visualizations and digital maps.
 
 % section
-\section{General Principles}
+\section{Principles}
 Mention Weibel definition (salience etc). Reference woodruff and toepfer (constant information density). Reference da sarma (zoom consistency and visibility constraint). Reference samet (proximity constraint). Reference someone for topological constraints.
 % section
-\section{Multiscale Abstraction}
 
-Define difference between data- and visual abstraction, reference data cube paper. Reuse points and figures from ICDE 2014 presentation (what to display versus how to display). Mention the geographical terms of model generalization and cartographic generalization (reference Gruenreich). Mention that data abstraction for maps is surveyed in Part I chapter 1.
+\section{Multiscale Abstraction}
+Define difference between data- and visual abstraction, reference data cube paper. Reuse points and figures from ICDE 2014 presentation (what to display versus how to display). Mention the geographical terms of model generalization and cartographic generalization (reference Gruenreich). 
+
+\subsection{Data abstraction}
+Mention that data abstraction for maps is surveyed in Part I chapter 1.
+
+\subsubsection{}
+
+\subsection{Visual abstraction}
+Reference visual variables.
 
 \section{Case Study: Danish Geodata Agency}
 Mention GST and their use cases (POI and place names).
 
-\part{Creating Multiscale Maps}
+\chapter{Map Services}
 
-\chapter{Survey of Data Abstraction for Maps}
+\section{Map Services}
+Talk about how map services are used.
+
+\section{Case Study: Danish Geodata Agency}
+Mention GST and their use cases (POI and place names).
+
+
+\part{Producing Maps}
+
+\chapter{Data abstraction methods for maps}
+Survey the literature.
+
 Reference Weibel and Harrie (constraint-based approach and salience). Reference Wollf (land use IP). Reference Da Sarma (fusion tables IP).
 
 
 \chapter{}
 
 
-\part{Serving Multiscale Maps}
+\part{Serving Maps}
+
+\bibliographystyle{plain}
+\bibliography{thesis}
+                             % Sample .bib file with references that match those in
+                             % the 'Specifications Document (V1.5)' as well containing
+                             % 'legacy' bibs and bibs with 'alternate codings'.
+                             % Gerry Murray - March 2012
+
 
 
 Marcos ambitious idea, three parts:
