@@ -21,23 +21,87 @@
 \chapter{Multiscale Data Visualizations}
 
 \section{History}
+\label{sec:history}
 On a cave wall in Lascaux, France, a series of dots dating to 16.500 BC have captured the imagination of scholars. These ancient dots are arranged so much like well-known constellations, that some scholars believe them to be a celestial map. On a clear night, the stone-age sky above Lascaux would have contained thousands of visible stars; clearly the artist did not paint them all. Before setting to work, the artist made two key decisions, namely \emph{which} stars to paint and \emph{how} to paint them. While the latter problem was addressed by painting dots on a cave wall, the first problem -- choosing which stars to paint -- was perhaps addressed by selecting the brightest stars and most prominent constellations on the night sky. In the field of data visualization, these problems are known respectively as \emph{data abstraction} (e.g. selection of stars) and \emph{visual abstraction} (e.g. painting stars as dots)~\cite{stolte2003multiscale}.
 
-A few thousand years later, man turned his attention to the ground beneath his feet. In Mesopotamia, clay tablets dating to 2.500 BC depict what is essentially a cadastral map~\cite{harley1987cartography}. The purpose of a cadastral map is to correctly identify land owners, not to convey accurate information about physical reality. So, if the physical borders of the land parcels are cleared marked with stone-walls, a cadastral map only needs to be \emph{topologically} correct.
+A few thousand years later, man turned his attention to the ground beneath his feet. In Mesopotamia, clay tablets dating to 2.500 BC depict what is essentially a cadastral map~\cite{harley1987cartography}. The purpose of a cadastral map is to correctly identify land owners, not to convey accurate information about physical reality. So, if the physical borders of the land parcels are cleared marked with stone-walls, a cadastral map only needs to satisfy \emph{topological} constraints. 
 
-\section{Logical zoom}
-Cave wall and clay tablets support only a primitive concept of zooming. When the spectator moves towards or away from surface, the objects seemingly become larger or smaller. By contrast, a computer screens enables a more sophisticated type of \emph{logical zoom}~\cite{van1990reactive}. In response to a logical zoom, a new data abstraction and visual abstraction can be computed and presented to the spectator. The abstraction can be adapted to the available data and the screen size. For example, data points can be selected or aggregated, and can be drawn differently. 
+\section{Definitions}
 
-\section{Principles}
-In 1961, Friedrich T\"{o}pfer formulated the \emph{Principle of Selection} for the field of cartography~\cite{topfer1966principles}. The principle has a slightly technical formation, however the core idea is that maps at different scale should have the same amount of information per unit display area (e.g. per $cm^2$ on a sheet of paper). In 1998, Allison Woodruff et al. reformulated it as the \emph{Principle of Constant Information Density}, in the context of zoomable visualizations on computer screens~\cite{woodruff1998constant}. The original principle, as formulated by T\"{o}pfer, has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
+The topic of this chapter is multiscale visualization of \emph{discrete objects} that are embedded in a \emph{metric two-dimensional space}. The main focus will be geographical maps, but visualization concepts that apply beyond the geospatial domain, will sometimes be exemplified in other domains (e.g. temporal, social, financial, etc.). This is important, because in fact the core principles of multiscale visualization apply very broadly to many different domains. Objects are assumed to have meaningful coordinates in some metric two-dimensional space. Notice that an objects object may have one coordinate (a point object) or several coordinates (a line or polygon objects). An example of a point object is a company that is represented by its revenue and employee count.
+
+A two-dimensional space has two axes, $x$ and $y$. For multiscale visualizations, we may think of the \emph{scale} as a third axis, $z$. In geography, scale is defined as the ratio between a distance measured on a map and the corresponding distance on the ground. However, the $x$ and $y$ axes can have any unit, e.g. life expectance and BNP, revenue earned and taxed payed etc.
+
+Multiscale visualizations allow panning and zooming, which are exactly what makes them \emph{multiscale} (i.e. visualizing information at different scales).  While we may have an intuitive idea of what these operations do, we need clear semantics.
+
+\begin{quote}
+``Users view the canvas as if with a camera that moves in three-dimensional space but always points straight down at the canvas. Users can pan across the canvas (changing the x,y location of the camera). Users can also zoom in and out above the canvas (changing the z location, or elevation, of the camera). Because a given set of objects looks different when seen from different elevations, a visualization that is appealing at one elevation is likely to be unappealing at another.''~\cite{woodruff1998constant}
+\end{quote}
+
+\begin{quote}
+``The display seen by the user is a fixed-size viewport onto an underlying, or native, coordinate space defined by the x,y values of the objects. The objects never change their native x,y position, so object density in the native space obviously never changes. However, any change in elevation implies a change in the area of the native space visible in the display, which implies (in general) that the display contains a different number of objects. This in turn implies a change in display object density. As a result, the same visualization can be appealing at one''
+\end{quote}
+
+% SECTION
+\section{Physical and logical zoom}
+
+The cave wall and clay tablet visualizations that were mentioned in Section~\ref{sec:history}, are analog visualizations of information. Concepts such as data abstraction, visual abstraction and constraints (e.g. topological constraints) apply to both analog and digital visualizations. However, the concept of a logical zoom applies solely to digital visualizations. 
+
+
+
+
+\begin{quote}
+``Objects change representation as users zoom closer to them. For example, when a user zooms closer to a circle representing a city, the name of the city may appear next to the circle.''
+\end{quote}
+
+Physical zooming (e.g. using a pair of binoculars) only enlarges objects. By contrast, computer-aided data visualizations enable \emph{logical zooming} that allows the visualization to evolve in response to scale change~\cite{van1990reactive}. For example, when zooming in, new data points can be selected or existing data points can be drawn differently (e.g. in more detail).
+
+\paragraph{data abstraction}
+
+Cite wolff. Cite fusion tables. Cite me. Cite 
+
+\paragraph{visual abstraction}
+
+Cite Bertand.
+
+% SECTION
+\section{Information density}
+
+\paragraph{Density measures}
+
+Information density can be measured using different metrics.
+
+\begin{quote}
+Our system currently supports two density metrics, number of objects and number of vertices. There are a number of other metrics that could be used, e.g., Tufte's data density~\cite{tufte1983visual}. For a thorough review see~\cite{nickerson1994visual}.
+\end{quote}
+
+\begin{quote}
+``For example, the ink metric (the number of live pixels) is not elevation-sensitive. To see this, imagine that the canvas contains a chessboard and that black pixels are live. Since half the pixels are white and half are black, 50\% of the pixels are live. Now imagine zooming closer to the chessboard. The view changes considerably, but the pixel distribution remains the same. Therefore, ink is probably not an appropriate density metric for zoomable applications.''
+\end{quote}
+
+\paragraph{Principle of Constant information Density}
+
+\begin{quote}
+``A guiding principle that addresses this issue can be derived from the Principle of Constant Information Density, drawn from the cartographic literature [5,18]. This principle states that the number of objects per display unit should be constant. A more general formulation posits that the amount of information (as defined by metrics discussed below) should remain constant as the user pans and zooms. To maintain constant information density, either (1) objects should be shown at greater detail when the user is closer to them, or (2) more objects should appear as the user zooms into the canvas, or (3) both.''
+\end{quote}
+
+In 1961, the cartographer Friedrich T\"{o}pfer proposed the \emph{Principle of Selection}, which states that the number of objects per display unit should be constant~\cite{topfer1966principles}. In 1998, Allison Woodruff et al. revamped the principle for (computer-based) multiscale visualizations and called it the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. However, it is not fundamentally different from the principle identified by Friedrich T\"{o}pfer. The main purpose of the principle is to maintain a legible visualization when the scale changes, which implies that it should be applied during the data- and visual abstraction processes. The soundness of the principle has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
 
 It is not difficult to understand why the Principle of Constant Information Density must be true. Screens have a fixed number of pixels for rendering objects, and similarly, sheets of paper have a fixed area on which to place ink. There is a physical bound on how much information can be represented per unit display area (e.g. a few thousand pixels per $cm^2$ on a computer screen). Simultaneously, there is a lower bound on how small things can get and still remain legible to the human eye.
 
-In 2012, Das Sarma et al. published a paper that listed the requirements for multiscale map visualizations supported by the commercially available Google Fusion Tables system~\cite{sarma2012fusiontables}. One requirement is that visualizations must satisfy a \emph{zoom-consistency} constraint; when a user zoom in, new objects may appear on the map, but must never disappear. Mathematically, if $S_z$ is the set of objects selected at scale $z$, then $S_z \subseteq S_{z'}$ for all $z < z'$. Intuitively, you must never loose sight of an object when zooming in on it.
+\section{Constraints}
 
-Another constraint mentioned by Das Sarma et al. is the \emph{visibility} constraint, which is closely related to the Principle of Constant Information Density. This constraint makes the general principle more specific by bounding the number of objects that are visible within a unit display area.
+Cite weibel, who has a good overview of constraint types. Maybe Lars Harrie.
+
+\paragraph{Visibility constraint}
+In 2012, Das Sarma et al. published a paper that listed the requirements for multiscale map visualizations, which are supported by the commercially available Google Fusion Tables system~\cite{sarma2012fusiontables}. One requirement is that visualizations must satisfyt he \emph{visibility} constraint, which is closely related to the Principle of Constant Information Density. This constraint states that the number of objects that are visible within a unit display area must be bounded by a constant $K$. Assuming that objects have roughly equal density, this implies that the principle of constant information density is upheld.
 
 %Back when the earth was believed to be flat, assuming that Eratosthenes was not around to suggest otherwise, 
+
+\paragraph{Zoom-consistency}
+Another constraint mentioned by Das Sarma et al. is  \emph{zoom-consistency} constraint; when a user zoom in, new objects may appear on the map, but must never disappear. Mathematically, if $S_z$ is the set of objects selected at scale $z$, then $S_z \subseteq S_{z'}$ for all $z < z'$. Intuitively, you must never loose sight of an object when zooming in on it.
+
+
 
 \section{Modern-age Data Visualization}
 
@@ -74,6 +138,10 @@ Mention GST and their use cases (POI and place names).
 
 
 \part{Producing Maps}
+
+\chapter{Related work}
+\paragraph{DataSplash} DataSplash allows users to control the range of elevations at which each layer is rendered. To this end, each layer appears as a vertical bar in a layer manager. The top of the layer bar represents the highest elevation at which objects in the layer are rendered. Similarly, the bottom of the layer bar represents the lowest elevation at which objects in the layer are rendered. The user's current elevation is shown with a horizontal elevation bar. Any layer bar that is crossed by the horizontal elevation bar is considered to be active and objects in the corresponding layer are rendered. In ``Constant information density in zoomable interfaces'', density feedback is added to the layer manager. First, the width of each layer bar now reflects the density of the corresponding layer at the given elevation. Second, the layer manager now relates the cumulative density value at each elevation to the density bounds. In that same paper, they also added semi-automated adjustment of layer density.
+
 
 \chapter{Data abstraction methods for maps}
 Survey the literature.
