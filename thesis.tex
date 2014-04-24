@@ -23,19 +23,36 @@
 \chapter{Introduction}
 
 \section{Motivation}
-Web-based multiscale visualizations are important because users can explore and interact intuitively with information on the go, i.e. on heterogenous devices (smartphones, tablets, personal computers) and in different life situations (at home, at the office, on the bus).  Specifically, information can be explored at different focal points and at different scales of perception, which facilitates both insights and decision making -- e.g. using zoomable graphs to understand complex social data or using zoomable geographical maps to find a nice restaurant within a city. Some important types of information are \emph{spatial}, \emph{social} and \emph{temporal} data, which can be visualized using \emph{maps}, \emph{networks} and \emph{timelines}. Among these verticals, the focus of this dissertation will be on spatial data and geographical maps. However, many of the contributions are directly applicable in the other domains also. Spatial data and geographical maps have important use cases, e.g. in social media, news, science and governance.
+Web-based multiscale visualizations are important because users can explore and interact intuitively with information on the go -- using heterogenous devices (smartphones, tablets, personal computers) and in various life situations (at home, at the office, on the bus).  Specifically, professional and private users can explore information at different focal points and different levels of abstraction, which facilitates insights and decision making -- e.g. using plots to understand complex financial data or using zoomable geographical maps to find a nice restaurant within a city. Some important types of information are \emph{spatial}, \emph{social} and \emph{temporal} data, which can be visualized using e.g. \emph{maps}, \emph{networks} and \emph{timelines}, respectively. Among these verticals, the focus of this dissertation will be on spatial data and geographical maps. However, many of the contributions are directly applicable in the other domains also. Spatial data and geographical maps have important use cases, e.g. in social media, news, science and governance.
 
-Driven by the exponential growth in spatial data online~\cite{foo,foo,foo}, web-based zoomable maps have recently attracted much larger audiences and can potentially integrate much larger and constantly evolving repositories of data~\cite{gst, foo}. This poses two key challenges to map designers and system engineers. First, map designers must efficiently and effectively address the dual problems of \emph{data abstraction} (e.g. selection and aggregation of information) and \emph{visual abstraction} (e.g. choice of information styles)~\cite{stolte2003multiscale}. Second, system engineers must cost-effectively manage a brutal query workload as online users connect to the mapping platform.
+Driven by the exponential growth in spatial data online~\cite{foo,foo,foo}, web-based zoomable maps have recently attracted much larger audiences and can potentially integrate much larger and constantly evolving repositories of data~\cite{gst, foo}. This poses two high-level challenges to map designers and system engineers. First, map designers must efficiently and effectively address the dual problems of \emph{data abstraction} (e.g. selection and aggregation of information) and \emph{visual abstraction} (e.g. choice of information styles)~\cite{stolte2003multiscale}. Second, system engineers must cost-effectively manage a brutal query workload as online users engage a map application.
 
 \section{Zoomable Geographical Maps}
 
+Mankind has created spatial visualizations of the natural world since the earliest years of our habitation on planet Earth. For the most part, these visualizations have been hand-crafted and analog artifacts, such as clay tablets and hand-inked paper sheets.
+
+\subsection{Implementing logical zoom}
+Recently, computers have offered the opportunity for \emph{logical zooming}. In contrast to physical zooming, which is limited to enlarging and diminishing objects, a logical zoom (enabled by computers) can adapt the data- and visual abstraction of information to scale~\cite{van1990reactive}. This can be done in an online fashion using an appropriate datastructure (e.g. B-tree, quad trees or gap tree)~\cite{van1995gap,bereuter2013real,nutanong2012multiresolution}, or in an off-line fashion using a preprocessing algorithm (e.g. combinatorial optimization)~\cite{kefaloukos2014declarative,haunert2006landcover,sarma2012fusiontables}.
+
+\subsection{Brief History}
+\label{sec:history}
+On a cave wall in Lascaux, France, a series of dots dating to 16.500 BC have captured the imagination of scholars. These ancient dots are arranged so much like well-known constellations, that some scholars believe them to be a celestial map. On a clear night, the stone-age sky above Lascaux would have contained thousands of visible stars; clearly the artist did not paint them all. Before setting to work, the artist probably made two key decisions, namely \emph{which} stars to paint and \emph{how} to paint them. Today, data visualization scholars will recognize these processes as \emph{data abstraction} and \emph{visual abstraction}, respectively~\cite{stolte2003multiscale}. Each of these two processes aim to fulfill two goals. First, maps should be legible to their audience. Second, maps should be representative of the phenomena they offer information about. These goals are somewhat conflicting, because in order to be legible, we must generally omit some information, thus decreasing representation.
+
+A few thousand years after the Lascaux cave walls were painted, man turned his attention to the ground beneath his feet. In Mesopotamia, clay tablets dating to 2.500 BC depict what is essentially a cadastral map~\cite{harley1987cartography}. Cadastral maps must enable correct identification of land owners. So, if the physical borders of the land parcels are cleared marked with stone-walls, a cadastral map only needs to satisfy topological constraints (not reflect physical reality). In other words, maps should fulfill their purpose.
+
 \subsection{Basic Principles}
+The fragments of history related in Section~\ref{sec:history} illustrate three partially conflicting principles that apply to geographical maps of any scale:
+
+\begin{itemize}
+\item Principle 1: Maps Must Be Legible
+\item Principle 2: Maps Must Be Representative
+\item Principle 3: Maps Must Fulfill Their Purpose
+\end{itemize}
 
 \paragraph{Constant Information Density}
+In 1961, the cartographer Friedrich T\"{o}pfer proposed the \emph{Principle of Selection}, which states that the number of objects per display unit should be constant~\cite{topfer1966principles}. In 1998, Allison Woodruff et al. revamped the principle for (computer-based) multiscale visualizations and called it the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. However, it is not fundamentally different from the principle identified by Friedrich T\"{o}pfer. The main purpose of the principle is to maintain a legible visualization when the scale changes, which implies that it should be applied during the data- and visual abstraction processes. The soundness of the principle has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
 
-\paragraph{Principle 2: YYY}
-
-\subsection{Techniques}
+It is not difficult to understand why the Principle of Constant Information Density must be true. Screens have a fixed number of pixels for rendering objects, and similarly, sheets of paper have a fixed area on which to place ink. There is a physical bound on how much information can be represented per unit display area (e.g. a few thousand pixels per $cm^2$ on a computer screen). Simultaneously, there is a lower bound on how small things can get and still remain legible to the human eye.
 
 \section{The State-of-the-Art in Web-based Zoomable Maps}
 
@@ -59,51 +76,21 @@ Vector tiles, Linearization, Partitioning, Compression, Streaming, Key-value sto
 
 \section{Structure of this Dissertation}
 
+Related work is discussed in the relevant sections.
 
-%Multiscale visualizations, with support for \emph{pan} and \emph{zoom} operatons, allow users to explore large datasets of discrete information objects at different focal points and levels of abstraction. In recent years, the exponential growth in online data has caused many visualization applications to migrate onto the web, where they can simultaneously reach a much larger audience and integrate against large repositories of data center local data. Professional and private users interact with online multiscale visualizations to gain data insights and support their decision making -- e.g. using a plot to understand complex financial data or using a map to find a restaurant to have dinner at. 
+\chapter{Geographical Workload Prediction}
 
+\chapter{Cartographic Visualization Language}
 
+\chapter{Multiscale Data Abstraction Language}
 
-
-
-
-\paragraph{Key challenges}
-There are two key challenges of multiscale visualizations on the web. 
-
-Visualizations typically project multi-dimensional data onto a two-dimensional space with continuous $x$ and $y$ axes -- with a discrete $z$ axis that represents scale in the case of multiscale visualizations. 
+\section{Related work}
 
 
-
-
-
-
-Zoomable geographical maps are an important subclass of multiscale visualizations, which allow users to explore projected geospatial data. 
-
-
-
-
-
-Zoomable Geographical Maps visualize spatial information at multiple scales.
-
-
-
-Foo
 
 % old
-
-\part{Introduction}
-
-\chapter{Multiscale Data Visualizations}
-
-\section{History}
-\label{sec:history}
-On a cave wall in Lascaux, France, a series of dots dating to 16.500 BC have captured the imagination of scholars. These ancient dots are arranged so much like well-known constellations, that some scholars believe them to be a celestial map. On a clear night, the stone-age sky above Lascaux would have contained thousands of visible stars; clearly the artist did not paint them all. Before setting to work, the artist made two key decisions, namely \emph{which} stars to paint and \emph{how} to paint them. While the latter problem was addressed by painting dots on a cave wall, the first problem -- choosing which stars to paint -- was perhaps addressed by selecting the brightest stars and most prominent constellations on the night sky. In the field of data visualization, these problems are known respectively as \emph{data abstraction} (e.g. selection of stars) and \emph{visual abstraction} (e.g. painting stars as dots)~\cite{stolte2003multiscale}.
-
-A few thousand years later, man turned his attention to the ground beneath his feet. In Mesopotamia, clay tablets dating to 2.500 BC depict what is essentially a cadastral map~\cite{harley1987cartography}. The purpose of a cadastral map is to correctly identify land owners, not to convey accurate information about physical reality. So, if the physical borders of the land parcels are cleared marked with stone-walls, a cadastral map only needs to satisfy \emph{topological} constraints. 
-
 \section{Definitions}
-
-The topic of this chapter is multiscale visualization of \emph{discrete objects} that are embedded in a \emph{metric two-dimensional space}. The main focus will be geographical maps, but visualization concepts that apply beyond the geospatial domain, will sometimes be exemplified in other domains (e.g. temporal, social, financial, etc.). This is important, because in fact the core principles of multiscale visualization apply very broadly to many different domains. Objects are assumed to have meaningful coordinates in some metric two-dimensional space. Notice that an objects object may have one coordinate (a point object) or several coordinates (a line or polygon objects). An example of a point object is a company that is represented by its revenue and employee count.
+The topic of this chapter is multiscale visualization of \emph{discrete spatial objects} that are embedded in a \emph{metric two-dimensional space}. The main focus will be geographical maps, but visualization concepts that apply beyond the geospatial domain, will sometimes be exemplified in other domains (e.g. temporal, social, financial, etc.). This is important, because in fact the core principles of multiscale visualization apply very broadly to many different domains. Objects are assumed to have meaningful coordinates in some metric two-dimensional space. Notice that an objects object may have one coordinate (a point object) or several coordinates (a line or polygon objects). An example of a point object is a company that is represented by its revenue and employee count.
 
 A two-dimensional space has two axes, $x$ and $y$. For multiscale visualizations, we may think of the \emph{scale} as a third axis, $z$. In geography, scale is defined as the ratio between a distance measured on a map and the corresponding distance on the ground. However, the $x$ and $y$ axes can have any unit, e.g. life expectance and BNP, revenue earned and taxed payed etc.
 
