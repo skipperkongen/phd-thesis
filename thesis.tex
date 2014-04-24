@@ -19,11 +19,11 @@
 \chapter{Introduction}
 
 \section{Motivation}
-Multiscale visualizations, with support for \emph{pan} and \emph{zoom} operatons, allow users to explore large datasets of discrete information objects at different focal points and levels of abstraction. Further interaction is enabled by responding e.g. to click-events. In recent years, the exponential growth in online data has caused many visualization applications to migrate onto the web, where they can simultaneously reach a much larger audience and integrate against large repositories of data center local data. Professional and private users interact with online multiscale visualizations to gain data insights and support decision making -- e.g. using a plot to understand complex financial data or using a map to find a restaurant to have dinner at. 
+Multiscale visualizations, with support for \emph{pan} and \emph{zoom} operatons, allow users to explore large datasets of discrete information objects at different focal points and levels of abstraction. In recent years, the exponential growth in online data has caused many visualization applications to migrate onto the web, where they can simultaneously reach a much larger audience and integrate against large repositories of data center local data. Professional and private users interact with online multiscale visualizations to gain data insights and support their decision making -- e.g. using a plot to understand complex financial data or using a map to find a restaurant to have dinner at. 
 
 Some important types of information are \emph{spatial}, \emph{social} and \emph{temporal} data. The corresponding visualizations are \emph{maps}, \emph{networks} and \emph{timelines}, respectively.
 
-\section{Challenges}
+\paragraph{Key challenges}
 There are two key challenges of multiscale visualizations on the web. First, designers must find solutions, one per scale, to the problems of \emph{data abstraction} (e.g. selection and aggreation) and \emph{visual abstraction} (e.g. picking colors and layouts)~\cite{stolte2003multiscale}. Second, engineers must manage query workloads as users connect to visualizations in a distributed system.
 
 Visualizations typically project multi-dimensional data onto a two-dimensional space with continuous $x$ and $y$ axes -- with a discrete $z$ axis that represents scale in the case of multiscale visualizations. 
