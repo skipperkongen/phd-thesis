@@ -11,7 +11,7 @@
 \setlength{\parindent}{0px}
 \setlength{\parskip}{1em}
 
-\title{Declarative Design and Efficient Serving of Web-Based Zoomable Maps}
+\title{Declarative Design and Efficient Serving of Zoomable Geographical Maps}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
@@ -26,6 +26,17 @@ Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
 
 
 \section{Motivation}
+% Why are they important? Use cases.
+Geographical maps are valuable because they facilitate spatial insights and enable spatial decision making. For example, a journalist writing a story about a war may choose to enrich the article with a map visualization, which allows readers to gain spatial insights about the location of troops, resources and refugees. As another examples, a tourist wandering the streets of an unfamiliar city may choose to use a location based service (LBS) to locate a near-by restaurant, which is an example of spatial decision making. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame. Zoomable maps allows users to explore data at different focal points and levels of abstraction, which enables both overview and in-depth exploration. For example, points can be selected and aggregated at low scales, and fully shown only at high scales.
+
+% What are maps and how are they used?
+Web-based multiscale maps have recently attracted millions (or even billions) of users who are attracted to web maps by a fruitful combination of several trends. In recent years, there has been an explosive growth in the amount and availability of useful spatial data (e.g. commercial, environmental, political and social data), driven in part by the availability of geocoding services. Furthermore, web access is now close to being ubiquitous in many parts of the world. Finally, as world-wide sales of mobile devices (e.g. smart phones, tablets and laptops) are soaring, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere, anytime and for many purposes.
+
+% challenges: caused by high traffic and constant surfacing of new and often big datasets.
+This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must frequently and rapidly address the problems of multiscale \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style) as new zoomable maps are needed and new datasets are integrated~\cite{stolte2003multiscale}. Third, system engineers must cost-effectively \emph{manage query workloads} as millions of online users engage a map application.
+
+
+
 
 \section{Principles and Requirements for Geographical Maps}
 \subsection{Basic Principles}
@@ -34,6 +45,7 @@ Apple iPhone 6 maps requirements listed in SELECT-DISTINCT paper, and in duking 
 
 \section{Zoomable Geographical Maps on the Web}
 \subsection{Definitions}
+\subsection{Key Challenges}
 
 \section{Overview of State-of-the-Art in Geographical Maps on the Web}
 \subsection{Vector Tiles and Client-side Rendering}
