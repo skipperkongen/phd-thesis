@@ -31,6 +31,9 @@
 
 \chapter{Literature Surveys}
 
+Follow a (1) design map; (2) create map ; (3) serve map approach, especially with regard to survey topics covered. 
+
+
 \section{Spatial MapReduce}
 % In this section I'll survey how Map Reduce is used for spatial data.
 
@@ -43,7 +46,7 @@
 % - Write the results
 % Outline stays the same, map and reduce change to fit the problem
 % \cite{dean2009lessons}
-MapReduce is a programming model and parallel data processing system implemented by Google and later described in a highly-cited white paper~\cite{dean2008mapreduce}. While MapReduce was originally designed by Google to run an its shared-nothing cluster of thousands of commodity servers, it is now deployed on both shared-memory multicores~\cite{ranger2007multicore} and graphics processors (GPUs)~\cite{he2008mapreducegpu} and used by some of the worlds largest organizations. The wide-spread adoption of the MapReduce programming model is largely due to the open source Apache Hadoop implementation~\cite{apachehadoop}, which together with the simplicity of the programming mode has made it a popular choice for scalable data processing.
+MapReduce is a programming model and parallel data processing system implemented by Google and later described in a highly-cited white paper~\cite{dean2008mapreduce}. While MapReduce was originally designed by Google to run an its shared-nothing cluster of thousands of commodity servers, it is now deployed on both shared-memory multicores~\cite{ranger2007multicore} and graphics processors (GPUs)~\cite{he2008mapreducegpu} and used by some of the worlds largest organizations. The wide-spread adoption of the MapReduce programming model is largely due to the open source Apache Hadoop implementation~\cite{apachehadoop}, which together with the simplicity of the programming mode has made it a popular choice for scalable data processing. 
 
 The backbone of a MapReduce program is made up of two functions, map and reduce:
 
@@ -52,11 +55,27 @@ $map$ & $(k1, v1)$ & $\rightarrow list(k2, v2)$\\
 $reduce$ & (k2, list(v2)) & $\rightarrow list(v2)$ \\
 \end{tabular}
 
-For example, these functions can be used to compute a set of geographical map tiles from a set of spatial features~\cite{dean2009lessons}. This follows a a five-step work flow that is typical of MapReduce programs. We will assume $n$ mappers and $m$ reducers take part in the evaluation of the MapReduce program. (1) The set of spatial features is randomly partitioned $n$ ways and forwarded to the $n$ mappers; (2) for each feature, the map function computes the set of intersected map tiles (rectangular coordinate region) and emits a list of corresponding $\langle TileID, Feature \rangle$ pairs; (3) In a shuffle and sort step, the $\langle TileID, Feature \rangle$ pairs are rearranged into lists such that contain all $Feature$ values that were grouped with a given $TileID$ key, and these lists are distributed evenly among the $m$ reducers; (4) Each reducer receives a set of $\langle TileID, List(Feature) \rangle$ pairs and aggregates each $Feature$ list into a finished map tile for $TileID$; (5) the set of map tiles is stored on a high-performance key-value store, ready for client requests. 
+As a natural consequence of its popularity, MapReduce has been used for spatial use cases, e.g. for spatial data analytics and spatial Extract-Transform-Load (ETL). For example, MapReduce can be used as an ETL tool to compute a set of geographical map tiles from a spatial dataset (points, lines, polygons) before loading the tiles into a scalable key-value store~\cite{dean2009lessons}. This follows a five-step work flow typical of MapReduce programs (we will assume $n$ mappers and $m$ reducers):
 
-While developers can directly write code in this style to solve a large class of spatial analytics problems (CITE SPATIAL JOIN IN MAP REDUCE), languages have been designed that accommodate developers who prefer a different programming style -- including higher-level declarative~\cite{thusoo2009hive} and procedural~\cite{olston2008pig,eldawy2014pigeon} styles. Higher-level languages, like HiveQL and Pig, are translated into lower-level programs expressed in terms of the map and reduce functions. These languages are part of database systems that are built on top of MapReduce, such as HadoopDB~\cite{abouzeid2009hadoopdb}, HadoopGIS~\cite{aji2013hadoopgis}, Pig~\cite{eldawy2014pigeon, olston2008pig} and Hive~\cite{thusoo2009hive}.
+\begin{enumerate}
+\item The set of spatial features is randomly partitioned $n$ ways and forwarded to the $n$ mappers
 
-A parallel RDBMS (e.g. an in-memory column-store) is the most efficient way to analyze large datasets~\cite{pavlo2009comparison}. For this reason several large organizations including Google are now switching back to an RDBMS approach for analytics (away from MapReduce). This switch will probably remain sensible from a pure performance point of view, in spite of recent research effort into automatically optimizing MapReduce ~\cite{jahani2011mapreduceoptimization}. Instead of competing with a parallel RDBMS for the spot as analytics engine, MapReduce will play a role along the RDMBS in an composite analytics architecture, i.e. as an \emph{extract-transform-load} (ETL) tool in front of a parallel RDBMS~\cite{stonebraker2010friendsorfoes}. The previously mentioned case of generating map tiles using MapReduce is an example of using MapReduce as an ETL tool in-front of a key-value store.
+\item For each feature, the map function computes the set of intersected map tiles (rectangular coordinate region) and emits a list of corresponding $\langle TileID, Feature \rangle$ pairs
+
+\item In a shuffle and sort step, the $\langle TileID, Feature \rangle$ pairs are rearranged into lists such that contain all $Feature$ values that were grouped with a given $TileID$ key, and these lists are distributed evenly among the $m$ reducers
+
+\item Each reducer receives a set of $\langle TileID, List(Feature) \rangle$ pairs and aggregates each $Feature$ list into a finished map tile for $TileID$
+
+\item The set of map tiles is stored on a high-performance key-value store, ready for client map requests. 
+\end{enumerate}
+
+\subsection{MapReduce Languages for OLAP}
+
+While developers can directly write basic MapReduce code to solve a large class of spatial analytics problems (CITE SPATIAL JOIN IN MAP REDUCE), languages have been designed that accommodate developers who prefer a different programming style -- including higher-level declarative~\cite{thusoo2009hive} and procedural~\cite{olston2008pig,eldawy2014pigeon} styles. Higher-level languages, like HiveQL and Pig, are translated into lower-level programs expressed in terms of the map and reduce functions. These languages are part of database systems that are built on top of MapReduce, such as HadoopDB~\cite{abouzeid2009hadoopdb}, HadoopGIS~\cite{aji2013hadoopgis}, Pig~\cite{eldawy2014pigeon, olston2008pig} and Hive~\cite{thusoo2009hive}.
+
+\subsection{MapReduce for ETL}
+
+A parallel RDBMS (e.g. an in-memory column-store) is generally the most efficient way to analyze large datasets~\cite{pavlo2009comparison}. For this reason several large organizations including Google are now switching back to an RDBMS approach for their analytics (away from MapReduce)~\cite{melnik2011dremel}. This switch will probably remain sensible from a pure performance point of view, in spite of recent research effort into automatically optimizing MapReduce ~\cite{jahani2011mapreduceoptimization,floratou2011columnmapreduce}. Instead of competing with a parallel RDBMS for the spot as analytics engine, MapReduce will most likely play a role together with a parallel RDMBS in an composite analytics architecture, i.e. as an \emph{extract-transform-load} (ETL) tool in front of a parallel RDBMS~\cite{stonebraker2010friendsorfoes}. The previously mentioned case of generating map tiles using MapReduce is an example of using MapReduce as an ETL tool in-front of a key-value store.
 
 
 While MapReduce frameworks can be used to implement the guts of a database, an recent trend is to use MapReduce as an  Several large organizations including Google have taking this route lately, and in a sense 

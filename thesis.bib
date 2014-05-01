@@ -7,7 +7,8 @@
 % Outline stays the same, map and reduce change to fit the problem
 % \cite{dean2009lessons}
 
-% Map Reduce (original paper)
+% MapReduce: simplified data processing on large clusters
+% - Not the original paper, this is a version in CASM
 @article{dean2008mapreduce,
 author = {Dean, Jeffrey and Ghemawat, Sanjay},
 journal = {Communications of the ACM},
@@ -19,10 +20,8 @@ volume = {51},
 year = {2008}
 }
 
-% Map Reduce
-% Parallel Databases
-% ETL
-% Query Processing
+% MapReduce and Parallel DBMSs: Friends or Foes?
+% - Mention the MapReduce as ETL tool idea
 @article{stonebraker2010friendsorfoes,
 address = {New York, NY, USA},
 author = {Stonebraker, Michael and Abadi, Daniel and DeWitt, David J and Madden, Sam and Paulson, Erik and Pavlo, Andrew and Rasin, Alexander},
@@ -40,10 +39,8 @@ year = {2010}
 }
 
 
-
-% Map Reduce
-% Parallel Databases
-% Comparison
+% A comparison of approaches to large-scale data analysis
+% - Compared RDBMS with MapReduce
 @inproceedings{pavlo2009comparison,
 author = {Pavlo, Andrew and Paulson, Erik and Rasin, Alexander and Abadi, Daniel J and DeWitt, David J and Madden, Samuel and Stonebraker, Michael and Csail, M I T},
 booktitle = {Proceedings of the 35th SIGMOD international conference on Management of data},
@@ -55,11 +52,7 @@ title = {{A comparison of approaches to large-scale data analysis}},
 year = {2009}
 }
 
-
-
-% MapReduce Database
-% OLAP/Warehouse
-% Hive
+% Hive: A Warehousing Solution over a Map-reduce Framework
 @article{thusoo2009hive,
  author = {Thusoo, Ashish and Sarma, Joydeep Sen and Jain, Namit and Shao, Zheng and Chakka, Prasad and Anthony, Suresh and Liu, Hao and Wyckoff, Pete and Murthy, Raghotham},
  title = {Hive: A Warehousing Solution over a Map-reduce Framework},
@@ -75,10 +68,9 @@ year = {2009}
  url = {http://dl.acm.org/citation.cfm?id=1687553.1687609},
  acmid = {1687609},
  publisher = {VLDB Endowment},
-} 
-% MapReduce Database
-% OLAP/Warehouse
-% Hive
+}
+
+% Hive - a petabyte scale data warehouse using Hadoop
 @inproceedings{thusoo2010hive,
 author = {Thusoo, Ashish and Sarma, Joydeep Sen and Jain, Namit and Shao, Zheng and Chakka, Prasad and Zhang, Ning and Antony, Suresh and Liu, Hao and Murthy, Raghotham},
 booktitle = {2010 IEEE 26th International Conference on Data Engineering (ICDE 2010)},
@@ -91,9 +83,7 @@ url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5447738},
 year = {2010}
 }
 
-
-
-
+% Filtering: A Method for Solving Graph Problems in MapReduce
 @inproceedings{lattanzi2011filtering,
 address = {New York, NY, USA},
 author = {Lattanzi, Silvio and Moseley, Benjamin and Suri, Siddharth and Vassilvitskii, Sergei},
@@ -108,7 +98,7 @@ url = {http://doi.acm.org/10.1145/1989493.1989505},
 year = {2011}
 }
 
-% Hadoop
+% Apache Hadoop
 @misc{apachehadoop,
   title = {Apache Hadoop},
   publisher = {Pearson Higher Education},
@@ -116,6 +106,7 @@ year = {2011}
   url = {http://hadoop.apache.org/}
 }
 
+% SPARQL Basic Graph Pattern Processing with Iterative MapReduce
 @inproceedings{myung2010sparqlmapreduce,
  author = {Myung, Jaeseok and Yeon, Jongheum and Lee, Sang-goo},
  title = {SPARQL Basic Graph Pattern Processing with Iterative MapReduce},
@@ -136,6 +127,7 @@ year = {2011}
 } 
 
 
+% Twister: A Runtime for Iterative MapReduce
 @inproceedings{ekanayake2010itermapreduce,
  author = {Ekanayake, Jaliya and Li, Hui and Zhang, Bingjing and Gunarathne, Thilina and Bae, Seung-Hee and Qiu, Judy and Fox, Geoffrey},
  title = {Twister: A Runtime for Iterative MapReduce},
@@ -154,10 +146,7 @@ year = {2011}
  keywords = {MapReduce, cloud technologies, iterative algorithms},
 } 
 
-
-% MapReduce Database
-% Query Processing
-% Parallel Processing
+% HadoopDB: An Architectural Hybrid of MapReduce and DBMS Technologies for Analytical Workloads
 @article{abouzeid2009hadoopdb,
 author = {Abouzeid, Azza and Bajda-Pawlikowski, Kamil and Abadi, Daniel and Silberschatz, Avi and Rasin, Alexander},
 issn = {2150-8097},
@@ -172,8 +161,7 @@ volume = {2},
 year = {2009}
 }
 
-% Map Reduce
-% Query processing (joins)
+% Processing Theta-joins Using MapReduce
 @inproceedings{okcan2011mapreducejoin,
  author = {Okcan, Alper and Riedewald, Mirek},
  title = {Processing Theta-joins Using MapReduce},
@@ -192,8 +180,7 @@ year = {2009}
  keywords = {MapReduce, skew, theta join processing},
 }
 
-% Map Reduce
-% Spatial
+% Hadoop GIS: A High Performance Spatial Data Warehousing System over Mapreduce
 @article{aji2013hadoopgis,
  author = {Aji, Ablimit and Wang, Fusheng and Vo, Hoang and Lee, Rubao and Liu, Qiaoling and Zhang, Xiaodong and Saltz, Joel},
  title = {Hadoop GIS: A High Performance Spatial Data Warehousing System over Mapreduce},
@@ -211,9 +198,8 @@ year = {2009}
  publisher = {VLDB Endowment},
 } 
 
-% Map Reduce
-% Spatial
-% OLAP
+% High Performance Spatial Query Processing for Large Scale Scientific Data
+% - By the HadoopGIS people
 @inproceedings{aji2012largespatial,
  author = {Aji, Ablimit and Wang, Fusheng},
  title = {High Performance Spatial Query Processing for Large Scale Scientific Data},
@@ -232,16 +218,37 @@ year = {2009}
  keywords = {analytical imaging, mapreduce, scientific data management, spatial query processing},
 } 
 
+% Dremel: interactive analysis of web-scale datasets
+@article{melnik2011dremel,
+address = {New York, NY, USA},
+annote = {implementation},
+author = {Melnik, Sergey and Gubarev, Andrey and Long, Jing Jing and Romer, Geoffrey and Shivakumar, Shiva and Tolton, Matt and Vassilakis, Theo},
+doi = {10.1145/1953122.1953148},
+issn = {0001-0782},
+journal = {Commun. ACM},
+month = jun,
+number = {6},
+pages = {114--123},
+publisher = {ACM},
+title = {{Dremel: interactive analysis of web-scale datasets}},
+url = {http://doi.acm.org/10.1145/1953122.1953148},
+volume = {54},
+year = {2011}
+}
 
-% Map Reduce
-% Query Optimization
+@inproceedings{floratou2011columnmapreduce,
+author = {Floratou, Avrilia and Madison, Wisconsin and Patel, Jignesh M and Shekita, Eugene J},
+booktitle = {VLDB},
+pages = {419--429},
+title = {{Column-Oriented Storage Techniques for MapReduce}},
+year = {2011}
+}
+
+% Automatic Optimization for MapReduce Programs
 @article{jahani2011mapreduceoptimization,
 author = {Jahani, Eaman and Cafarella, Michael J and R\'{e}, Christopher},
-file = {:Users/kostas/Dropbox/Phd/articles/jahani2011mapreduce.pdf:pdf},
 issn = {2150-8097},
 journal = {Proc. VLDB Endow.},
-keywords = {mapreduce,pass0,queryoptimization},
-mendeley-tags = {mapreduce,pass0,queryoptimization},
 month = mar,
 number = {6},
 pages = {385--396},
