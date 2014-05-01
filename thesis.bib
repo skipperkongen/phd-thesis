@@ -1,3 +1,390 @@
+% Typical problem solved by MapReduce
+% - Read a lot of data
+% - Map: extract something you care about from each record
+% - Shuffle and Sort
+% - Reduce: aggregate, summarize, filter, or transform
+% - Write the results
+% Outline stays the same, map and reduce change to fit the problem
+% \cite{dean2009lessons}
+
+% Map Reduce (original paper)
+@article{dean2008mapreduce,
+author = {Dean, Jeffrey and Ghemawat, Sanjay},
+journal = {Communications of the ACM},
+number = {1},
+pages = {107--113},
+publisher = {ACM},
+title = {{MapReduce: simplified data processing on large clusters}},
+volume = {51},
+year = {2008}
+}
+
+% Map Reduce
+% Parallel Databases
+% ETL
+% Query Processing
+@article{stonebraker2010friendsorfoes,
+address = {New York, NY, USA},
+author = {Stonebraker, Michael and Abadi, Daniel and DeWitt, David J and Madden, Sam and Paulson, Erik and Pavlo, Andrew and Rasin, Alexander},
+doi = {10.1145/1629175.1629197},
+issn = {0001-0782},
+journal = {Commun. ACM},
+month = jan,
+number = {1},
+pages = {64--71},
+publisher = {ACM},
+title = {{MapReduce and Parallel DBMSs: Friends or Foes?}},
+url = {http://doi.acm.org/10.1145/1629175.1629197},
+volume = {53},
+year = {2010}
+}
+
+
+
+% Map Reduce
+% Parallel Databases
+% Comparison
+@inproceedings{pavlo2009comparison,
+author = {Pavlo, Andrew and Paulson, Erik and Rasin, Alexander and Abadi, Daniel J and DeWitt, David J and Madden, Samuel and Stonebraker, Michael and Csail, M I T},
+booktitle = {Proceedings of the 35th SIGMOD international conference on Management of data},
+isbn = {9781605585512},
+keywords = {comparison,mapreduce,olap,paralleldatabases,pass0},
+organization = {ACM},
+pages = {165--178},
+title = {{A comparison of approaches to large-scale data analysis}},
+year = {2009}
+}
+
+
+
+% MapReduce Database
+% OLAP/Warehouse
+% Hive
+@article{thusoo2009hive,
+ author = {Thusoo, Ashish and Sarma, Joydeep Sen and Jain, Namit and Shao, Zheng and Chakka, Prasad and Anthony, Suresh and Liu, Hao and Wyckoff, Pete and Murthy, Raghotham},
+ title = {Hive: A Warehousing Solution over a Map-reduce Framework},
+ journal = {Proc. VLDB Endow.},
+ issue_date = {August 2009},
+ volume = {2},
+ number = {2},
+ month = aug,
+ year = {2009},
+ issn = {2150-8097},
+ pages = {1626--1629},
+ numpages = {4},
+ url = {http://dl.acm.org/citation.cfm?id=1687553.1687609},
+ acmid = {1687609},
+ publisher = {VLDB Endowment},
+} 
+% MapReduce Database
+% OLAP/Warehouse
+% Hive
+@inproceedings{thusoo2010hive,
+author = {Thusoo, Ashish and Sarma, Joydeep Sen and Jain, Namit and Shao, Zheng and Chakka, Prasad and Zhang, Ning and Antony, Suresh and Liu, Hao and Murthy, Raghotham},
+booktitle = {2010 IEEE 26th International Conference on Data Engineering (ICDE 2010)},
+doi = {10.1109/ICDE.2010.5447738},
+isbn = {978-1-4244-5445-7},
+pages = {996--1005},
+publisher = {Ieee},
+title = {{Hive - a petabyte scale data warehouse using Hadoop}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5447738},
+year = {2010}
+}
+
+
+
+
+@inproceedings{lattanzi2011filtering,
+address = {New York, NY, USA},
+author = {Lattanzi, Silvio and Moseley, Benjamin and Suri, Siddharth and Vassilvitskii, Sergei},
+booktitle = {Proceedings of the Twenty-third Annual ACM Symposium on Parallelism in Algorithms and Architectures},
+doi = {10.1145/1989493.1989505},
+isbn = {978-1-4503-0743-7},
+pages = {85--94},
+publisher = {ACM},
+series = {SPAA '11},
+title = {{Filtering: A Method for Solving Graph Problems in MapReduce}},
+url = {http://doi.acm.org/10.1145/1989493.1989505},
+year = {2011}
+}
+
+% Hadoop
+@misc{apachehadoop,
+  title = {Apache Hadoop},
+  publisher = {Pearson Higher Education},
+  author = {Apache Foundation},
+  url = {http://hadoop.apache.org/}
+}
+
+@inproceedings{myung2010sparqlmapreduce,
+ author = {Myung, Jaeseok and Yeon, Jongheum and Lee, Sang-goo},
+ title = {SPARQL Basic Graph Pattern Processing with Iterative MapReduce},
+ booktitle = {Proceedings of the 2010 Workshop on Massive Data Analytics on the Cloud},
+ series = {MDAC '10},
+ year = {2010},
+ isbn = {978-1-60558-991-6},
+ location = {Raleigh, North Carolina},
+ pages = {6:1--6:6},
+ articleno = {6},
+ numpages = {6},
+ url = {http://doi.acm.org/10.1145/1779599.1779605},
+ doi = {10.1145/1779599.1779605},
+ acmid = {1779605},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {MapReduce, RDF, SPARQL, basic graph pattern, cloud computing, data warehouse, query processing},
+} 
+
+
+@inproceedings{ekanayake2010itermapreduce,
+ author = {Ekanayake, Jaliya and Li, Hui and Zhang, Bingjing and Gunarathne, Thilina and Bae, Seung-Hee and Qiu, Judy and Fox, Geoffrey},
+ title = {Twister: A Runtime for Iterative MapReduce},
+ booktitle = {Proceedings of the 19th ACM International Symposium on High Performance Distributed Computing},
+ series = {HPDC '10},
+ year = {2010},
+ isbn = {978-1-60558-942-8},
+ location = {Chicago, Illinois},
+ pages = {810--818},
+ numpages = {9},
+ url = {http://doi.acm.org/10.1145/1851476.1851593},
+ doi = {10.1145/1851476.1851593},
+ acmid = {1851593},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {MapReduce, cloud technologies, iterative algorithms},
+} 
+
+
+% MapReduce Database
+% Query Processing
+% Parallel Processing
+@article{abouzeid2009hadoopdb,
+author = {Abouzeid, Azza and Bajda-Pawlikowski, Kamil and Abadi, Daniel and Silberschatz, Avi and Rasin, Alexander},
+issn = {2150-8097},
+journal = {Proc. VLDB Endow.},
+month = aug,
+number = {1},
+pages = {922--933},
+publisher = {VLDB Endowment},
+title = {{HadoopDB: An Architectural Hybrid of MapReduce and DBMS Technologies for Analytical Workloads}},
+url = {http://dl.acm.org/citation.cfm?id=1687627.1687731},
+volume = {2},
+year = {2009}
+}
+
+% Map Reduce
+% Query processing (joins)
+@inproceedings{okcan2011mapreducejoin,
+ author = {Okcan, Alper and Riedewald, Mirek},
+ title = {Processing Theta-joins Using MapReduce},
+ booktitle = {Proceedings of the 2011 ACM SIGMOD International Conference on Management of Data},
+ series = {SIGMOD '11},
+ year = {2011},
+ isbn = {978-1-4503-0661-4},
+ location = {Athens, Greece},
+ pages = {949--960},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/1989323.1989423},
+ doi = {10.1145/1989323.1989423},
+ acmid = {1989423},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {MapReduce, skew, theta join processing},
+}
+
+% Map Reduce
+% Spatial
+@article{aji2013hadoopgis,
+ author = {Aji, Ablimit and Wang, Fusheng and Vo, Hoang and Lee, Rubao and Liu, Qiaoling and Zhang, Xiaodong and Saltz, Joel},
+ title = {Hadoop GIS: A High Performance Spatial Data Warehousing System over Mapreduce},
+ journal = {Proc. VLDB Endow.},
+ issue_date = {August 2013},
+ volume = {6},
+ number = {11},
+ month = aug,
+ year = {2013},
+ issn = {2150-8097},
+ pages = {1009--1020},
+ numpages = {12},
+ url = {http://dl.acm.org/citation.cfm?id=2536222.2536227},
+ acmid = {2536227},
+ publisher = {VLDB Endowment},
+} 
+
+% Map Reduce
+% Spatial
+% OLAP
+@inproceedings{aji2012largespatial,
+ author = {Aji, Ablimit and Wang, Fusheng},
+ title = {High Performance Spatial Query Processing for Large Scale Scientific Data},
+ booktitle = {Proceedings of the on SIGMOD/PODS 2012 PhD Symposium},
+ series = {PhD '12},
+ year = {2012},
+ isbn = {978-1-4503-1326-1},
+ location = {Scottsdale, Arizona, USA},
+ pages = {9--14},
+ numpages = {6},
+ url = {http://doi.acm.org/10.1145/2213598.2213603},
+ doi = {10.1145/2213598.2213603},
+ acmid = {2213603},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {analytical imaging, mapreduce, scientific data management, spatial query processing},
+} 
+
+
+% Map Reduce
+% Query Optimization
+@article{jahani2011mapreduceoptimization,
+author = {Jahani, Eaman and Cafarella, Michael J and R\'{e}, Christopher},
+file = {:Users/kostas/Dropbox/Phd/articles/jahani2011mapreduce.pdf:pdf},
+issn = {2150-8097},
+journal = {Proc. VLDB Endow.},
+keywords = {mapreduce,pass0,queryoptimization},
+mendeley-tags = {mapreduce,pass0,queryoptimization},
+month = mar,
+number = {6},
+pages = {385--396},
+publisher = {VLDB Endowment},
+title = {{Automatic Optimization for MapReduce Programs}},
+url = {http://dl.acm.org/citation.cfm?id=1978665.1978670},
+volume = {4},
+year = {2011}
+}
+
+
+% Map Reduce
+% Parallel Processing
+% Query processing (SQL )
+% Spatial join
+@inproceedings{zhang2009mapreduce, 
+author={Shubin Zhang and Jizhong Han and Zhiyong Liu and Kai Wang and Zhiyong Xu}, 
+booktitle={Cluster Computing and Workshops, 2009. CLUSTER '09. IEEE International Conference on}, 
+title={SJMR: Parallelizing spatial join with MapReduce on clusters}, 
+year={2009}, 
+month={Aug}, 
+pages={1-8}, 
+keywords={parallel programming;pattern clustering;MapReduce program;SJMR;duplication avoidance technology;heterogeneous related data sets processing;parallel programming model;spatial join parallelization;strip-based plane sweeping algorithm;tile-based spatial partitioning function;Clustering algorithms;Computer applications;Computer science;Concurrent computing;Logic;Mathematics;Parallel processing;Parallel programming;Partitioning algorithms;Rivers}, 
+doi={10.1109/CLUSTR.2009.5289178}, 
+ISSN={1552-5244},}
+
+% Map Reduce
+% Parallel Processing
+% Spatial data
+% Vector data (bulk-construction of R-Trees)
+% Raster data (aerial image quality computation)
+@incollection{cary2009experiences,
+year={2009},
+isbn={978-3-642-02278-4},
+booktitle={Scientific and Statistical Database Management},
+volume={5566},
+series={Lecture Notes in Computer Science},
+editor={Winslett, Marianne},
+doi={10.1007/978-3-642-02279-1_24},
+title={Experiences on Processing Spatial Data with MapReduce},
+url={http://dx.doi.org/10.1007/978-3-642-02279-1_24},
+publisher={Springer Berlin Heidelberg},
+author={Cary, Ariel and Sun, Zhengguo and Hristidis, Vagelis and Rishe, Naphtali},
+pages={302-319}
+}
+
+% Map Reduce
+% Parallel Processing
+% Query Processing
+% Spatial data
+@inproceedings{wang2010mapreduce, 
+author={Kai Wang and Jizhong Han and Bibo Tu and Jiao Dai and Wei Zhou and Xuan Song}, 
+booktitle={Parallel and Distributed Systems (ICPADS), 2010 IEEE 16th International Conference on}, 
+title={Accelerating Spatial Data Processing with MapReduce}, 
+year={2010}, 
+month={Dec}, 
+pages={229-236}, 
+keywords={file organisation;parallel processing;query processing;resource allocation;very large databases;visual databases;MapReduce;all nearest neighbor query;astronomical cross-certification;data partition;distributed parallel processing;file structure;key-value based programming model;large data set processing;spatial computation;spatial data processing;spatial object;splitting method;strip-based two-direction plane sweeping algorithm;workload balancing;All Nearest Neighbor;MapReduce;Spatial Applications;cross-certification}, 
+doi={10.1109/ICPADS.2010.76}, 
+ISSN={1521-9097},}
+
+% Map Reduce
+% Preprocessing
+% Vector data
+% Tile processing (page 38)
+% description:
+% - Input: Geographic feature list
+% - Map: Emit each to all overlapping latitude/longitude rectangles (tiles)
+% - Shuffle: sort by key (key = Rect. Id)
+% - Reduce: Render tiles using data for all enclosed features
+% - Output: Rendered tiles (pyramid)
+@inproceedings{dean2009lessons,
+author = {Dean, Jeff},
+booktitle = {Keynote presentation from LADIS},
+title = {{Designs, lessons and advice from building large distributed systems}},
+year = {2009}
+}
+
+% Map Reduce
+% Query Language
+@inproceedings{eldawy2014pigeon,
+author = {Eldawy, Ahmed and Mokbel, Mohamed F},
+title = {{Pigeon: A Spatial MapReduce Language}}
+}
+
+% Map Reduce
+% Pig
+@inproceedings{olston2008pig,
+author = {Olston, Christopher and Reed, Benjamin and Srivastava, U and Kumar, Ravi},
+booktitle = {Proceedings of the 2008 ACM SIGMOD international conference on Management of data},
+isbn = {9781605581026},
+pages = {1099--1110},
+title = {{Pig latin: a not-so-foreign language for data processing}},
+url = {http://dl.acm.org/citation.cfm?id=1376726},
+year = {2008}
+}
+
+@inproceedings{he2008mapreducegpu,
+address = {New York, NY, USA},
+author = {He, Bingsheng and Fang, Wenbin and Luo, Qiong and Govindaraju, Naga K and Wang, Tuyong},
+booktitle = {Proceedings of the 17th International Conference on Parallel Architectures and Compilation Techniques},
+doi = {10.1145/1454115.1454152},
+isbn = {978-1-60558-282-5},
+pages = {260--269},
+publisher = {ACM},
+series = {PACT '08},
+title = {{Mars: A MapReduce Framework on Graphics Processors}},
+url = {http://doi.acm.org/10.1145/1454115.1454152},
+year = {2008}
+}
+
+@inproceedings{ranger2007multicore, 
+author={Ranger, C. and Raghuraman, R. and Penmetsa, A. and Bradski, G. and Kozyrakis, C.}, 
+booktitle={High Performance Computer Architecture, 2007. HPCA 2007. IEEE 13th International Symposium on}, 
+title={Evaluating MapReduce for Multi-core and Multiprocessor Systems}, 
+year={2007}, 
+month={Feb}, 
+pages={13-24}, 
+keywords={fault tolerance;multi-threading;multiprocessing systems;performance evaluation;scheduling;MapReduce;Phoenix;data partitioning;distributed system;dynamic task scheduling;error recovery;fault tolerance;functional-style code;multicore system;multiprocessor system;programming API and;shared-memory systems;thread creation;Concurrent computing;Dynamic scheduling;Fault tolerance;Laboratories;Multiprocessing systems;Parallel programming;Processor scheduling;Programming profession;Runtime;Yarn}, 
+doi={10.1109/HPCA.2007.346181},}
+
+% Cloud Computing
+@article{armbrust2010view,
+author = {Armbrust, Michael and Fox, Armando and Griffith, Rean and Joseph, Anthony D and Katz, Randy and Konwinski, Andy and Lee, Gunho and Patterson, David and Rabkin, Ariel and Stoica, Ion and Others and Armbrust, By},
+journal = {Communications of the ACM},
+number = {4},
+pages = {50--58},
+publisher = {ACM},
+title = {{A view of cloud computing}},
+volume = {53},
+year = {2010}
+}
+
+
+% Query Languages, especially spatial ones
+% 
+% - Pig/Pigeon, SQL, HiveQL, CQL, CVL, 
+% - CVL
+% - CVL 2
+% - Kristian Bruun
+% - 
+
+
 @article{stolte2002polaris,
 author = {Stolte, Chris and Tang, Diane and Hanrahan, Pat},
 journal = {Visualization and Computer Graphics, IEEE Transactions on},
@@ -216,7 +603,7 @@ year = {1995}
   publisher={Elsevier}
 }
 
-@book{harley1987cartography
+@book{harley1987cartography,
   title={Vol. 1: Cartography in prehistoric, ancient, and medieval Europe and the Mediterranean},
   author={Harley, JB and Woodward, D},
   year={1987},
@@ -244,4 +631,15 @@ year = {1995}
   year={1994},
   school={New York University}
 }
+
+@article{lomet2012warstories,
+annote = {motivation},
+author = {Lomet, David},
+journal = {Database Engineering Bulletin},
+number = {2},
+title = {{Special Issue on Big DataWar Stories}},
+volume = {35},
+year = {2012}
+}
+
 

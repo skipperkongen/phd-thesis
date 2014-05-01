@@ -6,6 +6,7 @@
 \usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
 								% TeX will automatically convert eps --> pdf in pdflatex		
 \usepackage{amssymb}
+\usepackage{amsmath}
 
 % Copied from Marcos Style:
 \setlength{\parindent}{0px}
@@ -20,6 +21,83 @@
 
 \tableofcontents
 
+\chapter{Thesis Topics}
+
+\begin{description}
+\item [System Types:] Databases (OLAP, OLTP), ETL, GIS, Data Processing (MapReduce), Caches, Web Servers
+\item [Data Models:] Relational, Graph, XML Document, Flat records 
+\item [Programming models:] Declarative, Imperiative, Object-Oriented, Functional (MapReduce)
+\end{description}
+
+\chapter{Literature Surveys}
+
+\section{Spatial MapReduce}
+% In this section I'll survey how Map Reduce is used for spatial data.
+
+
+% Typical problem solved by MapReduce
+% - Read a lot of data
+% - Map: extract something you care about from each record
+% - Shuffle and Sort
+% - Reduce: aggregate, summarize, filter, or transform
+% - Write the results
+% Outline stays the same, map and reduce change to fit the problem
+% \cite{dean2009lessons}
+MapReduce is a programming model and parallel data processing system implemented by Google and later described in a highly-cited white paper~\cite{dean2008mapreduce}. While MapReduce was originally designed by Google to run an its shared-nothing cluster of thousands of commodity servers, it is now deployed on both shared-memory multicores~\cite{ranger2007multicore} and graphics processors (GPUs)~\cite{he2008mapreducegpu} and used by some of the worlds largest organizations. The wide-spread adoption of the MapReduce programming model is largely due to the open source Apache Hadoop implementation~\cite{apachehadoop}, which together with the simplicity of the programming mode has made it a popular choice for scalable data processing.
+
+The backbone of a MapReduce program is made up of two functions, map and reduce:
+
+\begin{tabular}{l l l}
+$map$ & $(k1, v1)$ & $\rightarrow list(k2, v2)$\\ 
+$reduce$ & (k2, list(v2)) & $\rightarrow list(v2)$ \\
+\end{tabular}
+
+For example, these functions can be used to compute a set of geographical map tiles from a set of spatial features~\cite{dean2009lessons}. This follows a a five-step work flow that is typical of MapReduce programs. We will assume $n$ mappers and $m$ reducers take part in the evaluation of the MapReduce program. (1) The set of spatial features is randomly partitioned $n$ ways and forwarded to the $n$ mappers; (2) for each feature, the map function computes the set of intersected map tiles (rectangular coordinate region) and emits a list of corresponding $\langle TileID, Feature \rangle$ pairs; (3) In a shuffle and sort step, the $\langle TileID, Feature \rangle$ pairs are rearranged into lists such that contain all $Feature$ values that were grouped with a given $TileID$ key, and these lists are distributed evenly among the $m$ reducers; (4) Each reducer receives a set of $\langle TileID, List(Feature) \rangle$ pairs and aggregates each $Feature$ list into a finished map tile for $TileID$; (5) the set of map tiles is stored on a high-performance key-value store, ready for client requests. 
+
+While developers can directly write code in this style to solve a large class of spatial analytics problems (CITE SPATIAL JOIN IN MAP REDUCE), languages have been designed that accommodate developers who prefer a different programming style -- including higher-level declarative~\cite{thusoo2009hive} and procedural~\cite{olston2008pig,eldawy2014pigeon} styles. Higher-level languages, like HiveQL and Pig, are translated into lower-level programs expressed in terms of the map and reduce functions. These languages are part of database systems that are built on top of MapReduce, such as HadoopDB~\cite{abouzeid2009hadoopdb}, HadoopGIS~\cite{aji2013hadoopgis}, Pig~\cite{eldawy2014pigeon, olston2008pig} and Hive~\cite{thusoo2009hive}.
+
+A parallel RDBMS (e.g. an in-memory column-store) is the most efficient way to analyze large datasets~\cite{pavlo2009comparison}. For this reason several large organizations including Google are now switching back to an RDBMS approach for analytics (away from MapReduce). This switch will probably remain sensible from a pure performance point of view, in spite of recent research effort into automatically optimizing MapReduce ~\cite{jahani2011mapreduceoptimization}. Instead of competing with a parallel RDBMS for the spot as analytics engine, MapReduce will play a role along the RDMBS in an composite analytics architecture, i.e. as an \emph{extract-transform-load} (ETL) tool in front of a parallel RDBMS~\cite{stonebraker2010friendsorfoes}. The previously mentioned case of generating map tiles using MapReduce is an example of using MapReduce as an ETL tool in-front of a key-value store.
+
+
+While MapReduce frameworks can be used to implement the guts of a database, an recent trend is to use MapReduce as an  Several large organizations including Google have taking this route lately, and in a sense 
+
+
+In a spatial setting, geographical map tiles can be created using MapReduce by following a five-step work flow that is typical of such MapReduce programs. 
+
+n a spatial setting For example, Using these functions, an inverted index can be created as follows. After reading in a large quantity of web documents, each document must be mapped to a list of $\langle document name, word \rangle$ pairs (where words occur in the documents). 
+MapReduce programs typically follow a five-step work flow to solve problems (often graph problems require \emph{multiple rounds}~\cite{ekanayake2010itermapreduce,myung2010sparqlmapreduce}):
+
+\begin{enumerate}
+\item Read a large quantity of records
+\item Map: extract something of interest from each record, i.e. a list of $\langle k2, v2 \rangle$ pairs. For example $k2$ = document name and $v2$ = a word occurring in the document
+\item Shuffle and Sort: gather $v2$ values having the same $k2$ key and send each list to a single reducer 
+\item Reduce: aggregate, summarize, filter, or transform all values $v2$ having the same key $k2$.
+\end{enumerate}
+
+
+
+
+Two functions, map and reduce, make up the backbone of the programming model in MapReduce:
+
+\begin{tabular}{l l l}
+$map$ & $(k1, v1)$ & $\rightarrow list(k2, v2)$\\ 
+$reduce$ & (k2, list(v2)) & $\rightarrow list(v2)$ \\
+\end{tabular}
+
+
+While, a developer may use these functions to solve a problem, higher-level languages have been designed that accommodate developers who prefer a different programming style -- including declarative~\cite{thusoo2009hive} and procedural~\cite{olston2008pig,eldawy2014pigeon} languages. Higher-level languages such as HiveQL and Pig are translated into a lower-level program expressed in terms of map and reduce functions.
+
+The primary use case of MapReduce and its derivatives is to process large quantities of semi-structured data, primarily for \emph{data analysis} and for \emph{extract-transform-load} (ETL)~\cite{stonebraker2010friendsorfoes}. In the spatial domain, MapReduce is typically used to perform data analysis~\cite{aji2012largespatial} and to perform . For example, MapReduce can be used to evaluate spatial joins~\cite{zhang2009mapreduce} and to compute geographical map tiles in a scalable manner~\cite{dean2009lessons}.
+
+
+
+ (e.g. spatial~{}, graphs and text{}) with several join algorithms implemented and  tasks over large quantities of semi-structured data. The typical problems solved by MapReduce systems involves five step: (1) read a large set of records, (2) \emph{Map}: extract something of interest from each record, (3) Shuffle and Sort (on key)
+
+
+\chapter{Cloud computing}
+
+
+
 \chapter{Introduction}
 
 Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
@@ -27,13 +105,13 @@ Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
 
 \section{Motivation}
 % Why are they important? Use cases.
-Geographical maps are valuable because they facilitate spatial insights and enable spatial decision making. For example, a journalist writing a story about a war may choose to enrich the article with a map visualization, which allows readers to gain spatial insights about the location of troops, resources and refugees. As another examples, a tourist wandering the streets of an unfamiliar city may choose to use a location based service (LBS) to locate a near-by restaurant, which is an example of spatial decision making. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame. This is typically the case. Zoomable maps allows users to explore vast amounts of data at different focal points and levels of abstraction. For example, points can be selected and aggregated at low scales, and fully shown only at high scales, which enables switching between overview mode and detailed exploration.
+Zoomable geographical maps are important to people because they facilitate spatial insights and support spatial decision making. For example, journalists can use maps to deliver spatial insights to their readers when reporting about a war, where the location of troops, resources and refugees is important. Tourist exploring an unfamiliar city can use location based services (LBS) running on their mobile devices to locate a near-by restaurants and shops when they suddenly feel hungry or in the mood for shopping. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame, because otherwise useful information might be rendered useless. Zoomable maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction. For example, points can be selected and aggregated at low scales, and fully shown only at high scales, which enables switching between overview mode and detailed exploration mode.
 
 % What are maps and how are they used?
-Web-based multiscale maps have recently attracted millions (or even billions) of users who are attracted to web maps by a fruitful combination of several trends. In recent years, there has been an explosive growth in the amount and availability of useful spatial data (e.g. commercial, environmental, political and social data), driven in part by the availability of effective geocoding services. Furthermore, web access is now close to being ubiquitous in many parts of the world. Finally, as world-wide sales of mobile devices (e.g. smart phones, tablets and laptops) are soaring, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere, anytime and for many purposes.
+Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
 
 % challenges: caused by high traffic and constant surfacing of new and often big datasets.
-This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must frequently and rapidly address the problems of multiscale \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style) as new zoomable maps are needed and new datasets are integrated~\cite{stolte2003multiscale}. Third, system engineers must cost-effectively \emph{manage query workloads} as millions of online users engage a map application.
+This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must address the dual problems of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style)~\cite{stolte2003multiscale}, at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must manage \emph{query workloads} as millions of online users concurrently engage a spatial data platform.
 
 
 
