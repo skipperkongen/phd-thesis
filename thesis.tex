@@ -21,6 +21,133 @@
 
 \tableofcontents
 
+\chapter{Introduction}
+
+Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
+
+
+\section{Motivation}
+% Why are they important? Use cases.
+Zoomable geographical maps are important to people because they facilitate spatial insights and support spatial decision making. For example, journalists can use maps to deliver spatial insights to their readers when reporting about a war, where the location of troops, resources and refugees is important. Tourist exploring an unfamiliar city can use location based services (LBS) running on their mobile devices to locate a near-by restaurants and shops when they suddenly feel hungry or in the mood for shopping. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame, because otherwise useful information might be rendered useless. Zoomable maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction. For example, points can be selected and aggregated at low scales, and fully shown only at high scales, which enables switching between overview mode and detailed exploration mode.
+
+% What are maps and how are they used?
+Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
+
+% What are the challenges: caused by high traffic and constant surfacing of new and often big datasets.
+This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must address the dual problems of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style)~\cite{stolte2003multiscale}, at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must manage \emph{query workloads} as millions of online users concurrently engage a spatial data platform.
+
+\emph{Idea}: motivate preprocessing and vector tiles with data from monitoring on servage that shows that ``dumb'' files have better performance and availability.
+
+\section{Pipelines for Geographical Maps}
+
+\subsection{Types of Geographical Maps}
+
+\subsection{Types of Pipelines for Maps}
+% review various pipelines for maps. This motivates 
+
+
+\section{Design Objectives and Principles for Geographical Maps}
+In a nutshell, maps must communicate important spatial information in a useful way to their intended audience~\cite{robinson1982early}. While this axiom is certainly true of all maps, it is not concrete enough to effectively guide the map design process. Ideally, it needs to be broken down into a list of requirements that can be checked using quantitative measures. In the following sections, we will review requirements for maps that have been stated.
+
+\subsection{iOS6 Apple Maps Requirements}
+Six design objectives have been used to evaluate the iOS6 Apple Maps API~\cite{nutanong2012multiresolution}:
+\begin{enumerate}
+\item \emph{Minimize overlap}. In later sections show how this requirement is implemented as proximity constraint
+\item \emph{Respect relative importance of entries}. Implemented by weighting.
+\item \emph{Maximize spatial fullness}. Implemented by SMCP.
+\item \emph{Provide panning/zooming consistency}. Implemented by recursive SQL, ladder approach.
+\item \emph{Enable efficient sampling}. Implemented by preprocessing approach.
+\item \emph{Support filtering conditions}. Problem here, also exhibited by fusiontables.
+\end{enumerate}
+
+\subsection{OpenScienceMaps Requirements}
+Check requirementes from OpenScienceMap~\cite{schmid2013opensciencemap}. My notes: Good idea to let rank have impact on proximity constraint: Lower ranked objects require more separation, which implies that conflicts are directed. Question: can the SELECT-PLACES algorithm be implemented in terms of my fundamental constraints and objectives? If not, make sure I can. The places selected by CVL are "too" globally optimal. The important criteria is including locally relevant places, not having a globally optimal result. A five star restaurant should never loose to a four star restaurant!
+
+\subsection{GST Requirements}
+Place name implies that we must support star approach as well as ladder approach (se email med Flemming).
+
+
+\subsection{Constant Information Density}
+In 1961, the cartographer Friedrich T\"{o}pfer proposed the \emph{Principle of Selection}, which states that the number of objects per display unit should be constant -- regardless of scale~\cite{topfer1966principles}. The soundness of the principle has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
+
+In 1998, Woodruff et al. revived the principle for multi-scale database visualizations as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. While these principles differ in name, the core meaning is the same, namely that information density should remain constant over change in scale. A small nuance is in the density metrics that are used, i.e. how information density is quantified.
+
+It is not difficult to understand why the Principle of Constant Information Density must be true. Computer screens and map charts have a fixed area on which to rendering information objects. There is a physical bound on how much information can be represented per unit display area (e.g. a few thousand pixels per $cm^2$ on a computer screen). Also, the human eye cannot see things that are too small or distinguish things that are too close together.
+
+\subsubsection{Metrics}
+
+\subsection{Requirements for iOS 6 Maps}
+Apple iPhone 6 maps requirements listed in SELECT-DISTINCT paper, and in duking it out paper. Constant Information density
+
+
+
+
+\section{Zoomable Geographical Maps on the Web}
+\subsection{Definitions}
+\subsection{Key Challenges}
+
+\section{Overview of State-of-the-Art in Geographical Maps on the Web}
+\subsection{Vector Tiles and Client-side Rendering}
+
+
+\section{Research Gaps}
+\subsection{Declarative Design}
+\subsection{Workload Prediction}
+
+\section{Contributions of the Dissertation}
+
+\subsection{CVL1}
+Brief summary and reference to Section.
+\subsection{CVL2}
+Brief summary and reference to Section.
+\subsection{TileHeat}
+Brief summary and reference to Section.
+
+
+\part{Automatic Multiscale Data Abstraction}
+
+\chapter{Survey of Automatic Multiscale Data Abstraction}
+
+\section{Online processing}
+
+\section{Preprocessing}
+
+\chapter{CVL1}
+Closing the gap, part a
+
+\chapter{CVL2} 
+Closing the gap, part b
+
+\part{Serving Web Maps}
+
+\chapter{Survey of Map Serving}
+
+\section{Getting to Keyed Data for Maps}
+
+\section{Caching}
+
+\section{Prediction}
+
+\section{Data Partitioning}
+
+\section{Replication}
+
+\section{Consistency}
+
+\section{Key-value Stores}
+
+\section{Classic Web Serving Infrastructures}
+
+\chapter{Case Study: Danish Geodata Agency}
+
+\section{Gap between the State of the Art, and the Agency}
+
+\chapter{TileHeat}
+TileHeat (closing the gap, step 1), deploying a caching infrastructure
+
+
+
+
 \chapter{Thesis Topics}
 
 \begin{description}
@@ -49,10 +176,10 @@ Data can be authored automatically (e.g. captured by sensors) or manually (perso
 Maps can be automatically created using algorithms or maps can be manually designed.
 
 % Two types of projections
-There are two types of projections: topographical (e.g. mountain map) and topological (e.g. subway map).
+There are two types of projections: physical (e.g. mountain map) and logical (e.g. subway map).
 
 % Two types of data types
-Two types of data types: raster and vector. Two subtypes of raster: orthophoto and grid data. Three subtypes of vector: points, lines and polygons.
+Two types of data types: raster and vector. Two subtypes of raster: orthophoto and grid data. Four subtypes of vector data: points, lines, polygons and polyhedra.
 
 % Two types of end-maps (the stuff that map users look at)
 Image-based maps and vector-based maps. Both types can be either single or multi-scale maps.
@@ -149,91 +276,6 @@ The primary use case of MapReduce and its derivatives is to process large quanti
 
 
 
-\chapter{Introduction}
-
-Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
-
-
-\section{Motivation}
-% Why are they important? Use cases.
-Zoomable geographical maps are important to people because they facilitate spatial insights and support spatial decision making. For example, journalists can use maps to deliver spatial insights to their readers when reporting about a war, where the location of troops, resources and refugees is important. Tourist exploring an unfamiliar city can use location based services (LBS) running on their mobile devices to locate a near-by restaurants and shops when they suddenly feel hungry or in the mood for shopping. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame, because otherwise useful information might be rendered useless. Zoomable maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction. For example, points can be selected and aggregated at low scales, and fully shown only at high scales, which enables switching between overview mode and detailed exploration mode.
-
-% What are maps and how are they used?
-Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
-
-% challenges: caused by high traffic and constant surfacing of new and often big datasets.
-This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must address the dual problems of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style)~\cite{stolte2003multiscale}, at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must manage \emph{query workloads} as millions of online users concurrently engage a spatial data platform.
-
-
-
-
-\section{Principles and Requirements for Geographical Maps}
-\subsection{Basic Principles}
-\subsection{Requirements as Stated by the Industry}
-Apple iPhone 6 maps requirements listed in SELECT-DISTINCT paper, and in duking it out paper. Constant Information density
-
-\section{Zoomable Geographical Maps on the Web}
-\subsection{Definitions}
-\subsection{Key Challenges}
-
-\section{Overview of State-of-the-Art in Geographical Maps on the Web}
-\subsection{Vector Tiles and Client-side Rendering}
-
-
-\section{Research Gaps}
-\subsection{Declarative Design}
-\subsection{Workload Prediction}
-
-\section{Contributions of the Dissertation}
-
-\subsection{CVL1}
-Brief summary and reference to Section.
-\subsection{CVL2}
-Brief summary and reference to Section.
-\subsection{TileHeat}
-Brief summary and reference to Section.
-
-
-\part{Automatic Multiscale Data Abstraction}
-
-\chapter{Survey of Automatic Multiscale Data Abstraction}
-
-\section{Online processing}
-
-\section{Preprocessing}
-
-\chapter{CVL1}
-Closing the gap, part a
-
-\chapter{CVL2} 
-Closing the gap, part b
-
-\part{Serving Web Maps}
-
-\chapter{Survey of Map Serving}
-
-\section{Getting to Keyed Data for Maps}
-
-\section{Caching}
-
-\section{Prediction}
-
-\section{Data Partitioning}
-
-\section{Replication}
-
-\section{Consistency}
-
-\section{Key-value Stores}
-
-\section{Classic Web Serving Infrastructures}
-
-\chapter{Case Study: Danish Geodata Agency}
-
-\section{Gap between the State of the Art, and the Agency}
-
-\chapter{TileHeat}
-TileHeat (closing the gap, step 1), deploying a caching infrastructure
 
 
 \bibliographystyle{plain}
