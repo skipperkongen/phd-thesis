@@ -29,12 +29,44 @@
 \item [Programming models:] Declarative, Imperiative, Object-Oriented, Functional (MapReduce)
 \end{description}
 
+\chapter{Overview of Geographical Maps}
+
+These are the orthogonal dimensions of geographical map design and use.
+
+% Two roles in maps
+Two roles in geographical maps: map designer and map user
+
+% Two types of data sources and deployments
+Two types of data sources: stored (e.g. database, files) and streaming (e.g. sensors, dynamic databases). Both of these data source types can be local or remote.
+
+% Two types of "liveliness"
+Data can be static or dynamic
+
+% Two extreme types of data authoring
+Data can be authored automatically (e.g. captured by sensors) or manually (person digitizing a street).
+
+% Two extreme types of map authoring
+Maps can be automatically created using algorithms or maps can be manually designed.
+
+% Two types of projections
+There are two types of projections: topographical (e.g. mountain map) and topological (e.g. subway map).
+
+% Two types of data types
+Two types of data types: raster and vector. Two subtypes of raster: orthophoto and grid data. Three subtypes of vector: points, lines and polygons.
+
+% Two types of end-maps (the stuff that map users look at)
+Image-based maps and vector-based maps. Both types can be either single or multi-scale maps.
+
+% Two types of map materializations
+Maps can either be materialized off-line or online.
+
 \chapter{Literature Surveys}
 
+Maps There are various paths to create maps.
 Follow a (1) design map; (2) create map ; (3) serve map approach, especially with regard to survey topics covered. Each technology will be ranked in these three categories using a set of metrics: (a) monetary cost; (b) scalability; (c) availability; (4) ease of use.
 
 
-\section{Spatial MapReduce}
+\section{MapReduce for Maps}
 % In this section I'll survey how Map Reduce is used for spatial data.
 
 
@@ -69,11 +101,11 @@ As a natural consequence of its popularity, MapReduce has been used for spatial 
 \item The set of map tiles is stored on a high-performance key-value store, ready for client map requests. 
 \end{enumerate}
 
-\subsection{MapReduce Languages for OLAP}
+\subsection{MapReduce Languages}
 
 While developers can directly write basic MapReduce code to solve a large class of spatial analytics problems (CITE SPATIAL JOIN IN MAP REDUCE), languages have been designed that accommodate developers who prefer a different programming style -- including higher-level declarative~\cite{thusoo2009hive} and procedural~\cite{olston2008pig,eldawy2014pigeon} styles. Higher-level languages, like HiveQL and Pig, are translated into lower-level programs expressed in terms of the map and reduce functions. These languages are part of database systems that are built on top of MapReduce, such as HadoopDB~\cite{abouzeid2009hadoopdb}, HadoopGIS~\cite{aji2013hadoopgis}, Pig~\cite{eldawy2014pigeon, olston2008pig} and Hive~\cite{thusoo2009hive}.
 
-\subsection{MapReduce for ETL}
+\subsection{MapReduce for Materializing Maps}
 
 A parallel RDBMS (e.g. an in-memory column-store) is generally the most efficient way to analyze large datasets~\cite{pavlo2009comparison}. For this reason several large organizations including Google are now switching back to an RDBMS approach for their analytics (away from MapReduce)~\cite{melnik2011dremel}. This switch will probably remain sensible from a pure performance point of view, in spite of recent research effort into automatically optimizing MapReduce ~\cite{jahani2011mapreduceoptimization,floratou2011columnmapreduce}. Instead of competing with a parallel RDBMS for the spot as analytics engine, MapReduce will most likely play a role together with a parallel RDMBS in an composite analytics architecture, i.e. as an \emph{extract-transform-load} (ETL) tool in front of a parallel RDBMS~\cite{stonebraker2010friendsorfoes}. The previously mentioned case of generating map tiles using MapReduce is an example of using MapReduce as an ETL tool in-front of a key-value store.
 
