@@ -12,7 +12,7 @@
 \setlength{\parindent}{0px}
 \setlength{\parskip}{1em}
 
-\title{Declarative Design and Efficient Serving of Zoomable Geographical Maps}
+\title{Declarative Multi-Scale Map Visualization and Efficient Serving of Zoomable Geographical Maps}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
@@ -34,19 +34,22 @@ Zoomable geographical maps are important to people because they facilitate spati
 Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
 
 % What are the challenges: caused by high traffic and constant surfacing of new and often big datasets.
-This growth in users and data poses three key challenges to map designers and system engineers. First and second, map designers must address the dual problems of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. choice of graphical style)~\cite{stolte2003multiscale}, at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must manage \emph{query workloads} as millions of online users concurrently engage a spatial data platform.
+Successful mapping platforms must ensure high availability and performance, which should be stated in service level agreements (SLA) and monitored continuously. The cost of ensuring these goals grows with the number of concurrent users and data volume, variety, velocity, veracity, validity and volatility (``the Six Vs of Big Data''). 
+
+A complex information processing pipeline is activated in order to materialize a useful map, e.g. on someones mobile device. As a consequence, we need to adopt some sensible, simplifying assumptions in order to scope our analysis of the map problem. We adopt the view that mapping consists of two tasks: \emph{map production} and \emph{map consumption}. As we will see, the line that divides these tasks is fuzzy. However, the semantics of the two tasks is defined broadly. Map production is synonymous with creating good maps -- without implying actual usage. Map consumption is synonymous with materializing maps on computer screens -- without implying that the maps are well designed. 
+
+, i.e. , three key challenges face map designers and system engineers: Map designers must (a) address the problem of \emph{data abstraction} (e.g. selection and aggregation) and (b) address the problem of  \emph{visual abstraction} (e.g. choice of graphical styles)~\cite{stolte2003multiscale}. This must be done at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must (c) manage \emph{brutal query workloads} (e.g. millions of concurrent users).
 
 \emph{Idea}: motivate preprocessing and vector tiles with data from monitoring on servage that shows that ``dumb'' files have better performance and availability.
 
-\section{Pipelines for Geographical Maps}
+\section{Architectures for Spatial Information Pipelines}
 
 \subsection{Types of Geographical Maps}
 
 \subsection{Types of Pipelines for Maps}
 % review various pipelines for maps. This motivates 
 
-
-\section{Design Objectives and Principles for Geographical Maps}
+\section{Design Objectives}
 In a nutshell, maps must communicate important spatial information in a useful way to their intended audience~\cite{robinson1982early}. While this axiom is certainly true of all maps, it is not concrete enough to effectively guide the map design process. Ideally, it needs to be broken down into a list of requirements that can be checked using quantitative measures. In the following sections, we will review requirements for maps that have been stated.
 
 \subsection{iOS6 Apple Maps Requirements}
@@ -54,7 +57,7 @@ Six design objectives have been used to evaluate the iOS6 Apple Maps API~\cite{n
 \begin{enumerate}
 \item \emph{Minimize overlap}. In later sections show how this requirement is implemented as proximity constraint
 \item \emph{Respect relative importance of entries}. Implemented by weighting.
-\item \emph{Maximize spatial fullness}. Implemented by SMCP.
+\item \emph{Maximize spatial fullness}. Implemented by SMCP model.
 \item \emph{Provide panning/zooming consistency}. Implemented by recursive SQL, ladder approach.
 \item \emph{Enable efficient sampling}. Implemented by preprocessing approach.
 \item \emph{Support filtering conditions}. Problem here, also exhibited by fusiontables.
@@ -64,7 +67,7 @@ Six design objectives have been used to evaluate the iOS6 Apple Maps API~\cite{n
 Check requirementes from OpenScienceMap~\cite{schmid2013opensciencemap}. My notes: Good idea to let rank have impact on proximity constraint: Lower ranked objects require more separation, which implies that conflicts are directed. Question: can the SELECT-PLACES algorithm be implemented in terms of my fundamental constraints and objectives? If not, make sure I can. The places selected by CVL are "too" globally optimal. The important criteria is including locally relevant places, not having a globally optimal result. A five star restaurant should never loose to a four star restaurant!
 
 \subsection{GST Requirements}
-Place name implies that we must support star approach as well as ladder approach (se email med Flemming).
+Place name implies that we must support star approach as well as ladder approach (se email med Flemming). These will motivate CVL 2.
 
 
 \subsection{Constant Information Density}
