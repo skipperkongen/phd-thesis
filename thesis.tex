@@ -33,10 +33,18 @@ Zoomable geographical maps are important to people because they facilitate spati
 % What are maps and how are they used?
 Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
 
-% What are the challenges: caused by high traffic and constant surfacing of new and often big datasets.
-Successful mapping platforms must ensure high availability and performance, which should be stated in service level agreements (SLA) and monitored continuously. The cost of ensuring these goals grows with the number of concurrent users and data volume, variety, velocity, veracity, validity and volatility (``the Six Vs of Big Data''). 
+% Views and assumptions
+We need some simplifying \emph{views} and \emph{assumptions} in order to scope our analysis of the complex pipeline needed for end-to-end map delivery. First, we adopt the view that the mapping pipeline consists of two high-level tasks: \emph{map production} and \emph{map consumption}. Second, we assume that map production in comprised of the dual tasks of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. styling)~\cite{stolte2003multiscale}. Third, we assume that map consumption occurs in the \emph{client-server model}.
 
-A complex information processing pipeline is activated in order to materialize a useful map, e.g. on someones mobile device. As a consequence, we need to adopt some sensible, simplifying assumptions in order to scope our analysis of the map problem. We adopt the view that mapping consists of two tasks: \emph{map production} and \emph{map consumption}. As we will see, the line that divides these tasks is fuzzy. However, the semantics of the two tasks is defined broadly. Map production is synonymous with creating good maps -- without implying actual usage. Map consumption is synonymous with materializing maps on computer screens -- without implying that the maps are well designed. 
+% What are the challenges: caused by high traffic and constant surfacing of new and often big datasets.
+XXX challenges of map production are (x), (xx), (xxx) saving manual time, saving computation time, powerful expressibility. YYY challenges of map consumption are (y), (yy), (yyy) high availability and high performance.
+
+% Variables
+What are the variables? Relevant metrics should be quantified in service level agreements (SLA) and monitored continuously. For a given fixed SLA, we can mimimize the monetary cost (e.g. salaries, hardware and license expenses, energy bills) of a fixed SLA generally increases with the number of \emph{concurrent users} and data \emph{volume}, \emph{variety}, and \emph{velocity} (``the Three Vs of Big Data'').
+
+
+% Map production is synonymous with creating good maps, which does not imply consumption of maps. Map consumption is synonymous with users browsing maps on their devices, which does not imply good maps. 
+% , with map services running on servers and map clients running on user devices (e.g. mobile devices)
 
 , i.e. , three key challenges face map designers and system engineers: Map designers must (a) address the problem of \emph{data abstraction} (e.g. selection and aggregation) and (b) address the problem of  \emph{visual abstraction} (e.g. choice of graphical styles)~\cite{stolte2003multiscale}. This must be done at the rapid pace that new zoomable maps are needed~\cite{lomet2012warstories}. Third, system engineers must (c) manage \emph{brutal query workloads} (e.g. millions of concurrent users).
 
