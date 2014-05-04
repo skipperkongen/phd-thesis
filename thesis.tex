@@ -59,15 +59,31 @@ What are the variables? Relevant metrics should be quantified in service level a
 
 \emph{Idea}: motivate preprocessing and vector tiles with data from monitoring on servage that shows that ``dumb'' files have better performance and availability.
 
-\section{Architectures for Spatial Information Pipelines}
+\section{Architectures for Web-based Geographical Maps}
 
-\subsection{Types of Geographical Maps}
+\subsection{Map Production}
 
-\subsection{Types of Pipelines for Maps}
+\subsection{Map Consumption}
 % review various pipelines for maps. This motivates 
 
-\section{Design Objectives}
+\section{Map Design Principles}
 In a nutshell, maps must communicate important spatial information in a useful way to their intended audience~\cite{robinson1982early}. While this axiom is certainly true of all maps, it is not concrete enough to effectively guide the map design process. Ideally, it needs to be broken down into a list of requirements that can be checked using quantitative measures. In the following sections, we will review requirements for maps that have been stated.
+
+\subsection{Basic Principles}
+
+\subsubsection{Constant Information Density}
+In 1961, the cartographer Friedrich T\"{o}pfer proposed the \emph{Principle of Selection}, which states that the number of objects per display unit should be constant -- regardless of scale~\cite{topfer1966principles}. The soundness of the principle has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
+
+In 1998, Woodruff et al. revived the principle for multi-scale database visualizations as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. While these principles differ in name, the core meaning is the same, namely that information density should remain constant over change in scale. A small nuance is in the density metrics that are used, i.e. how information density is quantified.
+
+It is not difficult to understand why the Principle of Constant Information Density must be true. Computer screens and map charts have a fixed area on which to rendering information objects. There is a physical bound on how much information can be represented per unit display area (e.g. a few thousand pixels per $cm^2$ on a computer screen). Also, the human eye cannot see things that are too small or distinguish things that are too close together.
+
+\paragraph{Metrics}
+
+\subsubsection{Distinction}
+
+Implemented as proximity constraint
+
 
 \subsection{iOS6 Apple Maps Requirements}
 Six design objectives have been used to evaluate the iOS6 Apple Maps API~\cite{nutanong2012multiresolution}:
@@ -87,14 +103,6 @@ Check requirementes from OpenScienceMap~\cite{schmid2013opensciencemap}. My note
 Place name implies that we must support star approach as well as ladder approach (se email med Flemming). These will motivate CVL 2.
 
 
-\subsection{Constant Information Density}
-In 1961, the cartographer Friedrich T\"{o}pfer proposed the \emph{Principle of Selection}, which states that the number of objects per display unit should be constant -- regardless of scale~\cite{topfer1966principles}. The soundness of the principle has been verified empirically, e.g. by counting the number of settlements shown per unit display area on different hand-crafted maps of Scotland~\cite{topfer1966principles}. 
-
-In 1998, Woodruff et al. revived the principle for multi-scale database visualizations as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. While these principles differ in name, the core meaning is the same, namely that information density should remain constant over change in scale. A small nuance is in the density metrics that are used, i.e. how information density is quantified.
-
-It is not difficult to understand why the Principle of Constant Information Density must be true. Computer screens and map charts have a fixed area on which to rendering information objects. There is a physical bound on how much information can be represented per unit display area (e.g. a few thousand pixels per $cm^2$ on a computer screen). Also, the human eye cannot see things that are too small or distinguish things that are too close together.
-
-\subsubsection{Metrics}
 
 \subsection{Requirements for iOS 6 Maps}
 Apple iPhone 6 maps requirements listed in SELECT-DISTINCT paper, and in duking it out paper. Constant Information density
