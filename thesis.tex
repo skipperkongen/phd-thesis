@@ -21,20 +21,38 @@
 
 \tableofcontents
 
+% STUART: Identifying the problem and objectives
 \chapter{Introduction}
 
-Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
+%Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
 
-
+% Emphasise map production and map consumption
 \section{Motivation}
-% Why are they important? Use cases.
-Zoomable geographical maps are important to people because they facilitate spatial insights and support spatial decision making. For example, journalists can use maps to deliver spatial insights to their readers when reporting about a war, where the location of troops, resources and refugees is important. Tourist exploring an unfamiliar city can use location based services (LBS) running on their mobile devices to locate a near-by restaurants and shops when they suddenly feel hungry or in the mood for shopping. Importantly, maps should be made \emph{zoomable} whenever data can not be legibly visualized within a single frame, because otherwise useful information might be rendered useless. Zoomable maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction. For example, points can be selected and aggregated at low scales, and fully shown only at high scales, which enables switching between overview mode and detailed exploration mode.
+% Opportunities for users
+Web-based geographical maps are important to people -- both producers and consumers of spatial information -- because they facilitate spatial insights and drive spatial decision making. For example, journalists can enrich online articles with digital maps that yield spatial insights into the geographical aspects of news stories (e.g. stories about wars, travel or pollution). As another example, tourists can use digital maps and location based services (LBS) to support spatial decision making, e.g. finding near-by restaurants, shops or points of interest. Furthermore, multi-scale or \emph{zoomable} maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction, which is of tantamount importance as the amount of data grows.
+
+% Challenge 1: too many users
+Today, consumers of maps have the opportunity to engage web maps anytime and anywhere, due in part to advances in mobile technology and a state of near-ubiquitous web access. As a consequence, web-based maps have attracted millions of users who bombard the end-points of spatial data services with a crushing request workload during peak hours. TODO: Explain the challenges presented to system engineers further...
+
+% Challenge 2: too much data
+Today, more data is available online than ever before, which subsumes an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data). While turning this mass of spatial data into valuable digital maps is highly desirable, doing so on a timely basis is challenging. The hard problems of \emph{data abstraction} (e.g. data selection and aggregation) and \emph{visual abstraction} (e.g. element styling) must be solved efficiently and effectively~\cite{stolte2003multiscale,jacques1967semiologie}.
+
+ and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is enforced by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
+
+
+% MOVE TO SECTION ABOUT MAPS
+% Why should maps be zoomable?
+Importantly, maps should be made \emph{zoomable} whenever data can not be sensibly visualized at a single scale, e.g. because there is too much data. Zoomable maps allows users to explore vast amounts of spatial information at different focal points and levels of abstraction. However, multi-scale maps also present hard challenges to map designers, who must e.g. select, displace or aggregate map feature to find the right balance between information legibility and representativity at multiple scales.
 
 % What are maps and how are they used?
-Web-based multiscale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is bolstered by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
+Web-based multi-scale maps have recently attracted millions of users, driven by an explosive growth in the availability of useful spatial data (e.g. commercial, social, environmental, scientific and political data) and by near-ubiquitous web access in many parts of the world. The opportunity to access maps over the web is enforced by soaring world-wide sales of mobile devices (e.g. smart phones, tablets and laptops). In combination, millions of users now have the ability and motivation to spontaneously engage maps -- anywhere and anytime.
+
+% What is the problem... map production and map consumption.
 
 % Views and assumptions
-We need some simplifying \emph{views} and \emph{assumptions} in order to scope our analysis of the complex pipeline needed for end-to-end map delivery. First, we adopt the view that the mapping pipeline consists of two high-level tasks: \emph{map production} and \emph{map consumption}. Second, we assume that map production in comprised of the dual tasks of \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. styling)~\cite{stolte2003multiscale}. Third, we assume that map consumption occurs in the \emph{client-server model}.
+In order to scope our analysis of the complex information pipeline needed to deliver a map, we will need some simplifying \emph{views} and \emph{assumptions}. First, we adopt the view that the mapping pipeline consists of two high-level tasks: \emph{map production} and \emph{map consumption}. Second, we assume that the map production task can be broken down into design substasks  and 
+
+is comprised of two design subtasks: \emph{data abstraction} (e.g. selection and aggregation) and \emph{visual abstraction} (e.g. element styling)~\cite{stolte2003multiscale,jacques1967semiologie}. Third, we assume that map production is  and \emph{preparation} (e.g. preprocessing or indexing). Third, we assume that map consumption occurs in the \emph{client-server model}.
 
 % What are the challenges: caused by high traffic and constant surfacing of new and often big datasets.
 XXX challenges of map production are (x), (xx), (xxx) saving manual time, saving computation time, powerful expressibility. YYY challenges of map consumption are (y), (yy), (yyy) high availability and high performance.
