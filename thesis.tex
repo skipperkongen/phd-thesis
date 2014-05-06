@@ -37,6 +37,149 @@ Today, consumers of maps have the opportunity to engage zoomable web maps anytim
 % Challenge 2: big data
 Everyday, a mass of data is accumulating online, which includes vast amounts of spatial data~\cite{agrawal2012bigdata}. The tendencies of this so-called Big Data are described by the ``three Vs'': \emph{volume}, \emph{variety}, and \emph{velocity}. While the need to visualize much of this data on maps is clear, it is very challenging to do so. Map producers must carefully execute the dual processes of \emph{data abstraction} (e.g. data selection and aggregation)~\cite{haunert2006landcover,schmid2013opensciencemap} and \emph{visual abstraction} (e.g. graphical expression)~\cite{jacques1967semiologie} in order to derive a useful map~\cite{stolte2003multiscale,weibel1999generalising}. These processes are made much harder in the context of Big Data. Furthermore, these tasks generally involve either preprocessing~\cite{sarma2012fusiontables,kefaloukos2014declarative} or indexing~\cite{bereuter2013real,nutanong2012multiresolution} of the data, which also becomes harder for Big Data. TODO: Give some examples
 
+\section{Terminology}
+
+\begin{table}[htdp]
+\caption{default}
+\begin{center}
+\begin{tabular}{|c|c|}
+
+\end{tabular}
+\end{center}
+\label{default}
+\end{table}%
+
+\section{A View of Geospatial Data Systems}
+
+\subsection{The Legacy: Geographical Information Systems}
+% The one-size fits all system for spatial data management
+% Use cases: analysis, visualization
+
+% Message: Why we should stop using GIS for everything (reference End of an Era!)
+% Who uses GIS: Goverment
+% When to use GIS: complex data analysis
+% Why GIS is no good: scalable and high-performance online data visualization
+% Who should we learn from: Google, Facebook, Amazon (millions of users)
+
+\subsection{Why GIS Does Not Fit All}
+% Separate use cases: data visualization (DATAVIZ), data creation (OLTP) and data analysis (OLAP)
+% database visualization, journalistic visualization, 
+% non-experts are increasingly working with data
+
+\subsection{The Online Eco-system for Geospatial Data}
+% Roles: A pipeline of producers and consumers
+% Producers: data creators, visualization designers, application developers
+% Consumers: end-users
+
+
+% Producers: Data Creators and Visualization Designers
+% - Who: Public Sector, Private Sector, Citizens (e.g. Crowd-Sourcing)
+% - What: Data creation, Visualization Design
+% - Why: Governance (Reference Offentlige Data i Spil), Business, Leisure
+
+% Consumers: 24-7, all platforms, a million use-cases
+
+\subsection{Requirements for Future Systems}
+% - Low monetary cost: software and hardware, wages for humans
+% -  
+
+\subsection{Research Gaps}
+% we need to ENABLE people to: produce data, visualize data
+% - Declarative Cartography
+
+% we need to CREATE high-availability and high-performance systems
+% - Simple and Effective Data Distribution
+% 
+
+
+\section{Data Services}
+All maps are multi-scale, with either discrete or continuous zoom-levels. All maps are multi-layer, each layer has a type and a map can mix layers of different types. 
+
+To make things easier, we might assume that the world is flat?
+
+\subsection{Data Models}
+In geographical information systems, \emph{images} and \emph{objects} are different data models for representing physical or abstract entities on planet Earth and over time. For example, a country is an abstract entity that has an extent on Earth (its borders) and in time (its period of existence), which can be represented either by an image or an object. In the image-based data model time-space is discrete, while in the object-based data model time-space is continuous.
+
+%We refer to a unit of information in geospatial data as a geospatial datum. Each geospatial datum is conceptually embedded in a four-dimensional space with dimensions: \emph{longitude}, \emph{latitude}, \emph{altitude} and \emph{time}. Each geospatial datum states information about the spatio-temporal subset it covers.
+
+%Because because the dimensions have fixed semantics: \emph{longitude}, \emph{latitude}, \emph{altitude} and \emph{time}.
+
+%because the dimensions have concrete semantics.
+
+%More formally, a geospatial datum (an image or an object) associates data with a spatio-temporal subset, i.e. a subset of a metric space with four dimensions:  \emph{longitude}, \emph{latitude}, \emph{altitude}, \emph{time}. While the image-based data model adopts a discrete view of space-time, the object-based model treats space-time as continuous.
+
+
+%While both images and objects model spatio-temporal entities by associating data tuples with spatio-temporal subsets, the mechanism of association is different for the two.
+
+
+%Conceptually, 
+
+
+
+
+%Each unit of information in geospatial data is conceptually embedded in a four-dimensional space with dimensions: \emph{longitude}, \emph{latitude}, \emph{altitude}, \emph{time}. Each geospatial datum lists information about the spatio-temporal subset it covers.
+
+
+%In other words, a geospatial subsets of a four-dimensional \emph{metric space} corresponding to the physical Earth plus time. .
+
+%Images use pixel values to represent discrete subsets of space and time. 
+
+%For example... and for example...
+
+
+
+Images store data in a matrix of pixels. Each pixel value is interpreted as either a color or as data. The outline of an image is mapped to a region on Earth.
+
+in the matrix corresponds to a rectangular region using a matrix $A$ of cells (or pixels). Each cell, indexed by $A_{i,j}$, contains a data tuple that represents the region that is covered by the cell.
+
+where each cell represents a discrete region of space-time by a pixel value (possibly multi-dimensional). rectangular region formed by a regular subdivision of space and time. An index $A_{i,j}$ points to a data tuple that represents the corresponding region. For example, an image can represent the elevation of the Earth's surface, by choosing a regular subdivision of earth.
+
+
+For geospatial data, the four dimensions are continuous and have fixed semantics: \emph{longitude}, \emph{latitude}, \emph{altitude} and \emph{time} -- which makes geospatial data a special case of multi-dimensional data. For any dimension, the subset may extend infinitely in the positive or negative direction (or both). In summary, we can use the simple technique of associating data tuples with a spatio-temporal subsets to represent any entity, physical or abstract, that has an extent in 3D space and period of existence of over time.
+
+% \emph{polyhedral} (actually only in the projected space), (conventionally), polyhedral (actually only in the projected space) 
+
+By polyhedral subset we specifically mean 
+%For example, images can be used to represent the elevation of the Earth's surface by letting each pixel represent a subdividing the surface into a set of rectangles and setting pixel values to the average altitude of rectangular regions.
+
+ Objects can be used to model images, using a separate object for each cell or pixel in the image.  
+
+models are image-based data (also called raster data) and object-based data (also called vector data). Each unit of information in geospatial data is conceptually embedded in a four-dimensional space with dimensions: \emph{longitude}, \emph{latitude}, \emph{altitude}, \emph{time}. To ease the display of information on a computer screen, geospatial data are \emph{projected} onto a two-dimensional plane. Furthermore, data can be selected on one or several dimensions, e.g. only show data for a particular altitude or time. Each unit states a set of facts about a given subset of four-dimensional space. Typical subsets are points, lines, polygons, surfaces, and volumes.
+
+The atomic unit of information in the image-based data model is a cell (or pixel), which associates an index $M_{i,j}$ in a matrix $M$ with a data tuple, e.g. the two-tuple $\langle A, 42\rangle$. The atomic unit of information in the object-based data modelAn image consists of cells in a matrix. and each cell is associated with one or more values (of arbitrary data type). Objects consist of 
+
+\subsection{Data Structures and Indexing}
+% linearization, quad-trees, r-trees, 
+
+\subsection{Query Models}
+
+
+\subsection{Design Principles for Geographical Maps}
+
+\subsection{System Architectures}
+Client-server model. Data can be streamed continuously or requested once.
+
+% review various pipelines for maps. This motivates 
+Map production and map consumption.
+
+
+
+\section{Map Services in the Public Sector}
+% support for use cases
+% high-availability
+% high-performance
+% consistent and authoritative data
+% consistent stale snapshots > in-consistent up-to-date data
+
+\subsection{Case Study: Danish Geodata Agency}
+
+\subsection{Use Cases}
+
+\subsection{Requirements}
+
+
+
+
 
 % What is the problem... map production and map consumption.
 
@@ -59,12 +202,6 @@ What are the variables? Relevant metrics should be quantified in service level a
 
 \emph{Idea}: motivate preprocessing and vector tiles with data from monitoring on servage that shows that ``dumb'' files have better performance and availability.
 
-\section{Architectures for Web-based Geographical Maps}
-
-\subsection{Map Production}
-
-\subsection{Map Consumption}
-% review various pipelines for maps. This motivates 
 
 \section{Map Design Principles}
 In a nutshell, maps must communicate important spatial information in a useful way to their intended audience~\cite{robinson1982early}. While this axiom is certainly true of all maps, it is not concrete enough to effectively guide the map design process. Ideally, it needs to be broken down into a list of requirements that can be checked using quantitative measures. In the following sections, we will review requirements for maps that have been stated.
@@ -108,15 +245,8 @@ Place name implies that we must support star approach as well as ladder approach
 Apple iPhone 6 maps requirements listed in SELECT-DISTINCT paper, and in duking it out paper. Constant Information density
 
 
-
-
-\section{Zoomable Geographical Maps on the Web}
-\subsection{Definitions}
-\subsection{Key Challenges}
-
 \section{Overview of State-of-the-Art in Geographical Maps on the Web}
 \subsection{Vector Tiles and Client-side Rendering}
-
 
 \section{Research Gaps}
 \subsection{Declarative Design}
