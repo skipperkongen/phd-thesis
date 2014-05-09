@@ -24,6 +24,12 @@
 % STUART: Identifying the problem and objectives
 \chapter{Introduction}
 
+In this dissertation, we investigate two classes of queries and associated data systems, which are used for designing and serving geographical maps respectively. We investigate query models and systems for \emph{multi-scale spatial data abstraction} (MSDA). Furthermore, we investigage query models and systems for \emph{multi-scale spatial data retrieval} (MSDR).
+
+MSDA queries and systems are in play when people \emph{design} new maps. We investigate the design of easy-to-use MSDA query languages and the implementation of scalable systems for executing MSDA queries.
+
+MSDR queries and systems are in play when users \emph{request} maps online. We investigate the requirements for MSDR queries and the implementation of high availability and high performance systems for executing MSDR queries. 
+
 %Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
 
 % Emphasise map production and map consumption
@@ -86,9 +92,12 @@ A couple of paragraphs that mention what I do to address these challenges.
 % Geographical Model Generalization: Grundreich, McMaster, Weibel, Wollf, Bereuter
 % Multi-scale Data Abstraction: Stoltze, Stonebraker (actually other guy), Jure
 \chapter{Review of Geographical Data Manipulation Languages}
+% Set-a-time languages VERSUS Record-a-time languages
 % SEQUEL: A Structured English Query Language
 % QUEL: The Design and Implementation of INGRES
-% Critique of SQL: C. J. Date: An Architecture for High-Level Language Database Extensions
+% Critique of SQL semantics: C. J. Date: An Architecture for High-Level Language Database Extensions
+% - From the programmer's point of view the significant features of a database are that it is persistent and shared.
+% - The question arises, how should such an aggregate be presented to the programmer?
 % Map-Reduce
 % Pig and Pidgeon
 % Datalog?
@@ -109,6 +118,8 @@ A couple of paragraphs that mention what I do to address these challenges.
 % RDBMS, parallel and non-parallel
 % Key-Value stores
 % Map-Reduce
+% DryadLINQ: A System for General-Purpose Distributed Data-Parallel Computing Using a High-Level Language
+
 \chapter{Tileheat: A Framework for Tile Selection}
 
 \part{Conclusions}
