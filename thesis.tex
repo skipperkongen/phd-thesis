@@ -8,9 +8,22 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 
-% Copied from Marcos Style:
+% MARCOS PARAGRAPH SEPARATION:
 \setlength{\parindent}{0px}
 \setlength{\parskip}{1em}
+
+% CVL
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{soul}
+\usepackage[multiple]{footmisc}
+
+% TILEHEAT
+\newcommand{\minisec}[1]{\vspace*{0.05cm}\noindent\textbf{#1.}}
 
 \title{Declarative Multi-Scale Selection and Scalable Serving of Geospatial Datasets}
 \author{Pimin Konstantin Kefaloukos}
@@ -22,108 +35,13 @@
 \tableofcontents
 
 % STUART: Identifying the problem and objectives
-\chapter{Introduction}
-
-In this dissertation, we investigate two classes of queries and associated data systems, which are used for designing and serving geographical maps respectively. We investigate query models and systems for \emph{multi-scale spatial data abstraction} (MSDA). Furthermore, we investigage query models and systems for \emph{multi-scale spatial data retrieval} (MSDR).
-
-MSDA queries and systems are in play when people \emph{design} new maps. We investigate the design of easy-to-use MSDA query languages and the implementation of scalable systems for executing MSDA queries.
-
-MSDR queries and systems are in play when users \emph{request} maps online. We investigate the requirements for MSDR queries and the implementation of high availability and high performance systems for executing MSDR queries. 
-
-%Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
-
-% Emphasise map production and map consumption
-\section{Motivation}
-% Opportunities for users
-\emph{Pannable} and \emph{zoomable} geographical maps are important because they allows users to explore large repositories of information at different focal points and levels of abstraction. Furthermore, \emph{web-based} maps enable online users world-wide to gain spatial insights and make spatial decisions on the go. For example, journalists can enrich online articles with digital maps based on the constantly emerging datasets online. Such maps give readers spatial insight into news stories with geographical aspects: the location of troops in a war, the extent of a pollution incident, places worth traveling to, etc. As another example, tourists can use digital maps and location based services (LBS) on mobile devices while exploring an unfamiliar city. Such maps support decision making: finding near-by restaurants, shops, points of interest, etc. Zoomable web maps have have many use cases, e.g. in social media, real-estate, government, science, policing, warfare, health, education and environmental control.%Finally, real-estate agents can advertise new deals on geographical maps, which is of great interest to people looking to buy or sell homes in a particular area. % work with the examples
-
-Paragraph that summarizes the challenges. Be consistent about the order of challenges and their order in the thesis in general.
-
-% Challenge 1: too many users
-One challenge is encountered during the serving of maps. Today, users of maps have the opportunity to engage maps anytime and anywhere, caused by advances in mobile technology and near-ubiquitous web access in many parts of the world. As a consequence, web-based maps have attracted millions of users who bombard the end-points of spatial data services with a crushing request workload around the clock -- especially during peak hours. To handle this workload there is a need for scalable system architectures for maps. %TODO: Explain the challenges presented to system engineers further... and give some examples.
-
-% Challenge 2: big data
-Another challenge is encounted during the production of maps. Everyday, a mass of spatial data is accumulating online~\cite{agrawal2012bigdata}. There is a clear need to visualize much of this data on maps for the reasons mentioned above. However, manually editing maps based on emerging big data is prohibitively time-consuming. Furthermore, relying on GIS specialists to handle the task is expensive at best. What is needed is efficient and effective methods that can be used by non-experts who must perform tasks such as \emph{data abstraction} (e.g. data selection and aggregation)~\cite{haunert2006landcover,schmid2013opensciencemap} and \emph{visual abstraction} (e.g. graphical expression)~\cite{jacques1967semiologie} in order to create useful multi-scale maps~\cite{stolte2003multiscale,weibel1999generalising}. 
-
-A couple of paragraphs that mention what I do to address these challenges. 
-
-%These processes are made much harder in the context of Big Data. Furthermore, these tasks generally involve either preprocessing~\cite{sarma2012fusiontables,kefaloukos2014declarative} or indexing~\cite{bereuter2013real,nutanong2012multiresolution} of the data, which also becomes harder for Big Data. TODO: Give some examples
-
-\section{Overview of State-of-the-Art Online Multi-scale Maps}
-\subsection{Spatial Indexing}
-% vector tiles, r-trees, linearization
-\subsection{Multi-scale Data Abstraction}
-
-\section{Requirements for Online Multi-scale Maps}
-\subsection{Map Design Objectives}
-% toepfer, constant info dens. metrics
-\subsection{System Objectives}
-% high-availability (basically no down-time), high-performance, scalable
-\subsection{Usability Objectives}
-% non-expert usage, time-efficient, effective
-\subsection{Case Study: Danish Geodata Agency}
-% authoritative data. consistent data. high-availability. high-performance. standards. cost-effective.
-
-\section{Research Gaps}
-\subsection{Programmability}
-\subsection{Moving code to data}
-\subsection{Unified Model for Multi-scale Data Visualization}
-\subsection{Scalability}
-\subsection{Resource Optimization}
-
-% abstraction: usable by non-experts, programmability, unifying data abstraction across domains (addressed by CVL2)
-% Vector Tiles: prediction
-
-\section{Contributions}
-\subsection{Survey of Automatic Methods for Geographical Data Abstraction}
-\subsection{Design of Declarative Languages for Multi-scale Selection of Relational Data}
-\subsection{Compilers for Multi-scale Selection Languages}
-\subsection{Prediction and Tile Selection for Geospatial Workloads}
-\subsection{Publications}
-
-\section{Structure of this Dissertation}
-
-\part{Multi-scale Data Abstraction}
-\chapter{Review of Multi-scale Data Abstraction Approaches}
-% Cover generalization operators: see forster, weibel, weibel+bereuter
-% Cover constraint based generalization: Lars Harrie
-% Cover optimization based generalization: various
-% Cover datastructures for generalization: Van Oosterrom, Bereuter, etc. (see Pia's work for refs)
-% Geographical Model Generalization: Grundreich, McMaster, Weibel, Wollf, Bereuter
-% Multi-scale Data Abstraction: Stoltze, Stonebraker (actually other guy), Jure
-\chapter{Review of Geographical Data Manipulation Languages}
-% Set-a-time languages VERSUS Record-a-time languages
-% SEQUEL: A Structured English Query Language
-% QUEL: The Design and Implementation of INGRES
-% Critique of SQL semantics: C. J. Date: An Architecture for High-Level Language Database Extensions
-% - From the programmer's point of view the significant features of a database are that it is persistent and shared.
-% - The question arises, how should such an aggregate be presented to the programmer?
-% Map-Reduce
-% Pig and Pidgeon
-% Datalog?
-% None of these languages immediately allow for Multi-scale Data Abstraction
-\chapter{Declarative Cartography: In-database Map Generalization of Spatial Datasets}
-\chapter{Multi-scale Selection for Relational Data}
-
-\part{Scalable Geospatial Data Serving}
-\chapter{Review of Query Models}
-% key-value based (pyramid, quad, linearization)
-% logic query based (sql)
-% imperative based (programming languages)
-\chapter{Review of Data Models}
-% File-based (shp, JSON)
-% Relational (tables)
-% Key-value (raster and vector tiles)
-\chapter{Review of Data Systems}
-% RDBMS, parallel and non-parallel
-% Key-Value stores
-% Map-Reduce
-% DryadLINQ: A System for General-Purpose Distributed Data-Parallel Computing Using a High-Level Language
-
-\chapter{Tileheat: A Framework for Tile Selection}
-
-\part{Conclusions}
-\chapter{Conclusion}
+% 1) SAY WHAT YOU'RE GOING TO SAY
+% 2) SAY IT
+% 3) SAY WHAT YOU JUST SAID
+\input{chapter-introduction}
+\input{chapter-cvl}
+\input{chapter-tileheat}
+\input{chapter-conclusion}
 
 \bibliographystyle{plain}
 \bibliography{thesis}

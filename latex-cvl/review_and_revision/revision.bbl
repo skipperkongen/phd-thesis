@@ -1,0 +1,51 @@
+\begin{thebibliography}{1}
+
+\bibitem{alimonti2000some}
+P.~Alimonti and V.~Kann.
+\newblock Some apx-completeness results for cubic graphs.
+\newblock {\em Theoretical Computer Science}, 237(1):123--134, 2000.
+
+\bibitem{beard1991constraints}
+K.~Beard.
+\newblock Constraints on rule formation.
+\newblock {\em Map generalization: making rules for knowledge representation},
+  pages 121--135, 1991.
+
+\bibitem{foerster2010challenges}
+T.~Foerster, J.~Stoter, and M.-J. Kraak.
+\newblock Challenges for automated generalisation at european mapping agencies:
+  a qualitative and quantitative analysis.
+\newblock {\em Cartographic Journal, The}, 47(1):41--54, 2010.
+
+\bibitem{garey1977rectilinear}
+M.~R. Garey and D.~S. Johnson.
+\newblock The rectilinear steiner tree problem is np-complete.
+\newblock {\em SIAM Journal on Applied Mathematics}, 32(4):826--834, 1977.
+
+\bibitem{harrie1999constraint}
+L.~Harrie.
+\newblock {The constraint method for solving spatial conflicts in cartographic
+  generalization}.
+\newblock {\em Cartography and Geographic Information Science}, 26(1):55--69,
+  Jan. 1999.
+
+\bibitem{harrie2007modelling}
+L.~Harrie and R.~Weibel.
+\newblock Modelling the overall process of generalisation.
+\newblock {\em Generalisation of geographic information: cartographic modelling
+  and applications}, pages 67--88, 2007.
+
+\bibitem{schmid2008automated}
+S.~Schmid.
+\newblock {\em {Automated constraint-based evaluation of cartographic
+  generalization solutions}}.
+\newblock PhD thesis, Geographisches Institut der Universit\{\"{a}\}t
+  Z\{\"{u}\}rich, 2008.
+
+\bibitem{weibel1999generalising}
+R.~Weibel and G.~Dutton.
+\newblock {Generalising spatial data and dealing with multiple
+  representations}.
+\newblock {\em Geographical information systems}, 1:125--155, 1999.
+
+\end{thebibliography}
