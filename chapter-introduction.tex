@@ -1,3 +1,4 @@
+% !TEX root = ./thesis.tex
 \chapter{Introduction}
 
 In this dissertation, we investigate two classes of queries and associated data systems, which are used for designing and serving geographical maps respectively. We investigate query models and systems for \emph{multi-scale spatial data abstraction} (MSDA). Furthermore, we investigage query models and systems for \emph{multi-scale spatial data retrieval} (MSDR).
@@ -25,36 +26,37 @@ A couple of paragraphs that mention what I do to address these challenges.
 
 %These processes are made much harder in the context of Big Data. Furthermore, these tasks generally involve either preprocessing~\cite{sarma2012fusiontables,kefaloukos2014declarative} or indexing~\cite{bereuter2013real,nutanong2012multiresolution} of the data, which also becomes harder for Big Data. TODO: Give some examples
 
-\section{Overview of State-of-the-Art Online Multi-scale Maps}
-\subsection{Spatial Indexing}
-% vector tiles, r-trees, linearization
-\subsection{Multi-scale Data Abstraction}
-
-\section{Requirements for Online Multi-scale Maps}
-\subsection{Map Design Objectives}
-% toepfer, constant info dens. metrics
-\subsection{System Objectives}
-% high-availability (basically no down-time), high-performance, scalable
-\subsection{Usability Objectives}
-% non-expert usage, time-efficient, effective
+\section{Requirements for Online Multi-scale Geospatial Visualization}
 \subsection{Case Study: Danish Geodata Agency}
 % authoritative data. consistent data. high-availability. high-performance. standards. cost-effective.
 
+\subsection{Visualization Requirements}
+% toepfer, constant info dens. metrics
+% ref: toepher, woodruff, iOS 6, sarma, bereuter, weibel
+\subsection{System Requirements}
+% high-availability (basically no down-time), high-performance, scalable
+\subsection{Usability Requirements}
+% non-expert usage, time-efficient, effective
+% ref: HOWTO, DATA ENTHUSIASTS
+
 \section{Research Gaps}
-\subsection{Programmability}
-\subsection{Moving code to data}
-\subsection{Unified Model for Multi-scale Data Visualization}
-\subsection{Scalability}
-\subsection{Resource Optimization}
+\subsection{User-Programmable Data Abstraction}
+\subsection{Flexible Modeling of Data Abstraction}
+\subsection{In-Database Data Abstraction}
+\subsection{Geospatial Workload Modeling}
+\subsection{Geospatial Workload Prediction}
+
 
 % abstraction: usable by non-experts, programmability, unifying data abstraction across domains (addressed by CVL2)
 % Vector Tiles: prediction
 
 \section{Contributions}
-\subsection{Survey of Automatic Methods for Geographical Data Abstraction}
-\subsection{Design of Declarative Languages for Multi-scale Selection of Relational Data}
-\subsection{Compilers for Multi-scale Selection Languages}
-\subsection{Prediction and Tile Selection for Geospatial Workloads}
+\subsection{Declarative Cartography: In-Database Map Generalization of Spatial Datasets}
+\subsection{Declarative Multi-scale Selection of Relational Datasets}
+\subsection{TileHeat: A Framework For Tile Selection}
+%\subsection{Design of Declarative Languages for Multi-scale Selection of Relational Data}
+%\subsection{Compilers for Multi-scale Selection Languages}
+%\subsection{Prediction and Tile Selection for Geospatial Workloads}
 \subsection{Publications}
 
 \section{Structure of this Dissertation}
