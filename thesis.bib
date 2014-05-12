@@ -1,14 +1,25 @@
-% Typical problem solved by MapReduce
-% - Read a lot of data
-% - Map: extract something you care about from each record
-% - Shuffle and Sort
-% - Reduce: aggregate, summarize, filter, or transform
-% - Write the results
-% Outline stays the same, map and reduce change to fit the problem
-% \cite{dean2009lessons}
+% SYSTEMS/DATABASES
 
-% MapReduce: simplified data processing on large clusters
-% - Not the original paper, this is a version in CASM
+@inproceedings{Stonebraker:2005:CCD:1083592.1083658,
+author = {Stonebraker, Mike and Abadi, Daniel J and Batkin, Adam and Chen, Xuedong and Cherniack, Mitch and Ferreira, Miguel and Lau, Edmond and Lin, Amerson and Madden, Sam and O'Neil, Elizabeth and O'Neil, Pat and Rasin, Alex and Tran, Nga and Zdonik, Stan and Neil, Elizabeth O and Neil, Pat O},
+booktitle = {Proceedings of the 31st international conference on Very large data bases},
+isbn = {1-59593-154-6},
+pages = {553--564},
+publisher = {VLDB Endowment},
+series = {VLDB '05},
+title = {{C-store: a Column-oriented DBMS}},
+url = {http://dl.acm.org/citation.cfm?id=1083592.1083658},
+year = {2005}
+}
+
+@inproceedings{Cooper2008,
+author = {Cooper, Brian F and Ramakrishnan, Raghu and Srivastava, Utkarsh and Silberstein, Adam and Bohannon, Philip and Jacobsen, Hans-arno and Puz, Nick and Weaver, Daniel and Yerneni, Ramana},
+booktitle = {VLDB},
+publisher = {VLDB Endowment},
+title = {{PNUTS : Yahoo!’ s Hosted Data Serving Platform}},
+year = {2008}
+}
+
 @article{dean2008mapreduce,
 author = {Dean, Jeffrey and Ghemawat, Sanjay},
 journal = {Communications of the ACM},
@@ -20,8 +31,103 @@ volume = {51},
 year = {2008}
 }
 
-% MapReduce and Parallel DBMSs: Friends or Foes?
-% - Mention the MapReduce as ETL tool idea
+@article{chang2008bigtable,
+author = {Chang, Fay and Dean, Jeffrey and Ghemawat, Sanjay and Hsieh, WC},
+journal = {ACM Transactions on},
+title = {{Bigtable: A distributed storage system for structured data}},
+url = {http://dl.acm.org/citation.cfm?id=1365816},
+year = {2008}
+}
+
+@article{pilchin2007dynamo,
+author = {Pilchin, Alex and Sivasubramanian, Swaminathan},
+isbn = {9781595935915},
+journal = {ACM SIGOPS},
+pages = {205--220},
+title = {{Dynamo: Amazon's Highly Available Key-Value Store}},
+url = {http://dl.acm.org/citation.cfm?id=1294281},
+year = {2007}
+}
+
+@article{chu2012openldap,
+author = {Chu, Howard},
+journal = {LinuxCon},
+number = {June 2012},
+title = {{Life After BerkeleyDB: OpenLDAP's Memory-Mapped Database}},
+year = {2012}
+}
+
+% HIGH AVAILABILITY SYSTEMS
+
+@inproceedings{birman2004highavailability,
+address = {Washington, DC, USA},
+author = {Birman, Ken and van Renesse, Robbert and Vogels, Werner},
+booktitle = {Proceedings of the 26th International Conference on Software Engineering},
+isbn = {0-7695-2163-0},
+pages = {17--26},
+publisher = {IEEE Computer Society},
+series = {ICSE '04},
+title = {{Adding High Availability and Autonomic Behavior to Web Services}},
+year = {2004}
+}
+
+@inproceedings{astrova2010esb,
+address = {New York, New York, USA},
+author = {Astrova, Irina and Koschel, Arne and Kruessmann, Tobias},
+booktitle = {Proceedings of the 2010 ACM Symposium on Applied Computing - SAC '10},
+doi = {10.1145/1774088.1774605},
+availability.pdf:pdf},
+isbn = {9781605586397},
+pages = {2495--2496},
+publisher = {ACM Press},
+title = {{Comparison of enterprise service buses based on their support of high availability}},
+year = {2010}
+}
+
+
+@inproceedings{sovran2011georeplicated,
+address = {New York, NY, USA},
+author = {Sovran, Yair and Power, Russell and Aguilera, Marcos K. and Li, Jinyang},
+booktitle = {Proceedings of the Twenty-Third ACM Symposium on Operating Systems Principles},
+doi = {10.1145/2043556.2043592},
+isbn = {978-1-4503-0977-6},
+pages = {385--400},
+publisher = {ACM},
+series = {SOSP '11},
+title = {{Transactional storage for geo-replicated systems}},
+year = {2011}
+}
+
+@article{trencseni2010keyspace,
+author = {Trencseni, Marton and Gazso, Attila},
+journal = {Scalien},
+pages = {1--9},
+title = {{Keyspace: A Consistently Replicated, Highly-Available Key-Value Store}},
+url = {http://final-project-hum.googlecode.com/svn-history/r24/trunk/refer/references/Keyspace.pdf},
+year = {2010}
+}
+
+@article{ford2010globalstorage,
+author = {Ford, Daniel and Labelle, F and Popovici, FI},
+journal = {on Operating Systems},
+title = {{Availability in globally distributed storage systems}},
+year = {2010}
+}
+
+
+% COMPARISONS BETWEEN SYSTEMS: RDBMS, MAP-REDUCE, KEYVALUE
+
+@inproceedings{pavlo2009comparison,
+author = {Pavlo, Andrew and Paulson, Erik and Rasin, Alexander and Abadi, Daniel J and DeWitt, David J and Madden, Samuel and Stonebraker, Michael and Csail, M I T},
+booktitle = {Proceedings of the 35th SIGMOD international conference on Management of data},
+isbn = {9781605585512},
+keywords = {comparison,mapreduce,olap,paralleldatabases,pass0},
+organization = {ACM},
+pages = {165--178},
+title = {{A comparison of approaches to large-scale data analysis}},
+year = {2009}
+}
+
 @article{stonebraker2010friendsorfoes,
 address = {New York, NY, USA},
 author = {Stonebraker, Michael and Abadi, Daniel and DeWitt, David J and Madden, Sam and Paulson, Erik and Pavlo, Andrew and Rasin, Alexander},
@@ -39,18 +145,49 @@ year = {2010}
 }
 
 
-% A comparison of approaches to large-scale data analysis
-% - Compared RDBMS with MapReduce
-@inproceedings{pavlo2009comparison,
-author = {Pavlo, Andrew and Paulson, Erik and Rasin, Alexander and Abadi, Daniel J and DeWitt, David J and Madden, Samuel and Stonebraker, Michael and Csail, M I T},
-booktitle = {Proceedings of the 35th SIGMOD international conference on Management of data},
-isbn = {9781605585512},
-keywords = {comparison,mapreduce,olap,paralleldatabases,pass0},
-organization = {ACM},
-pages = {165--178},
-title = {{A comparison of approaches to large-scale data analysis}},
-year = {2009}
+@article{floratou2012can,
+author = {Floratou, Avrilia and Teletia, Nikhil and DeWitt, David J and Patel, Jignesh M and Zhang, Donghui},
+journal = {Proceedings of the VLDB Endowment},
+number = {12},
+pages = {1712--1723},
+publisher = {VLDB Endowment},
+title = {{Can the elephants handle the NoSQL onslaught?}},
+volume = {5},
+year = {2012}
 }
+
+@inproceedings{Stonebraker:2007:EAE:1325851.1325981,
+author = {Stonebraker, Michael and Madden, Samuel and Abadi, Daniel J and Harizopoulos, Stavros and Hachem, Nabil and Helland, Pat},
+booktitle = {Proceedings of the 33rd international conference on Very large data bases},
+isbn = {978-1-59593-649-3},
+pages = {1150--1160},
+publisher = {VLDB Endowment},
+series = {VLDB '07},
+title = {{The end of an architectural era: (it's time for a complete rewrite)}},
+year = {2007}
+}
+
+
+% PARALLEL DATABASES
+
+@article{melnik2011dremel,
+address = {New York, NY, USA},
+annote = {implementation},
+author = {Melnik, Sergey and Gubarev, Andrey and Long, Jing Jing and Romer, Geoffrey and Shivakumar, Shiva and Tolton, Matt and Vassilakis, Theo},
+doi = {10.1145/1953122.1953148},
+issn = {0001-0782},
+journal = {Commun. ACM},
+month = jun,
+number = {6},
+pages = {114--123},
+publisher = {ACM},
+title = {{Dremel: interactive analysis of web-scale datasets}},
+url = {http://doi.acm.org/10.1145/1953122.1953148},
+volume = {54},
+year = {2011}
+}
+
+% MAP REDUCE
 
 % Hive: A Warehousing Solution over a Map-reduce Framework
 @article{thusoo2009hive,
@@ -83,7 +220,15 @@ url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=5447738},
 year = {2010}
 }
 
-% Filtering: A Method for Solving Graph Problems in MapReduce
+
+% Apache Hadoop
+@misc{apachehadoop,
+  title = {Apache Hadoop},
+  publisher = {Pearson Higher Education},
+  author = {Apache Foundation},
+  url = {http://hadoop.apache.org/}
+}
+
 @inproceedings{lattanzi2011filtering,
 address = {New York, NY, USA},
 author = {Lattanzi, Silvio and Moseley, Benjamin and Suri, Siddharth and Vassilvitskii, Sergei},
@@ -96,14 +241,6 @@ series = {SPAA '11},
 title = {{Filtering: A Method for Solving Graph Problems in MapReduce}},
 url = {http://doi.acm.org/10.1145/1989493.1989505},
 year = {2011}
-}
-
-% Apache Hadoop
-@misc{apachehadoop,
-  title = {Apache Hadoop},
-  publisher = {Pearson Higher Education},
-  author = {Apache Foundation},
-  url = {http://hadoop.apache.org/}
 }
 
 % SPARQL Basic Graph Pattern Processing with Iterative MapReduce
@@ -125,7 +262,6 @@ year = {2011}
  address = {New York, NY, USA},
  keywords = {MapReduce, RDF, SPARQL, basic graph pattern, cloud computing, data warehouse, query processing},
 } 
-
 
 % Twister: A Runtime for Iterative MapReduce
 @inproceedings{ekanayake2010itermapreduce,
@@ -198,8 +334,6 @@ year = {2009}
  publisher = {VLDB Endowment},
 } 
 
-% High Performance Spatial Query Processing for Large Scale Scientific Data
-% - By the HadoopGIS people
 @inproceedings{aji2012largespatial,
  author = {Aji, Ablimit and Wang, Fusheng},
  title = {High Performance Spatial Query Processing for Large Scale Scientific Data},
@@ -218,23 +352,6 @@ year = {2009}
  keywords = {analytical imaging, mapreduce, scientific data management, spatial query processing},
 } 
 
-% Dremel: interactive analysis of web-scale datasets
-@article{melnik2011dremel,
-address = {New York, NY, USA},
-annote = {implementation},
-author = {Melnik, Sergey and Gubarev, Andrey and Long, Jing Jing and Romer, Geoffrey and Shivakumar, Shiva and Tolton, Matt and Vassilakis, Theo},
-doi = {10.1145/1953122.1953148},
-issn = {0001-0782},
-journal = {Commun. ACM},
-month = jun,
-number = {6},
-pages = {114--123},
-publisher = {ACM},
-title = {{Dremel: interactive analysis of web-scale datasets}},
-url = {http://doi.acm.org/10.1145/1953122.1953148},
-volume = {54},
-year = {2011}
-}
 
 @inproceedings{floratou2011columnmapreduce,
 author = {Floratou, Avrilia and Madison, Wisconsin and Patel, Jignesh M and Shekita, Eugene J},
@@ -260,26 +377,19 @@ year = {2011}
 }
 
 
-% Map Reduce
-% Parallel Processing
-% Query processing (SQL )
-% Spatial join
+
 @inproceedings{zhang2009mapreduce, 
 author={Shubin Zhang and Jizhong Han and Zhiyong Liu and Kai Wang and Zhiyong Xu}, 
 booktitle={Cluster Computing and Workshops, 2009. CLUSTER '09. IEEE International Conference on}, 
+publisher = {IEEE}
 title={SJMR: Parallelizing spatial join with MapReduce on clusters}, 
 year={2009}, 
 month={Aug}, 
 pages={1-8}, 
-keywords={parallel programming;pattern clustering;MapReduce program;SJMR;duplication avoidance technology;heterogeneous related data sets processing;parallel programming model;spatial join parallelization;strip-based plane sweeping algorithm;tile-based spatial partitioning function;Clustering algorithms;Computer applications;Computer science;Concurrent computing;Logic;Mathematics;Parallel processing;Parallel programming;Partitioning algorithms;Rivers}, 
-doi={10.1109/CLUSTR.2009.5289178}, 
-ISSN={1552-5244},}
+ISSN={1552-5244}
+}
 
-% Map Reduce
-% Parallel Processing
-% Spatial data
-% Vector data (bulk-construction of R-Trees)
-% Raster data (aerial image quality computation)
+
 @incollection{cary2009experiences,
 year={2009},
 isbn={978-3-642-02278-4},
@@ -295,50 +405,37 @@ author={Cary, Ariel and Sun, Zhengguo and Hristidis, Vagelis and Rishe, Naphtali
 pages={302-319}
 }
 
-% Map Reduce
-% Parallel Processing
-% Query Processing
-% Spatial data
 @inproceedings{wang2010mapreduce, 
 author={Kai Wang and Jizhong Han and Bibo Tu and Jiao Dai and Wei Zhou and Xuan Song}, 
 booktitle={Parallel and Distributed Systems (ICPADS), 2010 IEEE 16th International Conference on}, 
 title={Accelerating Spatial Data Processing with MapReduce}, 
 year={2010}, 
+publisher = {IEEE},
 month={Dec}, 
 pages={229-236}, 
-keywords={file organisation;parallel processing;query processing;resource allocation;very large databases;visual databases;MapReduce;all nearest neighbor query;astronomical cross-certification;data partition;distributed parallel processing;file structure;key-value based programming model;large data set processing;spatial computation;spatial data processing;spatial object;splitting method;strip-based two-direction plane sweeping algorithm;workload balancing;All Nearest Neighbor;MapReduce;Spatial Applications;cross-certification}, 
 doi={10.1109/ICPADS.2010.76}, 
-ISSN={1521-9097},}
-
-% Map Reduce
-% Preprocessing
-% Vector data
-% Tile processing (page 38)
-% description:
-% - Input: Geographic feature list
-% - Map: Emit each to all overlapping latitude/longitude rectangles (tiles)
-% - Shuffle: sort by key (key = Rect. Id)
-% - Reduce: Render tiles using data for all enclosed features
-% - Output: Rendered tiles (pyramid)
-@inproceedings{dean2009lessons,
-author = {Dean, Jeff},
-booktitle = {Keynote presentation from LADIS},
-title = {{Designs, lessons and advice from building large distributed systems}},
-year = {2009}
+ISSN={1521-9097},
 }
 
-% Map Reduce
-% Query Language
+@article{dean2009designs,
+  title={Designs, lessons and advice from building large distributed systems},
+  author={Dean, Jeff},
+  journal={Keynote from LADIS},
+  year={2009}
+}
+
 @inproceedings{eldawy2014pigeon,
 author = {Eldawy, Ahmed and Mokbel, Mohamed F},
-title = {{Pigeon: A Spatial MapReduce Language}}
+publisher = {IEEE},
+title = {Pigeon: A Spatial MapReduce Language},
+booktitle = {ICDE},
+year = {2014}
 }
 
-% Map Reduce
-% Pig
 @inproceedings{olston2008pig,
 author = {Olston, Christopher and Reed, Benjamin and Srivastava, U and Kumar, Ravi},
 booktitle = {Proceedings of the 2008 ACM SIGMOD international conference on Management of data},
+publisher = {ACM},
 isbn = {9781605581026},
 pages = {1099--1110},
 title = {{Pig latin: a not-so-foreign language for data processing}},
@@ -367,19 +464,6 @@ title={Evaluating MapReduce for Multi-core and Multiprocessor Systems},
 year={2007}, 
 month={Feb}, 
 pages={13-24}, 
-keywords={fault tolerance;multi-threading;multiprocessing systems;performance evaluation;scheduling;MapReduce;Phoenix;data partitioning;distributed system;dynamic task scheduling;error recovery;fault tolerance;functional-style code;multicore system;multiprocessor system;programming API and;shared-memory systems;thread creation;Concurrent computing;Dynamic scheduling;Fault tolerance;Laboratories;Multiprocessing systems;Parallel programming;Processor scheduling;Programming profession;Runtime;Yarn}, 
-doi={10.1109/HPCA.2007.346181},}
-
-% Cloud Computing
-@article{armbrust2010view,
-author = {Armbrust, Michael and Fox, Armando and Griffith, Rean and Joseph, Anthony D and Katz, Randy and Konwinski, Andy and Lee, Gunho and Patterson, David and Rabkin, Ariel and Stoica, Ion and Others and Armbrust, By},
-journal = {Communications of the ACM},
-number = {4},
-pages = {50--58},
-publisher = {ACM},
-title = {{A view of cloud computing}},
-volume = {53},
-year = {2010}
 }
 
 
@@ -392,15 +476,45 @@ year = {2010}
 % - 
 
 
-@article{stolte2002polaris,
-author = {Stolte, Chris and Tang, Diane and Hanrahan, Pat},
-journal = {Visualization and Computer Graphics, IEEE Transactions on},
-number = {1},
-pages = {52--65},
-publisher = {IEEE},
-title = {{Polaris: A system for query, analysis, and visualization of multidimensional relational databases}},
-volume = {8},
-year = {2002}
+
+% MATH RELEVANT TO GENERALIZATION
+
+@article{kennedy2006compact,
+  title={Compact packings of the plane with two sizes of discs},
+  author={Kennedy, Tom},
+  journal={Discrete \& Computational Geometry},
+  volume={35},
+  number={2},
+  pages={255--267},
+  year={2006},
+  publisher={Springer}
+}
+
+% SPATIAL INDEXING
+
+@article{dutton1999hierarchical,
+  title={A hierarchical coordinate system for geoprocessing and cartography},
+  author={Dutton, Geoffrey H},
+  journal={Lecture Notes in Earth Sciences, Berlin Springer Verlag},
+  volume={79},
+  year={1999}
+}
+
+
+% SPATIAL QUERY PREDICTION
+
+
+
+
+
+% GENERALIZATION
+
+@inproceedings{kefaloukos2014declarative,
+  title={Declarative Cartography: In-Database Map Generalization of Geospatial Datasets},
+  author={Kefaloukos, Pimin Konstantin and Salles, Marcos Vaz and Zachariasen, Martin},
+  organization = {IEEE},
+  year = {2014},
+  booktitle = {ICDE}
 }
 
 @inproceedings{kefaloukos2014declarative,
@@ -426,19 +540,6 @@ title = {{Efficient Spatial Sampling of Large Geographical Tables}},
 year = {2012}
 }
 
-@inproceedings{woodruff1998constant,
-address = {New York, NY, USA},
-author = {Woodruff, Allison and Landay, James and Stonebraker, Michael},
-booktitle = {Proceedings of the working conference on Advanced visual interfaces},
-doi = {10.1145/948496.948505},
-pages = {57--65},
-publisher = {ACM},
-series = {AVI '98},
-title = {{Constant information density in zoomable interfaces}},
-url = {http://doi.acm.org/10.1145/948496.948505},
-year = {1998}
-}
-
 @article{harrie1999constraint,
 author = {Harrie, Lars},
 doi = {10.1559/152304099782424884},
@@ -461,29 +562,6 @@ year = {1999}
   year={2007}
 }
 
-@article{topfer1966principles,
-author = {T\"{o}pfer, Friedrich and Pillewizer, Wolfgang},
-journal = {Cartographic Journal, The},
-number = {1},
-pages = {10--16},
-publisher = {Maney Publishing},
-title = {{The principles of selection}},
-volume = {3},
-year = {1966}
-}
-
-@article{kennedy2006compact,
-  title={Compact packings of the plane with two sizes of discs},
-  author={Kennedy, Tom},
-  journal={Discrete \& Computational Geometry},
-  volume={35},
-  number={2},
-  pages={255--267},
-  year={2006},
-  publisher={Springer}
-}
-
-
 @inproceedings{shahaf2013informationcartography,
 address = {New York, NY, USA},
 author = {Shahaf, Dafna and Yang, Jaewon and Suen, Caroline and Jacobs, Jeff and Wang, Heidi and Leskovec, Jure},
@@ -498,22 +576,6 @@ url = {http://doi.acm.org/10.1145/2487575.2487690},
 year = {2013}
 }
 
-@inproceedings{yan2011timelines,
-address = {New York, NY, USA},
-author = {Yan, Rui and Wan, Xiaojun and Otterbacher, Jahna and Kong, Liang and Li, Xiaoming and Zhang, Yan},
-booktitle = {Proceedings of the 34th International ACM SIGIR Conference on Research and Development in Information Retrieval},
-doi = {10.1145/2009916.2010016},
-isbn = {978-1-4503-0757-4},
-pages = {745--754},
-publisher = {ACM},
-series = {SIGIR '11},
-title = {{Evolutionary Timeline Summarization: A Balanced Optimization Framework via Iterative Substitution}},
-url = {http://doi.acm.org/10.1145/2009916.2010016},
-year = {2011}
-}
-
-
-
 @article{weibel1999generalising,
 author = {Weibel, Robert and Dutton, Geoffrey},
 journal = {Geographical information systems},
@@ -522,30 +584,6 @@ publisher = {Wiley New York},
 title = {{Generalising spatial data and dealing with multiple representations}},
 volume = {1},
 year = {1999}
-}
-
-@article{stolte2003multiscale,
-author = {Stolte, Chris and Tang, Diane and Hanrahan, Pat},
-doi = {10.1109/TVCG.2003.1196005},
-issn = {1077-2626},
-journal = {Visualization and Computer Graphics, IEEE Transactions on},
-month = apr,
-number = {2},
-pages = {176--187},
-publisher = {IEEE},
-title = {{Multiscale visualization using data cubes}},
-url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1196005},
-volume = {9},
-year = {2003}
-}
-
-@inproceedings{van1990reactive,
-  title={Reactive data structures for geographic information systems},
-  author={van Oosterom, Peter},
-  booktitle={Auto-Carto},
-  volume={9},
-  pages={665--674},
-  year={1990}
 }
 
 @article{bereuter2013real,
@@ -557,6 +595,15 @@ year = {2003}
   pages={271--281},
   year={2013},
   publisher={Taylor \& Francis}
+}
+
+@inproceedings{van1990reactive,
+  title={Reactive data structures for geographic information systems},
+  author={van Oosterom, Peter},
+  booktitle={Auto-Carto},
+  volume={9},
+  pages={665--674},
+  year={1990}
 }
 
 @inproceedings{haunert2006landcover,
@@ -591,12 +638,11 @@ title = {{The GAP-tree, an approach to ‘on-the-fly’map generalization of an area
 year = {1995}
 }
 
-@article{dutton1999hierarchical,
-  title={A hierarchical coordinate system for geoprocessing and cartography},
-  author={Dutton, Geoffrey H},
-  journal={Lecture Notes in Earth Sciences, Berlin Springer Verlag},
-  volume={79},
-  year={1999}
+@inproceedings{schmid2013opensciencemap,
+author = {Schmid, Falko and Janetzek, Hannes},
+booktitle = {Proceedings of 26th International Cartographic Conference},
+title = {{A Method for High-Level Street Network Extraction of OpenStreetMap Data in OpenScienceMap}},
+year = {2013}
 }
 
 @article{de2004simplifying,
@@ -610,57 +656,75 @@ year = {1995}
   publisher={Elsevier}
 }
 
-@book{harley1987cartography,
-  title={Vol. 1: Cartography in prehistoric, ancient, and medieval Europe and the Mediterranean},
-  author={Harley, JB and Woodward, D},
-  year={1987},
-  publisher={Chicago: University of Chicago Press}
+
+% (MULTI-SCALE AND SINGLE-SCALE) DATA ABSTRACTION OUTSIDE GEOGRAPHY
+
+@inproceedings{yan2011timelines,
+address = {New York, NY, USA},
+author = {Yan, Rui and Wan, Xiaojun and Otterbacher, Jahna and Kong, Liang and Li, Xiaoming and Zhang, Yan},
+booktitle = {Proceedings of the 34th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+doi = {10.1145/2009916.2010016},
+isbn = {978-1-4503-0757-4},
+pages = {745--754},
+publisher = {ACM},
+series = {SIGIR '11},
+title = {{Evolutionary Timeline Summarization: A Balanced Optimization Framework via Iterative Substitution}},
+url = {http://doi.acm.org/10.1145/2009916.2010016},
+year = {2011}
 }
 
-@book{tufte1983visual,
-  title={The visual display of quantitative information},
-  author={Tufte, Edward R and Graves-Morris, PR},
-  volume={2},
-  year={1983},
-  publisher={Graphics press Cheshire, CT}
+
+@article{stolte2003multiscale,
+author = {Stolte, Chris and Tang, Diane and Hanrahan, Pat},
+doi = {10.1109/TVCG.2003.1196005},
+issn = {1077-2626},
+journal = {Visualization and Computer Graphics, IEEE Transactions on},
+month = apr,
+number = {2},
+pages = {176--187},
+publisher = {IEEE},
+title = {{Multiscale visualization using data cubes}},
+url = {http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1196005},
+volume = {9},
+year = {2003}
 }
 
-@book{robinson1982early,
-  title={Early thematic mapping in the history of cartography},
-  author={Robinson, Arthur H},
-  year={1982},
-  publisher={University of Chicago Press Chicago}
+@article{stolte2002polaris,
+author = {Stolte, Chris and Tang, Diane and Hanrahan, Pat},
+journal = {Visualization and Computer Graphics, IEEE Transactions on},
+number = {1},
+pages = {52--65},
+publisher = {IEEE},
+title = {{Polaris: A system for query, analysis, and visualization of multidimensional relational databases}},
+volume = {8},
+year = {2002}
 }
 
-@phdthesis{nickerson1994visual,
-  title={Visual programming},
-  author={Nickerson, Jeffrey Vernon},
-  year={1994},
-  school={New York University}
+@article{gansner2005topological,
+author = {Gansner, Emden R and Koren, Yehuda and North, Stephen C},
+doi = {10.1109/TVCG.2005.66},
+issn = {1077-2626},
+journal = {Visualization and Computer Graphics, IEEE Transactions on},
+number = {4},
+pages = {457--468},
+pmid = {16138555},
+publisher = {IEEE},
+title = {{Topological fisheye views for visualizing large graphs}},
+url = {http://www.ncbi.nlm.nih.gov/pubmed/16138555},
+volume = {11},
+year = {2005}
 }
+
+% MOTIVATION
+% add: howto, data enthusiast
 
 @article{lomet2012warstories,
-annote = {motivation},
 author = {Lomet, David},
 journal = {Database Engineering Bulletin},
 number = {2},
 title = {{Special Issue on Big DataWar Stories}},
 volume = {35},
 year = {2012}
-}
-
-@inproceedings{schmid2013opensciencemap,
-author = {Schmid, Falko and Janetzek, Hannes},
-booktitle = {Proceedings of 26th International Cartographic Conference},
-title = {{A Method for High-Level Street Network Extraction of OpenStreetMap Data in OpenScienceMap}},
-year = {2013}
-}
-
-@article{jacques1967semiologie,
-  title={S{\'e}miologie graphique},
-  author={Jacques, Bertin},
-  journal={Paris: Mouton, 1966, 432p},
-  year={1967}
 }
 
 @inproceedings{agrawal2012bigdata,
@@ -671,6 +735,94 @@ keywords = {big data,bigpicture,datajournalism,pass1},
 mendeley-tags = {bigpicture,datajournalism,pass1},
 title = {{Challenges and Opportunities with Big Data}},
 year = {2012}
+}
+
+% DECLARATIVE CARTOGRAPHY: RELATED WORK
+
+% recommended by Weibel
+@book{tomlin1990map,
+  title={A map algebra},
+  author={Tomlin, C Dana},
+  year={1990},
+  publisher={Harvard Graduate School of Design}
+}
+
+
+% MAP AND VISUALIZATION PRINCIPLES
+
+@inproceedings{woodruff1998constant,
+address = {New York, NY, USA},
+author = {Woodruff, Allison and Landay, James and Stonebraker, Michael},
+booktitle = {Proceedings of the working conference on Advanced visual interfaces},
+doi = {10.1145/948496.948505},
+pages = {57--65},
+publisher = {ACM},
+series = {AVI '98},
+title = {{Constant information density in zoomable interfaces}},
+url = {http://doi.acm.org/10.1145/948496.948505},
+year = {1998}
+}
+
+@article{topfer1966principles,
+author = {T\"{o}pfer, Friedrich and Pillewizer, Wolfgang},
+journal = {Cartographic Journal, The},
+number = {1},
+pages = {10--16},
+publisher = {Maney Publishing},
+title = {{The principles of selection}},
+volume = {3},
+year = {1966}
+}
+
+@article{jacques1967semiologie,
+  title={S{\'e}miologie graphique},
+  author={Jacques, Bertin},
+  journal={Paris: Mouton, 1966, 432p},
+  year={1967}
+}
+
+@phdthesis{nickerson1994visual,
+  title={Visual programming},
+  author={Nickerson, Jeffrey Vernon},
+  year={1994},
+  school={New York University}
+}
+
+@book{tufte1983visual,
+  title={The visual display of quantitative information},
+  author={Tufte, Edward R and Graves-Morris, PR},
+  volume={2},
+  year={1983},
+  publisher={Graphics press Cheshire, CT}
+}
+
+% CARTOGRAPHY BACKGROUND
+
+@book{robinson1982early,
+  title={Early thematic mapping in the history of cartography},
+  author={Robinson, Arthur H},
+  year={1982},
+  publisher={University of Chicago Press Chicago}
+}
+
+@book{harley1987cartography,
+  title={Vol. 1: Cartography in prehistoric, ancient, and medieval Europe and the Mediterranean},
+  author={Harley, JB and Woodward, D},
+  year={1987},
+  publisher={Chicago: University of Chicago Press}
+}
+
+% CLOUD COMPUTING
+
+@article{armbrust2010view,
+author = {Armbrust, Michael and Fox, Armando and Griffith, Rean and Joseph, Anthony D and Katz, Randy and Konwinski, Andy and Lee, Gunho and Patterson, David and Rabkin, Ariel and Stoica, Ion and Others and Armbrust, By},
+journal = {Communications of the ACM},
+number = {4},
+pages = {50--58},
+publisher = {ACM},
+title = {{A view of cloud computing}},
+volume = {53},
+year = {2010}
 }
 
 
