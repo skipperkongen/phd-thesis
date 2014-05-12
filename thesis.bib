@@ -20,15 +20,13 @@ title = {{PNUTS : Yahoo!Õ s Hosted Data Serving Platform}},
 year = {2008}
 }
 
-@article{dean2008mapreduce,
+% FIX REFERENCE
+@inproceedings{dean04mapreduce,
 author = {Dean, Jeffrey and Ghemawat, Sanjay},
-journal = {Communications of the ACM},
-number = {1},
-pages = {107--113},
-publisher = {ACM},
-title = {{MapReduce: simplified data processing on large clusters}},
-volume = {51},
-year = {2008}
+booktitle = {OSDI'04: Sixth Symposium on Operating System Design and Implementation},
+pages = {1--13},
+title = {{MapReduce: {Simplified} data processing on large clusters}},
+year = {2004}
 }
 
 @article{chang2008bigtable,
@@ -316,8 +314,9 @@ year = {2009}
  keywords = {MapReduce, skew, theta join processing},
 }
 
+% FIX REFERENCE
 % Hadoop GIS: A High Performance Spatial Data Warehousing System over Mapreduce
-@article{aji2013hadoopgis,
+@article{aji2013HadoopGIS,
  author = {Aji, Ablimit and Wang, Fusheng and Vo, Hoang and Lee, Rubao and Liu, Qiaoling and Zhang, Xiaodong and Saltz, Joel},
  title = {Hadoop GIS: A High Performance Spatial Data Warehousing System over Mapreduce},
  journal = {Proc. VLDB Endow.},
@@ -490,6 +489,48 @@ pages={13-24},
   publisher={Springer}
 }
 
+@article{alimonti2000some,
+title={Some APX-completeness results for cubic graphs},
+author={Alimonti, Paola and Kann, Viggo},
+journal={Theoretical Computer Science},
+volume={237},
+number={1},
+pages={123--134},
+year={2000},
+publisher={Elsevier}
+}
+
+@article{garey1977rectilinear,
+title={The Rectilinear Steiner Tree Problem is NP-complete},
+author={Garey, Michael R and Johnson, David S.},
+journal={SIAM Journal on Applied Mathematics},
+volume={32},
+number={4},
+pages={826--834},
+year={1977},
+publisher={SIAM}
+}
+
+@book{vazirani2001approximation,
+author = {Vazirani, Vijay V.},
+ title = {Approximation algorithms},
+ year = {2001},
+ isbn = {3-540-65367-8},
+ publisher = {Springer-Verlag New York, Inc.},
+ address = {New York, NY, USA},
+ }
+ 
+@article{rajagopalan1998primal,
+title={Primal-dual {RNC} approximation algorithms for set cover and covering integer programs},
+author={Rajagopalan, Sridhar and Vazirani, Vijay V},
+journal={SIAM Journal on Computing},
+volume={28},
+number={2},
+pages={525--540},
+year={1998},
+publisher={SIAM}
+}
+
 % SPATIAL INDEXING
 
 @article{dutton1999hierarchical,
@@ -509,12 +550,35 @@ pages={13-24},
 
 % GENERALIZATION
 
+% constraint based generalization
+@article{harrie2007modelling,
+title={Modelling the overall process of generalisation},
+author={Harrie, Lars and Weibel, Robert},
+journal={Generalisation of geographic information: cartographic modelling and applications},
+pages={67--88},
+year={2007},
+publisher={Elsevier}
+}
+
+% Ladder/star approach
+@article{foerster2010challenges,
+title={Challenges for automated generalisation at European mapping agencies: a qualitative and quantitative analysis},
+author={Foerster, Theodor and Stoter, Jantien and Kraak, Menno-Jan},
+journal={Cartographic Journal, The},
+volume={47},
+number={1},
+pages={41--54},
+year={2010},
+publisher={Maney Publishing}
+}
+
+
 @inproceedings{kefaloukos2014declarative,
-  title={Declarative Cartography: In-Database Map Generalization of Geospatial Datasets},
-  author={Kefaloukos, Pimin Konstantin and Salles, Marcos Vaz and Zachariasen, Martin},
-  organization = {IEEE},
-  year = {2014},
-  booktitle = {ICDE}
+title={Declarative Cartography: In-Database Map Generalization of Geospatial Datasets},
+author={Kefaloukos, Pimin Konstantin and Salles, Marcos Vaz and Zachariasen, Martin},
+organization = {IEEE},
+year = {2014},
+booktitle = {ICDE}
 }
 
 @inproceedings{kefaloukos2014declarative,
@@ -527,7 +591,6 @@ publisher = {ACM},
 title = {{Efficient Spatial Sampling of Large Geographical Tables}},
 year = {2012}
 }
-
 
 @inproceedings{sarma2012fusiontables,
 author = {{Das Sarma}, Anish and Lee, Hongrae and Gonzalez, Hector and Madhavan, Jayant and Halevy, Alon},
@@ -556,10 +619,10 @@ year = {1999}
 }
 
 @inproceedings{foerster2007towards,
-  title={Towards a formal classification of generalization operators},
-  author={Foerster, Theodor and Stoter, Jantien and Kobben, B},
-  booktitle={Proceedings of the 23rd International Cartographic Conference},
-  year={2007}
+title={Towards a formal classification of generalization operators},
+author={Foerster, Theodor and Stoter, Jantien and Kobben, B},
+booktitle={Proceedings of the 23rd International Cartographic Conference},
+year={2007}
 }
 
 @inproceedings{shahaf2013informationcartography,
@@ -576,6 +639,7 @@ url = {http://doi.acm.org/10.1145/2487575.2487690},
 year = {2013}
 }
 
+% FIX REFERENCE
 @article{weibel1999generalising,
 author = {Weibel, Robert and Dutton, Geoffrey},
 journal = {Geographical information systems},
@@ -716,7 +780,36 @@ year = {2005}
 }
 
 % MOTIVATION
-% add: howto, data enthusiast
+ 
+% why we need programmable methods
+@article{rieger1993consensus,
+author = {Rieger, Monika K and Coulson, Michael R C},
+journal = {Cartographica: The International Journal for Geographic Information and Geovisualization},
+number = {2},
+pages = {69--80},
+publisher = {UT Press},
+title = {{Consensus or Confusion: {Cartographers'} Knowledge of Generalization}},
+volume = {30},
+year = {1993}
+}
+
+@article{morton2014support,
+title={Support the Data Enthusiast: Challenges for Next-Generation Data-Analysis Systems},
+author={Morton, Kristi and Balazinska, Magdalena and Grossman, Dan and Mackinlay, Jock},
+journal={Proceedings of the VLDB Endowment},
+volume={7},
+number={6},
+year={2014}
+}
+
+@article{meliou2011reverse,
+author = {Meliou, Alexandra and Gatterbauer, Wolfgang and Suciu, Dan},
+journal = {Proc. VLDB Endowment},
+number = {12},
+title = {{Reverse data management}},
+volume = {4},
+year = {2011}
+}
 
 @article{lomet2012warstories,
 author = {Lomet, David},
@@ -730,10 +823,34 @@ year = {2012}
 @inproceedings{agrawal2012bigdata,
 author = {Agrawal, Divyakant and Bernstein, Philip and Bertino, Elisa and Davidson, Susan and Dayal, Umeshwar and Franklin, Michael and Gehrke, Johannes and Haas, Laura and Halevy, Alon and Han, Jiawei and Others},
 booktitle = {A community white paper developed by leading researches across the United States},
-file = {:Users/kostas/Library/Application Support/Mendeley Desktop/Downloaded/Agrawal - 2012 - Challenges and Opportunities with Big Data.pdf:pdf},
-keywords = {big data,bigpicture,datajournalism,pass1},
-mendeley-tags = {bigpicture,datajournalism,pass1},
 title = {{Challenges and Opportunities with Big Data}},
+year = {2012}
+}
+
+@inproceedings{cohen2011journalism,
+author = {Cohen, Sarah},
+booktitle = {Proc. Fifth Biennial Conference on Innovative Data Systems Research, CIDR 2011},
+pages = {148--151},
+title = {Computational Journalism: {A} Call to Arms to Database Researchers},
+year = {2011}
+}
+
+@inproceedings{sankaranarayanan2009twitterstand,
+author = {Sankaranarayanan, Jagan and Samet, Hanan and Teitler, Benjamin E and Lieberman, Michael D and Sperling, Jon},
+booktitle = {Proc. 17th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems},
+isbn = {9781605586496},
+organization = {ACM},
+pages = {42--51},
+title = {{Twitterstand: news in tweets}},
+year = {2009}
+}
+
+@inproceedings{samet2012duking,
+author = {Samet, Hanan and Fruin, Brendan C and Nutanong, Sarana},
+booktitle = {Proc. First ACM SIGSPATIAL International Workshop on Mobile Geographic Information Systems},
+organization = {ACM},
+pages = {41--48},
+title = {{Duking it out at the smartphone mobile app mapping api corral: {Apple}, {Google}, and the competition}},
 year = {2012}
 }
 
@@ -741,12 +858,11 @@ year = {2012}
 
 % recommended by Weibel
 @book{tomlin1990map,
-  title={A map algebra},
-  author={Tomlin, C Dana},
-  year={1990},
-  publisher={Harvard Graduate School of Design}
+title={A map algebra},
+author={Tomlin, C Dana},
+year={1990},
+publisher={Harvard Graduate School of Design}
 }
-
 
 % MAP AND VISUALIZATION PRINCIPLES
 
@@ -824,6 +940,326 @@ title = {{A view of cloud computing}},
 volume = {53},
 year = {2010}
 }
+
+
+%%% FROM CVL
+
+
+
+% TRADITIONAL GENERALIZATION
+
+@misc{sld,
+  author = {Open Geospatial Consortium},
+  title = {{Styled Layer Descriptor}},
+  howpublished = "\url{http://www.opengeospatial.org/standards/sld}",
+  year = {2007}, 
+  note = "[Online; accessed 18-July-2013]"
+}
+
+@misc{mapnik,
+author = {Artem Pavlenko},
+title = {{Mapnik}},
+howpublished = "\url{http://mapnik.org/}",
+year = {2011}, 
+note = "[Online; accessed 18-July-2013]"
+}
+
+@article{gruenreich1985cag,
+author = {Gruenreich, Dietmar},
+journal = {Papers CERCO Cartography course},
+title = {{Computer-Assisted Generalisation}},
+year = {1985}
+}
+
+@article{brassel1988generalization,
+author = {Brassel, Kurt E and Weibel, Robert},
+doi = {10.1080/02693798808927898},
+journal = {International journal of geographical information systems},
+number = {3},
+pages = {229--244},
+title = {{A review and conceptual framework of automated map generalization}},
+url = {http://www.tandfonline.com/doi/abs/10.1080/02693798808927898},
+volume = {2},
+year = {1988}
+}
+
+@book{international73multilingual,
+title={Multilingual dictionary of technical terms in cartography},
+author={International Cartographic Association. Commission Definition, Classification and Standardization of Technical Terms in Cartography},
+year={1973},
+publisher={Steiner}
+}
+
+@inproceedings{regnauld2006improving,
+author = {Regnauld, Nicolas},
+booktitle = {Proceedings of ISPRS workshop: multiple representation and interoperability of spatial data},
+pages = {1--5},
+title = {{Improving efficiency for developing automatic generalisation solutions}},
+year = {2006}
+}
+
+% FIX REFERENCE
+@misc{bono2013factivism,
+author = {Dan Gillmor},
+title = {{'Factivism' for every field: why {Bono} is right to want more data and evidence}},
+howpublished = "\url{http://www.guardian.co.uk/commentisfree/2013/feb/28/bono-ted-talk-facktivist-is-way-forward}",
+year = {2013}, 
+note = "The Guardian. [Online; accessed 9-April-2013]"
+}
+
+@article{ordonez10udf, 
+author={Ordonez, C.}, 
+journal={Knowledge and Data Engineering, IEEE Transactions on}, 
+title={Statistical Model Computation with {UDFs}}, 
+year={2010}, 
+volume={22}, 
+number={12}, 
+pages={1752-1765}, 
+doi={10.1109/TKDE.2010.44}, 
+ISSN={1041-4347},}
+
+@article{hellerstein12madlib,
+ author = {Hellerstein, Joseph M. and R{\'e}, Christoper and Schoppmann, Florian and Wang, Daisy Zhe and Fratkin, Eugene and Gorajek, Aleksander and Ng, Kee Siong and Welton, Caleb and Feng, Xixuan and Li, Kun and Kumar, Arun},
+ title = {The {MADlib} analytics library: or {MAD} skills, the {SQL}},
+ journal = {Proc. VLDB Endow.},
+ issue_date = {August 2012},
+ volume = {5},
+ number = {12},
+ month = aug,
+ year = {2012},
+ issn = {2150-8097},
+ pages = {1700--1711},
+ numpages = {12},
+ url = {http://dl.acm.org/citation.cfm?id=2367502.2367510},
+ acmid = {2367510},
+ publisher = {VLDB Endowment},
+} 
+
+@article{gaffuri12vectortiles,
+author = {Gaffuri, Julien},
+journal = {Geographic Information Science},
+pages = {87--101},
+publisher = {Springer},
+title = {{Toward Web Mapping with Vector Data}},
+year = {2012}
+}
+
+
+@article{hilbert1891ueber,
+author = {Hilbert, David},
+journal = {Mathematische Annalen},
+pages = {459--460},
+title = {{\"{U}ber die stetige Abbildung einer Linie auf ein Fl\"{a}chenst\"{u}ck}},
+volume = {38},
+year = {1891}
+}
+
+@article{ware2003generalization_sa,
+annote = {Automated map generalization with multiple operators: a simulated annealing approach},
+author = {Ware, J. Mark and Jones, Christopher B. and Thomas, Nathan},
+isbn = {1365881031000},
+issn = {1365-8816},
+journal = {International Journal of Geographical Information Science},
+month = dec,
+number = {8},
+pages = {743--769},
+title = {{Automated map generalization with multiple operators: a simulated annealing approach}},
+url = {http://www.tandfonline.com/doi/abs/10.1080/13658810310001596085},
+volume = {17},
+year = {2003}
+}
+
+@phdthesis{schmid2008automated,
+author = {Schmid, Stefan and Of, Valuation},
+number = {June},
+school = {Geographisches Institut der Universit\{\"{a}\}t Z\{\"{u}\}rich},
+title = {{Automated constraint-based evaluation of cartographic generalization solutions}},
+year = {2008}
+}
+
+@phdthesis{cecconi2003integration,
+author = {Cecconi, Alessandro},
+school = {Universit\{\"{a}\}t Z\{\"{u}\}rich},
+title = {{Integration of cartographic generalization and multi-scale databases for enhanced web mapping}},
+year = {2003}
+}
+
+% FIX REFERENCE
+@inproceedings{boncz2005pathfinder,
+author = {Boncz, Peter and Grust, Torsten and van Keulen, Maurice and Manegold, Stefan and Rittinger, Jan and Teubner, Jens},
+title = {Pathfinder: {XQuery} --- the relational way},
+booktitle = {Proc. 31st international conference on Very large data bases},
+series = {VLDB '05},
+year = {2005},
+isbn = {1-59593-154-6},
+location = {Trondheim, Norway},
+pages = {1322--1325},
+numpages = {4},
+url = {http://dl.acm.org/citation.cfm?id=1083592.1083764},
+publisher = {VLDB Endowment}}
+} 
+
+% FIX REFERENCE
+@inproceedings{grust2009ferry,
+author = {Grust, Torsten and Mayr, Manuel and Rittinger, Jan and Schreiber, Tom},
+title = {{FERRY:} database-supported program execution},
+booktitle = {Proc. 2009 ACM SIGMOD International Conference on Management of data},
+series = {SIGMOD '09},
+year = {2009},
+isbn = {978-1-60558-551-2},
+location = {Providence, Rhode Island, USA},
+pages = {1063--1066},
+numpages = {4},
+url = {http://doi.acm.org/10.1145/1559845.1559982},
+doi = {10.1145/1559845.1559982},
+publisher = {ACM},
+address = {New York, NY, USA},
+} 
+
+% FIX REFERENCE
+@inproceedings{guttman1984rtree,
+author = {Guttman, Antonin},
+title = {R-trees: a dynamic index structure for spatial searching},
+booktitle = {Proc. 1984 ACM SIGMOD international conference on Management of data},
+series = {SIGMOD '84},
+year = {1984},
+pages = {47--57},
+publisher = {ACM}
+} 
+
+% FIX REFERENCE
+@inproceedings{hellerstein1995gist,
+author = {Hellerstein, Joseph M. and Naughton, Jeffrey F. and Pfeffer, Avi},
+title = {Generalized Search Trees for Database Systems},
+booktitle = {Proc. 21th International Conference on Very Large Data Bases},
+series = {VLDB '95},
+year = {1995},
+pages = {562--573}}
+} 
+
+% FIX REFERENCE
+@inproceedings{blakeley2008dotnet,
+ author = {Blakeley, Jos{\'e} A. and Rao, Vineet and Kunen, Isaac and Prout, Adam and Henaire, Mat and Kleinerman, Christian},
+ title = {{.NET} database programmability and extensibility in {Microsoft SQL} server},
+ booktitle = {Proc. 2008 ACM SIGMOD international conference on Management of data},
+ series = {SIGMOD '08},
+ year = {2008},
+ pages = {1087--1098},
+ publisher = {ACM}
+} 
+
+% FIX REFERENCE
+@inproceedings{ordonez2007statistics,
+ author = {Ordonez, Carlos},
+ title = {Building statistical models and scoring with {UDFs}},
+ booktitle = {Proc. 2007 ACM SIGMOD international conference on Management of data},
+ series = {SIGMOD '07},
+ year = {2007},
+ pages = {1005--1016},
+ publisher = {ACM}}
+} 
+
+% FIX REFERENCE
+@article{liu2012cologne,
+ author = {Liu, Changbin and Ren, Lu and Loo, Boon Thau and Mao, Yun and Basu, Prithwish},
+ title = {Cologne: a declarative distributed constraint optimization platform},
+ journal = {Proc. VLDB Endow.},
+ volume = {5},
+ number = {8},
+ year = {2012},
+ pages = {752--763}
+} 
+
+% FIX REFERENCE ???
+@inproceedings{aji2012hadoopspatial,
+ author = {Aji, Ablimit and Wang, Fusheng and Saltz, Joel H.},
+ title = {Towards building a high performance spatial query system for large scale medical imaging data},
+ booktitle = {Proc. 20th International Conference on Advances in Geographic Information Systems},
+ series = {SIGSPATIAL '12},
+ year = {2012},
+ pages = {309--318},
+ publisher = {ACM}
+} 
+
+% FIX REFERENCE
+@inproceedings{arasu2009dedupalog,
+author = {Arasu, Arvind and Re, Christopher and Suciu, Dan},
+title = {Large-Scale Deduplication with Constraints Using {Dedupalog}},
+booktitle ={Proc. 2009 International Conference on Data Engineering, ICDE'09},
+year = {2009},
+pages = {952-963}
+}
+
+% FIX REFERENCE
+@inproceedings{binnig2007reverseqp,
+author = {Binnig, Carsten and Kossmann, Donald and Lo, Eric},
+title = {Reverse Query Processing},
+booktitle = {Proc. 2007 IEEE International Conference on Data Engineering, ICDE'07},
+year = {2007},
+pages = {506-515}
+} 
+
+% FIX REFERENCE
+@inproceedings{binnig2007symbolicqp,
+author = {Binnig, Carsten and Kossmann, Donald and Lo, Eric and \"{O}zsu, M. Tamer},
+title = {{QAGen:} generating query-aware test databases},
+booktitle = {Proc. 2007 ACM SIGMOD international conference on Management of data},
+series = {SIGMOD '07},
+year = {2007},
+pages = {341--352},
+publisher = {ACM}
+} 
+
+@article{gruenreich1992atkis,
+author = {Gruenreich, Dietmar},
+journal = {From Digital Map Series to Geo-Information Systems, Geologisches Jarhrbuch Series A. Hannover, Germany: Federal Institute of Geosciences and Resources},
+title = {{ATKIS --- a topographic information system as a basis for GIS and digital cartography in Germany}},
+year = {1992}
+}
+
+@inproceedings{shea1989cartographic,
+author = {Shea, K Stuart and McMaster, Robert B},
+booktitle = {Proceedings for Auto-Carto},
+pages = {56--67},
+title = {{Cartographic generalization in a digital environment: When and how to generalize}},
+volume = {9},
+year = {1989}
+}
+
+@article{foerster2008classification,
+author = {Foerster, Theodor and Morales, Javier and Stoter, J E},
+journal = {Proc. 6th Geographic Information Days},
+pages = {141--156},
+title = {{A classification of generalisation operators formalised in OCL}},
+volume = {32},
+year = {2008}
+}
+
+@article{frank1994multiscaletree,
+annote = {background: visual clutter},
+author = {Frank, Andrew U. and Timpf, Sabine},
+journal = {Computers and Graphics},
+number = {6},
+pages = {823--829},
+title = {{Multiple representations for cartographic objects in a multi-scale tree - an intelligent graphical zoom.}},
+volume = {18},
+year = {1994}
+}
+
+% FIX REFERENCE
+@article{hellerstein2012madlib,
+ author = {Hellerstein, Joseph M. and R{\'e}, Christoper and Schoppmann, Florian and Wang, Daisy Zhe and Fratkin, Eugene and Gorajek, Aleksander and Ng, Kee Siong and Welton, Caleb and Feng, Xixuan and Li, Kun and Kumar, Arun},
+ title = {{The MADlib analytics library: or MAD skills, the SQL}},
+ journal = {Proc. VLDB Endow.},
+ volume = {5},
+ number = {12},
+ year = {2012},
+ pages = {1700--1711}
+} 
+
+
+
+
 
 
 
