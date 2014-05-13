@@ -1,5 +1,8 @@
 % !TEX root = ./thesis.tex
-\chapter{Declarative Multi-scale Graph Abstraction}
+\chapter{Declarative Multi-scale Visualization of Large Graphs}
+
+% Define clear usecase
+% - Zoomable visualizations of large social networks
 
 We want to:
 \begin{itemize}
@@ -9,21 +12,21 @@ We want to:
 \item Support declarative languages for creating zoomable graph visualizations
 \end{itemize}
 
-We assume that:
+We assume that there:
 
 \begin{itemize}
-\item There exists methods for transforming data into graph form
-\item There exists methods for embedding graphs in the plane, i.e. cast nodes into two-dimensional points and edges into two-dimensional linestrings. 
+\item Exists methods for translating any data into nodes and edges form; we will give examples
+\item Exists methods for embedding nodes and edges in the plane, i.e. computing two-dimensional coordinates for nodes and edges
 \end{itemize}
 
 For this to work, we must:
 \begin{itemize}
-\item Define projections for translating between topological graphs and plane-embedded graphs, i.e. graph layout algorithms
-\item Formulate a scale-based \emph{view model} for graphs
-
+\item Define a notion of \emph{resolution} or \emph{scale} for graphs; it is sufficient to define a unit for the two-dimensional coordinate system, e.g. meters
+\item Define a query model for graph views, e.g. the pyramid model because it is scalable
+\item Define metrics for evaluating graph views, e.g. information density metrics (see Woodruff et al.~\cite{woodruff1998constant})
 \item Define valid transformation functions for turning one graph into another graph
+
 \item Formulate constraints that can be evaluated over graph views
-\item Define metrics for scale-based graph views, e.g. information density metrics
 \item Define a distance function 
 \item Define an equivalence relation between graph views at different scales, i.e. what are the constraints that must hold when transforming graphs between scales
 
