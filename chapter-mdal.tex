@@ -1,0 +1,66 @@
+% !TEX root = ./thesis.tex
+\chapter{Declarative Multi-scale Graph Abstraction}
+
+We want to:
+\begin{itemize}
+\item Model all data as graphs, because graphs are general (they subsume spatial, temporal and social data). 
+\item Analyze graphs using zoomable graph visualizations
+\item Share visualizations with the world
+\item Support declarative languages for creating zoomable graph visualizations
+\end{itemize}
+
+We assume that:
+
+\begin{itemize}
+\item There exists methods for transforming data into graph form
+\item There exists methods for embedding graphs in the plane, i.e. cast nodes into two-dimensional points and edges into two-dimensional linestrings. 
+\end{itemize}
+
+For this to work, we must:
+\begin{itemize}
+\item Define projections for translating between topological graphs and plane-embedded graphs, i.e. graph layout algorithms
+\item Formulate a scale-based \emph{view model} for graphs
+
+\item Define valid transformation functions for turning one graph into another graph
+\item Formulate constraints that can be evaluated over graph views
+\item Define metrics for scale-based graph views, e.g. information density metrics
+\item Define a distance function 
+\item Define an equivalence relation between graph views at different scales, i.e. what are the constraints that must hold when transforming graphs between scales
+
+\item Define metrics for evaluating scale-based views for graphs, e.g. density metric
+
+
+We need to guide the abstraction process, i.e. objective functions. 
+
+We want the multi-scale data abstraction of graphs to be user-programmable, to support data enthusiasts and professional analysis. We need scalable algorithms and systems that implement the whole deal.
+
+\end{itemize}
+
+% Motivation
+
+\section{Introduction}
+
+\section{Multi-scale Graph Abstraction}
+We want to compute a multi-scale data abstraction for a graph. at a set of discrete scales. For this we need to: Model data (i.e. spatial, temporal, social data) as graphs. Define a scale-based view of graphs (projection of graph into metric space, representation of metric space in pixel space). Define equivalence classes for graphs (subject to constraints)
+\subsection{Modeling Data Domains}
+% how can we model different domains as graphs
+% - spatial
+% - temporal
+% - 
+\subsection{Scale-based View Model}
+
+\subsection{Data Abstraction Operators}
+\subsection{Equivalent Graphs}
+\paragraph{Graph Minor}
+\paragraph{Constraints}
+
+
+\section{Modeling}
+\subsection{Data Model}
+\subsection{Query Model}
+\subsection{Graph Projection}
+\subsection{Scale-based Equivalence}
+
+\section{Related Work}
+
+\section{Conclusion}
