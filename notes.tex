@@ -1,0 +1,425 @@
+\documentclass[11pt, oneside]{article}
+\usepackage{geometry}
+\geometry{letterpaper}  
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{tabu}
+\usepackage{amssymb}
+
+\title{Declarative Cartography: An Algebra for Map Generalization in Relational Databases}
+\author{The Author}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+\begin{itemize}
+\item Why is this work important?
+\item What is the work that it extends?
+\item What are the new challenges?
+\item What are the contributions?
+\end{itemize}
+
+\section{Requirements}
+
+Enlist help in Z\"{u}rich for formulation of requirements. A good source is book: Generalising spatial data and dealing with multiple representations. Section 5 covers requirements, and table 1 has a good overview of operators. Also see uncommented section ``Meta-goals'' in LaTeX source code.
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table*}[htdp] 
+\caption{From book ``Generalising spatial data and dealing with multiple representations''}
+\begin{center}
+\begin{tabular} { p{3.4cm} | p{4.2cm} p{4.2cm} p{4.2cm}}
+\hline
+OPERATOR & Points & Lines & Areas \\
+\hline
+SELECT & Eliminate based on attributes or priorities~\cite{cvl} & Eliminate minor branches~\cite{askweibel} & Eliminate small areas or sub-polygons \\ 
+SIMPLIFY &  & Snap to pixel center~\cite{debfusiontables} & Snap to pixel center~\cite{debfusiontables} \\
+AGGREGATE & Combine similar neighbors &  & Merge with similar neighbors~\cite{gaptree,landcover} \\
+DISPLACE & & & \\
+COLLAPSE & Replace by area symbol &  & Replace by point \\
+\hline
+\end{tabular}
+\end{center}
+\label{default}
+\end{table*}%
+
+%\section{Meta-goals}
+%
+%\begin{itemize}
+%\item Decompose declarative cartography into \emph{first principles} and \emph{fundamental patterns} expressed in relational algebra
+%\item Expose fundamental connections between generalization and constructs in relational algebra such as joins.
+%\item Avoid presenting \emph{recipes}, i.e. mapping specific algorithms to specific blobs of SQL
+%\item Try absolute hardest to be the \emph{complete} and \emph{definitive solution} to in-database generalization
+%\item Provide a solid \emph{skeleton implementation} than is open for further extension, e.g. new constraints, objectives and algorithms
+%\item Should really try hard to address topology for both lines and polygons (bbtg)
+%\item Play to the strengths of databases, e.g. joins, sorting and distribution.
+%\end{itemize}
+
+
+\section{Generalization in Spatial data management}
+A problem in spatial data management is the generalization of spatial data. 
+
+The most typical use case for generalization is that we want to visualize a set of records in a spatial relation on a map at a certain scale. To make the map more readable at low scales, we are allowed to \emph{omit}, \emph{modify} and \emph{combine} records as we please. The intuition is that we want to reduce ``clutter'' by performing these operations. 
+
+As a definition of ``clutter'', we formulate a set of \emph{spatial constraints} that must be satisfied by the records. The idea is that if no constraint is violated, i.e. there are no conflicts, then there is no clutter. 
+
+To avoid the solution where we simply omit all the records, we balance the constraint satisfaction by introducing an \emph{objective} that must be optimized. The idea is that the objective should force us to retain the most relevant records.
+
+The overall generalization process can be decomposed into a sequence of high-level atomic operations on the dataset. The high-level operations are performed by semantically rich \emph{generalization operators}, such as \emph{simplification} and \emph{selection}, that serve the purpose of transitioning a dataset towards a state where all constraints are satisfied and the objective is optimized. Each operator can be decomposed into a mix of low-level operations that omit, modify and combine records, depending on which algorithm is used to implement the operator.
+
+There exist many ways to conceptualize the generalization process in the literature~\cite{agent,something}. In the present approach we treat the generalization problem as a constraint satisfaction problem~\cite{constraintsatisfaction} with a deliberately vague notion of optimization.
+
+%Thus, the goal of generalization is to derive a distilled dataset suitable for both clear and informative map visualizations as well as efficient analysis, in accordance with scale and purpose of these downstream use cases.
+
+%A good generalization strikes a balance between simplification and representation, and can be viewed as a form of approximation that makes a complex dataset more accessible and comprehensible, either for a human viewer or a computer algorithm.
+
+\subsection{Spatial constraints}
+A \emph{spatial constraint} is a way to reason about acceptable states of a spatial dataset, i.e. states that by definition have an acceptable level of clutter or information density. A spatial constraint is evaluated in the context of scale over a set of objects embedded in space.
+
+(see Table~\ref{tab:constraints})
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[htdp] 
+\caption{Five fundamental spatial constraints}
+\begin{center}
+\begin{tabular} { c | c c}
+\hline
+Constraint & Degree & Domain \\
+\hline
+COMPLEXITY & 1 & Objects \\
+SIZE & 1 & Objects \\
+PROXIMITY (1) & 1 & Objects \\
+PROXIMITY (2) & 2 & Objects \\
+DENSITY & * & Space \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:constraints}
+\end{table}%
+\renewcommand{\arraystretch}{1}
+
+\subsubsection{Five fundamental spatial constraints}
+
+We have identified five fundamental spatial constraints, four of which apply to spatial objects and one which applies to space. The \emph{degree} of a constraint is the number of objects that are related to each other and imposes a restriction on. All the fundamental object constraints have degree one or two. The \emph{density} constraint may involve any number of objects, depending on how many objects are members of a given subspace.
+
+Below is a description of each of the fundamental spatial constraints, with their degree written in parenthesis (a degree of ``*'' means that it is unbounded):
+
+\begin{description}
+
+\item[Complexity (1)] An object constraint that restricts how \emph{complex} an object can be.
+
+\item[Size (1)] An object constraint that restricts how \emph{small} or \emph{large} an object can be.
+
+\item[Proximity-A (1)] An object constraint that restricts how \emph{close} an object can be to itself (objects that bend back on themselves).
+
+\item[Proximity-B (2)] A object constraint that restricts how \emph{close} two objects can be to each other.
+
+%\item[Topology] An object constraint that prohibits a states that alter topology, such as disconnecting a network or breaking a tessellation.
+
+\item[Density (*)] A space constraint that restricts \emph{how many} objects can be members of a given subspace.
+\end{description}
+
+We use terms such as \emph{complex}, \emph{small} and \emph{close} in their most abstract sense in the definition of constraints, leaving the precise definition of these measures to user-defined functions.
+
+
+
+
+%\item[Topology (general)]  Objects may not topologically \emph{change place}, e.g. a point that was previously outside a polygon, may not change position to inside the polygon.
+
+%\item[Topology (lines)] Topologically, we consider a set of lines as an undirected graph $G(V,E)$ consisting of nodes $V$ and edges $E$. The topology constraint places restrictions on which edges that can be deleted. Several approaches for pruning edges in a network are covered in the generalization literature.
+
+%\item[Topology (polygons)] A tessellation is made up by adjacent and disjoint polygons which cover an area ``completely'', e.g. the territories of states covering a continent. We may combine adjacent polygons in a tessellation, but never delete or modify polygons. Doing so would introduce a hole or an overlap in the coverage.
+
+\subsection{Objective}
+
+Weight function $\omega$ inputs a spatial tuple $t \in T$ and a scale $z \in \mathbb{R}^+_0$ and outputs a weight $w \in \mathbb{R}^+_0$: 
+
+\begin{equation}
+\omega: T \times \mathbb{R}^+: \mathbb{R}^+_0
+\end{equation}
+
+If we allow arbitrary objectives, we may need to solve new underlying optimization problems, i.e. not the set multicover problem... think more on this.
+
+\subsection{Generalization operators}
+One way to think of generalization is in terms of low-level operations on objects, such as \emph{attribute modification}, \emph{object deletion} and \emph{object combination}. While this is a conceptually simple model of computation, it is hard to reason in terms of such low-level operations.
+
+In the geographic literature the generalization process is typically described in terms of high-level \emph{generalization operators}, such as \emph{selection} and \emph{displacement}, which atomically transform a dataset into a new state.
+
+In the context of \emph{constraint satisfaction}, generalization operator serve the purpose of resolving conflicts arising from violated constraints.
+
+In this work we consider a subset of generalization operators that we consider the most important ones:
+
+\begin{description}
+\item[Simplification:] reduces the complexity of objects in response to violated complexity constraints
+\item[Collapse:] changes the geometry type of object in response to violated size constraints
+\item[Displacement:] modifies the coordinates of objects in response to violated proximity constraints
+\item[Elimination:] deletes objects in response to violated proximity or density constraints
+\item[Aggregation:] combines objects in response to violated size or density constraints
+\end{description}
+
+In Table~\ref{tab:constraints:vs:operators} we list these operators together with an indication of the constraints they resolve.
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table*}[htdp] 
+\caption{Operators in our framework mapped to conflicts they resolve}
+\begin{center}
+\begin{tabular} { p{2.5cm} | c c c c c}
+\hline
+Operator & COMPLEXITY & SIZE & PROXIMITY (1) & PROXIMITY (2) & DENSITY \\
+\hline
+SIMPLIFY & X & & & \\
+COLLAPSE & & X & & & \\
+DISPLACE & & & X & X & \\
+ELIMINATE & & & & X & X \\
+AGGREGATE & & X & & & X \\
+%ANNOTATE & & & & & \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:constraints:vs:operators}
+\end{table*}%
+\renewcommand{\arraystretch}{1}
+
+%At a low level, every algorithm implementing a generalization operator changes the state of a dataset by performing low-level operations on the objects, such as \emph{changing object attribute values}, \emph{removing objects} from the dataset, \emph{combining objects into new objects} and \emph{annotating objects with metadata} that can be observed by other operators.
+
+%\renewcommand{\arraystretch}{1.5}
+%\begin{table}[htdp] 
+%\caption{Generalization operators}
+%\begin{center}
+%\begin{tabular} {c | c | c c c c }
+%\hline
+%OPERATOR & Type & Modify & Delete & Combine \\
+%\hline
+%SIMPLIFY & Object & X &  & \\
+%COLLAPSE & Object & X &  & \\
+%DISPLACE & Set & X & & \\
+%ELIMINATE & Set & & X & \\ 
+%AGGREGATE & Set & X & & X \\
+%\hline
+%\end{tabular}
+%\end{center}
+%\label{tab:operator:means}
+%\end{table}%
+
+
+\begin{table}[htdp] 
+\caption{Operational view of generalization}
+\begin{center}
+\begin{tabular} { l | c | c | c }
+\hline
+OPERATOR & Stage 1 & Stage 2 & Stage 3 \\
+\hline
+SIMPLIFY & X & & \\
+COLLAPSE & X & & \\
+LOCK &  & X & \\
+AGGREGATE & & & X \\
+DISPLACE & & & X \\
+ELIMINATE & & & X \\ 
+\hline
+\end{tabular}
+\end{center}
+\label{tab:algorithms:for:operators}
+\end{table}%
+
+\section{Evaluating constraints}
+
+There are three fundamental patterns for evaluating constraints, one for each type of constraint.
+
+\begin{description}
+\item[Degree one constraints] Iterate over all objects and output objects that violate the constraint. Corresponds to a \emph{select} query in a database.
+\item[Degree two constraints] Iterate over all unique pairs of objects and output the pairs that violate the constraint. Corresponds to a \emph{self-join} in a database.
+\item[Space constraints] Iterate over all pairs of subspaces and objects and output objects that are members of subspaces that violates a space constraint. Correspond to a \emph{spatial join} between data objects and subspaces in a database (TODO: look at visibility constraint)
+\end{description}
+
+
+\section{Terms and definitions}
+
+%Spatial relations are decomposed into \emph{spatial tuples}, which are again decomposed into spatial and non-spatial \emph{attributes}. We will drop the use of the spatial adjective, unless it is needed to disambiguate meaning.
+
+We begin by introducing the terms that this logical view builds upon, so that we will have a crisp understanding of the problem.
+
+\begin{description}
+
+\item[Spatial relation:] a relation that has (at least) a geometry column and an ID column.
+
+\item[Spatial tuple:] a tuple or row in a spatial relation.
+
+\item[Locus:] an abstract location to which zero, one or more tuples may belong. A spatial relation can be completely decomposed into, possibly non-disjoint, loci. 
+
+\textbf{Marcos}: include notions of space partitioning vs data partitioning
+
+A locus may be determined by the evaluation of spatial predicates such as proximity and intersection, or from non-spatial predicates such as attribute equality.
+
+\item[Constraint:] a rule that can be evaluated for (the set of tuples in) a locus
+
+
+%\item[Conflict:] a locus for which a constraint does not hold.
+
+\item[Generalization operator:] operator that computes an atomic transformation of a set of tuples in a locus, with the aim of making one or more constraints hold. The transformation \emph{deletes}, \emph{modifies} and/or \emph{combines} tuples.
+
+\item[Objective function:] a function that takes a set of tuples as input and outputs a floating point number.
+
+\end{description}
+
+
+\section{Generalization Algebra}
+
+\textbf{Marcos:} Every algebra needs binary operators, a plus and a multiply, for RA union is plus and cross is multiply. It may also have unary operators, like select in RA. \\
+
+\textbf{Marcos:} A lot of interesting structure in an algebra, arises from binary operating operators and rewriting rules\\
+
+\textbf{Marcos:} Different ways to resolve issues from information density. Different ways to resolve lead to different to results, so order matters. May be a problem for an algebra, where the same result can be achieved by rewriting \\
+
+\textbf{Marcos:} We probably have to give up on saying the same thing in different ways (think rewriting in relational algebra), so we need a way to compare different results, i.e. we need a (mathematical) way to measure quality. So equivalent means having the same quality, not being the same result.\\
+
+\textbf{Marcos:} We could create more of a map-designing, i.e. interactive, tool. Generating suggestions is an algorithmic, but iterative process. Weibel's amplified intelligence.
+
+\textbf{Note:} This is work in progress, and the definitions below are totally inconsistent and incomplete at this point.\\
+
+In this section we introduce an algebra for generalizing spatial relations. It a superset of \emph{relational algebra}, which means that all the relational operators such as \emph{union}, \emph{select} and \emph{join} are included. It adds \emph{generalization operators} such as \emph{selection}, \emph{aggregation} and \emph{simplification}. These operators are expressed using relational algebra with inclusion of spatial functions. 
+
+To avoid confusion, we will rename generalization operators when their names clash with names of relational operators, e.g. select versus selection.
+
+ 
+%\item[Relating join] Tuples are joined on a spatial predicate such as distance, that relates one tuple to another. The conflict ID is the two tuple IDs concatenated. Each conflict pair $(i, j)$ should only be enumerated once, for $oid_i < oid_j$. 
+
+%\item[Location join] Tuples that have the same location are joined. The group ID is some unique code for the location. As a special case, each tuple can be in a location by itself. As another special case, all tuples are in the same location.
+
+
+\subsection{Locus operator (approach 1)}
+
+An operator that computes a tuple to locus mapping, i.e. a spatial decomposition. For each tuple in the input, it output one or more $\langle oid, lid \rangle$ tuples.
+
+\begin{equation}
+\lambda_{...}(R) \rightarrow \langle oid, lid \rangle*
+\end{equation}
+
+\textbf{Marcos}: When only returning $lid$, we loose information about the locus. That is, we loose information about the domain.
+
+\textbf{Marcos}: Maybe merit in using a nested datamodel; we can express more complex things.
+
+\subsection{Conflict operator (approach 1)}
+
+An operator that computes a set of conflicts. It takes as input a set of locus mapping tuples $l = \langle oid, lid \rangle$, a spatial relation $R$ and a constraint definition $c=(cid, rule, resolve)$, and outputs a set of $\langle lid, cid \rangle$ tuples.
+
+\begin{equation}
+\omega_{...}(l, R, c) \rightarrow \langle lid, cid \rangle*
+\end{equation}
+
+\subsection{Generalize operator (approach 1)}
+
+TODO 
+
+%\emph{Generalization operator} of a relation $R$ that contains conflicts, computes a relation $R'$ with the same schema as $R$ that is conflict free, with respect to a constraint. The tuples in $R'$ are usually a subset of the tuples in $R$.
+
+%An \emph{optimal generalization} computes $R'$ such that it is conflict free and optimal with respect to an objective.
+
+\subsection{Requirements for complete generalization algebra}
+In order to be considered a full algebra for generalization, the algebra needs a way to express the following items:
+
+\begin{itemize}
+\item Learn and exploit properties of data such as topology and continuation.
+\item Define constraints
+\item Define objectives
+\item Define generalization operators
+\item Find conflicts within relations
+\item Resolve conflicts in optimal way
+\end{itemize}
+
+As a restriction, these items must be expressed using only relational algebra plus standard spatial functions.
+
+\subsection{Find operator (approach 2)}
+
+The \emph{find operator} $\phi$ computes a set of conflicts, with regard to a certain constraint, for a relation $R$: 
+
+\begin{equation}
+\phi_{constraint}(R) \rightarrow C
+\end{equation}
+
+It outputs a non-spatial relation $C$ with two attributes $oid$ and $cid$, where $oid$ is the ID of an object that is a member of conflict $cid$.
+
+Because the generalization algebra extends relational algebra, a new conflict relation can be computed by taking the union of two conflict relations $C = C1 \cup C2$.
+
+\subsection{Generalize operator (approach 2)}
+
+Conflicts are resolved by applying a generalization operator $\gamma_{operator}$ to a pair $C \times R$. The $operator$ may implement any well-known generalization operator, e.g. \emph{selection}, \emph{aggregation} or \emph{displacement}. The idea is that $C$ contains the conflicts and $R$ is the original relation that must be modified somehow to become \emph{conflict-free}.
+
+The result is an output relation $S$ with the same schema as $R$.
+
+\begin{equation}
+\gamma_{operator}(R, C) \rightarrow S
+\end{equation}
+
+\subsection{Notes}
+
+\textbf{Note}: But then $C$ would possibly contain conflicts for two different constraints. We need a way to know which constraint a conflict pertains to. Otherwise we can't ``fix'' it.
+
+\textbf{Rob}: make clearer the relationship between constraints and objectives for non-optimization people.
+
+\textbf{Note}: This won't work, because in $C$ there is no reference to the violated constraint, so the operator does not ``known'' how to fix the situation. Also there is no way to compute an optimal solution, because I have not yet talked about \emph{objectives}.
+
+\textbf{Note}: In CVL, conflicts could only be resolved in one way, by deleting objects. In this work, we are trying to generalize this (no pun intended), e.g. by allowing displacement instead of deletion as a way to resolve proximity conflicts. 
+
+\textbf{Note}: In CVL, there was only one type of objective. In this work we want to generalize this (again, no pun intended) to include arbitrary objective functions.
+
+\textbf{Note}: Having user-defined \emph{constraints}, \emph{objectives} and \emph{generalization operators} makes the challenge much harder, because the problem is much more fundamental. However, a successful solution would be more \emph{definitive}, i.e. be the ``definitive solution to declarative cartography''. This is a goal that is encouraged in the paper ``Abstraction Without Regret in Data Management''.
+
+\textbf{Note}: Generalization operators need to known about active constraints, in order to remedy a situation.
+
+\textbf{Question}: Are we trying to do something that is impossible to compute using relational algebra?
+
+\textbf{Idea}: maybe if we combine $\phi$ and $\gamma$ into one operator?
+
+\textbf{Rob}: Having multiple operators means having to decide a sequence, and even prefered sequences, e.g. selection, simplification, aggregation and then displacement. RECENT PAPERS. Could have the user decide operator sequence, then it becomes more a programming language design issue. Or have a compound operator that ties together several simpler operators, Pia is experimenting with various combination. Maybe even operator names more intuitively, like in photoshop.
+
+\textbf{Rob}: Greedy versus global optimization. What is the limit of acceptability? RECENT dutch paper, trade-off between quality and computability. 
+
+\textbf{Rob}: Lars Broders 2001 from KMS, did study, where he let map users answer questions about maps, simple ``what is the title of this map'' to complex questions "how long is this line in reality" or ``in what direction''
+
+\textbf{Rob}: Regarding measuring quality of produced maps. It hard and takes time. No time for user-tests, you could talk to Pia who has similar problem. Exploit KMS-connection to do expert evaluation.
+
+\textbf{Rob}: Use KMS to formulate requirements of maps.
+
+\textbf{Rob}: Maintaining topology for polygons (aggregation only): Peter Van Oosterrom (Delft), Jan-Henrik Haunert and Alexander Wolff. Dutch group has simpler more heuristic methods, german group has more optimization based approach. Weibel did work on splitting polygons and then sharing the parts.
+
+\textbf{Rob}: Maintaining topology for lines (pruning, simplification and displacement). Aggregation does not makes sense. Elastics beams and snakes.
+
+\textbf{Rob}: Displacement could done with a greedy pre-processing algorithm.
+
+\textbf{Rob}: What you can use from Pia's work: quantitative evaluation. 
+
+\textbf{Rob}: Local constraints are easy. Global constraints are harder to implement and an define and measure. Counter-meaures to local/global problem. Do good local decisions that have good global consequences: If high density keep more points, if low density keep few, if outlier keep it. Conclusion: A quad-tree allows to adjust for density. Enhancement could solve something.
+
+\section{Experiments}
+
+\begin{itemize}
+\item Experimental setup
+\item Results
+\end{itemize}
+
+\section{Related work}
+
+\section{Conclusions}
+
+%ACKNOWLEDGMENTS are optional
+\section{Acknowledgments}
+
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+\bibliographystyle{abbrv}
+\bibliography{sigproc}  % sigproc.bib is the name of the Bibliography in this case
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+
+\subsection{References}
+Generated by bibtex from your ~.bib file.  Run latex,
+then bibtex, then latex twice (to resolve references)
+to create the ~.bbl file.  Insert that ~.bbl file into
+the .tex source file and comment out
+the command \texttt{{\char'134}thebibliography}.
+
+
+\end{document}
