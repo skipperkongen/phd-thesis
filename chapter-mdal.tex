@@ -7,9 +7,16 @@
 We want to:
 \begin{itemize}
 \item Model all data as graphs, because graphs are general (they subsume spatial, temporal and social data). 
-\item Analyze graphs using zoomable graph visualizations
-\item Share visualizations with the world
-\item Support declarative languages for creating zoomable graph visualizations
+\item Visualize graphs at different focal points and levels of abstraction, i.e. zoom and pan
+\item Share beautiful visualizations with the world in a scalable manor
+\item Support and design a declarative language for creating zoomable graph visualizations
+\end{itemize}
+
+We need:
+\begin{itemize}
+\item Efficient, effective and easy-to-use way to specify visualizations, e.g. a declarative language
+\item Efficient and effective ways to compute visualizations (e.g. materialization or indexing), i.e. algorithms and system implementations (perhaps on top of Pregel or Neo4J)
+\item Efficient and effective ways to serve visualizations, i.e. a scalable query model (e.g. pyramid model)
 \end{itemize}
 
 We assume that there:
@@ -19,50 +26,27 @@ We assume that there:
 \item Exists methods for embedding nodes and edges in the plane, i.e. computing two-dimensional coordinates for nodes and edges
 \end{itemize}
 
-For this to work, we must:
+For this to work, we at least need to:
 \begin{itemize}
 \item Define a notion of \emph{resolution} or \emph{scale} for graphs; it is sufficient to define a unit for the two-dimensional coordinate system, e.g. meters
 \item Define a query model for graph views, e.g. the pyramid model because it is scalable
-\item Define metrics for evaluating graph views, e.g. information density metrics (see Woodruff et al.~\cite{woodruff1998constant})
-\item Define valid transformation functions for turning one graph into another graph
+\item Define constraints for single graph views, i.e. density constraint (visibility) and distance constraint (proximity)
+\item Define cross view constraints, i.e. zoom and pan constraints and graph minor constraints.
+\item Enable ways to define metrics for evaluating graph constraints, i.e. a way to define an information density metric (see Woodruff et al.~\cite{woodruff1998constant}) and distance metric.
+\item Define valid transformation functions for turning one graph into another graph, i.e. a graph minor step.
+\item Define objective function, i.e. scale-dependent ranking of nodes and edges
+\end{itemize}
 
-\item Formulate constraints that can be evaluated over graph views
-\item Define a distance function 
-\item Define an equivalence relation between graph views at different scales, i.e. what are the constraints that must hold when transforming graphs between scales
+To support a declarative language, we need to:
 
-\item Define metrics for evaluating scale-based views for graphs, e.g. density metric
-
-
-We need to guide the abstraction process, i.e. objective functions. 
-
-We want the multi-scale data abstraction of graphs to be user-programmable, to support data enthusiasts and professional analysis. We need scalable algorithms and systems that implement the whole deal.
-
+\begin{itemize}
+\item Hmmm....
 \end{itemize}
 
 % Motivation
 
 \section{Introduction}
 
-\section{Multi-scale Graph Abstraction}
-We want to compute a multi-scale data abstraction for a graph. at a set of discrete scales. For this we need to: Model data (i.e. spatial, temporal, social data) as graphs. Define a scale-based view of graphs (projection of graph into metric space, representation of metric space in pixel space). Define equivalence classes for graphs (subject to constraints)
-\subsection{Modeling Data Domains}
-% how can we model different domains as graphs
-% - spatial
-% - temporal
-% - 
-\subsection{Scale-based View Model}
-
-\subsection{Data Abstraction Operators}
-\subsection{Equivalent Graphs}
-\paragraph{Graph Minor}
-\paragraph{Constraints}
-
-
-\section{Modeling}
-\subsection{Data Model}
-\subsection{Query Model}
-\subsection{Graph Projection}
-\subsection{Scale-based Equivalence}
 
 \section{Related Work}
 
