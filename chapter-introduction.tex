@@ -28,9 +28,25 @@ Another challenge is encountered during the serving of maps. Today, users of map
 % A couple of paragraphs that mention what I do to address these challenges.
 %To reduce concurrency, architectures can be designed that reduce the total computational and I/O work done per live user-request. Caching is an approach that achieves this by reusing the result of previous long-running result computations and base data I/O.
 
-\section{Overview of State-of-the-art Map Technology}
-\subsection{Automated Geospatial Data Abstraction}
-% ::read pia intro to get good overview
+\section{Overview of State-of-the-art Online Maps}
+% SWYGS
+% Define online maps
+
+% SI
+% set maps (VIZ) use case appart from spatial OLAP, OLTP. Argue for end of GIS.
+% \cite{stonebraker2005onesizefitsall}
+% \cite{stonebraker2007endofanera}
+
+% who defines the state-of-the-art geospatial visualization? big (Google, Apple) and small (OpenScienceMap, OpenStreetMap, MapBox)
+% \cite{sarma2012fusiontables}, \cite{nutanong2012multiresolution} be better with Apple cite
+% \cite{schmid2013opensciencemap}, \cite{openstreetmap), \cite{mapbox}
+
+\subsection{Automated Generalization}
+% describe automated generalization (model and cartographic), cite grundreich
+% mention related work and nomenclature (data and visual abstraction)
+% mention focus my on multi-scale data abstraction
+% talk about preprocessing versus live generalization
+% briefly outline some methods used
 % refer to chapter with survey for more thorough overview
 \subsection{Vector Tiles}
 % vector tiles, used by google, apple, opensciencemap, cite, cite, cite
@@ -39,8 +55,7 @@ Another challenge is encountered during the serving of maps. Today, users of map
 % easy to store and replicate (raw files, key-value stores) => high-availability and scalability
 % easy to predict and cache (finite space, predictable workloads)
 % if properly constrained, not much more space consuming than base data (constant information density, exponential decay)
-% challenging to keep up to date. may brute force via map reduce cite jeff dean
-
+% challenging to keep up to date. may brute force via map reduce cite FriendsOrFoes, LessonsLearned
 
 \section{Requirements for Multi-scale Maps on the Web}
 
