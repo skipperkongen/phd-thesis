@@ -19,36 +19,53 @@ MSDR queries and systems are in play when users \emph{request} maps online. We i
 
 Paragraph that summarizes the challenges. Be consistent about the order of challenges and their order in the thesis in general.
 
-% Challenge 1: too many users
-One challenge is encountered during the serving of maps. Today, users of maps have the opportunity to engage maps anytime and anywhere, caused by advances in mobile technology and near-ubiquitous web access in many parts of the world. As a consequence, web-based maps have attracted millions of users who bombard the end-points of spatial data services with a crushing request workload around the clock -- especially during peak hours. To handle this workload there is a need for scalable system architectures for maps. %TODO: Explain the challenges presented to system engineers further... and give some examples.
-
 % Challenge 2: big data
-Another challenge is encounted during the production of maps. Everyday, a mass of spatial data is accumulating online~\cite{agrawal2012bigdata}. There is a clear need to visualize much of this data on maps for the reasons mentioned above. However, manually editing maps based on emerging big data is prohibitively time-consuming. Furthermore, relying on GIS specialists to handle the task is expensive at best. What is needed is efficient and effective methods that can be used by non-experts who must perform tasks such as \emph{data abstraction} (e.g. data selection and aggregation)~\cite{haunert2006landcover,schmid2013opensciencemap} and \emph{visual abstraction} (e.g. graphical expression)~\cite{jacques1967semiologie} in order to create useful multi-scale maps~\cite{stolte2003multiscale,weibel1999generalising}. 
+One challenge is encounted during the production of maps. Everyday, a mass of spatial data is accumulating online~\cite{agrawal2012bigdata}. There is a clear need to visualize much of this data on maps for the reasons mentioned above. However, manually editing maps based on emerging big data is prohibitively time-consuming. Furthermore, relying on GIS specialists to handle the task is expensive at best. What is needed is efficient and effective methods that can be used by non-experts who must perform tasks such as \emph{data abstraction} (e.g. data selection and aggregation)~\cite{haunert2006landcover,schmid2013opensciencemap} and \emph{visual abstraction} (e.g. graphical expression)~\cite{jacques1967semiologie} in order to create useful multi-scale maps~\cite{stolte2003multiscale,weibel1999generalising}.
 
-A couple of paragraphs that mention what I do to address these challenges.
+% Challenge 1: too many users
+Another challenge is encountered during the serving of maps. Today, users of maps have the opportunity to engage maps anytime and anywhere, caused by advances in mobile technology and near-ubiquitous web access in many parts of the world. As a consequence, web-based maps have attracted millions of users who bombard the end-points of spatial data services with a crushing request workload around the clock -- often with a temporally skewed workload~\cite{kefaloukos2012tileheat}. To handle this workload there is a need for scalable system architectures for maps. Decreasing the level of concurrency in a map serving system leads to decreased latency and eases resources consumption.  %TODO: Explain the challenges presented to system engineers further... and give some examples.
 
-\section{Requirements for Multi-scale Data Visualization on the Web}
+% A couple of paragraphs that mention what I do to address these challenges.
+%To reduce concurrency, architectures can be designed that reduce the total computational and I/O work done per live user-request. Caching is an approach that achieves this by reusing the result of previous long-running result computations and base data I/O.
+
+\section{Overview of State-of-the-art Map Technology}
+\subsection{Automated Geospatial Data Abstraction}
+% ::read pia intro to get good overview
+% refer to chapter with survey for more thorough overview
+\subsection{Vector Tiles}
+% vector tiles, used by google, apple, opensciencemap, cite, cite, cite
+% data tiles and index tiles cite gauffuri
+% easy to index and partition (b-tree, space-filling curves, consistent hashing, geodistribution)
+% easy to store and replicate (raw files, key-value stores) => high-availability and scalability
+% easy to predict and cache (finite space, predictable workloads)
+% if properly constrained, not much more space consuming than base data (constant information density, exponential decay)
+% challenging to keep up to date. may brute force via map reduce cite jeff dean
+
+
+\section{Requirements for Multi-scale Maps on the Web}
+
+\subsection{Visualization Requirements}
+% iOS6, toepfer, woodruff (principle and metrics), sarma, bereuter, weibel
+
+\subsection{System Requirements}
+% high-availability (basically no down-time), high-performance, scalable, up-to-date
+
+\subsection{Usability Requirements}
+% producing: non-expert usage, time-efficient, effective, custom styling
+% consuming: interaction (click), advanced dynamic rendering
+% ref: HOWTO, DATA ENTHUSIASTS
+
 \subsection{Case Study: Danish Geodata Agency}
 % authoritative data. consistent data. high-availability. high-performance. standards. cost-effective.
 Within the last decade an increasing number of components fulfilling needs of a Spatial Data Infrastructure have been implemented. In Denmark, the National Survey and Cadastre (KMS) has had a leading role in the implementation of Spatial Data Infrastructure components. In 2001, KMS launched its digital map supply including the first view services and has since then implemented an increasing amount of services making geographic data, that KMS is responsible for, available for users via on-line and direct access. Also the amount of requests served by the digital map supply has increased. In 2005 the digital map supply served 23 million requests and in 2010 it served 370 million with a yearly increase ranging from 70\% to 115\%. These numbers demonstrates that there is a sustained need for infrastructure components and that establishing the digital map supply has been a success.
 
 However, the increased amount of served requests has put high demands on the distribution platform of the digital map supply. Currently, the platform consists of more than 40 server instances. In addition there is a growing expectation on performance from the community. INSPIRE [European Commission, 2007] sets out quality of service requirements in the regulation on INSPIRE Network Services [European Commission, 2009]. But perhaps more demanding is users’ expectation. The appearance of e.g., Google and Bing Maps, have set new standards for how fast a map is expected to be rendered and shown to the user.
 
-\subsection{Visualization Requirements}
-% toepfer, constant info dens. metrics
-% ref: toepher, woodruff, iOS 6, sarma, bereuter, weibel
+\subsubsection{Requirements for Danish Geodata Agency}
+% authoritative, consistent, standards-based
 
-\subsection{System Requirements}
-% high-availability (basically no down-time), high-performance, scalable
-
-\subsection{Usability Requirements}
-% non-expert usage, time-efficient, effective
-% ref: HOWTO, DATA ENTHUSIASTS
 
 \section{Research Gaps}
-\subsection{User-programmable Data Abstraction}
-\subsection{In-database Processing}
-\subsection{Prediction of Query Workloads}
 
 
 % abstraction: usable by non-experts, programmability, unifying data abstraction across domains (addressed by CVL2)
@@ -56,7 +73,7 @@ However, the increased amount of served requests has put high demands on the dis
 
 \section{Contributions}
 \subsection{Declarative Cartography: In-Database Map Generalization of Spatial Datasets}
-\subsection{Declarative Multi-scale Abstraction of Large Graphs}
+%\subsection{Declarative Multi-scale Abstraction of Large Graphs}
 \subsection{TileHeat: A Framework For Tile Selection}
 %\subsection{Design of Declarative Languages for Multi-scale Selection of Relational Data}
 %\subsection{Compilers for Multi-scale Selection Languages}
@@ -64,3 +81,4 @@ However, the increased amount of served requests has put high demands on the dis
 \subsection{Publications}
 
 \section{Structure of this Dissertation}
+% Say what I'm going to say
