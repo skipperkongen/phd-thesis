@@ -28,6 +28,9 @@ Another challenge is encountered during the serving of maps. Today, users of map
 % A couple of paragraphs that mention what I do to address these challenges.
 %To reduce concurrency, architectures can be designed that reduce the total computational and I/O work done per live user-request. Caching is an approach that achieves this by reusing the result of previous long-running result computations and base data I/O.
 
+\section{Nomenclature}
+% data/visual abstraction versus model/cartographic generalization
+
 \section{Overview of State-of-the-art Online Maps}
 % SWYGS
 % Define online maps
@@ -51,6 +54,8 @@ Another challenge is encountered during the serving of maps. Today, users of map
 \subsection{Vector Tiles}
 % vector tiles, used by google, apple, opensciencemap, cite, cite, cite
 % data tiles and index tiles cite gauffuri
+% motivation: client-side rendering, scalable
+% challenge: bounded content => content selection/aggregation, i.e. data abstraction.
 % easy to index and partition (b-tree, space-filling curves, consistent hashing, geodistribution)
 % easy to store and replicate (raw files, key-value stores) => high-availability and scalability
 % easy to predict and cache (finite space, predictable workloads)
