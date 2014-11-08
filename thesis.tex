@@ -25,7 +25,7 @@
 % TILEHEAT
 \newcommand{\minisec}[1]{\vspace*{0.05cm}\noindent\textbf{#1.}}
 
-\title{Declarative Multi-scale Data Abstraction and Scalable Serving of Spatial Datasets}
+\title{Selection Problems in Spatio-Temporal Data Visualizations}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
@@ -38,16 +38,34 @@
 % 1) SAY WHAT YOU'RE GOING TO SAY
 % 2) SAY IT
 % 3) SAY WHAT YOU JUST SAID
-\input{chapter-introduction}
-\part{Declarative Multi-scale Data Abstraction}
-\input{chapter-related-abstraction}
-\input{chapter-cvl}
-\input{chapter-cvl2}
-%\input{chapter-mdal}
-\part{Scalable Serving of Spatial Datasets}
-\input{chapter-related-serving}
-\input{chapter-tileheat}
-\input{chapter-conclusion}
+
+\chapter{Introduction}
+\section{Motivation}
+\section{Problems studied in this Dissertation}
+\subsection{Content Selection for Multi-scale Visualizations}
+\subsection{Selection of Materialized Data}
+\section{Contributions of this Dissertation}
+\subsection{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
+\subsection{Glossy: Global Selections for Data Visualizations}
+\subsection{Tileheat: A Framework For Tile Selection}
+\subsection{Publications, Data and Software}
+\section{Remainder of this thesis}
+
+\chapter{Selection Problems in Spatio-Temporal Data Visualization}
+\section{Case Study: Danish Geodata Agency}
+\subsection{Situation}
+\subsection{Challenges}
+\section{Global Selection for Visualizations}
+\subsection{Related Work}
+\subsection{Contributions of this Dissertation}
+\section{Cache Selection Problem}
+\subsection{Related Work}
+\subsection{Contribution of this Dissertation}
+
+\chapter{Glossy: Global Selections for Data Visualizations}
+\chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
+\chapter{Tileheat: A Framework For Tile Selection}
+\chapter{Conclusion}
 
 \bibliographystyle{plain}
 \bibliography{thesis}
@@ -57,39 +75,6 @@
                              % Gerry Murray - March 2012
 
 
-
-Marcos ambitious idea, three parts:
-- (I) Introduction: talk about the two chapters that follow. 
-- (P1) Pt 1: bulk: declarative cartography, about PRODUCING maps
-- (P2) Pt 2: about SERVING digital maps
-- Similar structure for both: state of the art, my contributions (advancing the state of the art).  
-
-What-goes-where:
-- I <- Case Study, P1 enables P2, Mention where related work is (which parts/chapters)
-- P1 <- 
-        Survey generalization, 
-        CVL1 (closing the gap, part a), 
-        CVL2 (closing the gap, part b)
-- P2 <- 
-        Survey on serving maps, getting to keyed data for maps, all this stuff you can use 
-                incl. vectile (step 2),
-                caching,
-                prediction,
-                data partitioning (step 3), 
-                replication (step 4), 
-                consistency, 
-                key-value stores, 
-                classic web serving infrastructures,
-                papers from seminar
-        Gap between state of the art, and the agency
-        TileHeat (closing the gap, step 1), deploying a caching infrastructure
-        
-Publication strategy:
-
-CVL2 (it's a journal thing, not a conference submission):
-Approach: "Make CVL more general (star approach), with comparable performance"
-- GeoInformatica (extended version of CVL), "completeness/thoroughness": repeat experiments, show new use cases (comp. to CVL), illustrate CVL2 with the new use cases 
-- Only conference if "technical fun" or "something new" in compiler, real tech. take-away
 
 \end{document}  
 
