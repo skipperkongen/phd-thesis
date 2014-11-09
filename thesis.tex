@@ -26,7 +26,7 @@
 \newcommand{\minisec}[1]{\vspace*{0.05cm}\noindent\textbf{#1.}}
 
 %\title{Building Highly Scalable Data Visualization Systems}
-\title{Key and Value Selection for Multi-scale Data Visualization}
+\title{Key and Value Selection for Multi-scale Data Visualization Systems}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
@@ -43,6 +43,9 @@
 \chapter{Introduction}
 \section{Background and Motivation}
 \section{Key and Value Selection}
+% Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a backend.
+% Key Selection: given a key space, select which keys to eagerly materialize. E.g. Tileheat solves this problem. 
+% Value Selection: given a key-space, select appropriate values for each key.. E.g. Global Selection solves this problem
 \section{Contributions of this Thesis}
 \subsection{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
 \subsection{Glossy: Global Selections for Data Visualizations}
