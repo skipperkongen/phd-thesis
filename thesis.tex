@@ -1,39 +1,103 @@
-\documentclass[11pt, oneside]{report}   	% use "amsart" instead of "article" for AMSLaTeX format
-\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
-\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
-%\geometry{landscape}                		% Activate for for rotated page geometry
-%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
-\usepackage{graphicx}				% Use pdf, png, jpg, or eps with pdflatex; use eps in DVI mode
-								% TeX will automatically convert eps --> pdf in pdflatex		
+\documentclass[11pt, oneside]{report}  
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+% Theorem environments
+\newtheorem{claim}{Claim}
+\newtheorem{class}{Class}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Use Case}
+\newtheorem{observation}{Observation}
+\newtheorem{property}{Property}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+
+% end Theorem environments
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[multiple]{footmisc}
+\usepackage[top=1.5in,bottom=1.5in,left=1.35in,right=1.35in]{geometry}
+\usepackage{graphicx}	
+\usepackage{ifpdf}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+\usepackage{subfigure}
+\usepackage{txfonts}
+\usepackage{times}
+\usepackage{url}
 
 % MARCOS PARAGRAPH SEPARATION:
 \setlength{\parindent}{0px}
 \setlength{\parskip}{1em}
+% Glossy
+\newif\ifpdf
+\ifx\pdfoutput\undefined
+  \pdffalse
+  \usepackage[colorlinks=false]{hyperref}
+\else
+  \pdfoutput=1
+  \pdftrue
+  \usepackage[pdftex,colorlinks=false,urlcolor=blue,linkcolor=blue]{hyperref}
+  \pdfcompresslevel=9
+  \usepackage{pslatex}
+\fi
+\newcommand{\mathendbox}{\hfill$\Box$}
+\newcommand{\minisec}[1]{\noindent\textbf{#1.}}
+\newcommand{\denote}[1]{\text{$[\![ $#1$ ]\!]$}}
+\newcommand{\opsem}[3]{\text{$<$#1,#2$>\Downarrow$#3}}
+%%%%%%%%%%%%
+% MVS: Language definitions
+%
+\renewcommand{\ttdefault}{pcr}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true
+}
+\lstdefinelanguage{sql}{
+  morekeywords={SELECT, FROM, WHERE, ITERATE, RECURSE, OVER, IN, RANGE, FROM, TO, SEQUENCE, FOREACH, PAIR, LOCUS, ID, MAP, FILTER, LIMIT, SCALE,LINEAR,LOG,WEIGH,BY,SUBJECT,TO,AND,AS, NOT, DROP, ONE, BOTH, WITH, RECURSIVE, UNION, ALL, PARTITION,ORDER,DESC,ASC,JOIN,ON,OR,GROUP,HAVING,BETWEEN,USING,EXISTS},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+%\lstset{
+%  language=sql
+%}
+\lstdefinelanguage{cvl}{
+  morekeywords={geometry, id, generalize,to, with, other, at, zoom, levels, weigh, by, subject, and, create, constraint, as, not, exists, resolve, if, delete, select, from, where, in, order, over, setup, teardown,force,min,level,for,allornothing,join,on,setup,group,having,index,temporary,table,drop,partition,merge,partitions},
+  sensitive=false,
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+}
+%\lstset{
+%  language=cvl
+%}
 
-% CVL
-\usepackage{times}
-\usepackage{graphicx}
-\usepackage{listings}
-\usepackage{color}
-\usepackage{url}
-\usepackage{amsmath}
-\usepackage{soul}
-\usepackage[multiple]{footmisc}
 
-% TILEHEAT
-\newcommand{\minisec}[1]{\vspace*{0.05cm}\noindent\textbf{#1.}}
+\sloppy
 
 %\title{Building Highly Scalable Data Visualization Systems}
-\title{Key and Value Selection for Multi-scale Data Visualization Systems}
+%\title{Declarative Selection for Multi-scale Visualizations Systems}
+\title{Selection Problems in Multi-scale Data Visualizations Systems}
+%\title{Title to be decided}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
 \begin{document}
 \maketitle
 
+\section*{Acknowledgements}
+Acknowledgements go here.
+
 \tableofcontents
+
+\abstract{Abstract goes here.}
 
 % STUART: Identifying the problem and objectives
 % 1) SAY WHAT YOU'RE GOING TO SAY
@@ -42,10 +106,17 @@
 
 \chapter{Introduction}
 \section{Background and Motivation}
-\section{Key and Value Selection}
-% Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a backend.
+
+\begin{itemize}
+\item something
+\item something else
+\end{itemize}
+
+\section{Problem Statement}
+% Data and query model: Public View is key-value, where value is an object collection. Base data is relational.
+% Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a relational backend.
 % Key Selection: given a key space, select which keys to eagerly materialize. E.g. Tileheat solves this problem. 
-% Value Selection: given a key-space, select appropriate values for each key.. E.g. Global Selection solves this problem
+% Value Selection: given a key-space, select appropriate content (value) for each key.. E.g. Global Selection solves this problem
 \section{Contributions of this Thesis}
 \subsection{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
 \subsection{Glossy: Global Selections for Data Visualizations}
@@ -54,10 +125,37 @@
 \section{Structure}
 
 \chapter{Related Work}
-%\chapter{Case Study: Danish Geodata Agency}
-\chapter{Glossy: Global Selections for Data Visualizations}
+\section{Generalization in Geography}
+\begin{itemize}
+\item See notex.tex
+\end{itemize}
+\section{(to be decided)}
+\section{(to be decided)}
+\section{(to be decided)}
+
+\chapter{Case study: The Digital Map Supply}
+\section{Introduction}
+\section{The Map Supply Today}
+\subsection{Government Requirements}
+\subsection{A Look Under the Covers}
+\subsection{The Story in Charts and Numbers}
+\section{A Map Supply for the Future}
+\subsection{Challenges}
+% 99% is not high availability 
+% 200 ms is not low latency
+% Images are not an interactive experience
+\subsection{A Proposal for a High Availability Distribution}
+
+
 \chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
+\input{cvl.tex}
+
+\chapter{Glossy: Global Selections for Data Visualizations}
+\input{glossy.tex}
+
 \chapter{Tileheat: A Framework For Tile Selection}
+\input{tileheat.tex}
+
 \chapter{Conclusion}
 
 \bibliographystyle{plain}

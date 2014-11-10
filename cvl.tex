@@ -1,30 +1,8 @@
-% !TEX root = ./thesis.tex
-\chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
-
-Creating good maps is the challenge of map generalization. An important generalization method is selecting subsets of the data to be shown at different zoom-levels of a zoomable map, subject to a set of spatial constraints. Applying these constraints serves the dual purpose of increasing the information quality of the map and improving the performance of data transfer and rendering.
-Unfortunately, with current tools, users must explicitly specify which objects to show at each zoom level of their map, while keeping their application constraints implicit. This paper introduces a novel declarative approach to map generalization based on a language called CVL, the Cartographic Visualization Language. In contrast to current tools, users declare application constraints and object importance in CVL, while leaving the selection of objects implicit. In order to compute an explicit selection of objects, CVL scripts are translated into an algorithmic search task. We show how this translation allows for reuse of existing algorithms from the optimization literature, while at the same time supporting fully pluggable, user-defined constraints and object weight functions. In addition, we show how to evaluate CVL entirely inside a relational database. The latter allows users to seamlessly integrate storage of geospatial data with its transformation into map visualizations. In a set of experiments with a variety of real-world data sets, we find that CVL produces generalizations in reasonable time for off-line processing; furthermore, the quality of the generalizations is high with respect to the chosen objective function.
-
 \section{Introduction}
-
-%\marcos{The introduction now reads a bit too generic, and a bit too rich in buzzwords (big data, crowd sourcing). What is the problem that is being addressed?}
-%what's the situation
-
-%- why do people need to do cartographic generalization?
-
-%- how do people go about this task today?
-
-%- what is the main related work, and why is it not enough?
-
-%Map generalization has a long tradition spanning hundreds of years, and has rightly been considered as much an art as a science~\cite{rieger1993consensus}.
-%\marcos{Not very clear what map generalization really means, now that the examples are completely gone.}
-%\marcos{GST?}
-%\martin{The new abstract and introduction looks good, but I think that the examples in the old abstract would work well in one of the paragraph below. I would also suggest that "precision" and "legibility" is defined and/or examplified.}
 
 The goal of map generalization is to produce a map at a given scale that achieves the right balance between rendering performance and information quality for end users. For example, in a tourist attraction rating system, one needs to efficiently visualize important attractions, and constrain object proximity to allow space for user interaction. In a journalistic piece that maps traffic incidents, however, maintaining the underlying distribution of data is the most important aspect, but at the same time object density must be constrained to ensure high-performance data transfer and rendering.
 
-%A benefit of data reduction in digital maps is that performance can improve vastly be reducing the amount of data that needs to be handled when rendering a portion of the map. In \emph{automated} map generalization the generalization process is performed either entirely or partially by algorithms on a computer.
-
-Fully automatic generalization of digital maps~\cite{sarma2012fusiontables,nutanong2012multiresolution} is relevant in many areas such as social networks, factivism and data journalism~\cite{cohen2011journalism,bono2013factivism,sankaranarayanan2009twitterstand}, where there is a constant need for visualizing new and often massive geospatial datasets. Automatic generalization includes both data reduction and graphical rendering~\cite{weibel1999generalising,gruenreich1985cag}. Increasingly, graphical rendering is deferred to map clients. This trend leaves the challenging problem of data reduction, i.e., selecting the right information to be displayed across zoom levels of the map, to the map service provider~\cite{gaffuri12vectortiles}. 
+Fully automatic generalization of digital maps~\cite{sarma2012fusiontables,nutanong2012multiresolution} is relevant in many areas such as social networks, factivism and data journalism~\cite{cohen2011journalism,bono,sankaranarayanan2009twitterstand}, where there is a constant need for visualizing new and often massive geospatial datasets. Automatic generalization includes both data reduction and graphical rendering~\cite{weibel1999generalising,gruenreich1985cag}. Increasingly, graphical rendering is deferred to map clients. This trend leaves the challenging problem of data reduction, i.e., selecting the right information to be displayed across zoom levels of the map, to the map service provider~\cite{gaffuri12vectortiles}. 
 
 Both the performance and quality of a generalized map become important as the map gains a large audience. A map generalization solution handling data reduction in this context should be able to deal with big spatial datasets, consisting of both point and polygon records, should be usable by novice programmers, and should be able to finish processing quickly, e.g., in time for a tight news agency deadline. Ideally, such a system will allow users to control the important aspects of generalization solutions using logical and concise measures and reuse existing technology as much as possible, e.g., relational database technology.
 
@@ -35,12 +13,7 @@ Spatial data is often stored in a database with powerful spatial extensions inst
 
 Using a \emph{declarative language}, we allow the user to concisely express spatial constraints and object importance, which are used to compute a multi-scale database from an input table of spatial data. This gives users a large amount of control over the map generalization process, while still being extremely concise, expressing a generalization with as little as four lines of code. 
 
-We term our approach \emph{declarative cartography}, since it combines a declarative language for data reduction with a compilation procedure that results in efficient database programs to transform data for cartographic visualization.
-
-%\marcos{Revise arguments wrt. related work + open-source?}
-%\martin{The paragraph below belongs, I think, to the related work section. Alternatively, it can be shortened a bit here and the extended version given in the related work section.}
-%
-%We know of two recent papers which address the problem of data reduction problem~\cite{nutanong2012multiresolution,sarma2012fusiontables}. While both of these approaches provide good solutions to the data reduction problem with good running time, there are distinct and overlapping shortcomings to both of these which are not suffered by our approach.  Both of these approaches support only fixed constraints, while we allow a large class of constraints to be defined by the user. The first paper~\cite{sarma2012fusiontables} seems to indicate that the dataset must fit main memory and implies that data must be serialized in and out of the database for processing, none of which is true of our system. The other published approach~\cite{nutanong2012multiresolution} seems to require modifications to the database engine, which is not true of our system either. Neither of these previously published systems offer a language interface to users, but do imply a mechanism for parameterizing the fixed constraints. While~\cite{sarma2012fusiontables} show that there is at least mathematical support in their approach for several different objective functions, it is not clear how a user would actually express new objectives in a way that is understood by the system. Finally, users can take our implementation and start running it on their own infrastructure using only free, unmodified, open source software.
+We term our approach \emph{declarative cartography}\, since it combines a declarative language for data reduction with a compilation procedure that results in efficient database programs to transform data for cartographic visualization.
 
 \vspace{5em}
 
@@ -50,18 +23,17 @@ In this paper, we make the following four contributions:
 
 \item We convert the data reduction problem in map generalization to an instance of the well-known \emph{set multicover problem}~\cite{rajagopalan1998primal}, which makes constraints fully pluggable and allows reuse of well-known algorithms~\cite{rajagopalan1998primal,vazirani2001approximation}.
 
-\item We show how to fully evaluate CVL inside the database; this enables us to reuse basic database technology for data management and scalability. While CVL is designed to compile to a variety of engines~\cite{stonebraker2010friendsorfoes}, we present here an implementation using a relational database engine with spatial extensions. The code for the project is available as open source through the project website.\footnote{\url{http://github.com/dmslab/declarativecartography}}
+\item We show how to fully evaluate CVL inside the database; this enables us to reuse basic database technology for data management and scalability. While CVL is designed to compile to a variety of engines~\cite{Stonebraker:2010:PDBMSvsMapReduce}, we present here an implementation using a relational database engine with spatial extensions. The code for the project is available as open source through the project website.\footnote{\url{http://github.com/dmslab/declarativecartography}}
 
 \item We present experimental results for a variety of real datasets. The results show that the proposed approach has good performance and produces high-quality map generalizations.
 \end{enumerate}
 
 In Section~\ref{sec:background}, we define the data reduction problem in map generalization as a selection problem. In Section~\ref{sec:cvl:language}, we introduce the CVL language. In Section~\ref{sec:optimizationmodel}, we formalize the selection problem as a combinatorial optimization problem based on a mapping to the set multicover problem, and we revisit algorithms for this problem in Section~\ref{sec:algorithms}. In Section~\ref{sec:implementation}, we discuss the compilation procedure that enables us to run CVL on a relational database backend. Experimental results are presented in Section~\ref{sec:experimental}, and finally related work is summarized in Section~\ref{sec:related}.
 
-
 \section{Selection of Geospatial Data}
 \label{sec:background}
 
-In the \emph{selection problem}, we wish to select the subset of a geospatial dataset to be visualized on a map at a given scale. Below we define the basic components of the problem, and informally define the associated optimization problem.
+In the \emph{selection problem,} we wish to select the subset of a geospatial dataset to be visualized on a map at a given scale. Below we define the basic components of the problem, and informally define the associated optimization problem.
 
 \subsection{Geospatial records and weights}
 \label{sec:records}
@@ -110,15 +82,14 @@ For a zoomable map with $\mathcal{Z}$ zoom levels, we are interested in finding 
 
 The ladder approach is not appropriate for all use cases. For example, when regional labels are modeled as geospatial records, e.g., the label ``Europe'', we may wish to show a record only on intermediate zoom levels, violating zoom consistency. Handling these use cases would require an alternative formulation, e.g., following the \emph{star} approach~\cite{foerster2010challenges}. This is an interesting avenue for future work.  
 
-% should be visible mostly on the intermediate zoom levels, the }\emph{star} approach~\cite{foerster2010challenges}\hl{ would be better. This is a limitation of the work presented in this paper.}
 
 \section{CVL Language}
 \label{sec:cvl:language}
-The Cartographic Visualization Language (CVL) is a declarative language that can be used to specify an instance of the multi-scale selection problem (Section~\ref{sec:filtering}). CVL is a rule-based language with a similar goal as other rule-based languages for selection over spatial datasets, i.e., to control the density of information at each zoom-level~\cite{sld,mapnik}. The CVL approach is, however, markedly different. In the related languages, the user must explicitly control the selection of records at each zoom level, while also specifying how records are to be visualized. First of all, CVL focuses only on selection, not presentation. Furthermore, CVL controls selection in a novel constraint-based way. Instead of having the user explicitly control the selection of records at each zoom level, CVL lets the user choose \emph{map constraints} that are instead enforced at all zoom levels. By making the constraints explicit and the control implicit, a very concise formulation is obtained (see Figure~\ref{fig:cvl:example:airports} for an example).
+The Cartographic Visualization Language (CVL) is a declarative language that can be used to specify an instance of the multi-scale selection problem (Section~\ref{sec:filtering}). CVL is a rule-based language with a similar goal as other rule-based languages for selection over spatial datasets, i.e., to control the density of information at each zoom-level~\cite{sld,mapnik}. The CVL approach is, however, markedly different. In the related languages, the user must explicitly control the selection of records at each zoom level, while also specifying how records are to be visualized. First of all, CVL focuses only on selection, not presentation. Furthermore, CVL controls selection in a novel constraint-based way. Instead of having the user explicitly control the selection of records at each zoom level, CVL lets the user choose map constraints that are instead enforced at all zoom levels. By making the constraints explicit and the control implicit, a very concise formulation is obtained (see Figure~\ref{fig:cvl:example:airports} for an example).
 
 CVL is one of the first languages and frameworks to implement the vision of reverse data management~\cite{meliou2011reverse}. In reverse data management, the core idea is that a user states a set of constraints and an objective. These are given together with an input database to an optimization algorithm which computes an output database that is feasible and optimal with regard to the constraints and objective (if a feasible solution exists). This is exactly how CVL works. Furthermore, a feasible solution is guaranteed to exist, as deleting all records is always a feasible solution.
 
-The CVL language has two statements, the \emph{generalize} statement (see Section~\ref{sec:generalize:statement}) and the \emph{create-constraint} statement (see Section~\ref{sec:create:constraint:statement}). The create constraint statement is used to formulate new map constraints and the generalize statement is used to specify a solution to the multi-scale selection problem subject to those constraints. 
+The CVL language has two statements, the \emph{generalize} statement (see Section~\ref{sec:generalize:statement}) and the \emph{create-constraint} statement (see Section~\ref{sec:create:constraint:statement}). The create constraint statement is used to formulate new map constraints and the generalize statement is used to specify a solution to the multi-scale selection problem subject to those constraints.
 
 The CVL language builds on top of SQL and reuses SQL as a language for formulating constraints and record weighting schemes.
 
@@ -149,15 +120,15 @@ SUBJECT TO
 
 \begin{figure*}[tb]
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.95\linewidth]{figs-cvl/airports.png}}
+    \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports.png}}
     \centerline{(a) Full Openflights Airport dataset}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.95\linewidth]{figs-cvl/airports_z4.png}}
+    \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports_z4.png}}
     \centerline{(b) Airports on zoom-level 5}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.95\linewidth]{figs-cvl/airports_z0.png}}
+    \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports_z0.png}}
     \centerline{(c) Airports on the top-most zoom-level.}
   \end{minipage}
   \vspace{-0ex}
@@ -258,7 +229,6 @@ RESOLVE cid IF DELETE (
 \end{figure}
 
 The \emph{resolve-if-delete} clause is used to compute the integer number of records that must be deleted in order to resolve the conflict with a given $cid$. 
-%\hl{For the proximity constraint, this number is always 1, but for other constraints this may vary}.
 
 Using this syntax, the definition of the proximity constraint is given in Figure~\ref{fig:proximity:definition}. The body of the constraint is a distance self join using a distance function \texttt{ST\_Distance} provided by a spatial extension to SQL. This join finds all pairs of records that are too close, e.g.\ less than $10$ pixels apart. For each conflict, the select statement outputs two tuples and exactly once for each conflict. The resolve-if-delete clause is simply the constant $1$, because that is how many records must be deleted to resolve a proximity conflict.
 
@@ -323,13 +293,6 @@ The purpose of these clauses is to enable arbitrary SQL statements to be run bef
 
 The user does not need to know how the conflicts are handled, because all conflicts are automatically resolved by the CVL framework using one of the algorithms presented in Section~\ref{sec:algorithms}.
 
-%In this example, calls are made to other CVL runtime functions, namely \texttt{CVL\_WebMercatorCells} and \texttt{CVL\_PointHash}. These functions returns a set of points corresponding to the centroids of intersected tiles (given a geometry) and a unique identifier for points, respectively. The unique identifier for points is based on the well-known GeoHash algorithm.
-
-
-% give the variables by example, and explain together with the example, instead of listing everything up front.
-
-%\marcos{These could be introduced by need along with the examples integrated into the sections above.}
-
 \section{Selection optimization problem}
 \label{sec:optimizationmodel}
 
@@ -352,6 +315,7 @@ The general selection optimization problem is clearly equivalent to the set mult
 The vertex cover problem is NP-hard, even for very restricted cases. For example, if $G$ is a planar graph and every vertex has degree at most 3, the problem remains NP-hard~\cite{alimonti2000some, garey1977rectilinear}. This corresponds to a selection optimization problem where the conflicts contain two records each, and each record is involved in at most 3 conflicts. It is hard to imagine that any interesting application is more restrictive. 
 
 In the next section, we discuss algorithmic approaches for solving the selection optimization problem. We include a further discussion on the objective value (\ref{eq:objective}) in the experimental evaluation of our approach.
+
 
 \section{Algorithms for selection problem}
 \label{sec:algorithms}
@@ -383,11 +347,6 @@ In this algorithm, we first solve a linear programming (LP) relaxation of the se
 
 This algorithm provides a feasible solution to the selection optimization problem, and the approximation guarantee is $f$~\cite{vazirani2001approximation}; thus, if $f$ is small, the algorithm provides a good approximation guarantee. As the LP-problem can be solved in polynomial time, the complete algorithm is polynomial.
 
-%\subsection{Dynamic greedy algorithm (DGA)}
-
-%Described in Vazirani 13.2.1. @Martin: Please write here.
-
-%\marcos{I would only introduce DGA if it is actually evaluated in the experiments.}
 
 \section{Implementation}
 \label{sec:implementation}
@@ -404,10 +363,11 @@ Since CVL is declarative, and CVL constraints are already expressed in SQL, it i
 
 \item Since all code is pushed down and both input and output reside in the database, we do not need to transfer any data outside of the database engine. This co-location of code and data is a significant advantage for large datasets.
 
-\item By expressing as much as possible of the generated code in SQL, we can reuse decades of optimizations built into database engines, especially for geospatial data~\cite{guttman1984rtree,hellerstein1995gist}. This opens up many opportunities, such as automatic optimization, parallelism, and selection of specialized algorithms and indexes.  
+\item By expressing as much as possible of the generated code in SQL, we can reuse decades of optimizations built into database engines, especially for geospatial data~\cite{Guttman1984:RTree,Hellerstein1995:GiST}. This opens up many opportunities, such as automatic optimization, parallelism, and selection of specialized algorithms and indexes.  
 
-\end{enumerate}
-While the general strategy of compiling declarative languages to SQL has been pursued in other contexts, e.g., for XQuery~\cite{boncz2005pathfinder} and LINQ~\cite{grust2009ferry}, our context poses a particular challenge of integrating the language with algorithmic solvers inside the database. 
+\end{enumerate} 
+
+While the general strategy of compiling declarative languages to SQL has been pursued in other contexts, e.g., for XQuery~\cite{pathfinder} and LINQ~\cite{ferry}, our context poses a particular challenge of integrating the language with algorithmic solvers inside the database. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -484,24 +444,6 @@ ALLORNOTHING FOR 'roads'
 
 In the evaluation of CVL, the minimum level specifier controls what data is given as input for a zoom level. The all-or-nothing specifier, on the other hand, controls filtering of the output of the level generalization process. If the specifier is present, all records of a partition are deleted if any record from the partition input is not present in the output. By filtering output, we ensure that the result also respects all other constraints specified by the user. 
 
-%\minisec{Set up and Tear Down for Constraints}   
-%Map constraints can exhibit significant complexity. Since a constraint is expressed as a single SELECT statement, it is often helpful to be able to refer to temporary tables in its formulation. We have thus extended the CREATE CONSTRAINT statement to include two additional clauses: WITH SETUP and WITH TEARDOWN. The former allows a user-defined SQL statement to be executed in advance of the constraint evaluation, creating any supporting tables for the evaluation of the constraint. The latter specifies user-defined cleanup code. Note that since constraints are evaluated independently at each zoom level, the set-up and tear-down clauses are evaluated before and after the constraint SQL at each zoom level.       
-%\marcos{Move necessary information from paragraph above to Language section, and remove paragraph after that.}
-
-%
-% MVS: We can probably get away with not showing the syntax below. 
-%
-%\begin{lstlisting}
-%CREATE CONSTRAINT C1 
-%AS NOT EXISTS
-% (SELECT cid, rid, minhits
-%  FROM {more SQL})
-%WITH SETUP
-% {user-defined SQL}
-%WITH CLEANUP
-% {user-defined SQL}
-%\end{lstlisting}
-
 \section{Experimental Results}
 \label{sec:experimental}
 
@@ -576,15 +518,15 @@ In our approach, we solve the multi-scale selection problem as a series of selec
 
 \begin{figure*}[tb]
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_7k_airports_heuristic_B.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_7k_airports_heuristic_B.pdf}}
     \centerline{(a) SGA + Proximity}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_7k_airports_lp_A.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_7k_airports_lp_A.pdf}}
     \centerline{(b) LPGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_7k_airports_lp_B.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_7k_airports_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
 %  \vspace{-1ex}
@@ -601,15 +543,15 @@ In this section, we present experimental results with point datasets, namely the
 
 \begin{figure*}[tb]
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_500k_tourism_heuristic_A.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_500k_tourism_heuristic_A.pdf}}
     \centerline{(a) SGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_500k_tourism_lp_A.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_500k_tourism_lp_A.pdf}}
     \centerline{(b) LPGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_pnt_500k_tourism_lp_B.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_500k_tourism_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
 %  \vspace{-1ex}
@@ -649,11 +591,11 @@ Tourism (500K) & Proximity & LPGA & 2h 18m & 1.24 \\
 
 \begin{figure*}[tb]
   \begin{minipage}{0.49\linewidth}
-    \centerline{\includegraphics[width=0.75\linewidth]{figs-cvl/scal_pnt_30m_synthetic.pdf}}
+    \centerline{\includegraphics[width=0.75\linewidth]{./figs-cvl/scal_pnt_30m_synthetic.pdf}}
     \centerline{(a) Scalability for point data}
   \end{minipage} \hfill
   \begin{minipage}{0.49\linewidth}
-    \centerline{\includegraphics[width=0.75\linewidth]{figs-cvl/scal_lin_30k_uswaterway.pdf}}
+    \centerline{\includegraphics[width=0.75\linewidth]{./figs-cvl/scal_lin_30k_uswaterway.pdf}}
     \centerline{(b) Scalability for complex shape data}
   \end{minipage} \hfill
 %  \vspace{-0ex}
@@ -716,15 +658,15 @@ Zones (30K) & Proximity & LPGA & --- & --- \\
 
 \begin{figure*}[tb]
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_lin_30k_uswaterway_lp_A.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_A.pdf}}
     \centerline{(a) LPGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_lin_30k_uswaterway_heuristic_A.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_heuristic_A.pdf}}
     \centerline{(b) SGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{figs-cvl/prelim_lin_30k_uswaterway_lp_B.pdf}}
+    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
 %  \vspace{-1ex}
@@ -754,21 +696,18 @@ The optimization approach of Das Sarma et al.~\cite{sarma2012fusiontables} is th
 %As a consequence, their approach is restricted to memory-resident datasets and pre-specified, not user-defined, constraints. 
 In addition, it is hard to integrate their approach with existing geospatial data serving infrastructures, which are mostly based on standard spatial database technology.
 
-User-defined constraints and declarative specifications have been shown to yield elegant solutions to a variety of problems in data management, including record deduplication~\cite{arasu2009dedupalog}, database testing~\cite{binnig2007reverseqp,binnig2007symbolicqp}, as well as cloud and networking resource optimization~\cite{liu2012cologne}. Our work brings these ideas to the context of map generalization and geospatial data, and as mentioned previously, is among the first frameworks to implement the vision of reverse data management~\cite{meliou2011reverse}. 
+User-defined constraints and declarative specifications have been shown to yield elegant solutions to a variety of problems in data management, including record deduplication~\cite{ArasuRS09:Dedupalog}, database testing~\cite{BinnigKL07:ReverseQP,Binnig:2007:SymbolicQP}, as well as cloud and networking resource optimization~\cite{Liu:2012:Cologne}. Our work brings these ideas to the context of map generalization and geospatial data, and as mentioned previously, is among the first frameworks to implement the vision of reverse data management~\cite{meliou2011reverse}. 
 
-In-database processing has also been explored successfully in diverse contexts in the literature. Translation of high-level languages, such as XQuery or LINQ, to SQL lead to highly scalable and efficient implementations~\cite{boncz2005pathfinder,grust2009ferry}. A number of recent approaches have targeted expressing complex statistical analytics in SQL~\cite{hellerstein2012madlib,ordonez2007udf}. In contrast, we show how in-database processing can be used in the implementation of a declarative language for map generalization which includes solvers and constraints, leveraging the trend to incorporate whole programming language interpreters and support for spatial data structures in database engines~\cite{blakeley2008dotnet}.  
+In-database processing has also been explored successfully in diverse contexts in the literature. Translation of high-level languages, such as XQuery or LINQ, to SQL lead to highly scalable and efficient implementations~\cite{pathfinder,ferry}. A number of recent approaches have targeted expressing complex statistical analytics in SQL~\cite{Hellerstein:2012:Madlib,Ordonez2007:StatisticsUDFs}. In contrast, we show how in-database processing can be used in the implementation of a declarative language for map generalization which includes solvers and constraints, leveraging the trend to incorporate whole programming language interpreters and support for spatial data structures in database engines~\cite{Blakeley2008:DotNET}.  
 
 Our approach dovetails with a number of techniques from the literature, which hold potential to further extend or complement it. First, we observe that the running time of the LP-based greedy algorithm (LPGA) is generally high. We implemented this algorithm because it provides a theoretical bound on the solution quality. We plan to explore other algorithms for set multicover, such as the greedy algorithm described by Rajagopalan and Vazirani~\cite{rajagopalan1998primal}, to improve running time compared to the LP-based greedy algorithm, while achieving good quality. An interesting challenge is how to express such algorithms entirely in SQL.
 
 Second, this work considers only selection of objects. An important extension is to allow other data reduction operations, such as geometric transformation and aggregation of objects. While we believe that CVL could be adapted to these additional requirements, this would imply modeling alternative semantics and procedures for satisfying constraints in our framework.
 
-Third, we would like to experiment with geospatially-aware parallel processing infrastructures, such as Hadoop-GIS~\cite{aji2013hadoopgis}, for even further scalability in computing map generalizations. Finally, once a map generalization is complete, the resulting map must be served to end-users. This problem is orthogonal to our work, and classic linearization techniques can be applied~\cite{hilbert1891ueber}. All of these are interesting avenues for future work.
+Third, we would like to experiment with geospatially-aware parallel processing infrastructures, such as Hadoop-GIS~\cite{Aji:2013:HadoopGIS}, for even further scalability in computing map generalizations. Finally, once a map generalization is complete, the resulting map must be served to end-users. This problem is orthogonal to our work, and classic linearization techniques can be applied~\cite{hilbert1891ueber}. All of these are interesting avenues for future work.
 
-\section{Conclusion}
 
 In this paper, we present a novel declarative approach to the data reduction problem in map generalization. 
 %The proposed approach is complete in the sense that it integrates seamlessly with existing database and cartographic generalization technology. 
 The proposed approach integrates seamlessly with existing database technology, and allows users to specify, using the proposed CVL language, and across all scales, what goals and constraints the generated map should fulfill --- leaving the detailed selection decisions to the system. The system leverages an algorithmic mapping which enables at the same time user-defined constraints and reuse of methods from the optimization literature. Our experiments show that the approach performs well for off-line processing and produces maps of high quality.
 
-\section{Acknowledgements}
-This project has been funded by Grontmij, the Danish Geodata Agency and the Ministry of Innovation in Denmark. We would like to thank employees and management at Grontmij and the Danish Geodata Agency for great discussions about the ideas presented in this work. We would also like to thank the anonymous reviewers for their insightful comments on our work. Finally, we would like to thank Amazon for providing an AWS in Education research grant award, which we used to implement our experimental setup.  

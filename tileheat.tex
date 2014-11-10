@@ -1,10 +1,3 @@
-% !TEX root = ./thesis.tex
-\chapter{TileHeat: A Framework for Tile Selection}
-% abstract
-Public geospatial services are now commonly available on the Web. These services often render maps to users by dividing the maps into tiles. Given that geospatial services experience significant user load, it is desirable to pre-compute tiles at a time of low load in order to increase overall performance. Based on our analysis of the request log of a public geospatial service provider, we observe that times of low load occur with a periodic pattern. In addition, our analysis shows that tile access patterns exhibit strong spatial skew.
-
-Based on these observations, we propose an adaptive strategy restricting the set of tiles that are pre-computed to fit the low load time window. Ideally, the restricted tile set should deliver performance comparable to the full tile set. To achieve this result, tiles should be selected based on their expected popularity. Our key observation is that the popularity of a tile can be estimated by analyzing the tiles that users have previously requested. Our adaptive strategy constructs heatmaps of previous requests and uses this information to decide which tiles to pre-compute. We examine two alternative heuristics, one of which exploits that nearby tiles have a high likelihood of having similar popularity. We evaluate our methods against a real production workload, and observe that the latter heuristic achieves a 25\% increase in the hit ratio compared to current methods, without pre-computing a larger set of tiles.
-
 \section{Introduction}
 
 % Situation
@@ -42,6 +35,7 @@ Our paper starts with a discussion of existing methodologies for tile caching (S
 \end{itemize}
 %
 We end the paper by reviewing additional related work (Section~\ref{sec:related}). 
+
 
 \section{Background}
 \label{sec:tile:caching}
@@ -381,6 +375,3 @@ As we have observed, heatmaps can be made predictive and aid in selecting a set 
 While our results improve on existing methods, for future work we plan to do a more thorough exploration of the parameter space of the algorithms HEAT-HW and HEAT-D to investigate if further improvements could be achieved. In addition, we plan to work on efficient methods for materializing the tiles selected by our algorithms as well as use the trend information from HEAT-HW to build a distributed cache that adapts to sudden spikes in load. 
 %Exploring efficient methods of materializing the tiles, given a plan computed by TileHeat, would bring the work full circle. 
 Finally, deploying TileHeat in a production environment and measuring the effect on latency remains as an important direction of future work.
-
-\section{Acknowledgements}
-The authors would like to acknowledge the support of the National Survey \& Cadastre in Denmark and the Department of GIS \& IT at Grontmij Denmark, who have contributed economically, with data, and with human resources to this work.
