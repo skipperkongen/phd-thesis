@@ -123,6 +123,7 @@ Acknowledgements go here.
 (The Tim Kraska intro) The web has made it easy to provide and consume data-driven visualizations. Building an interactive map, graph or chart visualization and publishing it online has become a commodity~\cite{1,2,3}. Nonetheless, for all but the most trivial cases, providing data-driven visualizations online requires a lot of effort. First, it is fundamentally hard to design a legible, informative and representative visualization over large datasets, especially when data changes over time~\cite{1,2,3}. Second, the performance of a data visualization system does not automatically scale with the number of concurrent consumers. To account for these issues, ... has been proposed. 
 
 \begin{itemize}
+\item Creating maps, serving maps, using maps. We focus on the two first areas.
 \item Data-driven visualizations of temporal, spatial and multi-variate datasets contribute to the growth, administration and transparency of our societies; they are produced by goverments, companies and individuals; they are consumed by goverments, companies and individuals.
 %\item The web has enabled governments, companies and individuals to grant everyone access to large spatial, temporal and multi-variate datasets of high quality.
 %\item Give example of the datasets
@@ -178,6 +179,7 @@ Forward reference the remaining chaptes, say what they contain.
 
 \chapter{Related Work}
 \label{chapter:related:work}
+Once I choose the title, adjust the related work accordingly.
 
 \section{Generalization in Geography}
 \label{sec:related:work:generalization}
@@ -191,14 +193,46 @@ Forward reference the remaining chaptes, say what they contain.
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
 \section{Introduction}
+Take Anders' write-up (if I can find it). Either attribute or paraphrase. Probably paraphrase and do not forget to thank him in acknowledgements.
+\subsection{The Importance of Public Data}
+Cite offentlige data is spil, etc.
+
 \section{The Digital Map Supply Today}
-\subsection{A Look Under the Covers}
-\subsection{The Story in Charts and Numbers}
+Current sitiation. Value created, Operations, 
 \subsection{Requirements}
+\subsection{A Look Under the Covers}
+\subsection{Operations in Charts and Numbers}
 \subsection{Challenges}
+\subsection{Summary}
 % 99% is not high availability 
 % 200 ms is not low latency
 % Images are not an interactive experience
+\section{A Digital Map Supply of the Future}
+A roadmap that uses the results of this Dissertation. The use cases may draw on one or both of them main results (creating maps, serving maps)
+\subsection{Use Cases}
+\begin{itemize}
+\item Visualizing non-curated data (e.g. sensor data, user generated content)
+\item Visualizing curated data (e.g. place names, streets, etc.)
+\end{itemize}
+\subsection{New Requirements}
+This section argues we need an extended set of requirements, wrt Section:Requirements are needed. Users expect more today that they did ten years ago when the digital map supply was founded.
+\begin{itemize}
+\item Interactive experience
+\item Zero down-time
+\item Very low latency
+\end{itemize}
+\subsection{Towards a Unified Key-Value Access Model}
+\begin{itemize}
+\item How Key-Value access is Used Today
+\item What are the Keys?
+\item What the Values?
+\end{itemize}
+\subsection{Summary}
+\section{Using the Contributions of this Thesis}
+\subsection{Using Glossy and CVL}
+\subsection{Using Tileheat}
+\section{Conclusion}
+
 
 \chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
 \label{chapter:cvl}
