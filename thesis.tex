@@ -111,6 +111,7 @@ Acknowledgements go here.
 \chapter{Introduction}
 \label{chapter:introduction}
 
+
 %The web has enabled governments and other organizations to grant everyone access to large spatial, temporal and multi-variate datasets of high quality cite(GST, Data.Gov, UN, World Bank). Visualizations-as-a-Service (DVaaS) contribute to the growth, administration and transparency of our societies by enabling citizens, companies and institutions to navigate and explore these important datasets cite(offentlige data is spil). For example, geographical maps allow planners to consult nature conservations data before building a new motorway (think of better example, or provide more examples).
 
 %Cloud computing enables visualizations by exposing the key components, such as storage and relational databases (RDBMS), as a commodity. Nonetheless, a critical problem is the cost to operate services in accordance with high availability and low latency requirements cite(kraska). In constrast with RDBMSes, key-value stores (K-V stores) have emerged as low cost components that combine fast storage with a simple access interface cite(dynamo, memcached, redis). Furthermore, K-V stores are both easy to scale and easy to make highly available cite(something). Consequently, K-V stores are increasingly used to power data driven visualizations over multi-dimensional datasets, e.g. geographical maps ()
@@ -120,26 +121,49 @@ Acknowledgements go here.
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
-(The Tim Kraska intro) The web has made it easy to provide and consume data-driven visualizations. Building an interactive map, graph or chart visualization and publishing it online has become a commodity~\cite{1,2,3}. Nonetheless, for all but the most trivial cases, providing data-driven visualizations online requires a lot of effort. First, it is fundamentally hard to design a legible, informative and representative visualization over large datasets, especially when data changes over time~\cite{1,2,3}. Second, the performance of a data visualization system does not automatically scale with the number of concurrent consumers. To account for these issues, ... has been proposed. 
-
 \begin{itemize}
-\item Creating maps, serving maps, using maps. We focus on the two first areas.
+\item New world of data mash-ups where in the data eco-system everyone can be both a provider and a consumer
+\item Data is being visualized in mashups like never before. This is very challenging to achieve in an online environement while keeping costs low
 \item Data-driven visualizations of temporal, spatial and multi-variate datasets contribute to the growth, administration and transparency of our societies; they are produced by goverments, companies and individuals; they are consumed by goverments, companies and individuals.
+\item Some division into background data (remains fixed) and overlay data (constantly emerging), e.g. background maps with hotels on top
+\item Open Data feeds demand for more Open Data. Open Data puts pressure on background data.
+\item Challenges are: serving costs, design costs
+\item This pressure causes a paradigm shift, e.g. wikipedia/openstreetmap deltas or key-value access models that are easy to scale.
+\item Simultaneously, there is an increased demand for drag-and-drop mash-up data visualization
+\item This in turn creates a need for customizable data reduction as data sizes grow
+\item Also, users demand interactive and explorable visualizations, e.g. with support for multiple scales (e.g. Maps and Timelines) or views (e.g. New York Times budget).
+\item Increased need for data transformation (e.g. data reduction) as a service if data-driven visualizations are to remain scalable
+\item Data can be all sorts, usually with a schema
+\item Also, increased need for high-availability, especially in multi-sourced applications
+\item Increased need for low latency as users grow more impatient
+\item Increased need for low total cost of ownership
+\item This thesis focuses on the data reduction (selection) and data serving part
+\end{itemize}
+
+%(The Tim Kraska intro) The web has made it easy to provide and consume data-driven visualizations. Building an interactive map, graph or chart visualization and publishing it online has become a commodity~\cite{1,2,3}. Nonetheless, for all but the most trivial cases, providing data-driven visualizations online requires a lot of effort. First, it is fundamentally hard to design a legible, informative and representative visualization over large datasets, especially when data changes over time~\cite{1,2,3}. Second, the performance of a data visualization system does not automatically scale with the number of concurrent consumers. To account for these issues, ... has been proposed. 
+
+%\begin{itemize}
+%\item Creating maps, serving maps, using maps. We focus on the two first areas.
 %\item The web has enabled governments, companies and individuals to grant everyone access to large spatial, temporal and multi-variate datasets of high quality.
 %\item Give example of the datasets
-\item Give examples of the visualizations
-\item Overview of the state-of-the-art (hmm, look at Kraska dissertation, he arrived very quickly to the challenges)
-\item Challenges are: operations costs, difficulty of design
-\end{itemize}
+%\item Give examples of the visualizations
+%\item Overview of the state-of-the-art (hmm, look at Kraska dissertation, he arrived very quickly to the challenges)
+%\item Challenges are: operations costs, difficulty of design
+%\end{itemize}
 
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
-Did Kraska wait with raising issue to this section? Maybe the issues are raised earlier, and the really crisp problem definition is given here?
+Cloud has made the essential infrastructure a commodity. Data visualizations can be driven entirely by key-value stores and front-end visualization frameworks (e.g. D3). Introduce key-value access model (e.g. content delivery networks, and in-memory caches) as means for scalable hosting of data-visualizations. Introduce key-selection (prediction of workload) and value-selection and materialization problems.
+
+Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with regard to workload.
 
 \begin{itemize}
-\item High operations cost of data visualization systems
-\item Difficulty of data reduction for visualizations 
+\item High level: (1) Creating mashups, i.e. value selection (2) serving mashups, i.e. key-selection
+\item (1a) Integrating with database technology
+\item (1b) Programming languages
+\item (1c) Extend to all types of data, not just spatial
+\item (2a) Predict keys to materialize 
 \end{itemize}
 
 % Data and query model: Public View is key-value, where value is an object collection. Base data is relational.
@@ -186,6 +210,7 @@ Forward reference the remaining chaptes, say what they contain.
 \label{sec:related:work:generalization}
 \begin{itemize}
 \item See notes.tex and possibly latex in old and old2.
+\item See 
 \end{itemize}
 
 \section{(to be decided)}
@@ -199,7 +224,7 @@ Forward reference the remaining chaptes, say what they contain.
 \label{chapter:case:study}
 
 \section{Introduction}
-Take Anders' write-up (if I can find it). Either attribute or paraphrase. Probably paraphrase and do not forget to thank him in acknowledgements.
+Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Probably paraphrase and do not forget to thank him in acknowledgements.
 
 \subsection{The Importance of Public Data}
 \begin{itemize}
