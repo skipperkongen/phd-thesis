@@ -84,7 +84,11 @@
 
 %\title{Building Highly Scalable Data Visualization Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
-\title{Selection Problems in Multi-scale Data Visualizations Systems}
+%\title{Selection Problems in Multi-scale Data Visualizations Systems}
+%\title{Selection Problems in High-Performance Multi-scale Visualizations}
+%\title{Data Selection in High-Performance Visualizations on the Web}
+\title{Selection Problems in High-Performance Data Visualizations for the Web}
+\title{Selection Problems in Data Visualizations for the Web}
 %\title{Title to be decided}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
@@ -107,15 +111,36 @@ Acknowledgements go here.
 \chapter{Introduction}
 \label{chapter:introduction}
 
+%The web has enabled governments and other organizations to grant everyone access to large spatial, temporal and multi-variate datasets of high quality cite(GST, Data.Gov, UN, World Bank). Visualizations-as-a-Service (DVaaS) contribute to the growth, administration and transparency of our societies by enabling citizens, companies and institutions to navigate and explore these important datasets cite(offentlige data is spil). For example, geographical maps allow planners to consult nature conservations data before building a new motorway (think of better example, or provide more examples).
+
+%Cloud computing enables visualizations by exposing the key components, such as storage and relational databases (RDBMS), as a commodity. Nonetheless, a critical problem is the cost to operate services in accordance with high availability and low latency requirements cite(kraska). In constrast with RDBMSes, key-value stores (K-V stores) have emerged as low cost components that combine fast storage with a simple access interface cite(dynamo, memcached, redis). Furthermore, K-V stores are both easy to scale and easy to make highly available cite(something). Consequently, K-V stores are increasingly used to power data driven visualizations over multi-dimensional datasets, e.g. geographical maps ()
+
+%However, the strong points of K-V stores are counter-balanced by severe limitations. While some K-V stores have been augmented with more advanced features, e.g. A cite, B cite and C, there is no general support for an advanced query and data definition language like SQL. K-V stores simply provide access-by-key to data values that must be materialized elsewhere. 
+
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
+
+(The Tim Kraska intro) The web has made it easy to provide and consume data-driven visualizations. Building an interactive map, graph or chart visualization and publishing it online has become a commodity~\cite{1,2,3}. Nonetheless, for all but the most trivial cases, providing data-driven visualizations online requires a lot of effort. First, it is fundamentally hard to design a legible, informative and representative visualization over large datasets, especially when data changes over time~\cite{1,2,3}. Second, the performance of a data visualization system does not automatically scale with the number of concurrent consumers. To account for these issues, ... has been proposed. 
+
 \begin{itemize}
-\item something
-\item something else
+\item Data-driven visualizations of temporal, spatial and multi-variate datasets contribute to the growth, administration and transparency of our societies; they are produced by goverments, companies and individuals; they are consumed by goverments, companies and individuals.
+%\item The web has enabled governments, companies and individuals to grant everyone access to large spatial, temporal and multi-variate datasets of high quality.
+%\item Give example of the datasets
+\item Give examples of the visualizations
+\item Overview of the state-of-the-art (hmm, look at Kraska dissertation, he arrived very quickly to the challenges)
+\item Challenges are: operations costs, difficulty of design
 \end{itemize}
 
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
+
+Did Kraska wait with raising issue to this section? Maybe the issues are raised earlier, and the really crisp problem definition is given here?
+
+\begin{itemize}
+\item High operations cost of data visualization systems
+\item Difficulty of data reduction for visualizations 
+\end{itemize}
+
 % Data and query model: Public View is key-value, where value is an object collection. Base data is relational.
 % Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a relational backend.
 % Key Selection: given a key space, select which keys to eagerly materialize. E.g. Tileheat solves this problem. 
@@ -124,20 +149,32 @@ Acknowledgements go here.
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
 
+Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
+ 
 \subsection{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
 \label{sec:introduction:contributions:cvl}
+
+Something resembling the abstract
 
 \subsection{Glossy: Global Selections for Data Visualizations}
 \label{sec:introduction:contributions:glossy}
 
+Something resembling the abstract
+
 \subsection{Tileheat: A Framework For Tile Selection}
 \label{sec:introduction:contributions:tileheat}
+
+Something resembling the abstract
 
 \subsection{Publications, Data and Software}
 \label{sec:introduction:publications}
 
+Mention where Git repos are and what they contain.
+
 \section{Structure}
 \label{sec:introduction:structure}
+
+Forward reference the remaining chaptes, say what they contain.
 
 \chapter{Related Work}
 \label{chapter:related:work}
@@ -145,7 +182,7 @@ Acknowledgements go here.
 \section{Generalization in Geography}
 \label{sec:related:work:generalization}
 \begin{itemize}
-\item See notex.tex
+\item See notes.tex and possibly latex in old and old2.
 \end{itemize}
 \section{(to be decided)}
 \section{(to be decided)}
