@@ -179,41 +179,90 @@ Forward reference the remaining chaptes, say what they contain.
 
 \chapter{Related Work}
 \label{chapter:related:work}
-Once I choose the title, adjust the related work accordingly.
+
+% Once I choose the title, adjust the related work accordingly.
 
 \section{Generalization in Geography}
 \label{sec:related:work:generalization}
 \begin{itemize}
 \item See notes.tex and possibly latex in old and old2.
 \end{itemize}
+
 \section{(to be decided)}
+
 \section{(to be decided)}
+
 \section{(to be decided)}
+
 
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
+
 \section{Introduction}
 Take Anders' write-up (if I can find it). Either attribute or paraphrase. Probably paraphrase and do not forget to thank him in acknowledgements.
+
 \subsection{The Importance of Public Data}
-Cite offentlige data is spil, etc.
+\begin{itemize}
+\item Cite offentlige data is spil, etc.
+\end{itemize}
 
 \section{The Digital Map Supply Today}
-Current sitiation. Value created, Operations, 
+
+\begin{itemize}
+\item Diagram of Users and Providers
+\end{itemize}
+
 \subsection{Requirements}
+\begin{itemize}
+\item SLA
+\end{itemize}
+
 \subsection{A Look Under the Covers}
-\subsection{Operations in Charts and Numbers}
+\begin{itemize}
+\item Describe the architecture (tiers, number of data centers, services running)
+\end{itemize}
+
+\subsection{The DMS in Charts and Numbers}
+\begin{itemize}
+\item Budget
+\item Requests per day
+\item Unique accounts
+\item Spatial skew
+\item Temporal skew
+\item Performance sensitivity
+\item Availability over time (find Kenneths tal)
+\end{itemize}
+
+\begin{figure}[!t]
+\centering
+\scalebox{0.12}{\includegraphics{figs-thesis/tileheat_heatmap_sjaelland.png}}
+%\vspace{-4ex}
+\caption{Heatmap showing the areas in North-East Zealand, Denmark most viewed on maps from the Digital Map Supply.}
+%\vspace{-3ex}
+\label{fig:usecase:heatmap}
+\end{figure}
+
+
 \subsection{Challenges}
-\subsection{Summary}
+\begin{itemize}
+\item Availability, especially for multi-source applications
+\item Performance sensitivity
+\end{itemize}
 % 99% is not high availability 
 % 200 ms is not low latency
 % Images are not an interactive experience
+
+\subsection{Summary}
+
 \section{A Digital Map Supply of the Future}
 A roadmap that uses the results of this Dissertation. The use cases may draw on one or both of them main results (creating maps, serving maps)
+
 \subsection{Use Cases}
 \begin{itemize}
 \item Visualizing non-curated data (e.g. sensor data, user generated content)
 \item Visualizing curated data (e.g. place names, streets, etc.)
 \end{itemize}
+
 \subsection{New Requirements}
 This section argues we need an extended set of requirements, wrt Section:Requirements are needed. Users expect more today that they did ten years ago when the digital map supply was founded.
 \begin{itemize}
@@ -221,16 +270,22 @@ This section argues we need an extended set of requirements, wrt Section:Require
 \item Zero down-time
 \item Very low latency
 \end{itemize}
+
 \subsection{Towards a Unified Key-Value Access Model}
 \begin{itemize}
 \item How Key-Value access is Used Today
 \item What are the Keys?
 \item What the Values?
 \end{itemize}
+
 \subsection{Summary}
+
 \section{Using the Contributions of this Thesis}
+
 \subsection{Using Glossy and CVL}
+
 \subsection{Using Tileheat}
+
 \section{Conclusion}
 
 
@@ -240,10 +295,8 @@ This section argues we need an extended set of requirements, wrt Section:Require
   language=cvl
 }
 
-
 \section{Introduction}
 \label{sec:cvl:introduction}
-
 The goal of map generalization is to produce a map at a given scale that achieves the right balance between rendering performance and information quality for end users. For example, in a tourist attraction rating system, one needs to efficiently visualize important attractions, and constrain object proximity to allow space for user interaction. In a journalistic piece that maps traffic incidents, however, maintaining the underlying distribution of data is the most important aspect, but at the same time object density must be constrained to ensure high-performance data transfer and rendering.
 
 Fully automatic generalization of digital maps~\cite{sarma2012fusiontables,nutanong2012multiresolution} is relevant in many areas such as social networks, factivism and data journalism~\cite{cohen2011journalism,bono,sankaranarayanan2009twitterstand}, where there is a constant need for visualizing new and often massive geospatial datasets. Automatic generalization includes both data reduction and graphical rendering~\cite{weibel1999generalising,gruenreich1985cag}. Increasingly, graphical rendering is deferred to map clients. This trend leaves the challenging problem of data reduction, i.e., selecting the right information to be displayed across zoom levels of the map, to the map service provider~\cite{gaffuri12vectortiles}. 
