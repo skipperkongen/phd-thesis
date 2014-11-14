@@ -203,6 +203,8 @@ a crucial problem is the effort and cost to create and serve data-driven visuali
 
 Use ZURICH_NOTES.txt as a list of requirements for what became Glossy.
 
+%This work draws heavily on ideas developed in the field of map generalization. Instead of copying in the entire theory of map generalization, the reader is encouraged to read Weibel and Dutton. While the rich diversity of planet earth has inspired such artful map generalization algorithms that can capture that vast reality on a piece of paper, this dissertation takes a side-ways leap: moving in parallel with the cartographernd, this dissertation will attempt to draw a vast universe of data tables on 
+
 Cloud has made the essential infrastructure a commodity. Data visualizations can be driven entirely by key-value stores and front-end visualization frameworks (e.g. D3). Introduce key-value access model (e.g. content delivery networks, and in-memory caches) as means for scalable hosting of data-visualizations. Introduce key-selection (prediction of workload) and value-selection and materialization problems.
 
 Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with regard to workload.
@@ -267,18 +269,24 @@ Talk about the basic abstraction types: (1) selection, (2) aggregation, (3) modi
 
 Talk about multi-scale data abstraction, and the two types: (1) ladder, (2) star.
 
-\subsection{Geography}
+\subsection{Geography: Map Generalization}
 \begin{itemize}
 \item See notes.tex and possibly latex in old and old2.
+\item See Weibel and Dutton: (1) what generalisation of spatial data is, (2) why it is necessary, (3) some techniques for performing it in the digital domain, and (4) what tools
+currently exist to support it, (5) providing pointers to some of the recent research literature.
 \end{itemize}
-\subsection{Databases}
 
-\section{(to be decided)}
+?the selection and simplified representation of detail appropriate to the scale and/or the purpose of a map? (ICA 1973: 173)
 
-\section{(to be decided)}
+\section{Generalized Data Abstraction Theory}
+Simply, transfer all terms and ideas from map generalization to data general data abstraction by removing specific spatial terms from the descriptions.
 
-\section{(to be decided)}
-
+\minisec{Geographical data}
+From a source map, compute a target map such that...
+\minisec{Relational data}
+From a source database, compute a target database such that...
+\minisec{Graphs}
+From a source graph, compute a graph minor such that..
 
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
