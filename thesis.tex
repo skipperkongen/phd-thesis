@@ -121,12 +121,59 @@ Acknowledgements go here.
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
+% SWOT
+
+% The data eco-system (data and visualizations) and requirements for high availability, high performance and scalability.
+The web is home to an eco-system of data providers and data consumers who exchange and combine, e.g., geographical, temporal and socio-economical datasets~\cite{wikipedia,worldbank,unstats,data:gov, data:co:uk,gst,openstreetmap}. Open data has become a commodity that is freely available online. Indeed, the value proposition of open data is clear: open data contributes to the transparency, progress and enlightenment of our societies~\cite{hans:rosling, offentlige:data:i:spil}. Commoditized data drives the demand for data-driven visualizations that are beginning to realize the potential of our open data~\cite{usecase1, usecase2, usecase3}. In turn, the momentum of data-driven visualizations drives the demand for more open data in an upwards spiral. In anticipation of this demand, most large web sites and organizations (e.g. Wikipedia and the United Nations) offer data-only APIs that are designed to meet this demand~\cite{wikipediaapi,unapi}. 
+
+% Key-value stores, advantages and limitations.
+% they support partitioning, replication and scale out => high availability, performance and scalability
+Today, users expect 24 x 7 availability and low latency access for data and visualizations. Consequently, data providers and researchers are focusing attention on techniques for high availability, high performance and scalability of data systems. Key-Value stores (K-V stores) have inherent support for partitioning, replication and scale out, which facilitates high availability, high performance and scalability~\cite{barroso2009datacenter}. Furthermore, K-V stores have an opaque data model that is appropriate for storing heterogenous data, e.g. geographical data, images, videos and user data~\cite{usecase1, usecase2, usecase3, usecase4}. These characteristics make K-V stores a popular choice among data providers who experience high demand for their data~\cite{googlecdn, haystack}. In a nutshell, the K-V stores are scalable because they are simple; data is retrieved by primary key only. For example, in the XYZ protocol, the key ``15/17527/10252'' points to a map segment that shows the location of the University of Copenhagen, Department of Computer Science (see Figure~\ref{fig:introduction:example:tile:pyramid:access}). However, these advantages of K-V stores are balanced by severe limitations; K-V stores lack the expressibility of more advanced query engines like relational database (RDBMS). \emph{Write about materialized data objects versus computed data objects.}
+
+% Current research in K-V stores
+Research in K-V stores is searching for the right trade-off with the capabilities of relational database systems. Important areas include consistency models, programmability, indexing, bla bla bla. \emph{at some point, we will present our contributions for closing this gap, specifically in the area of data visualizations}.
+
+
+\emph{end of writing}
+
+% Geographical data and the Danish Geodata Agency.
+Geographical data is an important type of data. In Denmark, the Danish Geodata Agency has offered an API for geographical data, which has been public and free of charge since 2013. The Agency too has felt the upwards spiral in demand for data. Over the past five years, the agency has experienced an exponential rise in the number of requests that are received per day. While the first version of the API was launched back in 2001, when data mash-ups were still in their infancy, it has been redesigned several time to keep up with demand. 
+
+
+
+In contrast, query engines that can evaluate select-project-join queries are more expressive but also harder to scale~\cite{Scalability:of:Select:Project:Join}. For example, in the WMS protocol, a portion of the map is retrieved by evaluating a select-project query (e.g. in an RDBMS). Generally, the difference in speed between evaluating a K-V query and a select-project query is $O(1)$ vs. $O(\log n)$, e.g. a memory address lookup vs. an index traversal to find matching records~\cite{rtree, btree}. In conclusion, K-V stores trade expressibility for scalability, which is a good compromise when the demand for data is high.
+
+Recently, the Danish Geodata Agency introduced a WMTS API, which is logically equivalent to an XYZ API. 
+
+The key reason behind this is scalability. Sites like YouTube and Facebook make images and video available though Content Delivery Networks (CDN), which are K-V stores at a planetary scale. Without these CDNs, these popular websites would crumble beneath the crushing workload. There is a key difference between using a K-V store for images and videos and using a K-V store for geographical data. While images and videos 
+
+Furthermore, data-driven visualizations like maps~\cite{google:maps, cartodb}, time lines~\cite{something}  and charts~\cite{something} have become a commodity. You can create a map in minutes by specifying a background map and add some overlay data to display on top (e.g. data from eBird.org). Data reuse is high, as popular background maps are used again and again in mash-ups around the world. Consequently, great effort has gone into providing background map data of high quality to satisfy this demand. While users expect 24 x 7 availability and low latency for data, a service like Google Maps is powered by a planet scale distributed system and an army of engineers.
+
+
+% 
+While mash-ups contribute to transparency and knowledge in our societies, the high demand for data presents a critical problem in the eco-system of data providers and consumers. Mash-ups like geographical maps draw data from multiple providers, with a strong skew in the workload that each provider has to handle. For example, a geographical map visualization may overlay bird observation data on top of background map data. While the demand across all mash-ups might be small for bird data (e.g. eBird.org), it could be order of magnitude higher for background map data (e.g. Google Maps). This creates a problem for the providers of popular datasets, because users expect 24 x 7 availability and low latency. Luckily, services like Google Maps can afford the cost of a ~\cite{something}. However, providers of government curated data are not generally so lucky.
+
+
+
+
+
+Similarly, organizations that do not own data centers will typically buy services from a cloud provider that in turn is powered by global datacenters~\cite{aws}.
+
+
+high demand also presents a problem for the data providers. Handling the popularity is costly! In response  of an information repository like Wikipedia can be crushing. In capitulation and 
+
+a crucial problem is the effort and cost to create and serve data-driven visualizations to an unforgiving audience. 
+
 \begin{itemize}
-\item New world of data mash-ups where in the data eco-system everyone can be both a provider and a consumer
+\item Cloud computing has made it significantly easier to build an own data-driven visualization.
+
+\item The supply of public datasets feeds the demand for more public dataset as mash-ups are continuously gaining momentum, e.g. in journalism and governance. This puts pressure on the whole eco-system, which includes base data like the background maps often used in geospatial mash-ups~\cite{google, mapbox, gst}.
+\item This has forced providers to rethink how data is made available. In the area of geographical data, two dominant approaches have been to provide deltas~\cite{openstreetmap:delta, wikipedia:delta} or to expose data with a simple key-value access model. The latter approach fits the pattern of a content delivery networks~\cite{cloudfront}, highly scalable key-value store~\cite{redis, memcached} and even plain file systems. Consequently, new standards for providing geospatial data have emerged, which are based on the key-value access model~\cite{WMTS, XYZ}.
+\item This creates a new set of challenges, i.e. key-value selection.
 \item Data is being visualized in mashups like never before. This is very challenging to achieve in an online environement while keeping costs low
 \item Data-driven visualizations of temporal, spatial and multi-variate datasets contribute to the growth, administration and transparency of our societies; they are produced by goverments, companies and individuals; they are consumed by goverments, companies and individuals.
 \item Some division into background data (remains fixed) and overlay data (constantly emerging), e.g. background maps with hotels on top
-\item Open Data feeds demand for more Open Data. Open Data puts pressure on background data.
+
 \item Challenges are: serving costs, design costs
 \item This pressure causes a paradigm shift, e.g. wikipedia/openstreetmap deltas or key-value access models that are easy to scale.
 \item Simultaneously, there is an increased demand for drag-and-drop mash-up data visualization
