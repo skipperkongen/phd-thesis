@@ -1,0 +1,72 @@
+In the following I have identified some "symptoms" for our method as described in paper for ICDE '14. The insights are a product of having showed our work to many people (Copenhagen, Zurich and soon Ispra).
+
+
+### Symptom 1 ### Important places can get eliminated by less important places in optimum solution to SMCP
+
+And people think this is a problem.
+
+Example: Generalizing a dataset consisting of star-rated restaurants, a 5-star restaurant can get eliminated by two 3-star restaurants in the optimal solution to set multicover problem. In another example, a big city, say Paris, can get eliminated by it's suburbs if we rank by population and use the proximity constraint.
+
+Discussion:
+Is this bad? Yes, several people commented on this during talk in Zurich. It is not purely a problem of modelling using set multicover, but also a consequence of computing an optimum solution to the problem (something we actually do not do, but could in theory be inclined to do). In this case, using a greedy algorithm that treats each conflict set independently, arguably produces a better result than if we had computed the optimum solution.
+
+- It consequence of two things:
+	- using set multicover approach, but combined with
+	- solving the problem to optimality (which we actually don't do)
+- A solution (for this particular problem) is:
+	- Use greedy algorithm for each conflict set, like our SGA algorithm
+	- Not think generalization only in terms of global optimization, but also in terms o local optimization
+
+
+### Symptom 2 ### Constraints that work on the local level (proximity and density), don't work on the global level
+
+Example: viewing airports dataset generalized with proximity (10 pixel separation) and with visibility constraint (16 object/tile).
+
+Discussion: 
+- Problem with proximity constraint: On world map, density of airports points the same for the Central Europe/East Coast America and Artic Siberia/Greenland.
+- Visibility constraint: World map OK, but one zoom-level down 10 airports in Brazil (out of 64) and 9 in Australia/New Zealand, combining to roughly 30% of the airports. Caused by looking for 16 airports in parts of the world that largely consists of ocean (lower east and lower west quadrants).
+- Robert weibel pointed out that it is not always a good idea to view constraints the same in global and local contexts.
+
+
+### Symptom 3 ### Hard to model similar constraints without comprehensive code duplication
+
+Example: In a paper by Schmid and Janetzek, an asymmeric distance function in spatial joins is used, which is very efficient for selecting cities (details in paper). 
+
+Problem: We can model this constraint without significant code duplication from proximity constraint
+
+Discussion:
+- We can model proximity with asymmetric distance function, but would introduce elaborate duplication of code from the proximity constraint.
+- Indication that our abstaction for defining constraints is too low-level.
+- Consequence of one thing:
+	- Using bare-bones SQL to formulating constraints
+- Solution (to this particular problem) could be:
+	- Formulate constraint in higher-level terms, i.e. fundamental patterns recurring on generalization constraints
+
+
+### Symptom 4 ### We can't model generalizations, where objects both appear and disappear as zooming in
+
+Example: This is a problem for generalizations such as place name selection, suggested by Geodata Styrelsen, i.e. hierarchical selection: E.g. show continent name -> country name -> city name -> neighborhood name -> street name -> ...
+
+- Consequence of two things in combination:
+	- we use only ladder approach (enforce zoom consistency automatically)
+	- we allow only static ranking of objects. 
+- A solution (for this particular problem) is:
+	- use star approach (such that zoom consistency is not automatically enforced)
+	- use a zoom-level parameterized ranking function or more generally, a zoom-level parameterized objective. Allow relevance of object to vary with scale.
+
+
+### Symptom 5 ### Hard to implement generalization algorithms from the literature in our framework
+
+Discussion:
+Our main contributions should be a high-level language for expressing desired outcome of generalization and the ability to exploit power of parallel databases to execute the generalization algorithm. Our core contribution is not novel generalization algorithms, so it is wrong to hard code the framework to one, arguably simplistic, generalization algorithm. We can go some way with our custom constraint approach, but need a higher-level ways to express constraints. We also need more flexible ways to express objectives. We also need to think if constraints + objectives + set multicover problem really encompasses all the use cases we want to cover. We also need to support more types of generalization other than elimination.
+
+Conclusion: Declarative Generalization + in-database execution is a good idea. However, our initial approach is too hard-coded to one particular way of generalizing spatial data: constraints + selection. We can't implement a off-the-shelf generalization algorithm in our framework, because it is not general enough
+
+### Wish list ###
+
+- support for both ladder and star approach
+- zoom-level parameterized objectives (we have zoom-level parameterized constraints already)
+- a set of fundamental patterns by which to express generalization
+- a more complete high-level language for both constraints, objectives and generalization workflows
+- perhaps being able to map to other problems than set multicover problem
+- It would be instructive to try and implement various existing algorithms from literature using fundamental constructs that run in the database.
