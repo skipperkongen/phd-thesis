@@ -201,7 +201,7 @@ a crucial problem is the effort and cost to create and serve data-driven visuali
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
-Use ZURICH_NOTES.txt as a list of requirements for what became Glossy.
+Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
 
 %This work draws heavily on ideas developed in the field of map generalization. Instead of copying in the entire theory of map generalization, the reader is encouraged to read Weibel and Dutton. While the rich diversity of planet earth has inspired such artful map generalization algorithms that can capture that vast reality on a piece of paper, this dissertation takes a side-ways leap: moving in parallel with the cartographernd, this dissertation will attempt to draw a vast universe of data tables on 
 
@@ -252,13 +252,18 @@ Mention where Git repos are and what they contain.
 
 Forward reference the remaining chaptes, say what they contain.
 
-\chapter{Related Work}
+\chapter{Unified Data Abstraction Theory}
 \label{chapter:related:work}
 
-% Once I choose the title, adjust the related work accordingly.
+\begin{itemize}
+\item Cover basic concepts from Map Generalization
+\item Idea: Simply transfer all terms and ideas from map generalization (operators, data types) to a general data abstraction framework by removing specific spatial terms from the descriptions.
+\end{itemize}
 
-\section{Work on Data Abstraction}
-\label{sec:related:work:data:abstraction}
+% Once I choose the title, adjust the related work accordingly.
+\section{Related Work}
+\subsection{Geography: Map Generalization}
+\label{sec:related:work:map:generalization}
 This section complements the related work sections found in the individual contributions. E.g. for generalization (data abstraction in geography) it covers other operators besides selection.
 
 Talk about what we are trying to achieve by data abstraction, i.e. the basic task of acquiring intelligence: gain insights from data, i.e. get information~cite{keynotefromvldb2011}.
@@ -269,7 +274,8 @@ Talk about the basic abstraction types: (1) selection, (2) aggregation, (3) modi
 
 Talk about multi-scale data abstraction, and the two types: (1) ladder, (2) star.
 
-\subsection{Geography: Map Generalization}
+\subsection{Databases}
+
 \begin{itemize}
 \item See notes.tex and possibly latex in old and old2.
 \item See Weibel and Dutton: (1) what generalisation of spatial data is, (2) why it is necessary, (3) some techniques for performing it in the digital domain, and (4) what tools
@@ -278,14 +284,15 @@ currently exist to support it, (5) providing pointers to some of the recent rese
 
 ?the selection and simplified representation of detail appropriate to the scale and/or the purpose of a map? (ICA 1973: 173)
 
-\section{Generalized Data Abstraction Theory}
-Simply, transfer all terms and ideas from map generalization to data general data abstraction by removing specific spatial terms from the descriptions.
+\section{Unified Data Abstraction Framework}
 
-\minisec{Geographical data}
+Given a source $G=(V,E)$, compute a target $G'=(V',E')$ over scales $Z = \lbrace z_0, ... z_n \rbrace$ by $\lbrack recursion, iteration\rbrack$, such that \emph{constraints} and \emph{objectives}... using \emph{operators}.
+
+\subsection{Geographical data}
 From a source map, compute a target map such that...
-\minisec{Relational data}
+\subsection{Relational data}
 From a source database, compute a target database such that...
-\minisec{Graphs}
+\subsection{Graph data}
 From a source graph, compute a graph minor such that..
 
 \chapter{Case study: The Digital Map Supply}
