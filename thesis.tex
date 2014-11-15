@@ -252,18 +252,39 @@ Mention where Git repos are and what they contain.
 
 Forward reference the remaining chaptes, say what they contain.
 
-\chapter{Unified Data Abstraction Theory}
-\label{chapter:related:work}
+\chapter{Towards a Unified Data Abstraction Theory}
+\label{chapter:data:abstraction:survey}
+
+\section{Introduction}
+
+What are the important areas where data abstraction is applied? Any area that has recorded data and where the concept of generalization can help us to get an overview: History, Geography, Culture, Economics, Politics, Databases, etc.
+
+What is data abstraction? Data abstraction is the art of transforming a dataset into a useful ``sketch''. While it is unimportant how the sketch should be interpreted (e.g. an image, a video, a data table, etc.), it is important that the process of interpretation it is efficient for humans. The sketch should provide relevant insights in humans, which are not provided by the original dataset.
+
+The sketch is useful if it is legible, representative, and relevant. Getting really philosophical, data abstraction means to represent one bitset by another bitset that is somehow more useful; it is not a requirement that one bitset is smaller than the other, nor that the two bitsets are interpreted in the same way. However, it is important that the latter bitset (when interpreted in the right way) triggers cognitive insights in the human brain that are not yielded by the first bitset.
+
+
+Getting into the nitty-gritty, what are the main types of data abstraction? Selection, aggregation, and modification.
+
+What factors control a data abstraction process? See Weibel, controls of data abstraction.
+
+What does data abstraction achieve? . balances legibility and representation, aims at aesthetic and efficient delivery of information.
+
+What are the fundamental challenges?
+
+%"MassifMontBlanc7438" by Gnomefilliere - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0-2.5-2.0-1.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:MassifMontBlanc7438.JPG#mediaviewer/File:MassifMontBlanc7438.JPG.
+
+\section{Related Work}
+
+\subsection{Geographical data}
+From a source map, compute a target map such that...
 
 \begin{itemize}
-\item Cover basic concepts from Map Generalization
-\item Idea: Simply transfer all terms and ideas from map generalization (operators, data types) to a general data abstraction framework by removing specific spatial terms from the descriptions.
+\item See notes.tex and possibly latex in old and old2.
+\item See Weibel and Dutton: (1) what generalisation of spatial data is, (2) why it is necessary, (3) some techniques for performing it in the digital domain, and (4) what tools
+currently exist to support it, (5) providing pointers to some of the recent research literature.
 \end{itemize}
 
-% Once I choose the title, adjust the related work accordingly.
-\section{Related Work}
-\subsection{Geography: Map Generalization}
-\label{sec:related:work:map:generalization}
 This section complements the related work sections found in the individual contributions. E.g. for generalization (data abstraction in geography) it covers other operators besides selection.
 
 Talk about what we are trying to achieve by data abstraction, i.e. the basic task of acquiring intelligence: gain insights from data, i.e. get information~cite{keynotefromvldb2011}.
@@ -274,26 +295,55 @@ Talk about the basic abstraction types: (1) selection, (2) aggregation, (3) modi
 
 Talk about multi-scale data abstraction, and the two types: (1) ladder, (2) star.
 
-\subsection{Databases}
-
-\begin{itemize}
-\item See notes.tex and possibly latex in old and old2.
-\item See Weibel and Dutton: (1) what generalisation of spatial data is, (2) why it is necessary, (3) some techniques for performing it in the digital domain, and (4) what tools
-currently exist to support it, (5) providing pointers to some of the recent research literature.
-\end{itemize}
-
 ?the selection and simplified representation of detail appropriate to the scale and/or the purpose of a map? (ICA 1973: 173)
 
-\section{Unified Data Abstraction Framework}
+
+\subsection{Relational data}
+From a source database, compute a target database such that...
+
+
+\subsection{Graph data}
+From a source graph, compute a graph minor such that..
+
+
+\section{Controlling Factors of Data Abstraction}
+
+See weibel.
+
+
+\section{Use Cases}
+
+\subsection{Geographical data}
+From a source map, compute a target map
+\subsection{Relational data}
+From a source database, compute a target database
+\subsection{Graph data}
+From a source graph, compute a graph minor
+
+\section{Contraint-based Data Abstraction}
 
 Given a source $G=(V,E)$, compute a target $G'=(V',E')$ over scales $Z = \lbrace z_0, ... z_n \rbrace$ by $\lbrack recursion, iteration\rbrack$, such that \emph{constraints} and \emph{objectives}... using \emph{operators}.
 
-\subsection{Geographical data}
-From a source map, compute a target map such that...
-\subsection{Relational data}
-From a source database, compute a target database such that...
-\subsection{Graph data}
-From a source graph, compute a graph minor such that..
+Brief coverage of related work
+
+\subsection{Constraints}
+
+\subsection{Objectives}
+
+\subsection{Operators}
+
+Selection, Aggregation, Modification
+
+\section{Algorithms}
+
+\subsection{Search}
+
+\subsection{Linear Programming}
+
+\subsection{Conflict Elimination}
+
+\section{Conclusion and Future Work}
+
 
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
