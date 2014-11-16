@@ -82,13 +82,13 @@
 
 \sloppy
 
-%\title{Building Highly Scalable Data Visualization Systems}
+\title{Building Highly Scalable Data Visualization Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
 %\title{Selection Problems in Multi-scale Data Visualizations Systems}
 %\title{Selection Problems in High-Performance Multi-scale Visualizations}
 %\title{Data Selection in High-Performance Visualizations on the Web}
-\title{Selection Problems in High-Performance Data Visualizations for the Web}
-\title{Selection Problems in Data Visualizations for the Web}
+%\title{Selection Problems in High-Performance Data Visualizations for the Web}
+%\title{Selection Problems in Data Visualizations for the Web}
 %\title{Title to be decided}
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
@@ -121,10 +121,26 @@ Acknowledgements go here.
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
+For Stuart:
+
+\begin{enumerate}
+\item How has the world changed; what is the new situation?
+\item How does the situation motivate the topic of the thesis?
+\item What are current challenges of the topic?
+\item How does this thesis make progress on these challenges?
+\end{enumerate}
+
 % SWOT
 
-% The data eco-system (data and visualizations) and requirements for high availability, high performance and scalability.
-The web is home to an eco-system of data providers and data consumers who exchange and combine, e.g., geographical, temporal and socio-economical datasets~\cite{wikipedia,worldbank,unstats,data:gov, data:co:uk,gst,openstreetmap}. Open data has become a commodity that is freely available online. Indeed, the value proposition of open data is clear: open data contributes to the transparency, progress and enlightenment of our societies~\cite{hans:rosling, offentlige:data:i:spil}. Commoditized data drives the demand for data-driven visualizations that are beginning to realize the potential of our open data~\cite{usecase1, usecase2, usecase3}. In turn, the momentum of data-driven visualizations drives the demand for more open data in an upwards spiral. In anticipation of this demand, most large web sites and organizations (e.g. Wikipedia and the United Nations) offer data-only APIs that are designed to meet this demand~\cite{wikipediaapi,unapi}. 
+% How has the world changed; what is the new situation?
+The web is home to an eco-system of data providers and data consumers who exchange and combine, e.g., geographical, temporal and socio-economical datasets~\cite{wikipedia,worldbank,unstats,data:gov, data:co:uk,gst,openstreetmap}. Open data has become a commodity that is freely available online. Indeed, the value proposition of open data is clear: open data contributes to the transparency, progress and enlightenment of our societies~\cite{hans:rosling, offentlige:data:i:spil}. Commoditized data drives the demand for data-driven visualizations that are beginning to realize the potential of our open data~\cite{usecase1, usecase2, usecase3}. In turn, the momentum of data-driven visualizations drives the demand for more open data in an upwards spiral. In anticipation of this demand, most large web sites and organizations (e.g. Wikipedia and the United Nations) offer data-only APIs that are designed to meet this demand~\cite{wikipediaapi,unapi}. Today, internet users consciously or unconsciously expect 24 x 7 availability, low latency and high scalability of these APIs~\cite{userstudy}.
+
+% How does the situation motivate the topic of the thesis?
+%TODO: Flow should go like this after describing the situation: Data partitioning~\cite{stuff}, data replication~\cite{stuff} and data abstraction~\cite{mapgen, dbgen} are important techniques for providing high quality web services, i.e web services with 24 x 7 availability, low latency and high scalability. The advantages and pitfalls of using data partitioning and data replication are generally well understood, for example, the relationship between replication and consistency. In this thesis, the focus will be on data abstraction primarily, and data partitioning and replication secondarily. In the area of digital maps, tiling is a concept that merges together the techniques of data partitioning with data abstraction~\ref{xyz}. Next, describe what tiles are and how the concept can be used also for time lines, cluster visualizations, etc.
+
+
+
+
 
 % Key-value stores, advantages and limitations.
 % they support partitioning, replication and scale out => high availability, performance and scalability
@@ -132,6 +148,7 @@ Today, users expect 24 x 7 availability and low latency access for data and visu
 
 % Current research in K-V stores
 Current research in K-V stores is searching for the right trade-off between the capabilities of relational database systems and first-generation K-V stores. Important areas include stronger consistency models, enhanced programmability, indexing, etc. \emph{at some point, we will present our contributions for closing this gap, specifically in the area of data visualizations. This is going to be so much fun!}
+
 
 
 \emph{end of writing}
@@ -201,6 +218,17 @@ a crucial problem is the effort and cost to create and serve data-driven visuali
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
+For Stuart:
+
+\begin{enumerate}
+\item a 
+\item b
+\item c
+\item d 
+\item e
+\end{enumerate}
+
+
 Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
 
 %This work draws heavily on ideas developed in the field of map generalization. Instead of copying in the entire theory of map generalization, the reader is encouraged to read Weibel and Dutton. While the rich diversity of planet earth has inspired such artful map generalization algorithms that can capture that vast reality on a piece of paper, this dissertation takes a side-ways leap: moving in parallel with the cartographernd, this dissertation will attempt to draw a vast universe of data tables on 
@@ -225,25 +253,38 @@ Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
 
-Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
+(Borrowed from Tim, need to paraphrase) Instead of presenting complete system for data-driven visualizations, this thesis concentrates on specific aspects of building high-scalability data-visualizations. The contributions have been designed to be compatible with existing systems, i.e. a relational database (PostgreSQL+PostGIS), a programming language (Python), and a commercial key-value stores (e.g. Redis, Memcached and CloudFront).
+
+The contributions of this thesis cover two topics: selecting data for visualizations (see Sections~\ref{sec:introduction:contributions:cvl}~and~\ref{sec:introduction:contributions:glossy}), and prediction of map tiles to materialize (see Section~\ref{sec:introduction:contributions:tileheat}).
+
+%Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
  
-\subsection{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
+\subsection{Global Selection for Geographical Maps with Zoom Consistency}
 \label{sec:introduction:contributions:cvl}
 
 Something resembling the abstract
 
-\subsection{Glossy: Global Selections for Data Visualizations}
+\subsection{Global Selection for Data Visualizations}
 \label{sec:introduction:contributions:glossy}
 
-Something resembling the abstract
+Something resembling the abstract. 
 
-\subsection{Tileheat: A Framework For Tile Selection}
+\subsection{Prediction of Geospatial Key-Value Workloads}
 \label{sec:introduction:contributions:tileheat}
 
 Something resembling the abstract
 
-\subsection{Publications, Data and Software}
-\label{sec:introduction:publications}
+\subsection{Publications}
+
+Some of the chapters in this thesis have been previously published in or submitted to international conferences. The publications and submissions are listed below: 
+
+\begin{itemize}
+\item \textbf{Chapter~\ref{chapter:cvl} -- Declarative Cartography~\cite{declarative:cartography}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In ICDE, 2014. 
+\item \textbf{Chapter~\ref{chapter:glossy} -- Glossy~\cite{glossy}}: Pimin Konstantin Kefaloukos, and Marcos Vaz Salles. Glossy: Global Selection for Data Visualizations. Submitted to SIGMOD, 2015. 
+\item \textbf{Chapter~\ref{chapter:tileheat} -- Tileheat~\cite{tileheat}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In SIGSPATIAL, 2012. 
+\end{itemize}
+
+\subsection{Data and Software}
 
 Mention where Git repos are and what they contain.
 
@@ -251,98 +292,6 @@ Mention where Git repos are and what they contain.
 \label{sec:introduction:structure}
 
 Forward reference the remaining chaptes, say what they contain.
-
-\chapter{Towards a Unified Data Abstraction Theory}
-\label{chapter:data:abstraction:survey}
-
-\section{Introduction}
-
-What are the important areas where data abstraction is applied? Any area that has recorded data and where the concept of generalization can help us to get an overview: History, Geography, Culture, Economics, Politics, Databases, etc.
-
-What is data abstraction? Data abstraction is the art of transforming a dataset into a useful ``sketch''. While it is unimportant how the sketch should be interpreted (e.g. an image, a video, a data table, etc.), it is important that the process of interpretation it is efficient for humans. The sketch should provide relevant insights in humans, which are not provided by the original dataset.
-
-The sketch is useful if it is legible, representative, and relevant. Getting really philosophical, data abstraction means to represent one bitset by another bitset that is somehow more useful; it is not a requirement that one bitset is smaller than the other, nor that the two bitsets are interpreted in the same way. However, it is important that the latter bitset (when interpreted in the right way) triggers cognitive insights in the human brain that are not yielded by the first bitset.
-
-
-Getting into the nitty-gritty, what are the main types of data abstraction? Selection, aggregation, and modification.
-
-What factors control a data abstraction process? See Weibel, controls of data abstraction.
-
-What does data abstraction achieve? . balances legibility and representation, aims at aesthetic and efficient delivery of information.
-
-What are the fundamental challenges?
-
-%"MassifMontBlanc7438" by Gnomefilliere - Own work. Licensed under Creative Commons Attribution-Share Alike 3.0-2.5-2.0-1.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:MassifMontBlanc7438.JPG#mediaviewer/File:MassifMontBlanc7438.JPG.
-
-\section{Related Work}
-
-\subsection{Geographical data}
-From a source map, compute a target map such that...
-
-\begin{itemize}
-\item See notes.tex and possibly latex in old and old2.
-\item See Weibel and Dutton: (1) what generalisation of spatial data is, (2) why it is necessary, (3) some techniques for performing it in the digital domain, and (4) what tools
-currently exist to support it, (5) providing pointers to some of the recent research literature.
-\end{itemize}
-
-This section complements the related work sections found in the individual contributions. E.g. for generalization (data abstraction in geography) it covers other operators besides selection.
-
-Talk about what we are trying to achieve by data abstraction, i.e. the basic task of acquiring intelligence: gain insights from data, i.e. get information~cite{keynotefromvldb2011}.
-
-Talk about the important balance between: (1) legibility, (2) representation~cite{weibel}.
-
-Talk about the basic abstraction types: (1) selection, (2) aggregation, (3) modification.  Give examples. 
-
-Talk about multi-scale data abstraction, and the two types: (1) ladder, (2) star.
-
-?the selection and simplified representation of detail appropriate to the scale and/or the purpose of a map? (ICA 1973: 173)
-
-
-\subsection{Relational data}
-From a source database, compute a target database such that...
-
-
-\subsection{Graph data}
-From a source graph, compute a graph minor such that..
-
-
-\section{Controlling Factors of Data Abstraction}
-
-See weibel.
-
-
-\section{Use Cases}
-
-\subsection{Geographical data}
-From a source map, compute a target map
-\subsection{Relational data}
-From a source database, compute a target database
-\subsection{Graph data}
-From a source graph, compute a graph minor
-
-\section{Contraint-based Data Abstraction}
-
-Given a source $G=(V,E)$, compute a target $G'=(V',E')$ over scales $Z = \lbrace z_0, ... z_n \rbrace$ by $\lbrack recursion, iteration\rbrack$, such that \emph{constraints} and \emph{objectives}... using \emph{operators}.
-
-Brief coverage of related work
-
-\subsection{Constraints}
-
-\subsection{Objectives}
-
-\subsection{Operators}
-
-Selection, Aggregation, Modification
-
-\section{Algorithms}
-
-\subsection{Search}
-
-\subsection{Linear Programming}
-
-\subsection{Conflict Elimination}
-
-\section{Conclusion and Future Work}
 
 
 \chapter{Case study: The Digital Map Supply}
@@ -383,13 +332,19 @@ Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Pr
 \item Availability over time (find Kenneths tal)
 \end{itemize}
 
-\begin{figure}[!t]
-\centering
-\scalebox{0.12}{\includegraphics{figs-thesis/tileheat_heatmap_sjaelland.png}}
-%\vspace{-4ex}
-\caption{Heatmap showing the areas in North-East Zealand, Denmark most viewed on maps from the Digital Map Supply.}
-%\vspace{-3ex}
-\label{fig:usecase:heatmap}
+\begin{figure}[tb]
+  \begin{minipage}{0.50\linewidth}
+    \centerline{\includegraphics[width=0.6\linewidth]{./figs-thesis/tileheat_heatmap_sjaelland.png}}
+    \centerline{(a) Heatmap showing the areas in North-East Zealand, Denmark most viewed on maps from the Digital Map Supply.}
+  \end{minipage} \hfill
+  \begin{minipage}{0.50\linewidth}
+    \centerline{\includegraphics[width=0.6\linewidth]{./figs-thesis/heat_extent.png}}
+    \centerline{(b) Extent of area covered by heatmap}
+  \end{minipage}
+  \vspace{-0ex}
+  \caption{Foo.}
+  \label{fig:cvl:visualization:airport}
+  \vspace{-2ex}
 \end{figure}
 
 
@@ -397,7 +352,7 @@ Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Pr
 \begin{itemize}
 \item Availability, especially for multi-source applications
 \item Performance sensitivity
-\end{itemize}
+\end{itemize}	
 % 99% is not high availability 
 % 200 ms is not low latency
 % Images are not an interactive experience
@@ -1945,6 +1900,7 @@ As future work, we plan to explore how to incorporate data aggregation features 
 
 
 \chapter{Tileheat: A Framework For Tile Selection}
+\label{chapter:tileheat}
 \section{Introduction}
 
 % Situation
