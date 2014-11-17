@@ -133,7 +133,27 @@ For Stuart:
 % SWOT
 
 % How has the world changed; what is the new situation?
-1: The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of datasets~\cite{wikipedia,worldbank,unstats,data:gov, data:co:uk,gst,openstreetmap}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, progress and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for data-driven visualizations, i.e. applications that help us understand of the data by visual means~\cite{nytimes,guardian}. In turn, these applications drive the demand for more open data in an upwards spiral. In anticipation of this trend, most large web sites and organizations (e.g. Wikipedia and the United Nations) now offer APIs that are specifically designed to efficiently meet the demand for data and data visualizations~\cite{wikipediaapi,unapi}. Accordingly, web users, consciously or unconsciously, have come to expect 24 x 7 availability, low latency, and high scalability in these services. Addtionally, the utility of a data-driven visualization greatly depends on the visual qualities of the presentation. Alas, a failure to recognize the importance of any of these quality metrics will have drastic consequences for the success of a service~\cite{usability:study, performance:study}.
+1a (data): The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests: e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and government~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for data-driven visualizations, i.e. applications that help us understand and (some times) take action on the data by visual means~\cite{google:maps, nytimes, guardian}. With great haste, we will continuously move towards a world where access to data and the ability to understand it is as basic as turning on the light. Already, the fundamental infrastructure is in place; devices in our pockets with backlit screens and the ability to reach any point in the world of data at the speed of light. What is needed now is to transform that we carry in our pockets permanently connect us to the world of data and data applications. \emph{elaborate more on the situation?}
+
+1b (data-driven visualizations):
+ 
+
+
+As with other web applications, users expect 24 x 7 availability and high performance of a data-driven visualization.
+
+A successful data-driven visualizations must be satisfy the expectations of web users. 
+
+
+Data-driven visualization are evaluated by metrics that fall into two categories: visual metrics and performance metrics.
+
+In the eyes of users, both data and data-driven visualizations have become a commodity. Consequently, data-driven visualizations must legibly and truthfully visualize data to users, the must also  24 x 7 availability, low latency, and high scalability, which is expected by web users today. Failure to recognize the importance of these usability and performance metrics will dramatically impact the success of a service~\cite{usability:study, performance:study}.
+
+
+
+Web users expect 24 x 7 availability, low latency, and high scalability for web applications such as 
+
+
+The demand for data-driven visualizations drive the demand for open data in an upwards spiral. In anticipation of this trend, most large web sites and organizations (e.g. Wikipedia and the United Nations) now offer APIs that are specifically designed to efficiently meet the demand for data and data visualizations~\cite{wikipediaapi,unapi}. Accordingly, web users, consciously or unconsciously, have come to expect 24 x 7 availability, low latency, and high scalability in these services. Addtionally, the utility of a data-driven visualization greatly depends on the visual qualities of the presentation. Alas, a failure to recognize the importance of any of these quality metrics will have drastic consequences for the success of a service~\cite{usability:study, performance:study}.
 
 % How does the situation motivate the topic of the thesis?
 %TODO: Flow should go like this after describing the situation: Data partitioning~\cite{stuff}, data replication~\cite{stuff} and data abstraction~\cite{mapgen, dbgen} are important techniques for providing high quality web services, i.e web services with 24 x 7 availability, low latency and high scalability. The advantages and pitfalls of using data partitioning and data replication are generally well understood, for example, the relationship between replication and consistency. In this thesis, the focus will be on data abstraction primarily, and data partitioning and replication secondarily. In the area of digital maps, tiling is a concept that merges together the techniques of data partitioning with data abstraction~\ref{xyz}. Next, describe what tiles are and how the concept can be used also for time lines, cluster visualizations, etc.
@@ -298,6 +318,10 @@ Mention where Git repos are and what they contain.
 \label{sec:introduction:structure}
 
 Forward reference the remaining chaptes, say what they contain.
+
+\chapter{Overview of data abstraction}
+
+\section{Visual metrics}
 
 
 \chapter{Case study: The Digital Map Supply}
