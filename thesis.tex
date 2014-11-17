@@ -97,7 +97,7 @@
 \maketitle
 
 \section*{Acknowledgements}
-Acknowledgements go here.
+I dedicate this thesis to Marusa, my son Morgan and daughter Athena and thank you for the motivation and for suffering an often overworked father and husband. Thank the Ministry of Higher Education and Science in Denmark, Grontmij and Danish Geodata Agency, in particular Anders, Thorben and Nils Bo, for taking a chance and sponsoring this thesis. In equal measure, thank the DIKU supervisors Marcos and Martin for tireless support, discussions and friendship, you have been a tremendous inspiration on both a scientific and personal level. Parents and Stuart for being supportive and proud of me. Thank DIKU faculty and students, e.g. Vivek Shah, for spontaneou discussions often over lunch. Thank Robert Weibel and everyone at UZH who offered feedback during my visit in Zurich. Thank everyone else who offered feedback: Lars Loldrup, Ole Haslund, Brian Haunstrup, Brødrene Petersen, GST crew. Thank the late Soren Aundal, a teacher and friend of the family when I was a kid, who showed me how to train binoculars at the sky and recognize birds, stars and planets. Last but not least thank Hans Skov-Petersen and Bernhard Snizek for kick-starting my interest in the field of geographical data science. I fully acknowledge that the set of all influences is  impossible to enumerate, so instead I close my eyes and gratefully accept my trace in ultimate system of systems.
 
 \tableofcontents
 
@@ -247,29 +247,37 @@ The demand for data-driven visualizations drive the demand for open data in an u
 For Stuart:
 
 \begin{enumerate}
-\item a 
-\item b
-\item c
-\item d 
-\item e
-\end{enumerate}
+\item Briefly mention discuss general research in data-driven visualizations and in particular data abstraction which is the focus of thesis
+\item Introduce need and problem of global selection (modelling, algorithms) for data abstraction
+\item Introduce need and problem of programming/query languages for data abstraction
+\item Introduce need and problem of database integration for data abstraction
+\item Introduce need and problem of adaptive pre-emptive caching of geographical data in key-value stores\end{enumerate}
 
+1: TODO
 
-Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
+2: TODO
+
+3: TODO
+
+4: TODO
+
+5: TODO
+
+%Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
 
 %This work draws heavily on ideas developed in the field of map generalization. Instead of copying in the entire theory of map generalization, the reader is encouraged to read Weibel and Dutton. While the rich diversity of planet earth has inspired such artful map generalization algorithms that can capture that vast reality on a piece of paper, this dissertation takes a side-ways leap: moving in parallel with the cartographernd, this dissertation will attempt to draw a vast universe of data tables on 
 
-Cloud has made the essential infrastructure a commodity. Data visualizations can be driven entirely by key-value stores and front-end visualization frameworks (e.g. D3). Introduce key-value access model (e.g. content delivery networks, and in-memory caches) as means for scalable hosting of data-visualizations. Introduce key-selection (prediction of workload) and value-selection and materialization problems.
+%Cloud has made the essential infrastructure a commodity. Data visualizations can be driven entirely by key-value stores and front-end visualization frameworks (e.g. D3). Introduce key-value access model (e.g. content delivery networks, and in-memory caches) as means for scalable hosting of data-visualizations. Introduce key-selection (prediction of workload) and value-selection and materialization problems.
 
-Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with regard to workload.
+%Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with regard to workload.
 
-\begin{itemize}
-\item High level: (1) Creating mashups, i.e. value selection (2) serving mashups, i.e. key-selection
-\item (1a) Integrating with database technology
-\item (1b) Programming languages
-\item (1c) Extend to all types of data, not just spatial
-\item (2a) Predict keys to materialize 
-\end{itemize}
+%\begin{itemize}
+%\item High level: (1) Creating mashups, i.e. value selection (2) serving mashups, i.e. key-selection
+%\item (1a) Integrating with database technology
+%\item (1b) Programming languages
+%\item (1c) Extend to all types of data, not just spatial
+%\item (2a) Predict keys to materialize 
+%\end{itemize}
 
 % Data and query model: Public View is key-value, where value is an object collection. Base data is relational.
 % Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a relational backend.
@@ -279,9 +287,9 @@ Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
 
-(Borrowed from Tim, need to paraphrase) Instead of presenting complete system for data-driven visualizations, this thesis concentrates on specific aspects of building high-scalability data-visualizations. The contributions have been designed to be compatible with existing systems, i.e. a relational database (PostgreSQL+PostGIS), a programming language (Python), and a commercial key-value stores (e.g. Redis, Memcached and CloudFront).
+Instead of presenting a complete system, this thesis concentrates on specific aspects of building a high-scalability application for data-driven visualization. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
 
-The contributions of this thesis cover two topics: selecting data for visualizations (see Sections~\ref{sec:introduction:contributions:cvl}~and~\ref{sec:introduction:contributions:glossy}), and prediction of map tiles to materialize (see Section~\ref{sec:introduction:contributions:tileheat}).
+The contributions of this thesis cover two topics: global selection for data-driven visualizations (see Sections~\ref{sec:introduction:contributions:cvl}~and~\ref{sec:introduction:contributions:glossy}), and adaptive pre-emptive caching of geographical data (see Section~\ref{sec:introduction:contributions:tileheat}).
 
 %Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
  
@@ -317,11 +325,12 @@ Mention where Git repos are and what they contain.
 \section{Structure}
 \label{sec:introduction:structure}
 
-Forward reference the remaining chaptes, say what they contain.
+The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers the state of the art data abstraction and scalable key-value stores. Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 
-\chapter{Overview of data abstraction}
+\chapter{State of the art}
+\label{chapter:state:of:the:art}
 
-\section{Visual metrics}
+%\section{Visual metrics}
 
 
 \chapter{Case study: The Digital Map Supply}
@@ -2308,7 +2317,10 @@ While our results improve on existing methods, for future work we plan to do a m
 Finally, deploying TileHeat in a production environment and measuring the effect on latency remains as an important direction of future work.
 
 
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
+\label{chapter:conclusion}
+
+Conclusion and future work
 
 \bibliographystyle{plain}
 \bibliography{thesis}
