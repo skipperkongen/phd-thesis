@@ -1,5 +1,4 @@
 \documentclass[11pt, oneside]{report}  
-\usepackage[croatian]{babel}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 % Theorem environments
@@ -133,13 +132,12 @@ For Stuart:
 % SWOT
 
 % How has the world changed; what is the new situation?
-1a (data): The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests: e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and government~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for data-driven visualizations, i.e. applications that help us understand and (some times) take action on the data by visual means~\cite{google:maps, nytimes, guardian}. With great haste, we will continuously move towards a world where access to data and the ability to understand it is as basic as turning on the light. Already, the fundamental infrastructure is in place; devices in our pockets with backlit screens and the ability to reach any point in the world of data at the speed of light. What is needed now is to transform that we carry in our pockets permanently connect us to the world of data and data applications. \emph{elaborate more on the situation?}
-
-1b (data-driven visualizations):
- 
+1: The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for data-driven visualizations, i.e. applications that help us understand and (sometimes) take action on the data by visual and interactive means~\cite{google:maps, nytimes, guardian}. Ideally, data access and data visualization will become basic commodities like electricity and light bulbs. In fact, the fundamental infrastructure is already in place; devices in our pockets can reach any point in the world of open data at the speed of light. \emph{Talk about data APIs. Talk about user expectations: visual requirements + performance requirements. Maybe support visual requirements by the controls of generalization.}
 
 
-As with other web applications, users expect 24 x 7 availability and high performance of a data-driven visualization.
+
+
+What is needed now is to transform that thing we carry in our pockets into a powerful and visual sense making tool. As with any other application on the web, users expect data-driven visualizations to have 24 x 7 availability,   performance of a data-driven visualization.
 
 A successful data-driven visualizations must be satisfy the expectations of web users. 
 
@@ -153,7 +151,7 @@ In the eyes of users, both data and data-driven visualizations have become a com
 Web users expect 24 x 7 availability, low latency, and high scalability for web applications such as 
 
 
-The demand for data-driven visualizations drive the demand for open data in an upwards spiral. In anticipation of this trend, most large web sites and organizations (e.g. Wikipedia and the United Nations) now offer APIs that are specifically designed to efficiently meet the demand for data and data visualizations~\cite{wikipediaapi,unapi}. Accordingly, web users, consciously or unconsciously, have come to expect 24 x 7 availability, low latency, and high scalability in these services. Addtionally, the utility of a data-driven visualization greatly depends on the visual qualities of the presentation. Alas, a failure to recognize the importance of any of these quality metrics will have drastic consequences for the success of a service~\cite{usability:study, performance:study}.
+The demand for data-driven visualizations drive the demand for open data in an upwards spiral. In anticipation of this trend, most large web sites and organizations (e.g. Wikipedia and the United Nations) now offer APIs that are specifically designed to efficiently meet the demand for data and data visualizations~\cite{wikipediaapi,unapi}. Accordingly, web users, consciously or unconsciously, have come to expect 24 x 7 availability, acceptable latency, and high scalability in these services. Addtionally, the utility of a data-driven visualization greatly depends on the visual qualities of the presentation. Alas, a failure to recognize the importance of any of these quality metrics will have drastic consequences for the success of a service~\cite{usability:study, performance:study}.
 
 % How does the situation motivate the topic of the thesis?
 %TODO: Flow should go like this after describing the situation: Data partitioning~\cite{stuff}, data replication~\cite{stuff} and data abstraction~\cite{mapgen, dbgen} are important techniques for providing high quality web services, i.e web services with 24 x 7 availability, low latency and high scalability. The advantages and pitfalls of using data partitioning and data replication are generally well understood, for example, the relationship between replication and consistency. In this thesis, the focus will be on data abstraction primarily, and data partitioning and replication secondarily. In the area of digital maps, tiling is a concept that merges together the techniques of data partitioning with data abstraction~\ref{xyz}. Next, describe what tiles are and how the concept can be used also for time lines, cluster visualizations, etc.
@@ -336,40 +334,31 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
 
-\section{Introduction}
-Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Probably paraphrase and do not forget to thank him in acknowledgements.
+\section{Why Public Geographical Data is Important}
 
-\subsection{The Importance of Public Data}
-\begin{itemize}
+\begin{enumerate}
+\item Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Probably paraphrase and do not forget to thank him in acknowledgements.
 \item Cite offentlige data is spil, etc.
-\end{itemize}
+\end{enumerate}
 
 \section{The Digital Map Supply Today}
 
-\begin{itemize}
-\item Diagram of Users and Providers
-\end{itemize}
+%\begin{itemize}
+%\item Diagram of Users and Providers
+%\end{itemize}
 
 \subsection{Requirements}
 \begin{itemize}
 \item SLA
 \end{itemize}
 
-\subsection{A Look Under the Covers}
-\begin{itemize}
+\subsection{Architecture and metrics}
+\begin{enumerate}
+\item Describe the key metrics
 \item Describe the architecture (tiers, number of data centers, services running)
-\end{itemize}
+\end{enumerate}
 
-\subsection{The DMS in Charts and Numbers}
-\begin{itemize}
-\item Budget
-\item Requests per day
-\item Unique accounts
-\item Spatial skew
-\item Temporal skew
-\item Performance sensitivity
-\item Availability over time (find Kenneths tal)
-\end{itemize}
+1:  Budget, Requests per day, Peak Load, Unique accounts, Spatial skew, Temporal skew, Performance sensitivity, Availability over time (find Kenneths tal)
 
 \begin{figure}[tb]
   \begin{minipage}{0.50\linewidth}
@@ -386,7 +375,6 @@ Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Pr
   \vspace{-2ex}
 \end{figure}
 
-
 \subsection{Challenges}
 \begin{itemize}
 \item Availability, especially for multi-source applications
@@ -396,41 +384,13 @@ Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Pr
 % 200 ms is not low latency
 % Images are not an interactive experience
 
-\subsection{Summary}
-
-\section{A Digital Map Supply of the Future}
-A roadmap that uses the results of this Dissertation. The use cases may draw on one or both of them main results (creating maps, serving maps)
-
-\subsection{Use Cases}
-\begin{itemize}
-\item Visualizing non-curated data (e.g. sensor data, user generated content)
-\item Visualizing curated data (e.g. place names, streets, etc.)
-\end{itemize}
-
-\subsection{New Requirements}
-This section argues we need an extended set of requirements, wrt Section:Requirements are needed. Users expect more today that they did ten years ago when the digital map supply was founded.
-\begin{itemize}
-\item Interactive experience
-\item Zero down-time
-\item Very low latency
-\end{itemize}
-
-\subsection{Towards a Unified Key-Value Access Model}
-\begin{itemize}
-\item How Key-Value access is Used Today
-\item What are the Keys?
-\item What the Values?
-\end{itemize}
-
-\subsection{Summary}
-
 \section{Using the Contributions of this Thesis}
 
-\subsection{Using Glossy and CVL}
+\subsection{Glossy}
 
-\subsection{Using Tileheat}
+\subsection{Tileheat}
 
-\section{Conclusion}
+\section{Summary}
 
 
 \chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
@@ -2317,10 +2277,11 @@ While our results improve on existing methods, for future work we plan to do a m
 Finally, deploying TileHeat in a production environment and measuring the effect on latency remains as an important direction of future work.
 
 
-\chapter{Conclusion and Future Work}
+\chapter{Conclusion}
 \label{chapter:conclusion}
 
-Conclusion and future work
+Foo bar.
+
 
 \bibliographystyle{plain}
 \bibliography{thesis}
