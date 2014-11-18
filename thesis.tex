@@ -124,52 +124,31 @@ For Stuart:
 
 \begin{enumerate}
 \item How has the world changed; what is the new situation?
-\item How does the situation motivate the topic of the thesis?
-\item What are key challenges and unanswered questions regarding the topic?
-\item How does this thesis make progress on these challenges and questions?
+\item What are the challenges?
+\item What is the state of the art?
+\item How does this thesis make progress on the state of the art?
+\item What are the specific contributions? 
 \end{enumerate}
 
-% SWOT
-
 % How has the world changed; what is the new situation?
-1: The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, i.e. applications that allow online users to understand and (sometimes) take action on the data by visual and interactive means~\cite{google:maps, nytimes, guardian}. For example, The New York Times and The Guardian rutinely feature data-driven visualizations as part of the news content that they provide~\cite{guardian:wikileaks, nytimes:obama:budget}. 
-
-There are several crucial problems that must be addressed in order to operate a successful web application for data-driven visualization. The first problem is the design effort required to provide a high-quality visual experience, i.e. an uncluttered and informative presentation of the data (see Figure~\ref{fig:introduction:cluttered}). The second problem is the cost to run a data-driven service with 24 x 7 availability and fast loading times. The third problem that must be addresses is the scalability of services that suddenly become popular (see Figure~\ref{fig:introduction:latency:with:workload}). While devices in our pockets can reach any point in the world of open data at the speed of light, data can take a very long time to escape the black hole of an overloaded endpoint.
+\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data has the potential to increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. 
 
 
-\emph{Talk about data APIs. Talk about user expectations: visual requirements + performance requirements. Maybe support visual requirements by the controls of generalization.}
+% http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
+% http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
+% http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html
 
+\emph{What are the challenges?} There are two crucial problems that must be addressed in order to successfully develop a data-driven visualization. The first problem is the design effort required to create a high-quality visual representation of a large and perhaps heterogenous dataset. Very quickly, the representation budget of fixed resources like screens and manageable files are depleted as the data grows in size. At this point, the data must be abstracted to fit the medium, for example by selecting subsets or by aggregating. An important question is: how should data be abstracted and how can we control the process to get the result that we want? The second problem is the cost to operate a data-intensive service with 24 x 7 x 365 availability and low latency. Devices in our pockets can reach any point in the world of open data at the speed of light, but that data may be stuck in the black hole of an overloaded endpoint. While techniques exist that minimize the risk of data being stuck on overloaded servers, using these techniques generally require a monetary investment, e.g. in cloud infrastructure. In many technology companies, the costs allocated to cloud infrastructure rival the cost of hiring expensive engineers. \emph{at this point, we should know that data-driven applications require both availability/performance and visual quality, and that it is not comletely straight forward}.
 
-
-
-What is needed now is to transform that thing we carry in our pockets into a powerful and visual sense making tool. As with any other application on the web, users expect data-driven visualizations to have 24 x 7 availability,   performance of a data-driven visualization.
-
-A successful data-driven visualizations must be satisfy the expectations of web users. 
-
-
-Data-driven visualization are evaluated by metrics that fall into two categories: visual metrics and performance metrics.
-
-In the eyes of users, both data and data-driven visualizations have become a commodity. Consequently, data-driven visualizations must legibly and truthfully visualize data to users, the must also  24 x 7 availability, low latency, and high scalability, which is expected by web users today. Failure to recognize the importance of these usability and performance metrics will dramatically impact the success of a service~\cite{usability:study, performance:study}.
-
-
-
-Web users expect 24 x 7 availability, low latency, and high scalability for web applications such as 
-
-
-The demand for data-driven visualizations drive the demand for open data in an upwards spiral. In anticipation of this trend, most large web sites and organizations (e.g. Wikipedia and the United Nations) now offer APIs that are specifically designed to efficiently meet the demand for data and data visualizations~\cite{wikipediaapi,unapi}. Accordingly, web users, consciously or unconsciously, have come to expect 24 x 7 availability, acceptable latency, and high scalability in these services. Addtionally, the utility of a data-driven visualization greatly depends on the visual qualities of the presentation. Alas, a failure to recognize the importance of any of these quality metrics will have drastic consequences for the success of a service~\cite{usability:study, performance:study}.
+\emph{What is the state of the art?} To address these crucial problems, the research community have worked on many useful techniques. First, the data abstraction problem has been the subject of research for many years (thousands!) and in many areas, e.g. geography~\cite{weibel}, knowledge discovery in databases~\cite{see:db} and visualization of news stories~\cite{metro:stops}. Data partitioning and data replication are important techniques for making access to data highly available, performant, and scalable~\cite{datacenter:as:a:computer}. The trade-offs involved are well-known, and have been the subject of intensive studies~\cite{danger:of:replication, cap:theorem}. Data partitioning schemes have been specifically developed for data that is visualized, e.g. hierarchical linerization of spatial data~\cite{hilbert:curve, z:curve, xyz:protocol}.  Key-Value stores (K-V stores) inherently support data partitioning, data replication and ``scale out''~\cite{dynamodb, datacenter:as:a:computer}. Furthermore, they feature a schema-less data model, which is appropriate for most data that is visualized online (e.g. objects and multimedia data). For these reasons, K-V stores are a good match for storing data that must be visualized online. However, the advantages of K-V stores are offset by severe limitations: they generally lack support for advanced query languages (e.g. SQL), hence they can not implement the logic needed for data abstraction. In constrast, relational database systems (RDBMS) have the power to express the complex selection and aggregation queries needed for data abstraction. However, they in turn are limited by being harder to scale. It seems that the ideal system to power data-driven visualizations would have the scalability of a K-V store (or better) and the expressibility of a RDBMS (or better). In this thesis we focus on developing such a system.
 
 % How does the situation motivate the topic of the thesis?
-%TODO: Flow should go like this after describing the situation: Data partitioning~\cite{stuff}, data replication~\cite{stuff} and data abstraction~\cite{mapgen, dbgen} are important techniques for providing high quality web services, i.e web services with 24 x 7 availability, low latency and high scalability. The advantages and pitfalls of using data partitioning and data replication are generally well understood, for example, the relationship between replication and consistency. In this thesis, the focus will be on data abstraction primarily, and data partitioning and replication secondarily. In the area of digital maps, tiling is a concept that merges together the techniques of data partitioning with data abstraction~\ref{xyz}. Next, describe what tiles are and how the concept can be used also for time lines, cluster visualizations, etc.
-
-% How does the situation motivate the topic of the thesis?
-2: Data partitioning~\cite{datacenter:as:a:computer}, data replication~\cite{datacenter:as:a:computer} and data abstraction~\cite{mapgen, dbgen} are important techniques for providing the high-quality data visualizations that users expect. While the advantages and pitfalls of using data partitioning and data replication are generally well understood, the full potential of data abstraction is only beginning to be realized. \emph{Talk more about how DP, DR and DA has been and can be used to power data visualization.} Key-Value stores (K-V stores) have inherent support for partitioning, replication and scale out, which facilitates high availability, high performance and scalability~\cite{dynamodb, andfriends}. Furthermore, K-V stores have an opaque data model that is appropriate for storing heterogenous data, e.g. geographical data, images, videos and user data~\cite{usecase1, usecase2, usecase3, usecase4}. These characteristics make K-V stores a popular choice among data providers who experience high demand for their data~\cite{googlecdn, haystack}. In a nutshell, the K-V stores are scalable because they are simple; data is retrieved by primary key only. For example, in the XYZ protocol, the key ``15/17527/10252'' points to a map segment that shows the location of the University of Copenhagen, Department of Computer Science (see Figure~\ref{fig:introduction:example:tile:pyramid:access}). 
+\emph{How does this thesis make progress on the state of the art?} K-V stores have a what-you-store-is-what-you-get data model (another form of WYSIWYG). Thus, data abstraction and data partitioning are activities that must be performed either upstream or downstream from the K-V store. In contrast, relational databases have the power to express complex data transformations and business logic. This thesis will explore how to integrate K-V stores with relational databases to power data-driven visualizations in a ``best of both worlds'' approach. The goal is to arrive at a system that can power data-driven visualizations with 24 x 7 availability, high performance and scalability, and high-quality...... hmmmm. \emph{elaborate}
 
 %In the field of multi-scale map generalization a narrow form of data abstraction has been extensively studied., e.g. in the field of , the full potential of data abstraction for other types of data data such in combination with data partitioning and data replication has not been realized yet. In the area of digital maps, tiling is a concept that merges together the techniques of data partitioning with data abstraction~\ref{xyz}. Next, describe what tiles are and how the concept can be used also for time lines, cluster visualizations, etc.
 
 % What are key challenges and unanswered questions regarding the topic?
-3: (by no means a good flow right now) While the basic K-V architecture is great for performance and availability, these advantages are offset by a severe limitation: Most K-V stores lack an advanced query languages (e.g. SQL) that can express (say) select-project-join statements. It should be noted that there exists K-V stores that support ordered key-iteration~\ref{leveldb}, atomic multi-key operations~\cite{gun}, set-typed values~\cite{redis} and MapReduce-based views~\cite{couchdb}. However,  into next-generation key-value stores In other words, we can place opaque data into the K-V store and retrieve it later on in the exact same form. For this reason, application logic has to be handled either upstream or downstream (or both). Given this limitation, the key question is: in what form should we place data into a K-V store so that the application (e.g. data-driven visualization) holistically makes the most of the K-V stores' strong points?
 
-4: This dissertation concentrates on problem of building a high-availability, high-scalability, low-latency, high-expressibility data systems that can power data-driven visualizations on the web. \emph{something about declarative query languages for data abstraction and systems that sense and predict demand and autoscale}.
 
 % Key-value stores, advantages and limitations.
 % they support partitioning, replication and scale out => high availability, performance and scalability
@@ -182,89 +161,30 @@ The demand for data-driven visualizations drive the demand for open data in an u
 
 \emph{end of writing, comments in source code}
 
-% Geographical data and the Danish Geodata Agency.
-%Geographical data is an important type of data. In Denmark, the Danish Geodata Agency has offered an API for geographical data, which has been public and free of charge since 2013. The Agency too has felt the upwards spiral in demand for data. Over the past five years, the agency has experienced an exponential rise in the number of requests that are received per day. While the first version of the API was launched back in 2001, when data mash-ups were still in their infancy, it has been redesigned several time to keep up with demand. 
-
-
-
-%In contrast, query engines that can evaluate select-project-join queries are more expressive but also harder to scale~\cite{Scalability:of:Select:Project:Join}. For example, in the WMS protocol, a portion of the map is retrieved by evaluating a select-project query (e.g. in an RDBMS). Generally, the difference in speed between evaluating a K-V query and a select-project query is $O(1)$ vs. $O(\log n)$, e.g. a memory address lookup vs. an index traversal to find matching records~\cite{rtree, btree}. In conclusion, K-V stores trade expressibility for scalability, which is a good compromise when the demand for data is high.
-
-%Recently, the Danish Geodata Agency introduced a WMTS API, which is logically equivalent to an XYZ API. 
-
-%The key reason behind this is scalability. Sites like YouTube and Facebook make images and video available though Content Delivery Networks (CDN), which are K-V stores at a planetary scale. Without these CDNs, these popular websites would crumble beneath the crushing workload. There is a key difference between using a K-V store for images and videos and using a K-V store for geographical data. While images and videos 
-
-%Furthermore, data-driven visualizations like maps~\cite{google:maps, cartodb}, time lines~\cite{something}  and charts~\cite{something} have become a commodity. You can create a map in minutes by specifying a background map and add some overlay data to display on top (e.g. data from eBird.org). Data reuse is high, as popular background maps are used again and again in mash-ups around the world. Consequently, great effort has gone into providing background map data of high quality to satisfy this demand. While users expect 24 x 7 availability and low latency for data, a service like Google Maps is powered by a planet scale distributed system and an army of engineers.
-
-
-% 
-%While mash-ups contribute to transparency and knowledge in our societies, the high demand for data presents a critical problem in the eco-system of data providers and consumers. Mash-ups like geographical maps draw data from multiple providers, with a strong skew in the workload that each provider has to handle. For example, a geographical map visualization may overlay bird observation data on top of background map data. While the demand across all mash-ups might be small for bird data (e.g. eBird.org), it could be order of magnitude higher for background map data (e.g. Google Maps). This creates a problem for the providers of popular datasets, because users expect 24 x 7 availability and low latency. Luckily, services like Google Maps can afford the cost of a ~\cite{something}. However, providers of government curated data are not generally so lucky.
-
-
-
-
-
-%Similarly, organizations that do not own data centers will typically buy services from a cloud provider that in turn is powered by global datacenters~\cite{aws}.
-
-
-%high demand also presents a problem for the data providers. Handling the popularity is costly! In response  of an information repository like Wikipedia can be crushing. In capitulation and 
-
-%a crucial problem is the effort and cost to create and serve data-driven visualizations to an unforgiving audience. 
-
-%\begin{itemize}
-%\item Cloud computing has made it significantly easier to build an own data-driven visualization.
-
-%\item The supply of public datasets feeds the demand for more public dataset as mash-ups are continuously gaining momentum, e.g. in journalism and governance. This puts pressure on the whole eco-system, which includes base data like the background maps often used in geospatial mash-ups~\cite{google, mapbox, gst}.
-%\item This has forced providers to rethink how data is made available. In the area of geographical data, two dominant approaches have been to provide deltas~\cite{openstreetmap:delta, wikipedia:delta} or to expose data with a simple key-value access model. The latter approach fits the pattern of a content delivery networks~\cite{cloudfront}, highly scalable key-value store~\cite{redis, memcached} and even plain file systems. Consequently, new standards for providing geospatial data have emerged, which are based on the key-value access model~\cite{WMTS, XYZ}.
-%\item This creates a new set of challenges, i.e. key-value selection.
-%\item Data is being visualized in mashups like never before. This is very challenging to achieve in an online environement while keeping costs low
-%\item Data-driven visualizations of temporal, spatial and multi-variate datasets contribute to the growth, administration and transparency of our societies; they are produced by goverments, companies and individuals; they are consumed by goverments, companies and individuals.
-%\item Some division into background data (remains fixed) and overlay data (constantly emerging), e.g. background maps with hotels on top
-
-%\item Challenges are: serving costs, design costs
-%\item This pressure causes a paradigm shift, e.g. wikipedia/openstreetmap deltas or key-value access models that are easy to scale.
-%\item Simultaneously, there is an increased demand for drag-and-drop mash-up data visualization
-%\item This in turn creates a need for customizable data reduction as data sizes grow
-%\item Also, users demand interactive and explorable visualizations, e.g. with support for multiple scales (e.g. Maps and Timelines) or views (e.g. New York Times budget).
-%\item Increased need for data transformation (e.g. data reduction) as a service if data-driven visualizations are to remain scalable
-%\item Data can be all sorts, usually with a schema
-%\item Also, increased need for high-availability, especially in multi-sourced applications
-%\item Increased need for low latency as users grow more impatient
-%\item Increased need for low total cost of ownership
-%\item This thesis focuses on the data reduction (selection) and data serving part
-%\end{itemize}
-
-%(The Tim Kraska intro) The web has made it easy to provide and consume data-driven visualizations. Building an interactive map, graph or chart visualization and publishing it online has become a commodity~\cite{1,2,3}. Nonetheless, for all but the most trivial cases, providing data-driven visualizations online requires a lot of effort. First, it is fundamentally hard to design a legible, informative and representative visualization over large datasets, especially when data changes over time~\cite{1,2,3}. Second, the performance of a data visualization system does not automatically scale with the number of concurrent consumers. To account for these issues, ... has been proposed. 
-
-%\begin{itemize}
-%\item Creating maps, serving maps, using maps. We focus on the two first areas.
-%\item The web has enabled governments, companies and individuals to grant everyone access to large spatial, temporal and multi-variate datasets of high quality.
-%\item Give example of the datasets
-%\item Give examples of the visualizations
-%\item Overview of the state-of-the-art (hmm, look at Kraska dissertation, he arrived very quickly to the challenges)
-%\item Challenges are: operations costs, difficulty of design
-%\end{itemize}
 
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
-For Stuart:
+What are the problems I solve?:
 
 \begin{enumerate}
-\item Briefly mention discuss general research in data-driven visualizations and in particular data abstraction which is the focus of thesis
-\item Introduce need and problem of global selection (modelling, algorithms) for data abstraction
-\item Introduce need and problem of programming/query languages for data abstraction
-\item Introduce need and problem of database integration for data abstraction
-\item Introduce need and problem of adaptive pre-emptive caching of geographical data in key-value stores\end{enumerate}
+\item What is the research context and the area of focus for this thesis? Data abstraction, more specifically selection. Semi-lazy materialization for geographical key-value stores. 
+\item What is the multi-scale global selection problem?
+\item What are programming/query languages for data abstraction?
+\item What is database integration for data abstraction?
+\item What is predictive caching for geographical key-value stores?
+\end{enumerate}
 
-1: TODO
+\emph{What is the research context and the area of focus for this thesis?}
 
-2: TODO
+\emph{What is the multi-scale global selection problem?} 
 
-3: TODO
+\emph{What are query languages for data abstraction?} Languages that can express multe-scale global selection.
 
-4: TODO
+\emph{What is database integration for data abstraction?} Data abstraction queries are translated into efficient queries in relational algebra.
 
-5: TODO
+\emph{What is predictive caching for geographical key-value stores?} Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
+
 
 %Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
 
@@ -289,6 +209,14 @@ For Stuart:
 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
+
+How did I solve the problems?
+
+\begin{enumerate}
+\item CVL
+\item Glossy
+\item Tileheat
+\end{enumerate}
 
 Instead of presenting a complete system, this thesis concentrates on specific aspects of building a high-scalability application for data-driven visualization. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
 
