@@ -117,11 +117,9 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 % Snippets.
 
-\todo{Introduce the term multi-scale data abstraction (MSDA) and stick with it.}
-\todo{Introduce the data abstraction operators: global selection, global projection and global aggregation, and stick with them. Call them the global operators. Either in the background or the problem statement.}
-
-\nice{Relational Databases (RDBMS) on the other hand, with their support for indexing and SQL,  are certainly powerful enough to express MSDA. While a full system for MSDA that supports all the global operators could likely be realized on top of a relational database, this thesis concentrates on using RDMBSs for multi-scale global selection.}
-
+%\todo{Introduce the term multi-scale data abstraction (MSDA) and stick with it.}
+%\todo{Introduce the data abstraction operators: global selection, global projection and global aggregation, and stick with them. Call them the global operators. Either in the background or the problem statement.}
+%\nice{Relational Databases (RDBMS) on the other hand, with their support for indexing and SQL,  are certainly powerful enough to express MSDA. While a full system for MSDA that supports all the global operators could likely be realized on top of a relational database, this thesis concentrates on using RDMBSs for multi-scale global selection.}
 
 %The web has enabled governments and other organizations to grant everyone access to large spatial, temporal and multi-variate datasets of high quality cite(GST, Data.Gov, UN, World Bank). Visualizations-as-a-Service (DVaaS) contribute to the growth, administration and transparency of our societies by enabling citizens, companies and institutions to navigate and explore these important datasets cite(offentlige data is spil). For example, geographical maps allow planners to consult nature conservations data before building a new motorway (think of better example, or provide more examples).
 
@@ -132,18 +130,18 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
-For Stuart:
+%For Stuart:
 
-\begin{enumerate}
-\item How has the world changed; what is the new situation?
-\item What are the challenges?
-\item What is the state of the art?
-\item How does this thesis make progress on the state of the art?
-\item What are the specific contributions? 
-\end{enumerate}
+%\begin{enumerate}
+%\item How has the world changed; what is the new situation?
+%\item What are the challenges?
+%\item What is the state of the art?
+%\item How does this thesis make progress on the state of the art?
+%\item What are the specific contributions? 
+%\end{enumerate}
 
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data will increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data (e.g. user-contributed data) 	has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. If an interesting data visualization is shared on social media, it can gain an audience of millions in a matter of hours or even minutes. 
+\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data will increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. In other words, properly designed data visualizations enable people to see the big picture of otherwise unfathomable phenomena, such government budgets, the geography of the Earth and complex human culture. Consequently, the availability of open data (e.g. user-contributed data) has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. To stimulate inquisitive behaviour, data visualizations often allow users to explore a dataset at multiple focal points and levels of detail; data can be explored at the global level or deep down in the detail. Since data visializations are so useful, they can quickly attract an audience of millions, for instance, when they are shared on social media. 
 
 % http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
 % http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
@@ -178,34 +176,27 @@ Second, given an appropriately abstracted dataset, system operators must ensure 
 % Current research in K-V stores
 %Current research in K-V stores is searching for the right trade-off between the capabilities of relational database systems and first-generation K-V stores. Important areas include stronger consistency models, enhanced programmability, indexing, etc. \emph{at some point, we will present our contributions for closing this gap, specifically in the area of data visualizations. This is going to be so much fun!}
 
-
-
-\emph{end of writing, comments in source code}
-
-
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
 Outside geography, research on data abstraction is still in its infancy. The majority of the related work focuses on data abstraction geographical data, i.e. map generalization. There is an opportunity to export useful ideas from map generalization to the wider area of data visualization. To fullfill the potential of data visualization, we must bring data abstraction techniques to where the data is primary managed, i.e. relational database systems (RDBMS). Ideally, a class of RDBMS will emerge that is specialized towards data visualization, e.g. systems that can perform multi-scale data abstraction operations over data tables. This thesis focuses on four problems that must be solved in order to build such a system.
 
-\begin{enumerate}
-\item Data Abstraction Operators
-\item Programming Languages
-\item RDBMS Integration
-\item Adaptive Data Serving
-\end{enumerate}
+%\begin{enumerate}
+%\item Data Abstraction Operators
+%\item Programming Languages
+%\item RDBMS Integration
+%\item Adaptive Data Serving
+%\end{enumerate}
 
-\todo{Wait to the contributions to narrow these down to the things I looked at.}
+\subsection{Holistic Selection} Today, relational databases do not support data abstraction operators for powering data visualizations. Critically, records must be \emph{holistically selected}, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization} (\emph{any other requirements?}). Two important questions that must be answered are: What are the sematics of a holistic selection operator? How should the operator parameterized?
 
-\emph{What is the research context and the area of focus for this thesis?}
+\subsection{SQL extension} Relational databases are powerful thanks to their query language, SQL. To enable data visualization queries, the SQL syntax must be \emph{extended} in order to to express data abstraction queries. This will enable developers to select data for visualizations using a familiar query language and in a concise declarative style. An important question is how the syntax should balance between expressibility and conciseness.
 
-\subsection{Data Abstraction Operators} Introduce the data model for mult-scale data abstraction: tables. Introduce the two types of multi-scale: ladder and star. Introduce constraints. Introduce objective functions. Introduce the operators: global selection, global projection, and global aggregation. Combine into full problem: ...
+\subsection{RDBMS Integration} SQL with data abstraction extensions must be \emph{implemented} on top of, or inside, relational database engines. This will enable data abstraction queries to harness the power of indexing and battle-proven query optimizers. An important question is how existing database engine functionality can be reused to power data abstraction queries.
 
-\subsection{Programming Languages} talk about the need for a concise, declarative language, and the elements it should contain, i.e. express the API.
+\subsection{Predictive Data Serving} Many types of data visualization, e.g. maps, incur heavy materialization costs when data is requested. Being able to provision resources ahead of time is important for workloads that exhibit clear trends. Using a log of previous requests, we can theoretically predict the requests that will be seen tomorrow. How well can we predict the workload for a data visualization? For example, in a 24-hour life cycle of a data visualization, where are experiences peaks and valleys in the number of concurrent users. Furthermore, the probability of a request for a subset of the data will be many orders of magnitude higher than the average probility of data being requested. Being able to predict what data will be requested and when, will allow a system to pre-materialize the most likely requests ahead of time. Some important questions are: on what basis should prediction we performed and what are the prediction models that are most effective?
 
-\subsection{RDBMS Integration} Data abstraction queries are translated into efficient queries in relational algebra.
-
-\subsection{Adaptive Data Serving} Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
+%Being able to provision resources according to predicted workloads is crucial for enabling timely and performant data visialization experiances. Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
 
 
 %Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
