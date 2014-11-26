@@ -143,20 +143,23 @@ For Stuart:
 \end{enumerate}
 
 % How has the world changed; what is the new situation?
-The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data will increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. However, there are two crucial problems that must be addressed in order to successfully develop a data-driven visualization. 
-
+\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of providers and consumers who create, combine and visualize a huge diversity of open data. In symphony, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data will increase transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data (e.g. user-contributed data) 	has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. If an interesting data visualization is shared on social media, it can gain an audience of millions in a matter of hours or even minutes. 
 
 % http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
 % http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
 % http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html
 
-Visualization designers must address the crucial problem of data abstraction when creating high-quality visual representations of large and possibly heterogenous datasets. As the data grows in size, the finite resources available to visually represent the data, such as screen real-estate and memory, are quickly depleted~\cite{topfer:selection, weibel, stonebraker}. At this point, the data must be abstracted to fit the media, e.g. by selecting a representative subset or aggregating the data. However, designers can not manually abstract the data as it is too time consuming. Thus, the data abstraction process must be at least partially automated. Some crucial questions are: what is the ideal data abstraction for a given visualization, and how can designers control a partially automated data abstraction process to achieve a desired result? 
 
-Given an appropriately abstracted dataset, system operators must ensure that the data is delivered to applications with low latency and high availability. A crucial problem is to operate a system that reaches these goals while minimizing the cost.
+\emph{What are the challenges?} 
+There are two crucial problems that must be addressed in order to successfully develop a data-driven visualization in the current situation. 
+
+First, developers must address the crucial problem of data abstraction in order to create a high-quality visual representation of a large and heterogenous dataset. Very quickly, the representational budget of finite resources available to visually represent the data, such as screen pixels or fast-access memory, is depleted as the data grows in size~\cite{topfer:selection, weibel, stonebraker}. At this point, the data must be abstracted to fit the media, e.g. by selecting a representative subset or aggregating the data. However, designers can not manually abstract the data as it is too time consuming. Thus, the data abstraction process must be at least partially automated. Some crucial questions are: what is the ideal data abstraction for a given visualization, and how can designers control a partially automated data abstraction process to achieve a desired result? 
+
+Second, given an appropriately abstracted dataset, system operators must ensure that the data is delivered to applications with low latency and high availability. A crucial problem is to operate a system that reaches these goals while minimizing the cost.
 
 %While devices in our pockets can reach any point in the world of open data at the speed of light, that data may be stuck in the black hole of an overloaded endpoint. 
 
-\emph{What is the state of the art?} Various research communities have worked on these two problems. First, the data abstraction problem has been studied for many years (in the case of cartography, thousands!) and in many areas, e.g. map generalization~\cite{weibel}, visual analytics~\cite{see:db} and information graphs~\cite{metro:stops}. Second, the performance and availability problems have been studied by the distributed systems and database communities, e.g. data partitioning~\cite{foo} and data replication~\cite{foo}. The trade-offs involved are well-known, and have been the subject of important studies~\cite{danger:of:replication, cap:theorem}. Additionally, data partitioning schemes have been specifically developed for data that is visualized, e.g. hierarchical linerization of spatial data~\cite{hilbert:curve, z:curve, xyz:protocol}.  Third, key-value stores with inherent support for data partitioning, data replication and ``scale out'' have been popularized by Internet giants such as Google, Amazon and Facebook~\cite{dynamodb, bigtable, haystack}. Key-value stores feature a schema-less data model that is appropriate for data that is visualized (e.g. objects and multimedia data). However, the advantages of key-value stores are offset by severe limitations: they generally lack powerful query languages like SQL. Hence, they are not a good fit for computing data abstractions. In constrast, relational database systems (RDBMS) have the power to express the complex selection and aggregation queries needed for data abstraction. However, data abstraction queries are generally not easy to express in pure SQL, as data abstraction is a holistic process that generally considers the whole dataset. It seems that the ideal system to power data-driven visualizations would have the scalability of a K-V store (or better) and the expressibility of a RDBMS (or better). In this thesis we focus on developing such a system.
+\emph{What is the state of the art?} To address the crucial problems, the research community has worked on many useful techniques. First, the data abstraction problem has been studied for many years (in the case of cartography, thousands!) and in many areas, e.g. map generalization~\cite{weibel}, visual analytics~\cite{see:db} and information graphs~\cite{metro:stops}. Second, the performance and availability problems have been studied by the distributed systems and database communities, e.g. data partitioning~\cite{foo} and data replication~\cite{foo}. The trade-offs involved are well-known, and have been the subject of important studies~\cite{danger:of:replication, cap:theorem}. Additionally, data partitioning schemes have been specifically developed for data that is visualized, e.g. hierarchical linerization of spatial data~\cite{hilbert:curve, z:curve, xyz:protocol}.  Third, key-value stores with inherent support for data partitioning, data replication and ``scale out'' have been popularized by Internet giants such as Google, Amazon and Facebook~\cite{dynamodb, bigtable, haystack}. Key-value stores feature a schema-less data model that is appropriate for data that is visualized (e.g. objects and multimedia data). However, the advantages of key-value stores are offset by severe limitations: they generally lack powerful query languages like SQL. Hence, they are not a good fit for computing data abstractions. In constrast, relational database systems (RDBMS) have the power to express the complex selection and aggregation queries needed for data abstraction. However, data abstraction queries are generally not easy to express in pure SQL, as data abstraction is a holistic process that generally considers the whole dataset. It seems that the ideal system to power data-driven visualizations would have the scalability of a K-V store (or better) and the expressibility of a RDBMS (or better). In this thesis we focus on developing such a system.
 
 \note{Two times however in a row does not flow well.}
 
@@ -183,26 +186,26 @@ Given an appropriately abstracted dataset, system operators must ensure that the
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
-Outside geography, research on data abstraction is still in its infancy. As a result, most of the related work focuses on geographical data. There is an opportunitiy to transfer ideas from map generalization to visualization of general relational data. i.e. multi-scale data abstraction for tables. This thesis focuses on building such a system. The list below enumerates some important problems that need solving to realize this opportunity.
+Outside geography, research on data abstraction is still in its infancy. The majority of the related work focuses on data abstraction geographical data, i.e. map generalization. There is an opportunity to export useful ideas from map generalization to the wider area of data visualization. To fullfill the potential of data visualization, we must bring data abstraction techniques to where the data is primary managed, i.e. relational database systems (RDBMS). Ideally, a class of RDBMS will emerge that is specialized towards data visualization, e.g. systems that can perform multi-scale data abstraction operations over data tables. This thesis focuses on four problems that must be solved in order to build such a system.
 
 \begin{enumerate}
-\item Data Abstraction Algebra
+\item Data Abstraction Operators
 \item Programming Languages
 \item RDBMS Integration
-\item Adaptive Materialization
+\item Adaptive Data Serving
 \end{enumerate}
 
 \todo{Wait to the contributions to narrow these down to the things I looked at.}
 
 \emph{What is the research context and the area of focus for this thesis?}
 
-\subsection{Multi-scale Data abstraction} Introduce the data model for mult-scale data abstraction: tables. Introduce the two types of multi-scale: ladder and star. Introduce constraints. Introduce objective functions. Introduce the operators: global selection, global projection, and global aggregation. Combine into full problem: ...
+\subsection{Data Abstraction Operators} Introduce the data model for mult-scale data abstraction: tables. Introduce the two types of multi-scale: ladder and star. Introduce constraints. Introduce objective functions. Introduce the operators: global selection, global projection, and global aggregation. Combine into full problem: ...
 
 \subsection{Programming Languages} talk about the need for a concise, declarative language, and the elements it should contain, i.e. express the API.
 
 \subsection{RDBMS Integration} Data abstraction queries are translated into efficient queries in relational algebra.
 
-\subsection{Adaptive Materialization} Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
+\subsection{Adaptive Data Serving} Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
 
 
 %Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
