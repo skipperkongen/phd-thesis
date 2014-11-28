@@ -84,6 +84,8 @@
 
 \newcommand{\note}[1]{\ \\ \fbox{\parbox{1.0\linewidth}{{\sc Note}:\\ #1}}}
 
+\newcommand{\marcos}[1]{\ \\ \fbox{\parbox{1.0\linewidth}{{\sc Marcos}:\\ #1}}}
+
 \sloppy
 
 \title{Building Highly Scalable Data Visualization Systems}
@@ -94,6 +96,7 @@
 %\title{Selection Problems in High-Performance Data Visualizations for the Web}
 %\title{Selection Problems in Data Visualizations for the Web}
 %\title{Title to be decided}
+
 \author{Pimin Konstantin Kefaloukos}
 %\date{}							% Activate to display a given date or no date
 
@@ -109,6 +112,10 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 \chapter{Introduction}
 \label{chapter:introduction}
+
+\marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
+
+\marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
 
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
@@ -141,37 +148,38 @@ A great advantage of key-value stores is their inherent support for data partiti
 
 In the field of databases, research on data abstraction is still in its infancy. Outside the field of databases, there exists prior and interesting work, e.g. in map generalization and information visualization. There is an opportunity to export useful ideas from these areas to the area of data abstraction in databases. To fullfill the potential of data visualization, this thesis proposes to bring data abstraction techniques to where the data is frequently managed, i.e. relational database systems (RDBMS). There is arguably a need for specialized RDBMS that are geared towards data visualization, e.g. systems that can perform multi-scale data abstraction operations over data tables. This thesis focuses on four problems that must be addressed in order to build such systems.
 
-\subsection{Holistic Selection} Today, relational databases do not support data abstraction operators for powering data visualizations. Critically, records must be \emph{holistically selected}, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization} (\emph{any other requirements?}). Two important questions that must be answered are: What are the sematics of a holistic selection operator? How should the operator parameterized?
+\subsection{Holistic Selection} 
+Today, relational databases do not support data abstraction operators for powering data visualizations. For example, the selection operator only allows rows to be filtered according to a row-by-row predicate. Critically, records in a data visualization must be \emph{holistically} selected, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization}. Moreover, data must sometimes be consistently selected for several levels of detail, which allows users to explore more data points by zooming in. Some important questions that must be answered are:
 
-\subsection{SQL extension} Relational databases are powerful thanks to their query language, SQL. To enable data visualization queries, the SQL syntax must be \emph{extended} in order to to express data abstraction queries. This will enable developers to select data for visualizations using a familiar query language and in a concise declarative style. An important question is how the syntax should balance between expressibility and conciseness.
+\begin{itemize}
+\item What use cases must holistic selection cover? 
+\item What are the sematics of holistic selection?
+\item How should holistic selection be parameterized?
+\end{itemize}
 
-\subsection{RDBMS Integration} SQL with data abstraction extensions must be \emph{implemented} on top of, or inside, relational database engines. This will enable data abstraction queries to harness the power of indexing and battle-proven query optimizers. An important question is how existing database engine functionality can be reused to power data abstraction queries.
+%\marcos{Not obvious that SQL is or is not the obvious? So build up the argument: Why declarative versus something else? Argue for declarative (leave minute detail to a system, not to the user. Constructive approach is too time consuming). SQL already exists in databases. Argue that ideal to extend SQL.}
 
-\subsection{Predictive Data Serving} Many types of data visualization, e.g. maps, incur heavy materialization costs when data is requested. Being able to provision resources ahead of time is important for workloads that exhibit clear trends. Using a log of previous requests, we can theoretically predict the requests that will be seen tomorrow. How well can we predict the workload for a data visualization? For example, in a 24-hour life cycle of a data visualization, where are experiences peaks and valleys in the number of concurrent users. Furthermore, the probability of a request for a subset of the data will be many orders of magnitude higher than the average probility of data being requested. Being able to predict what data will be requested and when, will allow a system to pre-materialize the most likely requests ahead of time. Some important questions are: on what basis should prediction we performed and what are the prediction models that are most effective?
+\subsection{Declarative Specification} 
+Designers of visualizations must be able to control the selection of data. While, data abstraction can be expressed in all programming languages, it is generally not easy or time-efficient to specify a holistic selection using imperative commands. A declarative approach, which leaves the minute details to the system, and lets the user focus on higher-level goals, is arguably better. The same type of argument has been made for SQL, which is one of the most successful programming languages for selecting relational data. However, SQL and its corresponding query engines do not support holistic selection. So, for data visualization purposes, SQL must be extended with new syntax for expressing holistic selection. An important questions is:
 
-%Being able to provision resources according to predicted workloads is crucial for enabling timely and performant data visialization experiances. Using a log of previous requests, predict the requests that will be seen tomorrow. Account for trends, seasonal variation and toblers first law.
+\begin{itemize}
+\item How can SQL be extended to allow designers to express holistic selection?
+\end{itemize}
 
+\subsection{Scalable Data Abstraction} 
+A query executing engine for holistic selection queries must be scalable, because the data may be large. One approach is to translate holistic selection queries to low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL. First, this has the advantage of reusing existing optimization techniques that are built-in to SQL query engines today. Second, data that underlies a visualization is frequently stored and managed in RDBMS, which can readily execture SQL queries. Therefore, it makes sense to compute holistic selection on top of or inside an RDBMS, e.g. using a translation to pure SQL. Assuming that holistic selection is implemented on top of an RDBMS, some key questions are: 
 
-%Use ZURICH\_NOTES.txt as a list of requirements for what became Glossy.
+\begin{itemize}
+\item How can holistic selection queries be translated into scalable and efficient queries in pure SQL? 
+\item How can the built-in optimizations of relational database engines be leveraged?
+\end{itemize}
 
-%This work draws heavily on ideas developed in the field of map generalization. Instead of copying in the entire theory of map generalization, the reader is encouraged to read Weibel and Dutton. While the rich diversity of planet earth has inspired such artful map generalization algorithms that can capture that vast reality on a piece of paper, this dissertation takes a side-ways leap: moving in parallel with the cartographernd, this dissertation will attempt to draw a vast universe of data tables on 
-
-%Cloud has made the essential infrastructure a commodity. Data visualizations can be driven entirely by key-value stores and front-end visualization frameworks (e.g. D3). Introduce key-value access model (e.g. content delivery networks, and in-memory caches) as means for scalable hosting of data-visualizations. Introduce key-selection (prediction of workload) and value-selection and materialization problems.
-
-%Optimize use of RAM (Redis, Memcached), optimize storage costs (CDN), etc. with regard to workload.
-
-%\begin{itemize}
-%\item High level: (1) Creating mashups, i.e. value selection (2) serving mashups, i.e. key-selection
-%\item (1a) Integrating with database technology
-%\item (1b) Programming languages
-%\item (1c) Extend to all types of data, not just spatial
-%\item (2a) Predict keys to materialize 
-%\end{itemize}
-
-% Data and query model: Public View is key-value, where value is an object collection. Base data is relational.
-% Assume a key-value store backing a multi-scale data visualisation. In the key-value store, key-value pairs can be eagerly or lazily materialized from a relational backend.
-% Key Selection: given a key space, select which keys to eagerly materialize. E.g. Tileheat solves this problem. 
-% Value Selection: given a key-space, select appropriate content (value) for each key.. E.g. Global Selection solves this problem
+\subsection{Predictive Map Serving}
+Digital maps are a type of visualization of geographical maps. Raw spatial data is transformed into a visual abstraction, the actual map. The transformation data objects to images is relatively CPU and I/O intensive. In a scalable service, we want to materialize and cache the visual abstraction ahead of time as much as possible. In order not to waste CPU and I/O resources, we want to prioritize the materialization of the map by the propabilty that parts of the map are accessed. Most web services today experience highs and lows in the number of concurrent users. If we can predict the content that will be requested during a high load window, we can exploit low-load windows perform pre-materialization. The questions that arise are:
+\begin{itemize}
+\item How can the prediction process be guided, e.g. by logging data?
+\item How can we design a prediction model that works well for geospatial workloads?
+\end{itemize}
 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
