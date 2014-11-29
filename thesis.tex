@@ -184,15 +184,7 @@ Digital maps are a type of visualization of geographical maps. Raw spatial data 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
 
-How did I solve the problems?
-
-\begin{enumerate}
-\item CVL
-\item Glossy
-\item Tileheat
-\end{enumerate}
-
-Instead of presenting a complete system, this thesis concentrates on specific aspects of building a high-scalability application for data-driven visualization. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
+Instead of presenting a complete system for creating and serving data visualizations, this thesis concentrates on specific aspects of building such a system. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
 
 The contributions of this thesis cover two topics: global selection for data-driven visualizations (see Sections~\ref{sec:introduction:contributions:cvl}~and~\ref{sec:introduction:contributions:glossy}), and adaptive pre-emptive caching of geographical data (see Section~\ref{sec:introduction:contributions:tileheat}).
 
@@ -232,11 +224,52 @@ Mention where Git repos are and what they contain.
 
 The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers the state of the art data abstraction and scalable key-value stores. Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 
-\chapter{State of the art}
-\label{chapter:state:of:the:art}
 
-%\section{Visual metrics}
+%  ############
+%  #  CHAPTER  
+%  ############ 
 
+\chapter{Related Work}
+\label{chapter:related:work}
+
+% http://youtu.be/nLjVKOLyvx4
+% Since maps are constructed in finite spaces, real-estate is at a premium. As such, not everything is represented, and even those things that are represented are not necessarily represented precisely. You can see a couple of examples here. Roads, rivers, cities, towns and islands are the most common victims of something like this. - Matt Dube, see http://www.spatial.maine.edu/~matthew.dube/
+
+\section{Multi-scale Data Abstraction}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/data-abstraction.pdf}
+\caption{Data abstraction.}
+\label{fig:related:work:data:abstraction}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
+
+
+
+\subsection{Selection}
+
+\subsection{Projection}
+
+\subsection{Aggregation}
+
+
+\section{Scalable Data Serving}
+
+
+
+
+\section{Object Relations}
+
+Models for binary topological relations are 9-intersection~\cite{egenhofer1991categorizing} and Region-Connection-Calculus~\cite{randell1992spatial}.
+
+\section{Visual Principles}
+
+
+%  ############
+%  #  CHAPTER  
+%  ############ 
 
 \chapter{Case study: The Digital Map Supply}
 \label{chapter:case:study}
@@ -268,18 +301,13 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 1:  Budget, Requests per day, Peak Load, Unique accounts, Spatial skew, Temporal skew, Performance sensitivity, Availability over time (find Kenneths tal)
 
 \begin{figure}[tb]
-  \begin{minipage}{0.50\linewidth}
-    \centerline{\includegraphics[width=0.6\linewidth]{./figs-thesis/tileheat_heatmap_sjaelland.png}}
-    \centerline{(a) Heatmap showing the areas in North-East Zealand, Denmark most viewed on maps from the Digital Map Supply.}
-  \end{minipage} \hfill
-  \begin{minipage}{0.50\linewidth}
-    \centerline{\includegraphics[width=0.6\linewidth]{./figs-thesis/heat_extent.png}}
-    \centerline{(b) Extent of area covered by heatmap}
-  \end{minipage}
-  \vspace{-0ex}
-  \caption{Foo.}
-  \label{fig:cvl:visualization:airport}
-  \vspace{-2ex}
+  \begin{center}
+    \begin{tabular}{cc}
+      \includegraphics[width=0.4\linewidth]{./figs-thesis/heat_extent.png} & \includegraphics[width=0.383\linewidth]{./figs-thesis/tileheat_heatmap_sjaelland.png} \\
+    \end{tabular}
+    \caption{Foo.}
+    \label{case:study:heat:map}
+  \end{center}
 \end{figure}
 
 \subsection{Challenges}
