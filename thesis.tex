@@ -122,6 +122,8 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \chapter{Introduction}
 \label{chapter:introduction}
 
+\note{'Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3)}
+
 \marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
 
 \marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
@@ -186,16 +188,28 @@ A great advantage of key-value stores is their inherent support for data partiti
 \section{Problem Statement}
 \label{sec:introduction:problem:statement}
 
-In the field of databases, research on data abstraction is still in its infancy. Outside the field of databases, there exists prior and interesting work, e.g. in map generalization and information visualization. There is an opportunity to export useful ideas from these areas to the area of data abstraction in databases. To fullfill the potential of data visualization, this thesis proposes to bring data abstraction techniques to where the data is frequently managed, i.e. relational database systems (RDBMS). There is arguably a need for specialized RDBMS that are geared towards data visualization, e.g. systems that can perform multi-scale data abstraction operations over data tables. This thesis focuses on four problems that must be addressed in order to build such systems.
+To realize further the potential of data visualization, this thesis proposes to bring data abstraction techniques to where the data is frequently managed, i.e. relational database systems (RDBMS). The extension of RDBMS with support for data visualization induces a new class of systems, i.e. data visualization management systems (DVMS)~\cite{wu2014case}. This thesis focuses on four problems that hinder the realization of DVMS.
 
-\subsection{Holistic Selection} 
-Today, relational databases do not support data abstraction operators for powering data visualizations. For example, the selection operator only allows rows to be filtered according to a row-by-row predicate. Critically, records in a data visualization must be \emph{holistically} selected, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization}. Moreover, data must sometimes be consistently selected for several levels of detail, which allows users to explore more data points by zooming in. Some important questions that must be answered are:
+\subsection{Multi-scale Selection Operator}
+To successfully visualize data in a (large) table, the set of rows must be abstracted in order to fit some finite medium of schematization, such as a computer screen. Failing that, legibility and representation conflicts will ensue~\cite{woodruff1998constant, topfer1966principles}. Dispite this problem, RDBMS today do not natively support operators that can (easily) express the data abstractions needed for complex, multi-scale data visualizations~\cite{wu2014case}. To eliminate conflicts in a multi-scale visualization, data must be filtered, aggregated or projected according to scale~\cite{weibel1999generalising, nongeo9999reference}.
+
+For example, the selection operator only allows rows to be filtered according to a row-by-row predicate. Critically, records in a data visualization must be \emph{holistically} selected, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization}. Moreover, data must sometimes be consistently selected for several levels of detail, which allows users to explore more data points by zooming in. Some important questions that must be answered are:
 
 \begin{itemize}
 \item What use cases must holistic selection cover? 
 \item What are the sematics of holistic selection?
 \item How should holistic selection be parameterized?
 \end{itemize}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/abstraction-pipeline.pdf}
+\caption{Data abstraction pipeline illustrated as a series of transformations from ``reality'' to constrained visual output. Modified after Grunreich~\cite{gruenreich1985cag}}
+\label{fig:related:work:data:abstraction}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
+
 
 %\marcos{Not obvious that SQL is or is not the obvious? So build up the argument: Why declarative versus something else? Argue for declarative (leave minute detail to a system, not to the user. Constructive approach is too time consuming). SQL already exists in databases. Argue that ideal to extend SQL.}
 
@@ -301,22 +315,10 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 \section{Terminology}
 
-In general, data visualization is concerned with the creation and study of (interactive) visual representations of data to reinforce human cognition~\cite{friendly2008milestones}. While data can be both numerical and non-numerical, this thesis will focus on data that is stored in tables, i.e sets of rows composed of columns. At first, this may seem constricted, however tables are versatile and make up the bulk of all data that is visualized today~\cite{wu2014case}. Defined in this way, the distinction between information visualization and scientific visualization (see Munzner~\cite{munzner2008pitfalls}) becomes irrellevant. For example, a table may contain geographical objects where the spatial representation is given, or contain economical data where the spatial representation is chosen. In any event, the tables are assumed to contain abstract objects represented as rows that capture some aspect of ``reality'' -- ideally with a high level of granularity. For example, a table may contain roads with their high-precision geographical geometries~\cite{openstreetmap}, or the minute details of a federal budget~\cite{nytimes2012obamabudget}.
+In general, data visualization is concerned with the creation and study of (interactive) visual representations of data to reinforce human cognition~\cite{friendly2008milestones}. While data can be both numerical and non-numerical, this thesis will focus on data that is stored in tables, e.g. rows in an RDBMS. At first, this may seem constricted, however tables are versatile and make up the bulk of all data that is visualized today~\cite{wu2014case}. Defined in this way, the distinction between information visualization and scientific visualization (see Munzner~\cite{munzner2008pitfalls}) becomes irrelevant. For example, a table may contain geographical objects where the spatial representation is given, or contain economical data where the spatial representation is chosen. In any event, the tables are assumed to contain rows that capture some aspect of ``reality'' -- ideally with a high level of granularity. For example, a table may contain roads with their high-precision geographical geometries~\cite{openstreetmap}, or the minute details of a federal budget~\cite{nytimes2012obamabudget}. Without loss of generality, the tables are assumed to have a fixed schema.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.5]{figs-thesis/abstraction-pipeline.pdf}
-\caption{Data abstraction pipeline illustrated as a series of transformations from ``reality'' to constrained visual output. Modified after Grunreich~\cite{gruenreich1985cag}}
-\label{fig:related:work:data:abstraction}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
 
-Agenda: Overview of different fields that relate to data visualization. Show how they are different. Show how they are similar. What are the goals and problems of each field? What types of data is handled? Where does the work fit into the pipeline: What type of workflows (e.g. operators, controls, stages, etc.).
 
-\todo{Can I find a citation for a ``typical'' pipeline?}
-
-\todo{Read related work section of Glossy}
 
 Sections (tentatives). For each section, define the field, goals, problems etc:
 
