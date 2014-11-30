@@ -11,6 +11,10 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{theorem}{Theorem}
 
+% font
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
 % end Theorem environments
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -88,7 +92,7 @@
 
 \sloppy
 
-\title{Building Highly Scalable Data Visualization Systems}
+\title{Building Scalable Data Visualization Management Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
 %\title{Selection Problems in Multi-scale Data Visualizations Systems}
 %\title{Selection Problems in High-Performance Multi-scale Visualizations}
@@ -110,6 +114,11 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 \abstract{Abstract goes here.}
 
+
+%  ############
+%  #  CHAPTER  
+%  ############ 
+
 \chapter{Introduction}
 \label{chapter:introduction}
 
@@ -117,20 +126,51 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 \marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
 
+\todo{Cite everything that is cited by The Case for Data Visualization Management Systems (33 citations)}
+
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of data providers and data consumers who create, combine and visualize a huge diversity of open datasets. In combination, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data increases the level of transparency, efficiency and enlightenment in our societies, but only if we can make sense of it~\cite{hans:rosling, offentlige:data:i:spil}. Luckily, we are rapidly gaining the ability to make sense of the data through the means of powerful data visualizations. Consequently, the availability of open data, both curated and user-contributed, has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. Since data visializations are so useful, they can quickly attract an audience of millions, for instance, when they are shared on social media. 
+\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of data providers and data consumers who create, combine and visualize a huge diversity of open datasets. In combination, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Luckily, we are rapidly gaining the ability to make sense of the data through the means of powerful data visualizations. Consequently, the availability of open data, both curated and user-contributed, has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. Since data visualizations are so useful, they can quickly attract an audience of millions, for instance, when they are shared on social media. 
 
 % Properly designed data visualizations enable people to see the big picture of otherwise unfathomable phenomena, such government spending~\cite{mytimes:obama:budget}, the geography of the Earth~\cite{google:maps}, and complex aspects of human history~\cite{foo} and culture~\cite{vocab}. 
 % http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
 % http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
 % http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html
 
-
 \emph{What are the challenges?} 
 % Creating visualizations
+
+% Big data: The next frontier for innovation, competition, and productivity
+% Breaking the chains: On declarative data analysis and data independence in the big data era
+
+
+\note{Data visualizations today must be scalable, in terms of data~\cite{Im2013visreduce, battle2013dynamicreduction} and size of the audience~\cite{cohen2011journalism, viegas2007manyeyes}. Moreover, it is crucial that we can produce compelling data visualizations effectively in terms of system and human resources~\cite{wu2014case, fekete2012dmvis}. \emph{insert arguments from vision papers... also see if reverse data management fits in somehow.}}
+
+\todo{Revisit this section when Related Works is done. Remember to read all relevant papers}
+
+\todo{Rehash arguments from: The Case for Visualization Management Systems~\cite{wu2014case}: % http://www.vldb.org/pvldb/vol7/p903-wu.pdf
+\begin{itemize}
+\item The case for an integrated Data Visualization Management System (DVMS).
+\item Data today is mostly stored in RDBMS
+\item Visualizations today retrieve data from a database and render it externally
+\item Decoupled approach results in significant duplication of functionality, such as aggregation and filters, and misses tremendous opportunities for cross-layer optimizations
+\item Declarative visualisation languages that fully compiles the end-to-end visualisation pipeline into relational algebra queries
+\item Thus, DVMS are expressive via the language and performant via traditional and visualisation specific optimizations to scale interactive visualizations to massive datasets.
+\end{itemize}
+Managing Data for Visual Analytics: Opportunities and Challenges~\cite{fekete2012dmvis}: 
+\begin{itemize}
+\item Foo
+\end{itemize}
+Visual Analytics: Definition, Process and Challenges: % https://hal.archives-ouvertes.fr/file/index/docid/272779/filename/VAChapter_final.pdf
+\begin{itemize}
+\item Foo
+\end{itemize}
+}
+
+\todo{Investigate also these papers: Visual Exploration of Big Spatio-Temporal Urban Data: A Study of New York City Taxi Trips~\cite{ferreira2013newyork}, Visual Analytics Infrastructures: From Data Management to Exploration~\cite{fekete2013visual}, Dive in!: enabling progressive loading for real-time navigation of data visualizations~\cite{glueck2014dive}.}
+
 First, designers of data visualizations must address the crucial problem of data abstraction, i.e. appropriate selection or aggragation of the data to be presented. Otherwise, the finite resources available for visual representation of the data will be quickly depleted as the data grows in size~\cite{topfer:selection, weibel, stonebraker}. For example, a computer screen only has a finite set of pixels that can be used to graphically represent the data. Furthermore, a data visualization has to be legible, representative and possibly multi-scale. For example, a digital map, which is a visualization of geographical data, must allow users to zoom in and out to expore the Earth at different granularities. Consequently, the data must be coherently abstracted in a way that satisfies multiple requirements. In general, designers cannot manually perform data abstraction over large datasets, because this would be too time consuming. Therefore, the data abstraction process must be at least partially automated. However, automation implies loss of control. How can designers remain in control of a partially automated data abstraction process, such that a desirable result is obtained, while simultaneously freeing up the designers valuable time? %Moreover, how can designers trigger the data abstraction process to be performed where the data is frequently stored and managed, i.e. in a relational database? %These are some of the questions that arise when creating a data-driven visualization.
 
 % Serving visualizations
@@ -159,6 +199,23 @@ Today, relational databases do not support data abstraction operators for poweri
 
 %\marcos{Not obvious that SQL is or is not the obvious? So build up the argument: Why declarative versus something else? Argue for declarative (leave minute detail to a system, not to the user. Constructive approach is too time consuming). SQL already exists in databases. Argue that ideal to extend SQL.}
 
+\todo{Reuse arguments from related work section in The Case for Visualization Management Systems~\cite{wu2014case}: % http://www.vldb.org/pvldb/vol7/p903-wu.pdf
+\begin{itemize}
+\item Previous work in visualization systems have traded-off between expressiveness and performance.
+\item D3, protovis, and matplotlib are highly expressive, however they require low-level programming that impedes the ability to quickly iterate and do not scale to large datasets.
+\item Declarative grammar-based languages, such as the Grammar of Graphics, and ggplot2 are expressive domain-specific languages designed for rapid iteration, however they do not scale beyond their host environments of SPSS and R.
+\item Recent systems address these scalability limitations int two ways
+\item First, by either adopting specific data management techniques such as pre-computation (Real-time visual querying of big data),  indexing (Nanocubes for real-time exploration of spatiotemporal datasets), sampling (Blinkdb: queries with bounded errors and bounded response times on very large data), speculation (Distributed and Interactive Cube Exploration), and aggregation (Dynamic reduction of query result sets for interactive visualization, Bin-summarise-smooth: a framework for visualising large data).
+\item Second, by developing two-tiered architectures where the visualization client composes and sends queries to a data management backend (Polaris: A system for query, analysis and visualization of multi-dimensional relational databases, Visreduce: Fast and responsive incremental information visualization of large datasets.)
+\item The former approaches are optimized towards properties of specific applications or visualization types and may not be broadly applicable.
+\item The former approaches are optimized towards properties of specific applications or visualization types and may not be broadly applicable.
+\end{itemize}
+Managing Data for Visual Analytics: Opportunities and Challenges~\cite{fekete2012dmvis}: % https://hal.archives-ouvertes.fr/file/index/docid/272779/filename/VAChapter_final.pdf
+\begin{itemize}
+\item Foo
+\end{itemize}
+}
+
 \subsection{Declarative Specification} 
 Designers of visualizations must be able to control the selection of data. While, data abstraction can be expressed in all programming languages, it is generally not easy or time-efficient to specify a holistic selection using imperative commands. A declarative approach, which leaves the minute details to the system, and lets the user focus on higher-level goals, is arguably better. The same type of argument has been made for SQL, which is one of the most successful programming languages for selecting relational data. However, SQL and its corresponding query engines do not support holistic selection. So, for data visualization purposes, SQL must be extended with new syntax for expressing holistic selection. An important questions is:
 
@@ -166,8 +223,18 @@ Designers of visualizations must be able to control the selection of data. While
 \item How can SQL be extended to allow designers to express holistic selection?
 \end{itemize}
 
+\todo{Reuse arguments from: The Case for Visualization Management Systems~\cite{wu2014case}: % http://www.vldb.org/pvldb/vol7/p903-wu.pdf
+\begin{itemize}
+\item Foo
+\end{itemize}
+Managing Data for Visual Analytics: Opportunities and Challenges~\cite{fekete2012dmvis}: % https://hal.archives-ouvertes.fr/file/index/docid/272779/filename/VAChapter_final.pdf
+\begin{itemize}
+\item Foo
+\end{itemize}
+}
+
 \subsection{Scalable Data Abstraction} 
-A query executing engine for holistic selection queries must be scalable, because the data may be large. One approach is to translate holistic selection queries to low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL. First, this has the advantage of reusing existing optimization techniques that are built-in to SQL query engines today. Second, data that underlies a visualization is frequently stored and managed in RDBMS, which can readily execture SQL queries. Therefore, it makes sense to compute holistic selection on top of or inside an RDBMS, e.g. using a translation to pure SQL. Assuming that holistic selection is implemented on top of an RDBMS, some key questions are: 
+A query executing engine for holistic selection queries must be scalable, because the data may be large. One approach is to translate holistic selection queries to low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, data that underlies a visualization is frequently stored and managed in RDBMS to begin with~\cite{wu2014case}. Therefore, it makes sense to compute holistic selection on top of or inside an RDBMS, e.g. using a translation to pure SQL. Assuming that holistic selection is implemented on top of an RDBMS, some key questions are: 
 
 \begin{itemize}
 \item How can holistic selection queries be translated into scalable and efficient queries in pure SQL? 
@@ -229,72 +296,73 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 %  #  CHAPTER  
 %  ############ 
 
-\chapter{Related Work}
+\chapter{Related Work: Data Visualization}
 \label{chapter:related:work}
-
-% http://youtu.be/nLjVKOLyvx4
-% Since maps are constructed in finite spaces, real-estate is at a premium. As such, not everything is represented, and even those things that are represented are not necessarily represented precisely. You can see a couple of examples here. Roads, rivers, cities, towns and islands are the most common victims of something like this. - Matt Dube, see http://www.spatial.maine.edu/~matthew.dube/
-
-\section{Data Abstraction}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/abstraction-pipeline.pdf}
-\caption{Data abstraction as a series of transformations from reality to visual output.}
+\caption{Data abstraction pipeline illustrated as a series of transformations from ``reality'' to constrained visual output. Modified after Grunreich~\cite{gruenreich1985cag}}
 \label{fig:related:work:data:abstraction}
 \end{center}
 %\vspace*{-4ex}
 \end{figure}
 
-% Principles, Lo-Fi views or visualizations?
-Principles are Woodruff~\cite{woodruff1998constant}, Bertin~\cite{jacques1967semiologie}, Nickerson~\cite{nickerson1994visual}, Tufte~\cite{tufte1983visual}.
+Agenda: Overview of different fields that relate to data visualization. Show how they are different. Show how they are similar. What are the goals and problems of each field? What types of data is handled? Where does the work fit into the pipeline: What type of workflows (e.g. operators, controls, stages, etc.).
 
-Models for binary topological relations are 9-intersection~\cite{egenhofer1991categorizing} and Region-Connection-Calculus RCC~\cite{randell1992spatial}.
+\todo{Can I find a citation for a ``typical'' pipeline?}
 
+\todo{Read related work section of Glossy}
 
-\subsection{Remainder}
-
-\begin{table}[htdp]
-\caption{default}
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-& \textbf{1-D} & \textbf{n-D} & \textbf{Graphs} \\
-Selection 
-
-\end{tabular}
-\end{center}
-\label{default}
-\end{table}%
-
-
-Take citations from Glossy and CVL, and categorise them.
-
-One structure is:
+Sections (tentatives). For each section, define the field, goals, problems etc:
 
 \begin{itemize}
-\item Selection
-\item Projection
-\item Aggregation
-\end{itemize}
-
-Another structure is:
-
-\begin{itemize}
+\item Introduction: principes, terminology (e.g. data abstraction?), general view of process
+\item Data Visualization Management Systems
 \item Map Generalization
-\item Data table abstraction
-\item Something else?
+\item Visual Analytics
+\item Information Visualization
 \end{itemize}
 
+\note{Where does information cartography, data cubes, polaris, etc. fit in?}
 
-\section{Scalable Data Serving}
+How have people reasoned about 
+
+\section{Visual Conflicts}
+
+Constraint-based visualization~\cite{harrie1999constraint}. Constant Information Density~\cite{woodruff1998constant} and Toepfer~\cite{topfer1966principles}. Binary object relations, e.g. 9-intersection~\cite{egenhofer1991categorizing} and RCC~\cite{randell1992spatial}. Object set mapping~\cite{sarma2012fusiontables, kefaloukos2014cvl}.
+
+Bertin~\cite{jacques1967semiologie}, Nickerson~\cite{nickerson1994visual}, Tufte~\cite{tufte1983visual}.
+
+Detecting conflicts by indexing~\cite{nutanong2012multiresolution, kefaloukos2014cvl}, 
+
+\subsection{Multi-scale Visualization}
+
+Star and ladder~\cite{foerster2010challenges}, zoom consistency~\cite{sarma2012fusiontables}. Multi-scale Select-Distinct~\cite{nutanong2012multiresolution}.
+
+% http://youtu.be/nLjVKOLyvx4
+% Since maps are constructed in finite spaces, real-estate is at a premium. As such, not everything is represented, and even those things that are represented are not necessarily represented precisely. You can see a couple of examples here. Roads, rivers, cities, towns and islands are the most common victims of something like this. - Matt Dube, see http://www.spatial.maine.edu/~matthew.dube/
+
+\section{Data Visualization Management Systems}
+
+\section{Map Generalization}
+
+\section{Visual Analytics}
+
+\section{Scientific Visualization}
+Scientific visualization is primarily concerned with the visualization of three-dimensional phenomena (architectural, meteorological, medical, biological, etc.), where the emphasis is on realistic renderings of volumes, surfaces, illumination sources, and so forth, perhaps with a dynamic (time) component~\cite{friendly2008milestones}. It is similar to visualization in gaming.
+
+\section{Information Visualization}
+
+Information visualization handles abstract data structures such as trees or graphs -- wikipedia. E.g. Fisheye.
+% http://upload.wikimedia.org/wikipedia/commons/d/d2/Internet_map_1024.jpg
 
 
+%  ############
+%  #  CHAPTER  
+%  ############ 
 
-
-\section{Object Relations}
-
-
-\section{Visual Principles}
+\chapter{Related Work: Scalable Data Serving}
 
 
 %  ############
