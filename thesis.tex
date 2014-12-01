@@ -90,6 +90,9 @@
 
 \newcommand{\marcos}[1]{\ \\ \fbox{\parbox{1.0\linewidth}{{\sc Marcos}:\\ #1}}}
 
+\newcommand{\pitfall}[1]{\ \\ \fbox{\parbox{1.0\linewidth}{{\sc Pitfalls in Writing}:\\ #1}}}
+
+
 \sloppy
 
 \title{Building Scalable Data Visualization Management Systems}
@@ -123,6 +126,10 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \label{chapter:introduction}
 
 \note{'Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3)}
+
+\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.
+
+\emph{Discuss:} unsupported data types, e.g. text, trees, and graphs; unsupported operators, e.g. multi-scale aggregation and multi-scale displacement; limitations in data size, e.g. explain that while results are shown for Postgres, other and more scalable databases could be used.}
 
 \marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
 
@@ -312,6 +319,15 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 \chapter{State-of-the-Art in Data Table Visualization}
 \label{chapter:related:work}
+
+\pitfall{\emph{I Am So Unique:} Do not ignore previous work when writing up your paper. You have to convince the reader that you have done something new, and the only way to do that is to explain how it is different than what has already been done. All research takes place in some kind of intellectual context, and your job as author is to situate what you have done within a framework of that context. A good previous work section is a mini-taxonomy of its own, where you decide on meaningful categorization given your specific topic. Proposing new names for old techniques or ideas may sneak your work past some reviewers, but will infuriate those who know of that previous work. This tactic will also make you lose credibility with knowledgeable readers. If you cannot find anything related to what you have done, it?s more likely that you?re looking in the wrong subfield than that your work is a breakthrough of such magnitude that there is no context. Remember to discuss not only work that has been done on similar problems to your own, but also work that uses similar solutions to yours that occurs in different problem domains. This advice is even more critical if you were lax about doing a literature review before you started your project. If you find work similar to your own, you have a fighting chance of carefully differentiating yours in the writeup, but if a reviewer is the one to
+bring it to your attention, the paper is most likely dead.}
+
+\pitfall{\emph{Enumeration Without Justification:} Simply citing the previous work is necessary but not sufficient. A description that ?X did Y?, even if it includes detail, is not enough. You must explain why this previous work does not itself solve your problem, and what specific limitations of that previous work your approach does address. Every paper you cite in the previous work section is a fundamental challenge to the very existence of your project. Your job is to convince a skeptical reader that the world needs your new thing because it is somehow better than a particular old thing. Moreover, it?s not even enough to just make the case that yours is different ? yours must be better. The claims you make must, of course, be backed up by your validation in a subsequent results section.
+
+A good way to approach the previous work section is that you want to tell to a story to the reader. Figure out the messages you want to get across to the reader, in what order, and then use the references to help you tell this story. It is possible to group the previous work into categories, and to usefully discuss the limitations of the entire category.}
+
+
 
 \section{Terminology}
 
