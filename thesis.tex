@@ -141,12 +141,31 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \label{sec:introduction:background:and:motivation}
 
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of data providers and data consumers who create, combine and visualize a huge diversity of open datasets. In combination, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Luckily, we are rapidly gaining the ability to make sense of the data through the means of powerful data visualizations. Consequently, the availability of open data, both curated and user-contributed, has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. Since data visualizations are so useful, they can quickly attract an audience of millions, for instance, when they are shared on social media. 
+\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of data providers and data consumers who create, combine and visualize a huge diversity of open datasets. In combination, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Luckily, we are rapidly gaining the ability to make sense of the large data (millions of records) through the means of powerful data visualizations. Consequently, the availability of open data, both curated and user-contributed, has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. Since data visualizations are so useful they are often shared online, for example on social media. In the always-on world of mobile devices, a compelling data visualization can quickly attract an audience of millions. 
 
 % Properly designed data visualizations enable people to see the big picture of otherwise unfathomable phenomena, such government spending~\cite{mytimes:obama:budget}, the geography of the Earth~\cite{google:maps}, and complex aspects of human history~\cite{foo} and culture~\cite{vocab}. 
 % http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
 % http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
 % http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html
+
+There are three crucial and orthogonal questions that relate to visualization of data on the web. First, how should we \emph{express} the transformation of data into compelling visual representations? Second, how should we \emph{process} millions of records for scalable data visualization? Third, how should we \emph{serve} data visualizations to millions of demanding online users? Answering each of these questions will require us to investigate areas of computer science beyond the area of pure data visualization. For example, programming languages have addressed the issue of expressing data transformations~\cite{sql}; databases have addressed the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; distributed systems have addressed the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. It is crucial that we can pull together the relevant know-how from these diverse fields in order to further the state of data visualization.
+
+\note{In the related work section, we will cover the state-of-the-art in these three areas, as they related to data visualization.}
+
+\emph{What are the requirements?}
+Data visualizations today must be scalable both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and audience~\cite{viegas2007manyeyes}. Additionally, it is crucial that designers have access to intuitive and expressive authoring interfaces~\cite{wilkinson2006grammar}. Specifically, authoring interfaces must be effective both in terms of system and human resources~\cite{wu2014case, fekete2012dmvis}.
+
+Two orthogonal tasks: viz creation, viz serving.
+
+% Who have made the case for DVMS?
+% MIT: Wu, Madden, Battle, Stonebraker
+
+% Who have made the case for in-database processing
+% Tübingen: Grust
+% 
+
+
+Data visualizations must scale well both in the size of the data~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes,scalablemaps}. Moreover, designers must be able to create compelling and complex data visualizations using inituitive and expressive interfaces. In-database execution addresses the issue of scalable data processing where the data for visualizations is most frequently managed~\cite{wu,ferry, }; linearization, data partitioning, data replication, and key-value stores address the issue of scaling data visualization services to large audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack}; declarative languages and visual design interfaces address the issue of intuitive creation of compelling and complex data visualizations~\cite{wu, someothers}. This dissertation investigates the design of a data visualization management system that meets all of these requirements, simultaneously.
 
 \emph{What are the challenges?} 
 % Creating visualizations
@@ -155,7 +174,7 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 % Breaking the chains: On declarative data analysis and data independence in the big data era
 
 
-\note{Data visualizations today must be scalable, in terms of data~\cite{Im2013visreduce, battle2013dynamicreduction} and size of the audience~\cite{cohen2011journalism, viegas2007manyeyes}. Moreover, it is crucial that we can produce compelling data visualizations effectively in terms of system and human resources~\cite{wu2014case, fekete2012dmvis}. \emph{insert arguments from vision papers... also see if reverse data management fits in somehow.}}
+\note{}}
 
 \todo{Revisit this section when Related Works is done. Remember to read all relevant papers}
 
@@ -197,7 +216,7 @@ A great advantage of key-value stores is their inherent support for data partiti
 
 To realize further the potential of data visualization, this thesis proposes to bring data abstraction techniques to where the data is frequently managed, i.e. relational database systems (RDBMS). The extension of RDBMS with support for data visualization induces a new class of systems, i.e. data visualization management systems (DVMS)~\cite{wu2014case}. This thesis focuses on four problems that hinder the realization of DVMS.
 
-\subsection{Multi-scale Selection Operator}
+\subsection{Holistic Multi-scale Selection}
 Panning and zooming are powerful techniques that allows users to explore data at different focal points and levels of detail~\cite{stolte2003multiscale,woodruff2001datasplash}. However, computer screens have a finite number of visual configurations by which the data can be represented. To avoid conflicts at lower scales, the set of rows must be abstracted according to principles that ensure legibility~\cite{woodruff1998constant, topfer1966principles}.  for example by selected, aggregated and projected to increase legibility and . Failing that, symbols that visually represent the rows will become increasingly cluttered at lower scales, making it impossible for users to comprehend or interact with the data. Dispite this problem, RDBMS today do not natively support operators that can (easily) express the data abstractions needed for complex, multi-scale data visualizations~\cite{wu2014case}. A critical issue is that rows must be abstracted \emph{holistically}
 
 For example, the selection operator only allows rows to be filtered according to a row-by-row predicate. Critically, records in a data visualization must be selected, i.e. according to global criteria such as legibility and relative importance~\cite{weibel:controls:of:generalization}. Moreover, data must sometimes be consistently selected for several levels of detail, which allows users to explore more data points by zooming in. Some important questions that must be answered are:
