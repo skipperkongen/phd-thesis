@@ -12,8 +12,10 @@
 \newtheorem{theorem}{Theorem}
 
 % font
-\usepackage{helvet}
-\renewcommand{\familydefault}{\sfdefault}
+%\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
 
 % end Theorem environments
 \usepackage{amssymb}
@@ -127,23 +129,21 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 \note{'Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}}
 
-%\marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
-
-
-\todo{Cite everything that is cited by The Case for Data Visualization Management Systems (33 citations)}
+% \marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
+% \todo{Cite everything that is cited by The Case for Data Visualization Management Systems (33 citations)}
 
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} The web today is home to an eco-system of data providers and data consumers who create, combine and visualize a huge diversity of open datasets. In combination, open data covers the full spectrum of human interests, e.g. culture~\cite{rapgenius,wikipedia}, economics~\cite{worldbank}, geography~\cite{openstreetmap,danish:geodata:agency}, demography~\cite{unstats} and politics~\cite{data:gov, data:co:uk}. Indeed, the value proposition of open data is clear: open data increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Luckily, we are rapidly gaining the ability to make sense of the large data (millions of records) through the means of powerful data visualizations. Consequently, the availability of open data, both curated and user-contributed, has created a great demand for online data-driven visualizations, e.g. maps~\cite{guardian:sunrise:on:twitter}, bubbles~\cite{nytimes:obama:budget}, and buckets~\cite{largest:vocabulary:in:rap}. Since data visualizations are so useful they are often shared online, for example on social media. In the always-on world of mobile devices, a compelling data visualization can quickly attract an audience of millions. 
+\emph{How has the world changed; what is the new situation?} The web today is home to an open eco-system of data providers and data consumers who create and combine a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{wikipedia} datasets. In combination, open data covers the full spectrum of human interests, including culture~\cite{rapgenius}, economics~\cite{worldbank}, geography~\cite{gst2014digitalmapsupply}, demography~\cite{unstats} and politics~\cite{data:gov}. Indeed, the value proposition of open data is clear: it increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{mapref}, bubbles~\cite{datavizref}, and buckets~\cite{datavizref}. Since data visualizations are so useful they are often shared online, for example on social media, where they can quickly attract an audience of millions~\cite{nytimes2012obamabudget, guardian2012wikileaks}. 
 
 % Properly designed data visualizations enable people to see the big picture of otherwise unfathomable phenomena, such government spending~\cite{mytimes:obama:budget}, the geography of the Earth~\cite{google:maps}, and complex aspects of human history~\cite{foo} and culture~\cite{vocab}. 
 % http://www.theguardian.com/news/datablog/ng-interactive/2014/may/07/sunrise-twitter-animated-map
 % http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/
 % http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html
 
-\emph{What are the key questions?} Three crucial and orthogonal questions relate to data visualization on the web. First, how can we express the task of data transformation, from non-geometric to geometric representation? Second, how can we process millions of records? Third, how can we serve data visualizations to millions of demanding online users? Answering each of these questions will require us to investigate areas beyond pure data visualization. For example, programming languages address the issue of expressing data transformation~\cite{sql}; databases address the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; distributed systems address the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. It is crucial that we pull together the relevant know-how from these diverse fields and combine it into systems for efficient and effective data visualization.
+\emph{What are the key questions?} To create a data-driven visualization, we must first answer three crucial and orthogonal questions. First, how do we express the task of abstracting data into a useful visual representation, which includes a transformation from (possibly) non-geometric data to its geometric representation? Second, how can we scalably process the millions of records that are often the foundation of a data-driven visualization? Third, how can we scalably serve data-driven visualizations to millions of online users, who expect 24 x 7 availability and acceptable latency? Answering each of these questions will require us to investigate areas beyond pure data visualization. For example, programming languages address the issue of expressing data transformation~\cite{sql}; databases address the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; distributed systems address the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. It is crucial that we pull together the relevant know-how from these diverse fields and combine it into systems for efficient and effective data visualization.
 
 \note{In the related work section, we will cover the state-of-the-art in these three areas, as they related to data visualization.}
 
