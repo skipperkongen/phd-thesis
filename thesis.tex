@@ -135,7 +135,31 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} Geospatial data visualization (e.g. digital maps) allows people to represent the physical and abstract realities of Earth in the confined pixel-space of a computer screen. Geospatial data includes points such as the location of gas stations and hospitals; lines such as the networks of streets and rivers; polygons such as areas of lakes and countries. Driving the demand for visualization is an active eco-system of geographical data creators who produce a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} datasets. Every day, the data grows bigger and more detailed. For example, more than one hundred thousand new objects are added to the OpenStreetMap database each day~\cite{openstreetmap2014stats}. Indeed, the value proposition is clear: geospatial data and data visualization increases transparency, efficiency and awareness in our societies~\cite{hans:rosling, offentlige:data:i:spil, haiti:earthquake:openstreetmap}; it helps us locate places to visit~\cite{}; it helps us find our way~\cite{}; Consequently, there is an increasing demand for online map visualizations that package all this geographical information into legible, interactive, and web-accessible interfaces~\cite{mapref}. The need for online maps creates a demand for more effective and efficient methods to produce and serve maps. While the process of map creation has traditionally meant the involvement of Geographical Information Systems (GIS) and experts in those systems, a new situation exists which has significantly marginalized the need for traditional GIS. \emph{larger and more connected audiences, bigger and rapidly evolving data, less cartographically trained map designers.}
+Geospatial data visualization studies how to usefully represent the complex realities of Earth on highly restricted graphical mediums, such as the tiny screens on mobile devices. A geographical map is an important type of geospatial data visualization that has been used for thousands of years. Indeed, maps have a clear value proposition: they help us to reason about our planet and even the universe~\cite{eisenstein2011sdss}; they increase transparency and efficiency in our societies~\cite{offentlige:data:i:spil}; they help in urban planning~\cite{agrawal2012bigdata}; they help us locate places to visit~\cite{}; they help us find our way~\cite{}. The demand for maps is driven by an active eco-system of geographical data creators, which has produced a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} datasets. Every day, the data grows bigger and more detailed. For example, more than one hundred thousand new objects are added to the OpenStreetMap database each day~\cite{openstreetmap2014stats}. Geospatial data is highly flexible; it includes points such as the location of gas stations and hospitals~\cite{openstreetmap2010haiti}; lines such as the network of streets and waterways; polygons such as the areas of lakes and countries.
+
+Traditionally, maps have been created by experts using Geographical Information Systems (GIS). However, maps are increasingly developed for the web and increasingly leverage the power of cloud computing. This has created a new situation that significantly marginalizes the need for traditional GIS. There are three consequences of the web and cloud computing that traditional GIS was not developed for. First, web maps can quickly reach millions of mobile users who will engage maps 24 x 7. Second, maps running on cloud infrastructure can easily integrate huge datasets (millions of data items). Third, the general demand for data visualizations on the web is rising faster than the number of experts who know how to create them.
+
+
+Therefore, web map systems must scale in the number of concurrent users; they must be highly available; they must have acceptable latency.  For this reason, map systems must scale with data volume. that are hard to process and visually represent.
+
+
+For this reason, non-expert users must be able to rapidly craft compelling map visualizations.
+
+However, these systems are incomplete.
+
+
+
+
+
+
+Consequently, there is an increasing demand for techniques that online map visualizations that package all this geographical information into legible, interactive, and web-accessible interfaces~\cite{mapref}. The need for online maps creates a demand for more effective and efficient methods to produce and serve maps. 
+
+
+Maps abstract and combine multiple layers of geospatial data, such as points, lines and polygons. 
+
+
+
+
 
 
 
@@ -143,7 +167,8 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 %\emph{How has the world changed; what is the new situation?} The web today is home to an open eco-system of data providers and data consumers who create and combine a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{wikipedia} datasets. In combination, open data covers the full spectrum of human interests, including culture~\cite{rapgenius}, economics~\cite{worldbank}, geography~\cite{gst2014digitalmapsupply}, demography~\cite{unstats} and politics~\cite{data:gov}. Indeed, the value proposition of open data is clear: it increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{mapref}, bubbles~\cite{datavizref}, and buckets~\cite{datavizref}. Since data visualizations are so useful they are often shared online, for example on social media, where they can quickly attract an audience of millions~\cite{nytimes2012obamabudget, guardian2012wikileaks}. 
 
-\section{Filtering challenge of Geospatial Visualization}
+\section{Challenges in Map Visualization}
+
 
 \begin{quote}
 Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}
