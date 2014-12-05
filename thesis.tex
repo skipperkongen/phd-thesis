@@ -97,7 +97,8 @@
 
 \sloppy
 
-\title{Building Scalable Data Visualization Management Systems}
+\title{Geodata Visualization Management Systems}
+%\title{Building Scalable Data Visualization Management Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
 %\title{Selection Problems in Multi-scale Data Visualizations Systems}
 %\title{Selection Problems in High-Performance Multi-scale Visualizations}
@@ -127,18 +128,54 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \chapter{Introduction}
 \label{chapter:introduction}
 
-\note{'Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}}
-
 % \marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
 % \todo{Cite everything that is cited by The Case for Data Visualization Management Systems (33 citations)}
 
+
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
-
 % How has the world changed; what is the new situation?
-\emph{How has the world changed; what is the new situation?} The web today is home to an open eco-system of data providers and data consumers who create and combine a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{wikipedia} datasets. In combination, open data covers the full spectrum of human interests, including culture~\cite{rapgenius}, economics~\cite{worldbank}, geography~\cite{gst2014digitalmapsupply}, demography~\cite{unstats} and politics~\cite{data:gov}. Indeed, the value proposition of open data is clear: it increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{mapref}, bubbles~\cite{datavizref}, and buckets~\cite{datavizref}. Since data visualizations are so useful they are often shared online, for example on social media, where they can quickly attract an audience of millions~\cite{nytimes2012obamabudget, guardian2012wikileaks}. 
+\emph{How has the world changed; what is the new situation?} Geospatial data visualization (e.g. digital maps) allows people to represent the physical and abstract realities of Earth in the confined pixel-space of a computer screen. Geospatial data includes points such as the location of gas stations and hospitals; lines such as the networks of streets and rivers; polygons such as areas of lakes and countries. Driving the demand for visualization is an active eco-system of geographical data creators who produce a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} datasets. Every day, the data grows bigger and more detailed. For example, more than one hundred thousand new objects are added to the OpenStreetMap database each day~\cite{openstreetmap2014stats}. Indeed, the value proposition is clear: geospatial data and data visualization increases transparency, efficiency and awareness in our societies~\cite{hans:rosling, offentlige:data:i:spil, haiti:earthquake:openstreetmap}; it helps us locate places to visit~\cite{}; it helps us find our way~\cite{}; Consequently, there is an increasing demand for online map visualizations that package all this geographical information into legible, interactive, and web-accessible interfaces~\cite{mapref}. The need for online maps creates a demand for more effective and efficient methods to produce and serve maps. While the process of map creation has traditionally meant the involvement of Geographical Information Systems (GIS) and experts in those systems, a new situation exists which has significantly marginalized the need for traditional GIS. Importantly, the requirements for geospatial data visualization have shifted along many dimensions: size of data, size of audience, connectivity of audience, expressibility of map creation.
 
-Data Visualization Management Systems (DVMS) have been proposed as a catch-all solution for data-driven visualizations on the web today~\cite{wu2014case, fekete2012dmvis}. The API of a fully-fledged DVMS must included facilities for both data management, visualization design, and visualization sharing~\cite{foo}. A DVMS must be scalable both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and audience~\cite{viegas2007manyeyes}. Additionally, it is crucial that designers can craft visualizations using an interface that is both intuitive, efficient (in terms of wall-clock time) and expressive. Examples of systems in production include Google Fusion Tables, which allows data managers, visualization designers and audiences to interface with a unified system for map visualizations~\cite{google2014fusiontables}, and CartoDB, which adds support for spatio-temporal visualizations~\cite{cartodb2014cartodb}.
+
+
+%One of the most popular types of map visualizaitons is the geospatial mashup. Mash-ups are popular because they combine something we know, such as a high-quality background map, with something we would like to find out, such as a new and exciting thematic overlay. Thanks to an active eco-system of data enthusiasts, thematic overlays now cover the full spectrum of human interests, such as culture~\cite{foo}, nature~\cite{foo}, war~\cite{wikileaks}, and peace~\cite{unstats}. In the ``always on'' world of mobile devices, millions of users can access an online map 24 x 7. For this reason, maps are a crucial form of communication that is used by international organizations~\cite{un}, news agencies~\cite{guardian}, and amateurs alike~\cite{shiplogs}.
+
+%\emph{How has the world changed; what is the new situation?} The web today is home to an open eco-system of data providers and data consumers who create and combine a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{wikipedia} datasets. In combination, open data covers the full spectrum of human interests, including culture~\cite{rapgenius}, economics~\cite{worldbank}, geography~\cite{gst2014digitalmapsupply}, demography~\cite{unstats} and politics~\cite{data:gov}. Indeed, the value proposition of open data is clear: it increases the level of transparency, efficiency and enlightenment in our societies~\cite{hans:rosling, offentlige:data:i:spil}. Consequently, the availability of open data has created a great demand for online data-driven visualizations, e.g. maps~\cite{mapref}, bubbles~\cite{datavizref}, and buckets~\cite{datavizref}. Since data visualizations are so useful they are often shared online, for example on social media, where they can quickly attract an audience of millions~\cite{nytimes2012obamabudget, guardian2012wikileaks}. 
+
+\section{Filtering challenge of Geospatial Visualization}
+
+\begin{quote}
+Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}
+\end{quote}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/europe-as-data.pdf}
+\caption{On a low scale map of Europe, 5 x 5 pixel symbols for tourism points of interest (left map) fully cover the physical landmass (right map). Thus, displaying unfiltered points of interest is non-sensical. First, a users can not discrimiate between interesting sites and less interesting sites. Second, crucial spatial context is lost, such as city names on a background map. Third, users can not accurately interact with the points of interest to get more information. For example, there are roughly 28 thousand points of interest near Paris. Given this fact, how should a user click exactly on the Eiffel Tower on the left map?}
+\label{default}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
+
+
+
+
+\emph{What are the requirements?}
+A map visualization must be \emph{scalable} both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and the size of the audience~\cite{viegas2007manyeyes}. Todays users on the web expect acceptable latency for an application. Failure to recognize this condition will result in loss of users, which has been studied in the areas of search and e-commerce~\cite{google2010latency, amazon2010latency}
+
+A map visualization must be \emph{expressible};
+
+A map visualization must be \emph{available};
+
+ Additionally, it is crucial that designers can craft visualizations using interfaces that are both intuitive, efficient (in terms of wall-clock time) and expressive (in terms of ). Crafting a map visualizationg involves a process of abstraction, including data abstraction and visual abstraction (see Figure~\ref{foo}).
+
+
+Currently, the infrastructure to support is 
+
+Geographical Information Systems (GIS) have traditionally been used to manage and visualize geographical data. However, these systems are  , Data Visualization Management Systems (DVMS) have been proposed as a catch-all solution for data-driven visualizations on the web today~\cite{wu2014case, fekete2012dmvis}. The API of a fully-fledged DVMS must included facilities for both data management, visualization design, and visualization sharing~\cite{foo}. A DVMS must be scalable both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and audience~\cite{viegas2007manyeyes}. Additionally, it is crucial that designers can craft visualizations using an interface that is both intuitive, efficient (in terms of wall-clock time) and expressive. In the geographical domain, prototypes of such systems include Google Fusion Tables~\cite{google2014fusiontables}, and CartoDB~\cite{cartodb2014cartodb}. To make the distinction between spatial and  clear, this dissertation introduces Geospatial Visualization Management Systems (GVMS) .
+
+\emph{What is special about geography?}
 
 \begin{figure}[htbp]
 \begin{center}
