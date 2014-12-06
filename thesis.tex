@@ -134,24 +134,20 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \vspace{-4ex}
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
-% How has the world changed; what is the new situation?
-Map visualization studies how to visually represent the geography of the Earth at multiple scales on a restricted medium, such as a computer screen. Necessarily, geographical data must be abstracted according to scale in order to fit the representational budget of a small pixel space, for example the 2880 x 1800 pixels of a laptop display. Within map visualization, the disciplin of map generalization studies how geographical data should be abstracted as the scale changes. In contrast to selection, projection and aggregation in the relation algebra, map generalization must select, project and aggregate data \emph{holistically} according to visual constraints and objectives~\cite{weibel1999generalising}. While the goal of generalization is clear, i.e., balance legibility against representation, this goal is deceptively hard to achieve.
+% Maps are important
+Map visualization studies how to visually represent the geography of the Earth at multiple scales (i.e. with pan and zoom) on restricted mediums, such as computer screens. The value proposition of maps is clear: maps save human lives~\cite{openstreetmap2010haiti}; maps assist in navigation~\cite{something}; maps even allow reasoning of non-spatial phenomena by spatial interpretation~\cite{shahaf2013informationcartography, daniels2014vocabulary}. 
 
-% People know this
-%Maps layer different strata of geographical data on top of each other. While geographical data are very versatile, they are always geometric. For example, points can represent the location of animals and hospitals~\cite{openstreetmap2010haiti}; lines can represent the network of waterways and streets; polygons can represent the areas of lakes and national territories. 
-
-% Challenges
-More and more, organizations without a strong tradition for geography are beginning to exploit the availability of geographical data to commicate spatial naratives to their online users~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. To power map visualizations, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{zooniverse2014oldweather} datasets, Day by day, the amount of geographical data on the web grows bigger and more detailed~\cite{openstreetmap2014stats}. Furthermore, nothing prohibits a geometric interpretation of otherwise non-spatial data, such as news stories~\cite{shahaf2013informationcartography} or the vocabulary of musicians~\cite{daniels2014vocabulary}, just to pick two real however exotic examples.
-
-As mobile devices increasingly bond millions of people to an online lifestyle, digital maps and geographical information can be consumed by anybody, at any time, and from anywhere.
+Today, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized on maps. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database that already contains billions of objects~\cite{openstreetmap2014stats}. Still, OpenStreetMap accounts for just a tiny fraction of all spatial data on the web, and perpaps, we have only seen the beginning. In 2014, a company launched a system of micro satellites equipped with multi-band sensors that will capture the entire surface of earth in high resolution -- every day~\cite{planetlabs2014flock1}. As mobile devices increasingly bond millions of people to an online lifestyle, digital maps and geographical information can be produced and consumed by anybody, anytime, and anywhere~\cite{tinder2014tinder, drivr2014drivr, geocaching2014geocaching}.
 
 % Why GIS is inadequate
 Traditionally, maps have been crafted by experts in Geographical Information Systems (GIS). However, a new situation exists on the web today that significantly marginalizes the use for traditional GIS. First, the demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS); therefore, map visualizations must be \emph{expressible by non-experts}. Second, web maps that run on top of cloud infrastructures can now integrate huge datasets (billions of data items); therefore, map visualization systems must be \emph{scalable in the size of data}. Third, web maps today can quickly reach millions of users who can interact with map visualization 24 x 7 using mobile devices; therefore, map visualization systems must be \emph{scalable in the number of concurrent users}. In short, GIS was not designed to satisfy these requirements, which merits the study of a new category of systems.
 
+% Challenges
+One of the most crucial problems is the mismatch between data volume and the small representational budget of computer screens. For example, a laptop display (e.g. 2880 x 1800 pixels) can display just a few thousand symbols without overlap, which is entirely indadequate for displaying most geographical datasets, at least for lower scale maps. Necessarily, geographical data must be abstracted according to scale in order to produce a legible and useful map. More and more, organizations with no strong tradition for geography, such as news agencies, are beginning commicate current geographical data using maps~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. 
 
-% Maybe gear more towards mash-ups?
+assuming uniform distribution of the coordinates. Within map visualization, the disciplin of map generalization studies how geographical data should be abstracted as the scale changes. In contrast to selection, projection and aggregation in the relation algebra, map generalization must select, project and aggregate data \emph{holistically} according to visual constraints and objectives~\cite{weibel1999generalising}. While the goal of generalization is clear, i.e., balance legibility against representation, this goal is deceptively hard to achieve.
 
-\section{Challenges and Opportunities in Map Visualization}
+\section{Challenges}
 \label{introduction:challenges:in:map:visualization}
 
 \begin{figure}[htbp]
@@ -163,26 +159,32 @@ Traditionally, maps have been crafted by experts in Geographical Information Sys
 \vspace*{-4ex}
 \end{figure}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.8]{figs-thesis/load-latency-correlation.pdf}
-\caption{\emph{Temporal query skew:} Default}
-\label{default}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
+
+Systems that address some, but not all 
+
+Large organizations like Google and Microsoft can afford the development costs of creating 
+
+\emph{What are the requirements?}
+A map visualization must be \emph{scalable} both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and the size of the audience~\cite{viegas2007manyeyes}. Todays users on the web expect acceptable latency for an application. Failure to recognize this condition will result in loss of users, which has been studied in the areas of search and e-commerce~\cite{google2010latency, amazon2010latency}
+
+A map visualization must be \emph{expressible};
+
+A map visualization must be \emph{available};
+
+ Additionally, it is crucial that designers can craft visualizations using interfaces that are both intuitive, efficient (in terms of wall-clock time) and expressive (in terms of ). Crafting a map visualizationg involves a process of abstraction, including data abstraction and visual abstraction (see Figure~\ref{foo}).
+
+\emph{What is special about geography?}
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.5]{figs-thesis/heatmap-side-by-side.pdf}
-\caption{\emph{Spatial query skew:} Default}
-\label{default}
+\includegraphics[scale=.6]{figs-thesis/data-visualization-management-system.pdf}
+\caption{TODO}
 \end{center}
 %\vspace*{-4ex}
 \end{figure}
 
 % Requirements for new system: MVMS
-To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
+\minisec{Challenges} To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
 
 \begin{enumerate}
 \item How can we intuitively express the creation of multi-scale map visualizations?
@@ -204,37 +206,11 @@ Some early, but incomplete, examples of MVMS include Google Fusion Tables~\cite{
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-\begin{quote}
-Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}
-\end{quote}
+%\begin{quote}
+%Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}
+%\end{quote}
 
 
-
-
-
-\emph{What are the requirements?}
-A map visualization must be \emph{scalable} both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and the size of the audience~\cite{viegas2007manyeyes}. Todays users on the web expect acceptable latency for an application. Failure to recognize this condition will result in loss of users, which has been studied in the areas of search and e-commerce~\cite{google2010latency, amazon2010latency}
-
-A map visualization must be \emph{expressible};
-
-A map visualization must be \emph{available};
-
- Additionally, it is crucial that designers can craft visualizations using interfaces that are both intuitive, efficient (in terms of wall-clock time) and expressive (in terms of ). Crafting a map visualizationg involves a process of abstraction, including data abstraction and visual abstraction (see Figure~\ref{foo}).
-
-
-Currently, the infrastructure to support is 
-
-
-
-\emph{What is special about geography?}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.6]{figs-thesis/data-visualization-management-system.pdf}
-\caption{TODO}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
 
 %wilkinson2006grammar....
 
@@ -585,7 +561,7 @@ Star and ladder~\cite{foerster2010challenges}, zoom consistency~\cite{sarma2012f
   \end{center}
 \end{figure}
 
-\subsection{Challenges}
+\subsection{Challenges and Opportunities}
 \begin{itemize}
 \item Availability, especially for multi-source applications
 \item Performance sensitivity
@@ -593,6 +569,25 @@ Star and ladder~\cite{foerster2010challenges}, zoom consistency~\cite{sarma2012f
 % 99% is not high availability 
 % 200 ms is not low latency
 % Images are not an interactive experience
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.8]{figs-thesis/load-latency-correlation.pdf}
+\caption{\emph{Temporal query skew:} Default}
+\label{default}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/heatmap-side-by-side.pdf}
+\caption{\emph{Spatial query skew:} Default}
+\label{default}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
 
 \section{Using the Contributions of this Thesis}
 
