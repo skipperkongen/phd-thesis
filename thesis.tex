@@ -135,18 +135,33 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 % How has the world changed; what is the new situation?
-Digital map visualization studies how to represent the geography of the Earth, as captured by geographical data, in highly restricted pixel spaces, such as computer screens. While geographical data are always spatial, they are otherwise very heterogenous. For example, points can represent the location of animals and hospitals~\cite{openstreetmap2010haiti}; lines can represent the network of waterways and streets; polygons can represent the areas of lakes and national territories. Furthermore, nothing prohibits a spatial interpretation of otherwise non-spatial data, such as news~\cite{shahaf2013informationcartography} and musicians~\cite{daniels2014vocabulary}. Every day, the amount of geographical data grows bigger and more detailed. For example, more than one hundred thousand new objects are added to the OpenStreetMap database each day~\cite{openstreetmap2014stats}.
+Map visualization studies how to visually represent the geography of the Earth at multiple scales on a restricted medium, such as a computer screen. Necessarily, geographical data must be abstracted according to scale in order to fit the representational budget of a small pixel space, for example the 2880 x 1800 pixels of a laptop display. Within map visualization, the disciplin of map generalization studies how geographical data should be abstracted as the scale changes. In contrast to selection, projection and aggregation in the relation algebra, map generalization must select, project and aggregate data \emph{holistically} according to visual constraints and objectives~\cite{weibel1999generalising}. While the goal of generalization is clear, i.e., balance legibility against representation, this goal is deceptively hard to achieve.
 
-% Maps need no introduction. But what is new in the world of maps?
-On the web, an eco-system of geographical data providers produce a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{zooniverse2014oldweather} datasets. As networked mobile devices have become deeply integrated into the modern life style, millions of people have gained the ability to interact with map visualizations 24 x 7 and on the go. Maps extend the spatial intelligence of humans; maps enhance our in-born ability to locate places, navigate and reason about the environment. For these reasons, maps are increasingly used by organizations without strong geographical traditions to communicate geographical naratives.
+% People know this
+%Maps layer different strata of geographical data on top of each other. While geographical data are very versatile, they are always geometric. For example, points can represent the location of animals and hospitals~\cite{openstreetmap2010haiti}; lines can represent the network of waterways and streets; polygons can represent the areas of lakes and national territories. 
+
+% Challenges
+More and more, organizations without a strong tradition for geography are beginning to exploit the availability of geographical data to commicate spatial naratives to their online users~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. To power map visualizations, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{zooniverse2014oldweather} datasets, Day by day, the amount of geographical data on the web grows bigger and more detailed~\cite{openstreetmap2014stats}. Furthermore, nothing prohibits a geometric interpretation of otherwise non-spatial data, such as news stories~\cite{shahaf2013informationcartography} or the vocabulary of musicians~\cite{daniels2014vocabulary}, just to pick two real however exotic examples.
+
+As mobile devices increasingly bond millions of people to an online lifestyle, digital maps and geographical information can be consumed by anybody, at any time, and from anywhere.
+
+% Why GIS is inadequate
+Traditionally, maps have been crafted by experts in Geographical Information Systems (GIS). However, a new situation exists on the web today that significantly marginalizes the use for traditional GIS. First, the demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS); therefore, map visualizations must be \emph{expressible by non-experts}. Second, web maps that run on top of cloud infrastructures can now integrate huge datasets (billions of data items); therefore, map visualization systems must be \emph{scalable in the size of data}. Third, web maps today can quickly reach millions of users who can interact with map visualization 24 x 7 using mobile devices; therefore, map visualization systems must be \emph{scalable in the number of concurrent users}. In short, GIS was not designed to satisfy these requirements, which merits the study of a new category of systems.
+
 
 % Maybe gear more towards mash-ups?
 
 \section{Challenges in Map Visualization}
 \label{introduction:challenges:in:map:visualization}
 
-% Why GIS is inadequate
-Traditionally, maps have been crafted by experts in Geographical Information Systems (GIS). However, a new situation exists on the web today that significantly marginalizes the use for traditional GIS. First, the demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS); therefore, map visualization systems must be \emph{expressive for non-experts} who wish to craft multi-scale map visualizations. Second, web maps that run on top of cloud infrastructures can now integrate huge datasets (billions of data items); therefore, map visualization systems must be \emph{scalable in the size of data}. Third, web maps today can quickly reach millions of users who interact with map visualization 24 x 7 on mobile devices; therefore, map visualization systems must be \emph{scalable in the number of concurrent users}. In short, GIS was not designed to satisfy these requirements, which merits the study of a new category of systems.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.45]{figs-thesis/europe-as-data.pdf}
+\caption{\emph{Data vs Territory:} On a low scale map of Europe, 5 x 5 pixel data symbols for tourism points of interest (left map) fully cover the territory (right map). Thus, for large datasets (thousands of records) displaying unfiltered data symbols is non-sensical. First, a users can not discrimiate between interesting data and less interesting data. Second, crucial spatial context is lost when map labels are eclipsed by data symbols. Third, users can not accurately interact with the data symbols to get more information. For example, there are 28 thousand points of interest near Paris; how would a user click on the Eiffel Tower?}
+\label{default}
+\end{center}
+%\vspace*{-4ex}
+\end{figure}
 
 % Requirements for new system: MVMS
 To address the challenges of GIS for the web, this dissertation introduces a new category of systems: Map Visualization Management System (MVMS). To begin answering what an MVMS should be, we must first investigate three crucial questions:
@@ -175,14 +190,6 @@ Some early, but incomplete, examples of MVMS include Google Fusion Tables~\cite{
 Wherever there is life, there is twist and mess: the frizz of an arctic lichen, the tangle of brush along a bank, the dogleg of a dog's leg, the way a line has got to curve, split or knob. The planet is characterised by its very jaggedness, its random heaps of mountains, its frayed fringes of shore... Think of a contour globe, whose mountain ranges cast shadows, whose continents rise in bas-relief above the oceans. But then: think of how it really is. These heights aren't just suggested; they're there... What if you had an enormous globe in relief that was so huge it showed roads and houses -- a geological survey globe, a quarter of a mile to an inch -- of the whole world, and the ocean floor! Looking at it, you would know what had to be left out: the free-standing sculptural arrangement of furniture in rooms, the jumble of broken rocks in a creek bed, tools in a box, labyrinthine ocean liners, the shape of snapdragons, walrus... The relief globe couldn't begin to show trees, between whose overlapping boughs birds raise broods, or the furrows in bark, where whole creatures, creatures easily visible, live out their lives and call it world enough.' (Dillard 1974: 141 -- 3) -- reproduced from Weibel~\cite{weibel1999generalising}
 \end{quote}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.45]{figs-thesis/europe-as-data.pdf}
-\caption{\emph{Data vs Territory:} On a low scale map of Europe, 5 x 5 pixel data symbols for tourism points of interest (left map) fully cover the territory (right map). Thus, for large datasets (thousands of records) displaying unfiltered data symbols is non-sensical. First, a users can not discrimiate between interesting data and less interesting data. Second, crucial spatial context is lost when map labels are eclipsed by data symbols. Third, users can not accurately interact with the data symbols to get more information. For example, there are 28 thousand points of interest near Paris; how would a user click on the Eiffel Tower?}
-\label{default}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
 
 
 
