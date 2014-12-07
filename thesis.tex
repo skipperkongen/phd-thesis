@@ -433,7 +433,11 @@ Answering each of these questions will require us to investigate areas beyond pu
 \section{Expressing Multi-scale Map Visualizations}
 \label{related:work:expressing}
 
+State the difference between data and visual abstraction~\cite{gruenreich1992atkis}. State requirements for expressing both.
+
 \subsection{Data Abstraction}
+
+In the terminology of Gr\{"o}nreich, this is called model generalization.
 
 Constraints~\cite{harrie1999constraint, woodruff1998constant, topfer1966principles, sarma2012fusiontables, nutanong2012multiresolution}.
 Multi-scale (star and ladder)~\cite{foerster2010challenges, sarma2012fusiontables}.
@@ -443,21 +447,24 @@ SQL, datalog
 
 \subsection{Visual Abstraction}
 
+In the terminology of Gr\{"o}nreich, this is called cartographic generalization.
+
 Graphics stuff~\cite{jacques1967semiologie, nickerson1994visual, tufte1983visual, wilkinson2006grammar, wickham2009ggplot2}.
 
 
 % PROCESSING
-\section{Processing Multi-scale Map Visualizations}
+\section{Data Processing for Multi-scale Maps}
 \label{related:work:processing}
 
-\subsection{In-database processing}
+State the requirements.
+
+\subsection{In-database Processing}
 
 Simple filtering~\cite{cartodb2014cartodb}.}
 Indexing~\cite{nutanong2012multiresolution}
 Compilation to relational algebra queries~\cite{wu2014case, battle2013scalar, boncz2006monetdb, grust2009ferry}
 
-
-\subsection{Out-of-database processing}
+\subsection{Out-of-database Processing}
 
 Linear programming~\cite{haunert2006landcover, sarma2012fusiontables} (simplex? other methods?)
 MapReduce~\cite{aji2013hadoopgis}.
@@ -469,8 +476,10 @@ Distributed Declarative Constraint Optimization (VLDB)~\cite{liu2012cologne}
 
 
 % SERVING
-\section{Serving Multi-scale Map Visualizations}
+\section{Serving of Multi-scale Maps}
 \label{related:work:serving}
+
+State the requirements.
 
 \subsection{No name yet}
 High-availability
