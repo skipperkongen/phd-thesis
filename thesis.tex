@@ -429,117 +429,58 @@ Answering each of these questions will require us to investigate areas beyond pu
 % subsection{CONTRIBUTION} plus-minus
 % subsection{CONTRIBUTION} plus-minus
 
-\section{Geographical Information Systems}
+% EXPRESSING
+\section{Expressing Multi-scale Map Visualizations}
+\label{related:work:expressing}
 
-Constraint-based map generalization (Cartography and Geographic Information Science)~\cite{harrie1999constraint}.
+\subsection{Data Abstraction}
+
+Constraints~\cite{harrie1999constraint, woodruff1998constant, topfer1966principles, sarma2012fusiontables, nutanong2012multiresolution}.
+Multi-scale (star and ladder)~\cite{foerster2010challenges, sarma2012fusiontables}.
+Binary relations~\cite{egenhofer1991categorizing, randell1992spatial}. 
+Combinatorial optimization~\cite{meliou2011reverse, haunert2006landcover, sarma2012fusiontables}
+SQL, datalog
+
+\subsection{Visual Abstraction}
+
+Graphics stuff~\cite{jacques1967semiologie, nickerson1994visual, tufte1983visual, wilkinson2006grammar, wickham2009ggplot2}.
 
 
-\section{Databases}
+% PROCESSING
+\section{Processing Multi-scale Map Visualizations}
+\label{related:work:processing}
 
-Reverse Data Management (VLDB)~\cite{meliou2011reverse}
+\subsection{In-database processing}
 
-Scalar (IEEE Big Data)~\cite{battle2013scalar}.
+Simple filtering~\cite{cartodb2014cartodb}.}
+Indexing~\cite{nutanong2012multiresolution}
+Compilation to relational algebra queries~\cite{wu2014case, battle2013scalar, boncz2006monetdb, grust2009ferry}
 
-Google Fusion Tables (SIGMOD)~\cite{gonzalez2010fusiontables}, scalable data processing, scalable data serving, intuitive visual abstraction interface, however non-configurable data abstraction interface.
 
-CartoDB~\cite{cartodb2014cartodb}.
+\subsection{Out-of-database processing}
 
-HadoopGIS (VLDB)~\cite{aji2013hadoopgis}.
+Linear programming~\cite{haunert2006landcover, sarma2012fusiontables} (simplex? other methods?)
+MapReduce~\cite{aji2013hadoopgis}.
 
-Ermac (VLDB)~\cite{wu2014case}
+\subsection{Not categorized yet}
 
 Analytic Data Engine for Visualization in Tableau (SIGMOD)~\cite{wesley2011tableau}.
-
 Distributed Declarative Constraint Optimization (VLDB)~\cite{liu2012cologne}
 
-Efficient Spatial Sampling (SIGMOD)~\cite{sarma2012fusiontables}.
 
-Select-Distinct queries~\cite{nutanong2012multiresolution}.
+% SERVING
+\section{Serving Multi-scale Map Visualizations}
+\label{related:work:serving}
 
-\section{Programming Languages}
-
-As they relate to data transformation for data visualization.
-
-\subsection{Graphics Languages}
-
-Examples: The Grammar of Graphics, ggplot2
-
-Why not good enough? Not holistic
-
-\subsection{Declarative Languages}
-
-Examples: SQL, datalog
-
-Why are they not good enough? Hard to write holistic programs.
-
-\subsection{Linear Programming}
-
-Give examples: Das Sarma, Landcover.
-
-Why is it not good enough? Hard to write, and require us to know the data, making programs hard to reuse. Plus side is that they capture constraints and objectives.
-
-
-\section{Databases}
-
-As they relate to data processing for data visualization. Specifically, in-database processing of data transformation. 
-
-Examples: xQuery, Ferry, Scalar, Ermac
-
-Why not good enough? Good idea, but lack compilations for holistic programs
-
-\subsection{Conclusion}
-
-Reverse Data Management is the right abstraction.
-
-\section{Distributed Systems}
-
-As they relate to data serving for data visualization.
-
-\subsection{Data Partitioning}
-
-Key-value stores, tile pyramids, vector tiles, buckets, 
-
-\subsection{Data Replication}
-
-content delivery networks
-
-\subsection{Content Delivery Networks}
-
-
-\section{Holistic Data Abstraction}
-
-Obviously, this is a core field
-
-\subsection{Map Generalization}
-
-Operators
-
-Constraints
-
-Selection
-
-Displacement
-
-Aggregegation
-
-
-
-
-
-\section{Visual Conflicts}
-
-Constraint-based visualization~\cite{harrie1999constraint}. Constant Information Density~\cite{woodruff1998constant} and Toepfer~\cite{topfer1966principles}. Binary object relations, e.g. 9-intersection~\cite{egenhofer1991categorizing} and RCC~\cite{randell1992spatial}. Object set mapping~\cite{sarma2012fusiontables, kefaloukos2014cvl}.
-
-Bertin~\cite{jacques1967semiologie}, Nickerson~\cite{nickerson1994visual}, Tufte~\cite{tufte1983visual}.
-
-Detecting conflicts by indexing~\cite{nutanong2012multiresolution, kefaloukos2014cvl}, 
-
-Star and ladder~\cite{foerster2010challenges}, zoom consistency~\cite{sarma2012fusiontables}. Multi-scale Select-Distinct~\cite{nutanong2012multiresolution}.
-
-
-
-% http://youtu.be/nLjVKOLyvx4
-% Since maps are constructed in finite spaces, real-estate is at a premium. As such, not everything is represented, and even those things that are represented are not necessarily represented precisely. You can see a couple of examples here. Roads, rivers, cities, towns and islands are the most common victims of something like this. - Matt Dube, see http://www.spatial.maine.edu/~matthew.dube/
+\subsection{No name yet}
+High-availability
+Data partitioning
+Data replication
+Key-value stores
+tile pyramids
+Vector tiles
+Content Delivery Networks
+Prediction
 
 
 %  ############
