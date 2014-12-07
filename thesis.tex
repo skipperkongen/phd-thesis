@@ -185,17 +185,6 @@ A map visualization must be \emph{available};
 \end{figure}
 
 % Requirements for new system: MVMS
-\minisec{Challenges} To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
-
-\begin{enumerate}
-\item How can we intuitively express the creation of multi-scale map visualizations?
-\item How can we scalably process millions of geographical records?
-\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
-\end{enumerate}
-
-Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of abstracting data for multiple scales~\cite{weibel1999generalising}. work in \emph{programming languages} addresses the issue of expressing data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of visually representing data~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. It is crucial that we pull together the relevant knowledge from these diverse fields and combine it into systems for efficient and effective data visualization.
-
-Some early, but incomplete, examples of MVMS include Google Fusion Tables~\cite{google2014fusiontables}, and CartoDB~\cite{cartodb2014cartodb}. \emph{move to related work.}
 
 % MOVE TO RELATED WORK
 %Data Visualization Management Systems (DVMS) have been proposed as a solution for data-driven visualizations on the web today~\cite{wu2014case, fekete2012dmvis}. The API of a fully-fledged DVMS includes components for both data management, visualization design, and visualization sharing~\cite{foo}. A DVMS must be scalable both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and audience~\cite{viegas2007manyeyes}. Additionally, it is crucial that designers can craft visualizations using an interface that is both intuitive, efficient (in terms of wall-clock time) and expressive. In the geographical domain, prototypes of such systems include Google Fusion Tables~\cite{google2014fusiontables}, and CartoDB~\cite{cartodb2014cartodb}. To make the distinction clear, this dissertation will introduce the term Map Visualization Management Systems (MVMS) and use it to refer to for DVMS that are specialized for map visualization.
@@ -417,11 +406,30 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 \pitfall{\emph{I Am So Unique:} Do not ignore previous work when writing up your paper. You have to convince the reader that you have done something new, and the only way to do that is to explain how it is different than what has already been done. All research takes place in some kind of intellectual context, and your job as author is to situate what you have done within a framework of that context. A good previous work section is a mini-taxonomy of its own, where you decide on meaningful categorization given your specific topic. Proposing new names for old techniques or ideas may sneak your work past some reviewers, but will infuriate those who know of that previous work. This tactic will also make you lose credibility with knowledgeable readers. If you cannot find anything related to what you have done, it?s more likely that you?re looking in the wrong subfield than that your work is a breakthrough of such magnitude that there is no context. Remember to discuss not only work that has been done on similar problems to your own, but also work that uses similar solutions to yours that occurs in different problem domains. This advice is even more critical if you were lax about doing a literature review before you started your project. If you find work similar to your own, you have a fighting chance of carefully differentiating yours in the writeup, but if a reviewer is the one to
 bring it to your attention, the paper is most likely dead.}
 
-\pitfall{\emph{Enumeration Without Justification:} Simply citing the previous work is necessary but not sufficient. A description that ?X did Y?, even if it includes detail, is not enough. You must explain why this previous work does not itself solve your problem, and what specific limitations of that previous work your approach does address. Every paper you cite in the previous work section is a fundamental challenge to the very existence of your project. Your job is to convince a skeptical reader that the world needs your new thing because it is somehow better than a particular old thing. Moreover, it?s not even enough to just make the case that yours is different ? yours must be better. The claims you make must, of course, be backed up by your validation in a subsequent results section.
+\pitfall{\emph{Enumeration Without Justification:} Simply citing the previous work is necessary but not sufficient. A description that $X did Y$, even if it includes detail, is not enough. You must explain why this previous work does not itself solve your problem, and what specific limitations of that previous work your approach does address. Every paper you cite in the previous work section is a fundamental challenge to the very existence of your project. Your job is to convince a skeptical reader that the world needs your new thing because it is somehow better than a particular old thing. Moreover, it?s not even enough to just make the case that yours is different ? yours must be better. The claims you make must, of course, be backed up by your validation in a subsequent results section.
 
 A good way to approach the previous work section is that you want to tell to a story to the reader. Figure out the messages you want to get across to the reader, in what order, and then use the references to help you tell this story. It is possible to group the previous work into categories, and to usefully discuss the limitations of the entire category.}
 
-\note{Compare against tableau~\cite{wesley2011tableau}, Ermac~\cite{wu2014case}. }
+
+To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
+
+\begin{enumerate}
+\item How can we intuitively express the creation of multi-scale map visualizations?
+\item How can we scalably process millions of geographical records?
+\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
+\end{enumerate}
+
+Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of abstracting data for multiple scales~\cite{weibel1999generalising}. work in \emph{programming languages} addresses the issue of expressing data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of visually representing data~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. This chapter scans the related work in these fields, and compares the results against the vision of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
+
+\section{Systems}
+
+\subsection{Data Visualization Management Systems}
+
+Compare against tableau~\cite{wesley2011tableau}, Ermac~\cite{wu2014case}, and more.
+
+\subsection{Map Visualization Systems}
+
+Compare against Google Fusion Tables~\cite{google2014fusiontables}, and CartoDB~\cite{cartodb2014cartodb}. \emph{move to related work.}
 
 \section{Definitions}
 
