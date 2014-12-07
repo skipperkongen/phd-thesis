@@ -131,22 +131,24 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 % \marcos{Regarding the chapters for the three papers: review the text, see if there are any arguments that can be improved; no time to redo non-text work.}
 % \todo{Cite everything that is cited by The Case for Data Visualization Management Systems (33 citations)}
 
+\note{Must have a section that clearly defines the problem I solve, the requirements for the system I propose, and my contributions toward solving this problem.}
+
 \vspace{-4ex}
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 % Maps are important
-Map visualization studies how to visually represent the geography of the Earth at multiple scales (i.e. with pan and zoom) on restricted mediums, such as computer screens. The value proposition of maps is clear: maps save lives~\cite{openstreetmap2010haiti}; maps assist in navigation~\cite{something}; maps even allow reasoning of non-spatial phenomena by spatial interpretation~\cite{shahaf2013informationcartography, daniels2014vocabulary}. 
+Map visualization studies how to visually represent the geography of the Earth at multiple scales (i.e. with pan and zoom) on restricted mediums, such as computer screens. Map visualization is a facet of the data visualization field, which is the study and creation of (interactive) visual representations of data to reinforce human cognition~\cite{friendly2008milestones}. However, the specific value proposition of geographical maps is clear: maps save lives~\cite{openstreetmap2010haiti}; maps crucially assist navigation~\cite{something}; maps increase the transparency and efficiency of our societies~\cite{gst2012friedata}. The human human mind has such a strong affinity for spatial reasoning that map metaphors are used to reason even about non-spatial phenomena~\cite{shahaf2013informationcartography, daniels2014vocabulary}.
 
 Today, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized on maps. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database that already contains billions of objects~\cite{openstreetmap2014stats}. Still, OpenStreetMap accounts for just a tiny fraction of all spatial data on the web, and perpaps, we have only seen the beginning. In 2014, a company launched a system of micro satellites equipped with multi-band sensors that will capture the entire surface of the Earth in high resolution every day~\cite{planetlabs2014flock1}. Moreover, as mobile devices increasingly bond millions of people to spatial services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced and consumed by anybody, anytime, and anywhere.
 
 More and more, organizations with no strong tradition for geography (e.g. news agencies) communicate spatial narratives using maps~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. One of the most crucial problems in map creation is the mismatch between data volume and the small representational budget of computer screens. For example, a laptop display (e.g. 2880 x 1800 pixels) can display just a few thousand symbols without overlap, which is entirely indadequate for displaying most geographical datasets. Necessarily, geographical data must be abstracted (e.g. filtered~\cite{} or aggregated~\cite{}) according to scale in order to produce a legible and useful map. However, filtering and aggregation for maps is much more complex than the similarly named operations in statistics. Within map visualization, the disciplin of map generalization studies how geographical data should be abstracted as the scale changes. In contrast to selection, projection and aggregation in the relation algebra, map generalization must select, project and aggregate data \emph{holistically} according to visual constraints and objectives~\cite{weibel1999generalising}.
 
 % Why GIS is inadequate
-Traditionally, maps have been crafted by experts in Geographical Information Systems (GIS). However, a new situation exists on the web today that significantly marginalizes the use for traditional GIS. First, the demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS); therefore, map visualizations must be \emph{expressible by non-experts}. Second, web maps that run on top of cloud infrastructures can now integrate huge datasets (billions of data items); therefore, map visualization systems must be \emph{scalable in the size of data}. Third, web maps today can quickly reach millions of users who can interact with map visualization 24 x 7 using mobile devices; therefore, map visualization systems must be \emph{scalable in the number of concurrent users} and \emph{highly available}. In short, GIS was not designed to satisfy these requirements, which merits the study of a new category of systems. To address the short-comings of GIS for the web, this dissertation makes the case for a new category of systems: Map Visualization Management Systems (MVMS).
+Traditionally, maps have been crafted by experts in Geographical Information Systems (GIS). However, a new situation exists on the web today that significantly marginalizes the use for traditional GIS. First, the demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS); therefore, map visualizations must be \emph{expressible by non-experts}. Second, web maps that run on top of cloud infrastructures can now integrate huge datasets (billions of data items); therefore, map visualization systems must be \emph{scalable in the size of data}. Third, web maps today can quickly reach millions of users who can interact with map visualization 24 x 7 using mobile devices; therefore, map visualization systems must be \emph{scalable in the number of concurrent users} and \emph{highly available}. In short, GIS was not designed to satisfy these requirements, which merits the study of a new category of systems.
 
-MVMS are inspired by bla bla.
+To address the short-comings of GIS for the web, this dissertation makes the case for a new category of systems: Map Visualization Management Systems (MVMS). The vision of MVMS is influences by the visions of Reverse Data Management~\cite{meliou2011reverse} and Data Visualization Management Systems (DVMS), however specialized for the particular challenges of map visualization.
 
-
+\emph{copy-pasted} While data can be both numerical and non-numerical, this thesis will focus on geographical data that is stored in tables, e.g. rows in an RDBMS. At first, this may seem constricted, however tables are versatile and make up the bulk of all data that is visualized today~\cite{wu2014case}.
 
 \section{Challenges}
 \label{introduction:challenges:in:map:visualization}
@@ -410,36 +412,39 @@ bring it to your attention, the paper is most likely dead.}
 
 A good way to approach the previous work section is that you want to tell to a story to the reader. Figure out the messages you want to get across to the reader, in what order, and then use the references to help you tell this story. It is possible to group the previous work into categories, and to usefully discuss the limitations of the entire category.}
 
-
 To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
 
 \begin{enumerate}
-\item How can we intuitively express the creation of multi-scale map visualizations?
-\item How can we scalably process millions of geographical records?
-\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
+\item How can non-experts intuitively express the creation of multi-scale map visualizations?
+\item How can map systems scalably process millions of geographical records?
+\item How can map systems scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
 \end{enumerate}
 
-Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of abstracting data for multiple scales~\cite{weibel1999generalising}. work in \emph{programming languages} addresses the issue of expressing data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of visually representing data~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. This chapter scans the related work in these fields, and compares the results against the vision of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
+Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
 
-\section{Systems}
 
-\subsection{Data Visualization Management Systems}
+\section{Map Generalization}
 
-Compare against tableau~\cite{wesley2011tableau}, Ermac~\cite{wu2014case}, and more.
+\section{Data Management}
+
+\subsection{Reverse Data Management}
+
+Reverse Data Management~\cite{meliou2011reverse}
+
+\subsection{Geographical Information Systems}
+
+TODO
 
 \subsection{Map Visualization Systems}
 
-Compare against Google Fusion Tables~\cite{google2014fusiontables}, and CartoDB~\cite{cartodb2014cartodb}. \emph{move to related work.}
+Google Fusion Tables~\cite{google2014fusiontables}, scalable data processing, scalable data serving, intuitive visual abstraction interface, however non-configurable data abstraction interface.
+CartoDB~\cite{cartodb2014cartodb}. \emph{move to related work, 
 
-\section{Definitions}
+\subsection{Data Visualization Management Systems}
 
-\note{Maybe this is a good section, but it should not be in the related work}
-
-In general, data visualization is concerned with the creation and study of (interactive) visual representations of data to reinforce human cognition~\cite{friendly2008milestones}. While data can be both numerical and non-numerical, this thesis will focus on data that is stored in tables, e.g. rows in an RDBMS. At first, this may seem constricted, however tables are versatile and make up the bulk of all data that is visualized today~\cite{wu2014case}. Defined in this way, the distinction between information visualization and scientific visualization (see Munzner~\cite{munzner2008pitfalls}) becomes irrelevant. For example, a table may contain geographical objects where the spatial representation is given, or contain economical data where the spatial representation is chosen. In any event, the tables are assumed to contain rows that capture some aspect of ``reality'' -- ideally with a high level of granularity. For example, a table may contain roads with their high-precision geographical geometries~\cite{openstreetmap}, or the minute details of a federal budget~\cite{nytimes2012obamabudget}. Without loss of generality, the tables are assumed to have a fixed schema.
-
-\section{Data Visualization Management Systems}
-
-Ermac (don't know the short-comings), Scalar (don't know the short-comings), Fusion Tables (scalable data processing, scalable data serving, intuitive visual abstraction interface, however non-configurable data abstraction interface).
+Tableau~\cite{wesley2011tableau}
+Ermac~\cite{wu2014case}
+Scalar (don't know the short-comings).
 
 \section{Programming Languages}
 
@@ -461,7 +466,7 @@ Why are they not good enough? Hard to write holistic programs.
 
 Give examples: Das Sarma, Landcover.
 
-Why is it not good enough? Hard to write and customize.
+Why is it not good enough? Hard to write, and require us to know the data, making programs hard to reuse. Plus side is that they capture constraints and objectives.
 
 
 \section{Databases}
