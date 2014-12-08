@@ -136,10 +136,38 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 \vspace{-4ex}
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
+% I have to keep making the problem tighter, but still important.
+
 % Maps are important
+\emph{Geographic information represents our understanding of the association of phenomena 
+with their location on and near the Earth's surface. When presented in map form, an 
+essential aspect of that information is that it may be adapted in semantic abstraction 
+and level of geometric detail according to the purpose of the map and the extent of the 
+Earth that is being considered at any one time. Representations of small areas in detail 
+result in so-called large-scale maps, while representations of large regions in lesser 
+detail are referred to as small-scale maps. Traditionally cartographers have performed 
+the task of adapting the content and the level of detail of a map to suit its scale and 
+purpose and this process is called map generalisation.}
+
+Map visualization studies how to visually represent the geography of the Earth at multiple scales on restricted mediums, such as computer screens. On the web, geographical mash-ups layer new and interesting geographical data on top of commonly shared background maps. While the background maps are generally of high-quality, the result of many hours of expert labor, new and interesting data presents a raw challenge for creators of mash-ups. Simply displaying raw geographical data on top of a background map, without appropriate abstraction, will only work for tiny datasets (tens of records)~\cite{jones, weibel1999generalising}. One of the most fundamental problems in digital map creation is the mismatch between data volume and the small representational budget of computer screens. For example, a laptop display (e.g. 2880 x 1800 pixels) can display just a few thousand symbols without overlap, which is entirely indadequate for displaying most geographical datasets, i.e. datasets of more than a hundred records that are spatially skewed. Necessarily, geographical data must be abstracted to scale, for example by selection. However, selection of geographical data for maps must be holistic, i.e. data must be selected according to both relevance and aesthetic metrics considered for the whole map.
+
+% lots of diverse data
+Today, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized on maps. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database that already contains billions of objects~\cite{openstreetmap2014stats}. Still, OpenStreetMap accounts for just a tiny fraction of all spatial data on the web, and perpaps, we have only seen the beginning. In 2014, a company launched a system of micro satellites equipped with multi-band sensors that will capture the entire surface of the Earth in high resolution every day~\cite{planetlabs2014flock1}. Moreover, as mobile devices increasingly bond millions of people to an online services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced and consumed by anybody, anytime, and anywhere.
+
+% lots of in-experiences designers, aggregation is too easy,  GIS is too hard.
+Given the availability of so much interesting data, more and more organizations with no strong tradition for geography, such as news agencies, are attempting to communicate spatial narratives using maps~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. While tools exist that will help a novice designer to style geographical data for a map~\cite{cartodb2014cartodb, google2014fusiontables}, no tools are currently available that will adequately allow novice designer to customize the selection of data. The easy way out is to aggregate the geographical data, for example using heatmaps, choropleth maps or clustering. As a result, users will loose the important opportunities for interaction, such as clicking on individual record symbols to get more information about concrete records. The hard way out, is to employ a GIS specialist to use advanced tools to select data for each scale offered by the map. However, demand for multi-scale maps on the web is rising faster than the number of GIS experts who know how to craft them (using traditional GIS). In any event, this is currently a time consuming process even for experts. In contrast, photo editing tools have long allowed novice designers to modify images using easibly mastered plugins for filtering. What is needed, is a framework that will allow the development of similar plugins for selecting geographical data for multi-scale maps. Such as framework should facilitate resuable and sharable code for holistic data selection.
+
+
+Currently, only two options 
+
+% lots of users
+
+
+
+
 Map visualization studies how to visually represent the geography of the Earth at multiple scales (i.e. with pan and zoom) on restricted mediums, such as computer screens. Map visualization is a facet of the data visualization field, which is the study and creation of (interactive) visual representations of data to reinforce human cognition~\cite{friendly2008milestones}. However, the specific value proposition of geographical maps is clear: maps save lives~\cite{openstreetmap2010haiti}; maps crucially assist navigation~\cite{something}; maps increase the transparency and efficiency of our societies~\cite{gst2012friedata}. The human human mind has such a strong affinity for spatial reasoning that map metaphors are used to reason even about non-spatial phenomena~\cite{shahaf2013informationcartography, daniels2014vocabulary}.
 
-Today, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized on maps. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database that already contains billions of objects~\cite{openstreetmap2014stats}. Still, OpenStreetMap accounts for just a tiny fraction of all spatial data on the web, and perpaps, we have only seen the beginning. In 2014, a company launched a system of micro satellites equipped with multi-band sensors that will capture the entire surface of the Earth in high resolution every day~\cite{planetlabs2014flock1}. Moreover, as mobile devices increasingly bond millions of people to spatial services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced and consumed by anybody, anytime, and anywhere.
+
 
 More and more, organizations with no strong tradition for geography (e.g. news agencies) communicate spatial narratives using maps~\cite{nytimes2010iraq}. As a consequence, more and more professionals will need to acquire the skills to craft map visualizations. One of the most crucial problems in map creation is the mismatch between data volume and the small representational budget of computer screens. For example, a laptop display (e.g. 2880 x 1800 pixels) can display just a few thousand symbols without overlap, which is entirely indadequate for displaying most geographical datasets. Necessarily, geographical data must be abstracted (e.g. filtered~\cite{} or aggregated~\cite{}) according to scale in order to produce a legible and useful map. However, filtering and aggregation for maps is much more complex than the similarly named operations in statistics. Within map visualization, the disciplin of map generalization studies how geographical data should be abstracted as the scale changes. In contrast to selection, projection and aggregation in the relation algebra, map generalization must select, project and aggregate data \emph{holistically} according to visual constraints and objectives~\cite{weibel1999generalising}.
 
@@ -436,21 +464,30 @@ Answering each of these questions will require us to investigate areas beyond pu
 State requirements for both: express multi-scale star and ladder, holistic selection (i.e. user-defined constraints and objectives), integrate relational data, encourage code sharing and reuse, intuitive for non-experts (constraints), maximize program clarity/minimize program length (objective).
 \emph{maybe state these in Introduction: problem statement, and refer to the section}.
 
-\subsection{Data Abstraction}
+Briefly mention graphics stuff~\cite{jacques1967semiologie, nickerson1994visual, tufte1983visual, wilkinson2006grammar, wickham2009ggplot2}.
 
-In the terminology of Gr\{"o}nreich, this is called model generalization.
+\subsection{Integer Programming}
+
+Combinatorial optimization~\cite{meliou2011reverse, haunert2006landcover, sarma2012fusiontables}
+
+\subsection{Search}
+
+Simulated annealing~\cite{ware2003generalization_sa}
+
+\subsection{Agent-based Modeling}
+
+\subsection{Declarative Programming}
+
+\subsection{Stuff}
 
 Constraints~\cite{harrie1999constraint, woodruff1998constant, topfer1966principles, sarma2012fusiontables, nutanong2012multiresolution}.
 Multi-scale (star and ladder)~\cite{foerster2010challenges, sarma2012fusiontables}.
 Binary relations~\cite{egenhofer1991categorizing, randell1992spatial}. 
-Combinatorial optimization~\cite{meliou2011reverse, haunert2006landcover, sarma2012fusiontables}
+
 SQL, datalog
 
-\subsection{Visual Abstraction}
 
-In the terminology of Gr\{"o}nreich, this is called cartographic generalization.
 
-Graphics stuff~\cite{jacques1967semiologie, nickerson1994visual, tufte1983visual, wilkinson2006grammar, wickham2009ggplot2}.
 
 
 % PROCESSING
@@ -462,7 +499,7 @@ State the requirements: high-scalability, match programming (constraints), minim
 
 \subsection{In-database Processing}
 
-Simple filtering~\cite{cartodb2014cartodb}.}
+Simple filtering~\cite{cartodb2014cartodb}.
 Indexing~\cite{nutanong2012multiresolution}
 Compilation to relational algebra queries~\cite{wu2014case, battle2013scalar, boncz2006monetdb, grust2009ferry}
 
