@@ -239,9 +239,8 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 %  #  CHAPTER  
 %  ############ 
 
-\chapter{Related Work}
-\label{chapter:related:work}
-
+\chapter{State of the Art}
+\label{chapter:state:of:the:art}
 % Big data: The next frontier for innovation, competition, and productivity
 % Breaking the chains: On declarative data analysis and data independence in the big data era
 
@@ -260,9 +259,9 @@ A MVMS must be \emph{scalable} both in the size of data~\cite{lins2013nanocubes,
 To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
 
 \begin{enumerate}
-\item How can non-experts intuitively express the creation of multi-scale map visualizations?
-\item How can map systems scalably process millions of geographical records?
-\item How can map systems scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
+\item How can we intuitively express the creation of multi-scale map visualizations?
+\item How can we scalably process millions of geographical records for map visualizations?
+\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
 \end{enumerate}
 
 Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
@@ -278,8 +277,11 @@ Answering each of these questions will require us to investigate areas beyond pu
 % subsection{CONTRIBUTION} plus-minus. First subsections are DISCARDED areas
 % subsection{CONTRIBUTION} plus-minus. Last subsection ACCEPTED area.
 
+\section{Map Generalization}
+\subsection{}
+
 % EXPRESSING
-\section{Programming Multi-scale Selection for Maps}
+\section{Programming Multi-scale Selection}
 \label{related:work:expressing}
 
 State requirements for both: express multi-scale star and ladder, holistic selection (i.e. user-defined constraints and objectives), integrate relational data, encourage code sharing and reuse, intuitive for non-experts (constraints), maximize program clarity/minimize program length (objective).
@@ -289,7 +291,13 @@ Briefly mention graphics stuff~\cite{jacques1967semiologie, nickerson1994visual,
 
 \subsection{Integer Programming}
 
-Combinatorial optimization~\cite{meliou2011reverse, haunert2006landcover, sarma2012fusiontables}
+Integer programming (IP) is an approach that has been demonstrated to work for multi-scale selection~\cite{sarma2012fusiontables} and single-scale amalgamation~\cite{haunert2006landcover}. Furthermore, integer programming formulations can theoretically harness the decades of advances in combinatorial optimization~\cite{branchandbound} and IP solvers such as cplex.
+
+However, map generalization problems are frequently NP-hard. For example, the approach by Haunert and Wolff for amalgamation of landcover polygons, while quite elegantly formulated, only scales to about hundreds of records~\cite{haunert2006landcover}. They prove the NP-hardness of the problem by a reduction from the planar vertex cover problem. The (un-optimized) optimization approach by Das Sarma et al initially scales only to about until thousands of records. By exploiting structure in the exact problem that is solved, they present an algorithm based on DFS traversal, which scales to tens of millions of records. At this point, which is however quite impressive, the custom c++ code gets bottlenecked by memory.
+
+Plus: Tremendous advances in combinatorial optimization packages~\cite{cplex}.
+Minus: Integer programs are hard to formulate and extensive to write, they require us to know the data a priori, code not reusable, hard to parallelize, so approach is limited by single machine capacity. A slight variation in the goals will require an extensive rewrite.
+For the future: High-level languages~\cite{meliou2011reverse} that translate into low-level integer programming formulations, efficient distributed solvers for IP.
 
 \subsection{Search}
 
