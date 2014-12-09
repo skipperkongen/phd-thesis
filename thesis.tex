@@ -178,6 +178,7 @@ The web has transformed how map visualization should ideally be approached. This
 
 \begin{itemize}
 % EXPRESSING
+% DONE 1
 \item \textbf{High-level Languages}: Designers, specifically those who are not GIS-experts, must be able to intuitively and concisely express complex multi-scale map visualizations over large geographical tables. A map visualization pipeline based on multi-scale selection, is easy to understand and produces maps that are interactive. Compelling map visualizations follow certain visual principles, which can be expressed as constraints, objectives and styles on the visual representation~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint}. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Ideally, such a task can be expressed in a high-level programming language for map visualization, which depends only on the schema, not on a priori knowledge of the individual data items. 
 
 A high-level programming langage for multi-scale selection must: (1) must be intuitive and productive for non-experts, (2) capture both the star and ladder paradigm for multi-scale selection~\cite{foerster2010challenges}, (3) allow designers to intuitively express user-defined and high-level constraints and objectives for multi-scale selection, (4) target geographical data that is stored in relational databases, (5) encourage code sharing and reuse through general-purpose language features. Subject to these requirements, the language should be designed to minimize the average programs length.
@@ -192,9 +193,11 @@ A high-level programming langage for multi-scale selection must: (1) must be int
 \end{figure}
 
 % PROCESSING
+% PENDING
 \item \textbf{In-database Processing}: Map visualization systems must be able to scalably process a specification for multi-scale selection of geographical data.
 
 % SERVING
+% PENDING
 \item \textbf{Scalable Architectures}: Map visualization systems must be able to serve tiled multi-scale maps to large web audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack}. In particular, the advantages of scalable distribution systems, such as content delivery networks (CDN), must be cost-efficiently leveraged~\cite{beaver2010haystack, datacentre}. However, since the number of tiles grow expenentially in the number of supported scales, fully materializing a multi-scale map into tiles and storing it in a CDN is costly. 
 
 %Linearization, data partitioning, data replication, and key-value stores address the issue of scaling data visualization services to large audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack};
