@@ -177,9 +177,23 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art. Map visualizations must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems that fulfill these requirements. In particular, the following problems are addressed:
 
 \begin{itemize}
-% EXPRESSING
+
+% HOLISTIC MULTI-SCALE SELECTION
+\item \textbf{Holistic Multi-scale Selection} TODO
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
+\caption{\emph{Multi-scale selection pipeline:} }
+\label{fig:introduction:multiscale:selection:pipeline}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+
+% DECLARATIVE SPECIFICATION
 % DONE 1
-\item \textbf{High-level Languages for Map Visualization}: Designers, especially those who are not GIS-experts, must be able to express multi-scale map visualizations over large geographical tables. In the terminology of Gr{\"u}nreich, designers must have control over both the model and visual abstraction stages of the visualization pipeline~\cite{gruenreich1985cag} (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}). A model abstration process based on multi-scale selection is easy to understand and moreover produces maps that are interactive, since the identity of records is preserved. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals in an intuitive specification language, which leaving the minute selection of data to the system~\cite{meliou2011reverse}. The high-level goals will include constraints, objectives and scales~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint} as well as styling rules that consistitute the visual abstraction of data items. Ideally, a specification language requires only the schema to be known, as opposed to a priori knowledge of the data itself. This would facilitate code reuse across similar datasets.
+\item \textbf{Declarative Specification}: Designers, especially those who are not GIS-experts, must be able to express multi-scale map visualizations over large geographical tables. In the terminology of Gr{\"u}nreich, designers must have control over both the model and visual abstraction stages of the visualization pipeline~\cite{gruenreich1985cag} (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}). A model abstration process based on multi-scale selection is easy to understand and moreover produces maps that are interactive, since the identity of records is preserved. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals in an intuitive specification language, which leaving the minute selection of data to the system~\cite{meliou2011reverse}. The high-level goals will include constraints, objectives and scales~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint} as well as styling rules that consistitute the visual abstraction of data items. Ideally, a specification language requires only the schema to be known, as opposed to a priori knowledge of the data itself. This would facilitate code reuse across similar datasets.
 
 In summary, a high-level programming langage for multi-scale selection must: (1) must be intuitive and productive for non-experts, (2) capture both the star and ladder paradigm of multi-scale data abstraction~\cite{foerster2010challenges}, (3) allow designers to control constraints and objectives that are enforced during selection, (4) target geographical data that is stored in relational databases, (5) encourage code sharing and reuse through schema-oriented language features, similar to SQL. Subject to these requirements, the language should be designed to minimize the average length of programs.
 
@@ -201,7 +215,7 @@ The compiler must: (1) produce SQL that is compatible with an existing relationa
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.4]{figs-thesis/indatabase-execution.pdf}
-\caption{\emph{In-database execution:} }
+\caption{\emph{In-database processing:} }
 \label{fig:introduction:indatabase:execution}
 \end{center}
 \vspace*{-4ex}
