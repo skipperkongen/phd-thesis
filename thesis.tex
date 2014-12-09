@@ -174,12 +174,12 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by state-of-the-art systems. Map visualizations must scale well both in the size of the data~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems for the web. In particular, the following problems are addressed:
+The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art. Map visualizations must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems for the web that fulfill these requirements. In particular, the following problems are addressed:
 
 \begin{itemize}
 % EXPRESSING
 % DONE 1
-\item \textbf{High-level Languages}: Designers, specifically those who are not GIS-experts, must be able to intuitively and concisely express complex multi-scale map visualizations over large geographical tables. A map visualization pipeline based on multi-scale selection, is easy to understand and produces maps that are interactive. Compelling map visualizations follow certain visual principles, which can be expressed as constraints, objectives and styles on the visual representation~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint}. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Ideally, such a task can be expressed in a high-level programming language for map visualization, which depends only on the schema, not on a priori knowledge of the individual data items. 
+\item \textbf{High-level Languages for Map Visualization}: Designers, especially those who are not GIS-experts, must be able to express multi-scale map visualizations over large geographical tables. A map visualization pipeline based on multi-scale selection is easy to understand and moreover produces maps that are interactive, since the identity of records is preserved. Compelling map visualizations follow certain visual principles, which can be expressed as constraints, objectives and styles on the visual representation~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint}. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals, while leaving the minute selection of data to the system~\cite{meliou2011reverse} (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}). Ideally, the specification requires only the schema to be known, as opposed to a priori knowledge of the data itself. This would facilitate code reuse across datasets.
 
 A high-level programming langage for multi-scale selection must: (1) must be intuitive and productive for non-experts, (2) capture both the star and ladder paradigm for multi-scale selection~\cite{foerster2010challenges}, (3) allow designers to intuitively express user-defined and high-level constraints and objectives for multi-scale selection, (4) target geographical data that is stored in relational databases, (5) encourage code sharing and reuse through general-purpose language features. Subject to these requirements, the language should be designed to minimize the average programs length.
 
@@ -194,7 +194,20 @@ A high-level programming langage for multi-scale selection must: (1) must be int
 
 % PROCESSING
 % PENDING
-\item \textbf{In-database Processing}: Map visualization systems must be able to scalably process a specification for multi-scale selection of geographical data.
+\item \textbf{In-database Processing}: A Map visualization systems must be able to scalably process a specification for multi-scale selection of geographical data, since the data may be large. One approach is to express geographical selection in low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, data for map visualizations is frequently stored and managed in RDBMS~\cite{wu2014case}, and from an I/O perspective it makes sense to process the data where it is stored. Therefore, to scalably compute multi-scale selection over geographical data stored in an RDBMS, it is ideal to translate a specification into a select statement in pure SQL (see Figure~\cite{fig:introduction:indatabase:execution}).
+
+The compiler must: (1) produce SQL that is compatible with an existing relational database with spatial extensions, (2), produce SQL that is scalable and computes multi-scale selection for large datasets, (3) support the full expressiveness of the specification language.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/indatabase-execution.pdf}
+\caption{\emph{In-database execution:} }
+\label{fig:introduction:indatabase:execution}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+
 
 % SERVING
 % PENDING
