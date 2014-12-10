@@ -179,13 +179,15 @@ The web has transformed how map visualization should ideally be approached. This
 \begin{itemize}
 
 % HOLISTIC MULTI-SCALE SELECTION
-\item \textbf{Holistic Multi-scale Selection} TODO
+\item \textbf{Holistic Multi-scale Selection} Geographical information is typically spatially skewed, which leaves some areas of geometric space dense with data while other are sparse. Simple selection, which filters a dataset row-by-row according to simple predicates, can not capture binary or multi-way object relations~\cite{egenhofer1991categorizing,egenhofer1991point}. Consequently, simple selection can not be used to ensure that a map is thinned to a legible level. In contrast, a holistic selection process will filter records according to global constraints and objectives~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint}, such as proximity and density constraints and relative object importance (see Figure~\ref{fig:introduction:holistic:selection}). To enable coherent selection for multi-scale maps, the process of selection should be carried through to multiple scales, using a process model such as star or ladder generalization~\cite{foerster2010challenges}. A model abstration process based on multi-scale selection is appropriate for non-expert map designers, as it can be intuitively understood and moreover produces maps that are interactive, since the identity of records is preserved.
+
+While a few recents map visualization systems have implemented automatic multi-scale selection~\cite{sarma2012fusiontables}, there is currently a lack of adequate algoritmic models for holistic multi-scale selection that allow flexible expression of user-defined constraints and objectives. This dissertation focuses on the development such models in the context of map visualizations.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
-\caption{\emph{Multi-scale selection pipeline:} }
-\label{fig:introduction:multiscale:selection:pipeline}
+\includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
+\caption{\emph{Holistic selection:} }
+\label{fig:introduction:holistic:selection}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
@@ -193,7 +195,7 @@ The web has transformed how map visualization should ideally be approached. This
 
 % DECLARATIVE SPECIFICATION
 % DONE 1
-\item \textbf{Declarative Specification}: Designers, especially those who are not GIS-experts, must be able to express multi-scale map visualizations over large geographical tables. In the terminology of Gr{\"u}nreich, designers must have control over both the model and visual abstraction stages of the visualization pipeline~\cite{gruenreich1985cag} (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}). A model abstration process based on multi-scale selection is easy to understand and moreover produces maps that are interactive, since the identity of records is preserved. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals in an intuitive specification language, which leaving the minute selection of data to the system~\cite{meliou2011reverse}. The high-level goals will include constraints, objectives and scales~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint} as well as styling rules that consistitute the visual abstraction of data items. Ideally, a specification language requires only the schema to be known, as opposed to a priori knowledge of the data itself. This would facilitate code reuse across similar datasets.
+\item \textbf{Declarative Specification}: Designers, especially those who are not GIS-experts, must be able to express holistic multi-scale selection over large geographical tables. Moreover, in the terminology of Gr{\"u}nreich, designers must have distinct control over the model and visual abstraction stages of the visualization pipeline~\cite{gruenreich1985cag} (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}). A model abstration process based on multi-scale selection is easy to understand and moreover produces maps that are interactive, since the identity of records is preserved. A productive pipeline for multi-scale selection, one that is programmable by designers, will require the specification only of high-level goals in an intuitive specification language, which leaving the minute selection of data to the system~\cite{meliou2011reverse}. The high-level goals will include constraints, objectives and scales~\cite{woodruff1998constant, topfer1966principles, harrie1999constraint} as well as styling rules that consistitute the visual abstraction of data items. Ideally, a specification language requires only the schema to be known, as opposed to a priori knowledge of the data itself. This would facilitate code reuse across similar datasets.
 
 In summary, a high-level programming langage for multi-scale selection must: (1) must be intuitive and productive for non-experts, (2) capture both the star and ladder paradigm of multi-scale data abstraction~\cite{foerster2010challenges}, (3) allow designers to control constraints and objectives that are enforced during selection, (4) target geographical data that is stored in relational databases, (5) encourage code sharing and reuse through schema-oriented language features, similar to SQL. Subject to these requirements, the language should be designed to minimize the average length of programs.
 
@@ -225,7 +227,7 @@ The compiler must: (1) produce SQL that is compatible with an existing relationa
 
 % SERVING
 % PENDING
-\item \textbf{Scalable Architectures}: Map visualization systems must be able to serve tiled multi-scale maps to large web audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack}. In particular, the advantages of scalable distribution systems, such as content delivery networks (CDN), must be cost-efficiently leveraged~\cite{beaver2010haystack, datacentre}. However, since the number of tiles grow expenentially in the number of supported scales, fully materializing a multi-scale map into tiles and storing it in a CDN is costly. 
+\item \textbf{Predictive Materialization}: Map visualization systems must be able to serve tiled multi-scale maps to large web audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack}. In particular, the advantages of scalable distribution systems, such as content delivery networks (CDN), must be cost-efficiently leveraged~\cite{beaver2010haystack, datacentre}. However, since the number of tiles grow expenentially in the number of supported scales, fully materializing a multi-scale map into tiles and storing it in a CDN is costly. 
 
 %Linearization, data partitioning, data replication, and key-value stores address the issue of scaling data visualization services to large audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack};
 
