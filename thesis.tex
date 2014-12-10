@@ -174,13 +174,6 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art. Map visualizations must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems that fulfill these requirements. In particular, the following problems are addressed:
-
-\begin{itemize}
-
-% HOLISTIC MULTI-SCALE SELECTION
-\item \textbf{Holistic Multi-scale Selection} Typically, real-life geographical information is non-uniformly distributed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps will be cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, selection is an intuitive way to reduce clutter in a map, simple selection, which filters a dataset row-by-row according to simple predicates, can not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial}. Consequently, simple selection can not ensure that maps represent as much of the data as is legibly possible for all local areas. 
-
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
@@ -189,6 +182,14 @@ The web has transformed how map visualization should ideally be approached. This
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+
+The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art in geographical information systems (GIS). Map visualizations must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems that fulfill these requirements. In particular, the following problems are addressed:
+
+\begin{itemize}
+
+% HOLISTIC MULTI-SCALE SELECTION
+\item \textbf{Holistic Multi-scale Selection} Typically, real-life geographical information is non-uniformly distributed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps will be cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, selection is an intuitive way to reduce clutter in a map, simple selection, which filters a dataset row-by-row according to simple predicates, can not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial}. Consequently, simple selection can not ensure that maps represent as much of the data as is legibly possible for all local areas. 
 
 In contrast, \emph{Holistic multi-scale selection} is a sampling process that filters data according to constraints~\cite{woodruff1998constant, topfer1966principles} and objectives~\cite{harrie1999constraint} that are evaluated locally and globally. For example, a map visualization may require that unit areas of the map stay below a certain object density or that objects are separated by a minimum distance (see Figure~\ref{fig:introduction:holistic:selection}). Moreover, since in general not all data points are equally important, it is desirable to prioritize conflicted objects based on some measure of importance. Finally, to enable coherent maps over multiple scales, it is important that holistic multi-scale selction can be performed consistently over a set of scales~\cite{foerster2010challenges}.
 
