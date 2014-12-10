@@ -114,7 +114,9 @@
 \maketitle
 
 \section*{Acknowledgements}
-First and foremost, I wish to dedicate this work to my son Morgan and my daughter Athena. Thank you for blessing my life with your love and magic. Thank you also to my ex-wife Marusa for being a wonderful co-parent to our children, a great support, and a source of life-long inspiration. Next, and with very deep gratitude, I wish to thank my primary supervisor Marcos Vaz Salles for his tireless dedication and support, the great discussions we had, and for his warm friendship. Furthermore, I wish thank my supervisor Martin Zachariasen, for always keeping a cool head, believing in my ideas and for giving me the right push whenever I needed it. With sincerity, I wish to thank the Ministry of Higher Education and Science in Denmark, Grontmij A/S and the Danish Geodata Agency, without whose financial support this industrial PhD thesis would not have materialized. In particular, I would like to thank Anders Friis-Christensen, Thorben Hansen and Nils Bo Wille-J{\"o}rgensen who are the people who took a chance and made it all possible. With a wam heart, I want to thank my father Georgios Kefaloukos, my mother Helena Hodgson and my step-father Stuart Hodgson for their great support and for always being proud of me. A special warm thought also goes out to Dora and Tonci Balic-Zunic, for many fond memories with the family and for being active grand parents when at times it was helpful. Another special thought goes out to the faculty at DIKU and all the PhD students, especially Vivek Shah, for fun and thought-provoking discussions over lunch in the cantine. It was sometimes silly and often enlightning. Also, I wish to thank Professor Robert Weibel who hosted me at the University of Z{\"u}rich (UZH), Department of Geography during my 3-month stay in Switzerland, as well as everybody in the department who offered their feedback, helped with accomodation, and sometimes invited me for cake and espresso. My talented colleagues at Grontmij A/S and the Danish Geodata Agency deserve a special thanks for their frequent and often pragmatic feedback on my work. I also reserve a special place in my heart for my friends, who forced me to go out and have some fun once in a while. As a commemoration, I would like to thank the late S{\o}ren Aundal, a primary school teacher who recently passed away. When I was a kid, he showed me how to train a pair of binoculars at birds, stars and planets in the sky, thus sparking my enduring curiosity about the world. Last but not least, I would like to thank Hans Skov-Petersen and Bernhard Snizek for kick starting my interest in the field of geographical data science, and by transitivity, in data science as a whole. Finally, I must acknowledge that I can never fully understand the influences that have lead me to this point. Instead, I close my eyes and humbly recognize that in the great labyrinth of human existence, I have never walked alone.
+First and foremost, I thank my primary supervisor Marcos Vaz Salles for his tireless dedication and big heart, the great discussions we had, and for his warm friendship. Furthermore, I thank my principal supervisor Martin Zachariasen, for always keeping a cool head, believing in my ideas and for giving me the right push at the right times. Next, and with very deep gratitude, I thank Anders Friis-Christensen who took the initiative and pushed the idea of an industrial PhD. In that neighborhood, I thank the Ministry of Higher Education and Science in Denmark, Grontmij A/S and the Danish Geodata Agency, who have gratiously funded this industrial PhD project for three years. In particular, Thorben Hansen and Nils Bo Wille-J{\o}rgensen deserve my special gratitude, for being the people who took perhaps the greatest chances of all. My very deepest feelings of gratitude go to Marusa, the co-bearer of many of my PhD burdens, a wonderful co-parent to our two children, one of my great inspiration as a human being, and for endless support, also during the final stretch when I felt the need to isolate myself in Osaka, Japan. With a wam heart, I want to thank my father Georgios Kefaloukos, my mother Helena Hodgson and my step-father Stuart Hodgson for their great support and for always being proud of me. A special warm thought also goes out to Dora and Tonci Balic-Zunic, for being wonderful people and great grandparents. Another special thought goes out to the faculty at DIKU and all the PhD students, especially Vivek Shah, for fun and thought-provoking discussions over lunch in the cantine. Jette Giovanni M{\o}ller must be very specially thanked for her almost super human patience and great mind for administration. Also, I wish to thank Professor Robert Weibel who kindly hosted my stay at the Department of Geography in Z{\"u}rich (UZH),  during me and my families three month stay in Switzerland, as well as everybody in the department who offered their feedback, helped with accomodation, and sometimes invited me for cake and espresso. My talented colleagues at Grontmij A/S and the Danish Geodata Agency deserve a special thanks for their frequent, useful, and often pragmatic feedback on my work. I also reserve a special place in my heart for my friends, who forced me to go out and have some fun once in a while. As a commemoration, I would like to thank the late S{\o}ren Aundal, a primary school teacher who recently passed away. When I was a kid, he showed me how to train a pair of binoculars at the sky, where we would watch birds, stars and planets together. He perhaps sparked my enduring curiosity about the world. Last but not least, I would like to thank Hans Skov-Petersen and Bernhard Snizek for kick starting my interest in the field of geographical data science, and by transitivity, in data science as a whole. Finally, I must acknowledge that I can never fully understand the influences that have lead me to this point. Instead, I close my eyes and humbly recognize that in the great labyrinth of human existence, I have never walked alone.
+
+This thesis is dedicated to my son Morgan and my daughter Athena, the little sister who was born a year into the PhD project.
 
 \tableofcontents
 
@@ -295,8 +297,8 @@ Software for the two published contributions of this thesis are made available a
 
 \begin{itemize}
 \item \textbf{Holistic Multi-scale Selection}: pending
-\item \textbf{In-Database Map Generalization}: \texttt{https://github.com/skipperkongen/declarative-cartography}
-\item \textbf{Prediction for Tile Materialization}: \textt{https://github.com/skipperkongen/tileheat}
+\item \textbf{In-Database Map Generalization}: \url{https://github.com/skipperkongen/declarative-cartography}
+\item \textbf{Prediction for Tile Materialization}: \url{https://github.com/skipperkongen/tileheat}
 \end{itemize}
 
 \section{Structure}
@@ -342,26 +344,41 @@ Answering each of these questions will require us to investigate areas beyond pu
 
 \section{Map Generalization}
 
-The general topic of this dissertation is map visualization. An important point that arises during map creation, is the process of adapting geographical data to scale of a given maps, which is refered to as map generalization~\cite{weibel1999generalising}. This thesis focuses mainly on holistic multi-scale selection, which is a specific type of map generalization operator. Indeed, many other operators exist, for example displacement and amalgamation, that could have been the focus of this thesis, however they are not. This section will cover the most important map generalization operators, and states the case for why they were not considered for a map visualization system for the web, in place of holistic multi-scale selection. Section~\ref{state:of:the:art:map:generalization:operators} covers the discussion of map generalization operators.
+The general topic of this dissertation is map visualization, however an important focus point of this dissertation is map generalization, which is the process of adapting geographical data to scale of a given map~\cite{weibel1999generalising}.
 
-There are many ways to think about the map generalization process. A high-level way to think about it is, that map generalization is a search problem: we are trying to find an ``optimal'' map, one that optimizes an objective function and satisfies a set of cartographic constraints~\cite{harrie1999constraint}. In this framework, we can think of the operators as functions that move the current solution from one map to another, and possible better, map. When multiple operators are considered simultaneously, the solution space may be enourmous. To simplify the discussion a bit, the discussion will be limited to methods that involve holistic multi-scale selection and multi-scale projection. Section~\ref{state:of:the:art:programming:multiscale:selection} covers the discussion of high-level generalization methods.
+\subsection{Batch-oriented vs. interactive}
 
 
-\section{Overview of Map Generalization Operators}
+\subsection{Model Abstraction vs. Visual Abstraction}
+
+In map generalization, Gr{\"u}nreich is attributed with a model that divides map generalization into two separate tasks of model generalization and cartographic generalization (see Figure~\ref{fig:state:of:the:art:gruenreich}). While this is a very useful distinction, the terms are not natural outside the domain of geography, for example in data visualization. To bridge the worlds of map visualization and data visualization, this dissertation will prefer the terms \emph{model abstraction} and \emph{visual abstraction}, instead of model generalization and cartographic generalization. Paraphrasing and perhaps stretching the original definitions, model abstraction is more concerned with what to display, while visual abstraction is concerned with how to display it. For example, holistic multi-scale selection belongs to model abstraction, since we are choosing what data to display. In constrast, the choice of appropriate symbols for the selected data would be a visual abstraction task. Clearly, these tasks are not entirely orthogonal, as for example larger symbols chosen during visual generalization would most likely require more aggressive filtering to be performed during model abstraction (room for fewer objects if symbols are larger).
+
+While the area of visual abstraction is somewhat outside the scope of this thesis, it must be briefly touched upon. The reason that visual abstraction is mostly outside the scope of this thesis is that visual abstraction is not an area with significant unsolved problems in the context of maps. Seminal work by Bertin~\cite{jacques1967semiologie} and Nickerson~\cite{nickerson1994visual} have thoroughly dealt with the topic of graphical expression including visual expression in the context of maps. The reason why visual abstraction still merits a discussion is the presence of recent work in data visualization that puts graphical abstraction languages as the center piece of the data visualization process. For example, the Ermac system~\cite{wu2014case} proposes a language for expressing data visualizations, which is heavily influenced by Wilkinson's work on the Grammer of Graphics~\cite{wilkinson2006grammar}. It is important to note that data visualization systems, such as Ermac, can safely ignore model abstraction, since the primary use case is visualization of statistical data. Statistical data can easily be transformed into well-known graphical representations, such as bar charts, without any concerns for the legibility problems that are encounted on (say) a point of interest map. Another system related system is ggplot2~\cite{wickham2009ggplot2}, which is also influenced by the Grammar of Graphics.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/gruenreich.pdf}
+\caption{\emph{Generalization framework:}}
+\label{fig:state:of:the:art:gruenreich}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+Mention graphics stuff
+
+\subsection{Operators}
 \label{state:of:the:art:map:generalization:operators}
 
-Displacement, amalgamation. The others are supported by our contributions.
-
+While this thesis focuses mainly on the holistic multi-scale selection operator, other operators, such as displacement or amalgamation, could have been the focus of this thesis. However, they are not. This section clarifies the main arguments for why holistic multi-scale selection is considered the most important operator for map visualizations on the web.
 
 
 % EXPRESSING
-\section{Formulations of Multi-scale Selection}
+\section{Expressing Multi-scale Selection}
 \label{state:of:the:art:programming:multiscale:selection}
 
-State requirements for both: express multi-scale star and ladder, holistic selection (i.e. user-defined constraints and objectives), integrate relational data, encourage code sharing and reuse, intuitive for non-experts (constraints), maximize program clarity/minimize program length (objective).
-\emph{maybe state these in Introduction: problem statement, and refer to the section}.
+There are many ways to formulate the problem of map generalization in general, and holistic multi-scale selection in particular. The subsections will cover different ways to formulate this task, weighing the pros against the cons in the context of map visualization for the web.
 
-Briefly mention graphics stuff~\cite{jacques1967semiologie, nickerson1994visual, tufte1983visual, wilkinson2006grammar, wickham2009ggplot2}.
+
 
 \subsection{Integer Programming}
 
