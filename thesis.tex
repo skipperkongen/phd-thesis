@@ -176,6 +176,13 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 \label{introduction:problem:statement}
 % DONE
 
+\begin{enumerate}
+\item How can we intuitively express the creation of multi-scale map visualizations?
+\item How can we scalably process millions of geographical records for map visualizations?
+\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
+\end{enumerate}
+
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
@@ -309,7 +316,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 % Big data: The next frontier for innovation, competition, and productivity
 % Breaking the chains: On declarative data analysis and data independence in the big data era
 
-This thesis argues that it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
+This thesis argues that GIS has become marginalized on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
 
 \marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
 
@@ -319,16 +326,6 @@ bring it to your attention, the paper is most likely dead.}
 \pitfall{\emph{Enumeration Without Justification:} Simply citing the previous work is necessary but not sufficient. A description that 'X did Y', even if it includes detail, is not enough. You must explain why this previous work does not itself solve your problem, and what specific limitations of that previous work your approach does address. Every paper you cite in the previous work section is a fundamental challenge to the very existence of your project. Your job is to convince a skeptical reader that the world needs your new thing because it is somehow better than a particular old thing. Moreover, it's not even enough to just make the case that yours is different: yours must be better. The claims you make must, of course, be backed up by your validation in a subsequent results section.
 
 A good way to approach the previous work section is that you want to tell to a story to the reader. Figure out the messages you want to get across to the reader, in what order, and then use the references to help you tell this story. It is possible to group the previous work into categories, and to usefully discuss the limitations of the entire category.}
-
-A MVMS must be \emph{scalable} both in the size of data~\cite{lins2013nanocubes, Im2013visreduce, battle2013scalar, liu2013immens} and the size of the audience~\cite{viegas2007manyeyes}. Todays users on the web expect acceptable latency for an application, and 24 x 7availability~\cite{google2010latency, amazon2010latency}. Additionally, it is crucial that designers can craft visualizations using MVMS interfaces that are both intuitive, efficient (in terms of wall-clock time) and can express multi-scale holistic selection.
-
-To address the short-comings of GIS for the web, this dissertation makes the case for a new system category, Map Visualization Management Systems (MVMS). An MVMS should address three crucial questions:
-
-\begin{enumerate}
-\item How can we intuitively express the creation of multi-scale map visualizations?
-\item How can we scalably process millions of geographical records for map visualizations?
-\item How can we scalably serve map visualizations to millions of online users, who expect 24~x~7~availability and acceptable latency?
-\end{enumerate}
 
 Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
 
@@ -344,11 +341,22 @@ Answering each of these questions will require us to investigate areas beyond pu
 % subsection{CONTRIBUTION} plus-minus. Last subsection ACCEPTED area.
 
 \section{Map Generalization}
-\subsection{}
+
+The general topic of this dissertation is map visualization. An important point that arises during map creation, is the process of adapting geographical data to scale of a given maps, which is refered to as map generalization~\cite{weibel1999generalising}. This thesis focuses mainly on holistic multi-scale selection, which is a specific type of map generalization operator. Indeed, many other operators exist, for example displacement and amalgamation, that could have been the focus of this thesis, however they are not. This section will cover the most important map generalization operators, and states the case for why they were not considered for a map visualization system for the web, in place of holistic multi-scale selection. Section~\ref{state:of:the:art:map:generalization:operators} covers the discussion of map generalization operators.
+
+There are many ways to think about the map generalization process. A high-level way to think about it is, that map generalization is a search problem: we are trying to find an ``optimal'' map, one that optimizes an objective function and satisfies a set of cartographic constraints~\cite{harrie1999constraint}. In this framework, we can think of the operators as functions that move the current solution from one map to another, and possible better, map. When multiple operators are considered simultaneously, the solution space may be enourmous. To simplify the discussion a bit, the discussion will be limited to methods that involve holistic multi-scale selection and multi-scale projection. Section~\ref{state:of:the:art:programming:multiscale:selection} covers the discussion of high-level generalization methods.
+
+
+\section{Overview of Map Generalization Operators}
+\label{state:of:the:art:map:generalization:operators}
+
+Displacement, amalgamation. The others are supported by our contributions.
+
+
 
 % EXPRESSING
-\section{Programming Multi-scale Selection}
-\label{related:work:expressing}
+\section{Formulations of Multi-scale Selection}
+\label{state:of:the:art:programming:multiscale:selection}
 
 State requirements for both: express multi-scale star and ladder, holistic selection (i.e. user-defined constraints and objectives), integrate relational data, encourage code sharing and reuse, intuitive for non-experts (constraints), maximize program clarity/minimize program length (objective).
 \emph{maybe state these in Introduction: problem statement, and refer to the section}.
@@ -365,7 +373,7 @@ Plus: Tremendous advances in combinatorial optimization packages~\cite{cplex}.
 Minus: Integer programs are hard to formulate and extensive to write, they require us to know the data a priori, code not reusable, hard to parallelize, so approach is limited by single machine capacity. A slight variation in the goals will require an extensive rewrite.
 For the future: High-level languages~\cite{meliou2011reverse} that translate into low-level integer programming formulations, efficient distributed solvers for IP.
 
-\subsection{Search}
+\subsection{Meta heuristics}
 
 Simulated annealing~\cite{ware2003generalization_sa}
 
