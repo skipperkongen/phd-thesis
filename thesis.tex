@@ -127,6 +127,7 @@ First and foremost, I wish to dedicate this work to my son Morgan and my daughte
 
 \chapter{Introduction}
 \label{chapter:introduction}
+% NOTFINISHED
 
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
@@ -173,6 +174,7 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 
 \section{Problem statement}
 \label{introduction:problem:statement}
+% DONE
 
 \begin{figure}[htbp]
 \begin{center}
@@ -193,13 +195,13 @@ The web has transformed how map visualization should ideally be approached. This
 
 In contrast, \emph{Holistic multi-scale selection} is a sampling process that filters data according to constraints~\cite{woodruff1998constant, topfer1966principles} and objectives~\cite{harrie1999constraint} that are evaluated locally and globally. For example, a map visualization may require that unit areas of the map stay below a certain object density or that objects are separated by a minimum distance (see Figure~\ref{fig:introduction:holistic:selection}). Moreover, since in general not all data points are equally important, it is desirable to prioritize conflicted objects based on some measure of importance. Finally, to enable coherent maps over multiple scales, it is important that holistic multi-scale selction can be performed consistently over a set of scales~\cite{foerster2010challenges}.
 
-While some form of holistic multi-scale selection has appeared in a few recent map visualization systems~\cite{sarma2012fusiontables}, there is a lack of better models for holistic multi-scale selection that can incorporate user-defined constraints, objectives, and notions of scale. This dissertation will focus on this problem by developing a richer model for holistic selection.
+The idea of holistic multi-scale selection for map generalization is not itself a new idea~\cite{weibel}. Furthermore previous work has either offered direct support for holistic multi-scale selection~\cite{sarma2012fusiontables} or proposed metaheuristic frameworks that do not necessarily preclude such an operator~\cite{lamy1999application, ware2003generalization_sa}. However, in all previously published systems, there is insufficient support for user-defined constraints, objectives, and notions of scale. This dissertation focuses on the problem of holistic multi-scale selection with strong, intuitive and explicit support for user-defined constraints, objectives, and notions of scale.
 
 % DECLARATIVE SPECIFICATION
 % DONE 1
-\item \textbf{Declarative Specification}: Map designers, especially those who are not GIS-experts, should ideally be able to express holistic multi-scale selection over large geographical tables in a highly productive way. One approach is to express holistic selection in low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, non-experts can not be expected to write low-level code. In a better approach, designers specify just the high-level constraints and objectives for a map in some intuitive specification language, while leaving the minute selection of data to the system. This goal fits exactly the vision of reverse data management as presented by Meliou at al.~\cite{meliou2011reverse}. The authors propose a declarative langauge for what they call \emph{how-to} queries. The idea behind a how-to query is specify a set of constraints and an objective for a target database that must be computed from a source database. This fits exactly the general pattern for holistic multi-scale selection queries, namely, given an input table of geographical data, compute an output table that satisfies a set of constraints and objectives.
+\item \textbf{Declarative Specification}: Map designers, especially those who are not GIS-experts, should ideally be able to express holistic multi-scale selection over large geographical tables in a highly productive way. One approach is to express holistic selection algorithmically in low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. This is the usual approach taken~\cite{sarma2012fusiontables}. However, non-experts can not be expected to write low-level code for map generalization. Another approach is to offer a graphical user interfaces that allow map designers to select data. While this approach should not be ruled out, there is a more fundamental approach of designing a domain-specific language for holistic multi-scale selection. In turn, graphical interfaces can be implemented on top of such a language. Ideally, designers should specify just the high-level constraints and objectives for a map in an intuitive specification language, while leaving the minute selection of data to the system. This goal fits exactly the vision of reverse data management as presented by Meliou at al.~\cite{meliou2011reverse}. The authors of this vision proposed a declarative langauge for what they call \emph{how-to} queries. The idea behind a how-to query is specify a set of constraints and an objective for a target database that the system must compute from a source database (they gave an example of optimizing a stock portfolio). This pattern fits exactly the general pattern for holistic multi-scale selection queries, namely, given an input table of geographical data, compute an output table that satisfies a set of constraints and objectives. This dissertation follows in the footsteps of Meliou et al. by solving the problem of a declarative language design for holistic multi-scale selection.
 
-Latching on to the vision of reverse data management, this dissertation will study and design declarative langauges for holistic multi-scale selection. Crucially, such languages must: (1) be intuitive and productive for geographical non-experts, (2) allow map designers to express constraints and objectives that should be enforced during selection, (3) allow map designes to express both the star and ladder paradigm of multi-scale data abstraction~\cite{foerster2010challenges},  (4) target geographical data that is stored in relational databases, and (5) encourage code sharing and reuse through schema-oriented language features, similar to SQL. In the literature no such language or its equivalent exist. To fill the gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection.
+Crucially, a declarative language for holistic multi-scale selection must: (1) be intuitive and productive for geographical non-experts, i.e. it must be concise and expressive, (2) allow map designers to express user-defined constraints and objectives that should be enforced during selection, (3) allow map designes to express both the star and ladder paradigm of multi-scale map generalization~\cite{foerster2010challenges},  (4) target geographical data that is stored in relational databases, since this is where most data for visualization is managed~\cite{wu2014case}, and (5) encourage code sharing and reuse through schema-oriented language features, similar to SQL. In the literature no such language has been proposed or designed for map visualization. To fill the gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection that meet the requirements stated above.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -243,40 +245,50 @@ The contributions of this thesis cover two topics: global selection for data-dri
 
 %Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
  
-\subsection{Global Selection for Geographical Maps with Zoom Consistency}
+\subsection{Holistic Multi-scale Selection}
 \label{sec:introduction:contributions:cvl}
 
 Something resembling the abstract
 
-\subsection{Global Selection for Data Visualizations}
+\subsection{In-Database Map Generalization}
 \label{sec:introduction:contributions:glossy}
 
 Something resembling the abstract. 
 
-\subsection{Prediction of Geospatial Key-Value Workloads}
+\subsection{Prediction for Tile Materialization}
 \label{sec:introduction:contributions:tileheat}
 
 Something resembling the abstract
 
 \subsection{Publications}
+% DONE
 
-Some of the chapters in this thesis have been previously published in or submitted to international conferences. The publications and submissions are listed below: 
+Previous versions of the chapters describing the contributions of this thesis have been previously published in or submitted to international conferences. The publications and submissions are listed below: 
 
 \begin{itemize}
-\item \textbf{Chapter~\ref{chapter:cvl} -- Declarative Cartography~\cite{declarative:cartography}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In ICDE, 2014. 
-\item \textbf{Chapter~\ref{chapter:glossy} -- Glossy~\cite{glossy}}: Pimin Konstantin Kefaloukos, and Marcos Vaz Salles. Glossy: Global Selection for Data Visualizations. In submission. 
-\item \textbf{Chapter~\ref{chapter:tileheat} -- Tileheat~\cite{tileheat}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In SIGSPATIAL, 2012. 
+\item \textbf{Chapter~\ref{chapter:glossy} -- Holistic Multi-scale Selection~\cite{glossy}}: Pimin Konstantin Kefaloukos, and Marcos Vaz Salles. Glossy: Global Selection for Data Visualizations. In submission. 
+\item \textbf{Chapter~\ref{chapter:cvl} -- In-Database Map Generalization~\cite{declarative:cartography}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In ICDE, 2014. 
+\item \textbf{Chapter~\ref{chapter:tileheat} -- Prediction for Tile Materialization~\cite{tileheat}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In SIGSPATIAL, 2012. 
 \end{itemize}
 
 \subsection{Data and Software}
+% DONE
 
-Mention where Git repos are and what they contain.
+Software for the two published contributions of this thesis are made available as open source software on Github. The software for the paper which is in submission will be made available after publication:
+
+\begin{itemize}
+\item \textbf{Holistic Multi-scale Selection}: pending
+\item \textbf{In-Database Map Generalization}: \texttt{https://github.com/skipperkongen/declarative-cartography}
+\item \textbf{Prediction for Tile Materialization}: \textt{https://github.com/skipperkongen/tileheat}
+\end{itemize}
 
 \section{Structure}
 \label{sec:introduction:structure}
+% DONE
 
-The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers the state of the art data abstraction and scalable key-value stores. Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
+The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers state-of-the-art map generalisation and visualization systems for the web abstraction, including related but non-spatial technologies such as key-value stores. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Finally, chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 
+%Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. 
 
 %  ############
 %  #  CHAPTER  
