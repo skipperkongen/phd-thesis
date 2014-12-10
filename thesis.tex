@@ -186,11 +186,15 @@ Data visualizations must scale well both in the size of the data~\cite{Im2013vis
 \end{figure}
 
 
-The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art in geographical information systems (GIS). Map visualizations must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. Moreover, designers must be able to create compelling and complex map visualizations using inituitive and expressive interfaces~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. This dissertation focuses on how to build map visualization systems that fulfill these requirements. In particular, the following problems are addressed:
+The web has transformed how map visualization should ideally be approached. This has opened up important new problems that must be solved, and which are not adequately addressed by the state of the art in geographical information systems (GIS). Specifically, a map visualization system must support geospatial non-experts who are increasingly tasked with designing map visualizations~\cite{wu2014case, battle2013scalar, fekete2012dmvis}. To benefit of this growing segment of map designers, systems most expose intuitive and productive map authoring interfaces. Moreover, to harness the explosion in available geograhical information and ubiquitous web access of mobile users, systems must scale infinitely both in data volume~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes}. This dissertation focuses on how to build map visualization systems that fulfill these requirements. In particular, the following problems must be addressed:
+
+
+\note{TEST: Each of the following sub-sections must (1) sound like a problem, (2) raise important and genuine concerns, (3) must not have been solved by previous work. }
+
 
 \begin{itemize}
-
 % HOLISTIC MULTI-SCALE SELECTION
+% SEMICOMPLETE
 \item \textbf{Holistic Multi-scale Selection} Typically, real-life geographical information is non-uniformly distributed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps will be cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, selection is an intuitive way to reduce clutter in a map, simple selection, which filters a dataset row-by-row according to simple predicates, can not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial}. Consequently, simple selection can not ensure that maps represent as much of the data as is legibly possible for all local areas. 
 
 In contrast, \emph{Holistic multi-scale selection} is a sampling process that filters data according to constraints~\cite{woodruff1998constant, topfer1966principles} and objectives~\cite{harrie1999constraint} that are evaluated locally and globally. For example, a map visualization may require that unit areas of the map stay below a certain object density or that objects are separated by a minimum distance (see Figure~\ref{fig:introduction:holistic:selection}). Moreover, since in general not all data points are equally important, it is desirable to prioritize conflicted objects based on some measure of importance. Finally, to enable coherent maps over multiple scales, it is important that holistic multi-scale selction can be performed consistently over a set of scales~\cite{foerster2010challenges}.
@@ -198,7 +202,7 @@ In contrast, \emph{Holistic multi-scale selection} is a sampling process that fi
 The idea of holistic multi-scale selection for map generalization is not itself a new idea~\cite{weibel}. Furthermore previous work has either offered direct support for holistic multi-scale selection~\cite{sarma2012fusiontables} or proposed metaheuristic frameworks that do not necessarily preclude such an operator~\cite{lamy1999application, ware2003generalization_sa}. However, in all previously published systems, there is insufficient support for user-defined constraints, objectives, and notions of scale. This dissertation focuses on the problem of holistic multi-scale selection with strong, intuitive and explicit support for user-defined constraints, objectives, and notions of scale.
 
 % DECLARATIVE SPECIFICATION
-% DONE 1
+% SEMICOMPLETE
 \item \textbf{Declarative Specification}: Map designers, especially those who are not GIS-experts, should ideally be able to express holistic multi-scale selection over large geographical tables in a highly productive way. One approach is to express holistic selection algorithmically in low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. This is the usual approach taken~\cite{sarma2012fusiontables}. However, non-experts can not be expected to write low-level code for map generalization. Another approach is to offer a graphical user interfaces that allow map designers to select data. While this approach should not be ruled out, there is a more fundamental approach of designing a domain-specific language for holistic multi-scale selection. In turn, graphical interfaces can be implemented on top of such a language. Ideally, designers should specify just the high-level constraints and objectives for a map in an intuitive specification language, while leaving the minute selection of data to the system. This goal fits exactly the vision of reverse data management as presented by Meliou at al.~\cite{meliou2011reverse}. The authors of this vision proposed a declarative langauge for what they call \emph{how-to} queries. The idea behind a how-to query is specify a set of constraints and an objective for a target database that the system must compute from a source database (they gave an example of optimizing a stock portfolio). This pattern fits exactly the general pattern for holistic multi-scale selection queries, namely, given an input table of geographical data, compute an output table that satisfies a set of constraints and objectives. This dissertation follows in the footsteps of Meliou et al. by solving the problem of a declarative language design for holistic multi-scale selection.
 
 Crucially, a declarative language for holistic multi-scale selection must: (1) be intuitive and productive for geographical non-experts, i.e. it must be concise and expressive, (2) allow map designers to express user-defined constraints and objectives that should be enforced during selection, (3) allow map designes to express both the star and ladder paradigm of multi-scale map generalization~\cite{foerster2010challenges},  (4) target geographical data that is stored in relational databases, since this is where most data for visualization is managed~\cite{wu2014case}, and (5) encourage code sharing and reuse through schema-oriented language features, similar to SQL. In the literature no such language has been proposed or designed for map visualization. To fill the gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection that meet the requirements stated above.
@@ -213,7 +217,7 @@ Crucially, a declarative language for holistic multi-scale selection must: (1) b
 \end{figure}
 
 % PROCESSING
-% PENDING
+% SEMICOMPLETE
 \item \textbf{In-database Processing}: A Map visualization systems must be able to scalably process a specification for multi-scale selection of geographical data, since the data may be large. One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for map visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored (see Figure~\cite{fig:introduction:indatabase:execution}).
 
 \begin{figure}[htbp]
@@ -228,7 +232,7 @@ Crucially, a declarative language for holistic multi-scale selection must: (1) b
 While the paradigm of in-database processing for visualizations has been proposed in a recent vision by Wu et al.~\cite{wu2014case}, their vision does not adequately address the special challenges presented by map visualization. This dissertation will design and implement a compiler that translates high-level specifications of holistic multi-scale selection into pure SQL, which can be scalably evaluated inside an RDBMS.
 
 % SERVING
-% PENDING
+% SEMICOMPLETE
 \item \textbf{Predictive Materialization}: Map visualization systems must be able to serve tiled multi-scale maps to large web audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack}. In particular, the advantages of scalable distribution systems, such as content delivery networks (CDN), must be cost-efficiently leveraged~\cite{beaver2010haystack, datacentre}. However, since the number of tiles grow expenentially in the number of supported scales, fully materializing a multi-scale map into tiles and storing it in a CDN is costly. 
 
 %Linearization, data partitioning, data replication, and key-value stores address the issue of scaling data visualization services to large audiences who expect 24 x 7 availability and acceptable latency~\cite{gaffuri2012toward, pilchin2007dynamo, beaver2010haystack};
@@ -238,6 +242,9 @@ While the paradigm of in-database processing for visualizations has been propose
 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
+% NOTFINISHED
+
+\note{(I guess) these are like mini summaries of the articles. They should of course explicitely connect to the problem statements above.}
 
 Instead of presenting a complete system for creating and serving data visualizations, this thesis concentrates on specific aspects of building such a system. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
 
@@ -247,16 +254,19 @@ The contributions of this thesis cover two topics: global selection for data-dri
  
 \subsection{Holistic Multi-scale Selection}
 \label{sec:introduction:contributions:cvl}
+% NOTFINISHED
 
 Something resembling the abstract
 
 \subsection{In-Database Map Generalization}
 \label{sec:introduction:contributions:glossy}
+% NOTFINISHED
 
 Something resembling the abstract. 
 
 \subsection{Prediction for Tile Materialization}
 \label{sec:introduction:contributions:tileheat}
+% NOTFINISHED
 
 Something resembling the abstract
 
@@ -299,6 +309,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 % Big data: The next frontier for innovation, competition, and productivity
 % Breaking the chains: On declarative data analysis and data independence in the big data era
 
+This thesis argues that it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
 
 \marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
 
