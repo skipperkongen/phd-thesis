@@ -373,10 +373,6 @@ The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
 \minisec{Enable efficient sampling}
 \minisec{Support filtering conditions}
 
-\subsection{Qualification of multi-scale selection}
-
-The conclusion is that multi-scale selection mets all of these requirements.
-
 \section{Real-time Map Generalization}
 
 Explain how real-time map generalization is an algorithmic approach that mostly exploit data structures for indexing. Expressing map generalization requires the formulation of algorithms, for example implemented as functional or imperative code, that access these data structures. Lack of a fundamental and concise language for expressing map generalization in this framework, so approach is limited to the enumeration of algorithmic recipes.
@@ -384,7 +380,7 @@ Explain how real-time map generalization is an algorithmic approach that mostly 
 % approaches: expressing, online processing
 \subsection{Data Structures}
 % approaches using data structures
-Two-dimensional data structures, such as quadtrees~\cite{bereuter2013real} and GAP-trees~\cite{van1995gap}. One-dimensional data-structures, such as B-tress and Hash Tables, can efficiently emulate certain aspects of two-dimensional datastructures by employing the techniques of linearization~\cite{zcurve, hilbertcurve}. For example, the nodes of a quadtree can be adressed by one-dimensional strings over the alphabet $\lbrace A, B, C, D \rbace$, where testing the existance of a node in a subtree corresponds to testing for prefixes. Finding keys that match a prefix is an efficiently operation in a B-tree. However, what?
+Two-dimensional data structures, such as quadtrees~\cite{bereuter2013real} and GAP-trees~\cite{van1995gap}. One-dimensional data-structures, such as B-tress and Hash Tables, can efficiently emulate certain aspects of two-dimensional datastructures by employing the techniques of linearization~\cite{zcurve, hilbertcurve}. For example, the nodes of a quadtree can be adressed by one-dimensional strings over the alphabet $\lbrace A, B, C, D \rbrace$, where testing the existance of a node in a subtree corresponds to testing for prefixes. Finding keys that match a prefix is an efficiently operation in a B-tree. However, what?
 
 Where does nutanong2012multiresolution fit in?
 
@@ -392,7 +388,7 @@ Distributed data structures~\cite{paralleluniverse2012spacebase}.
 
 \subsection{Online processing}
 
-\subsection{Advantages and Drawbacks}
+\subsection{Discussion}
 % advantages
 Advantage: not storing multiple representations, flexible queries like KNN and bounding box, fast one-off queries.
 
@@ -431,14 +427,16 @@ ABM, Tree-traversal, meta-heuristics
 % In-database processing
 Ermac, Scalar, CVL, Glossy
 
-\subsection{Advantages and Drawbacks}
+\subsection{Discussion}
+
 
 \section{Conclusion}
 % conclusion
 
-This thesis proposes a batch-oriented approach to perform multi-scale selection of geographical data.
-Conclude on the sensibility of performing batch-oriented multi-scale selection by using context from the three previous sections.
-
+This thesis proposes a batch-oriented, declarative, in-database approach for multi-scale selection of geographical data.
+- Conforms to principles
+- Declarative is good
+- In-database is good
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -448,38 +446,47 @@ Conclude on the sensibility of performing batch-oriented multi-scale selection b
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Serving Web Maps}
+\chapter{Online Map Serving}
 
 % approaches: expressing, processing, serving
 
 State the requirements: high-availability, high-scalability, high-performance, interactive (constraints), minimize cost (objective).
 
+% Web Services
 \section{Web services}
 
 \subsection{Protocols}
 WMS, WFS, etc
 
 \subsection{Query Processing}
+Multi-tier architecture
 
-\subsection{Advantages and Drawbacks}
+\subsection{Discussion}
 
-
+% Content Delivery Networks
 \section{Content Delivery Networks}
 Key-value paradigm. Data partitioning, data replication
 
 \subsection{Protocols}
 XYZ
 
+\subsection{Systems}
+Key-value stores
+
 \subsection{Preprocessing}
 % MapReduce
 Dean lessons
 
-\subsection{Query Processing}
+\subsection{Discussion}
 
-\subsection{Prediction}
+% Prediction
+\section{Prediction}
 
-\subsection{Advantages and Drawbacks}
+\subsection{Real-time prediction}
 
+\subsection{Batch-oriented prediction}
+
+\subsection{Discussion}
 
 \section{Conclusion}
 
