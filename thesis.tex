@@ -354,10 +354,39 @@ dimensionality, or collapse, from area-referenced features to line or point refe
 features; exaggeration of the size of significant features that would otherwise be too 
 small to perceive; typification, or caricature, of the form and distribution of features
 
+\section{Principles of Map Generalization}
+
+This thesis proposes a new map generalization technique for multi-scale selection. To ensure that multi-scale selection is a solid solution, it must be evaluated in the context of well-known principles from the map generalization literature. This section reviews the most important principles.
+
+\subsection{Constant Information Density}
+
+Cite woodruff and toepfer.
+
+\subsection{Mobile Map Design Objectives}
+
+The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
+
+\minisec{Minimize overlaps}
+\minisec{Respect relative importance of entries}
+\minisec{Maximize spatial fullness}
+\minisec{Provide panning/zooming consistency}
+\minisec{Enable efficient sampling}
+\minisec{Support filtering conditions}
+
+\subsection{Qualification of multi-scale selection}
+
+The conclusion is that multi-scale selection mets all of these requirements.
+
+
+
+
+
 \section{Real-time Map Generalization}
 
 % approaches: expressing, processing, serving
-Indexing~\cite{bereuter2013real, nutanong2012multiresolution, van1995gap}. 
+\subsection{Data Structures}
+
+Quadtrees~\cite{bereuter2013real} , nutanong2012multiresolution, van1995gap}. 
 
 \subsection{Advantages and Drawbacks}
 % advantages
