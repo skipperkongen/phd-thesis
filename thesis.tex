@@ -377,39 +377,67 @@ The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
 
 The conclusion is that multi-scale selection mets all of these requirements.
 
-
-
-
-
 \section{Real-time Map Generalization}
 
-% approaches: expressing, processing, serving
-\subsection{Data Structures}
+Explain how real-time map generalization is an algorithmic approach that mostly exploit data structures for indexing. Expressing map generalization requires the formulation of algorithms, for example implemented as functional or imperative code, that access these data structures. Lack of a fundamental and concise language for expressing map generalization in this framework, so approach is limited to the enumeration of algorithmic recipes.
 
-Quadtrees~\cite{bereuter2013real} , nutanong2012multiresolution, van1995gap}. 
+% approaches: expressing, online processing
+\subsection{Data Structures}
+% approaches using data structures
+Two-dimensional data structures, such as quadtrees~\cite{bereuter2013real} and GAP-trees~\cite{van1995gap}. One-dimensional data-structures, such as B-tress and Hash Tables, can efficiently emulate certain aspects of two-dimensional datastructures by employing the techniques of linearization~\cite{zcurve, hilbertcurve}. For example, the nodes of a quadtree can be adressed by one-dimensional strings over the alphabet $\lbrace A, B, C, D \rbace$, where testing the existance of a node in a subtree corresponds to testing for prefixes. Finding keys that match a prefix is an efficiently operation in a B-tree. However, what?
+
+Where does nutanong2012multiresolution fit in?
+
+Distributed data structures~\cite{paralleluniverse2012spacebase}.
+
+\subsection{Online processing}
 
 \subsection{Advantages and Drawbacks}
 % advantages
-Advantage: not storing multiple representations, reparameterization, fast one-off queries, highly suitable for situations that involve a single GIS operator.
+Advantage: not storing multiple representations, flexible queries like KNN and bounding box, fast one-off queries.
 
 % drawbacks
-Drawbacks: not optimized across queries, although this is not a fundamentally problem as witnessed by seminal studies of self-adjusting data structures~\cite{tarjan1985selfadjusting}. require online query processors that are harder to scale, significant repetition of work. Hard to perform data partitioning, although distributed spatial indexing techniques have been developed recently~\cite{paralleluniverse2012spacebase}.
+Drawbacks: Somewhat specialized. Not particularly well-suited for web-scale access as they  require advanced online query engines, that are harder to scale than simpler indexing structures, such as B-trees and Hash tables. One-dimensional data structures better facilitate data partitioning~\cite{consistent hashing} and replication~cite\.  Not optimized across queries, although this is not a fundamentally problem as witnessed by Sleator and Tarjan's seminal study of self-adjusting data structures~\cite{tarjan1985selfadjusting}. However, .... require online query processors that are harder to scale, and still repeat work across queries. While advanced distributed spatial indexing techniques do exist, these only partially mitigate the problems of non-distributed index structures in a web-scale data serving context.
 
 \section{Batch-oriented Map Generalization}
 
-% approaches
+% approaches: expressing, off-line processing
 An efficient sampling method for characterizing points of interests on maps: wang2014efficient
 
-\subsection{Advantages and Drawbacks}
-% advantages
-Batch-orientied: sarma2012fusiontables
+% expression
+\subsection{Specification}
 
-% drawbacks
+Search
+- Ware simulated annealing, Lamy agent-based
+
+Linear Programming
+- Da Sarma, Haunert
+
+Declarative Programming
+- Pigion, CVL, Glossy
+
+% Off-line processing
+\subsection{Off-line processing}
+
+% MapReduce
+spatialhadoop, hadoopgis.
+
+% IP solvers
+Apache Simplex Solver
+
+% Custom code
+ABM, Tree-traversal, meta-heuristics
+
+% In-database processing
+Ermac, Scalar, CVL, Glossy
+
+\subsection{Advantages and Drawbacks}
 
 \section{Conclusion}
 % conclusion
 
-Conclusion: O(log n) is too slow for maps on the web, need O(1) and ability to scale infinitely using data partitioning and data replication techniques.
+This thesis proposes a batch-oriented approach to perform multi-scale selection of geographical data.
+Conclude on the sensibility of performing batch-oriented multi-scale selection by using context from the three previous sections.
 
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -428,13 +456,30 @@ State the requirements: high-availability, high-scalability, high-performance, i
 
 \section{Web services}
 
-\subsection{Approaches}
+\subsection{Protocols}
+WMS, WFS, etc
+
+\subsection{Query Processing}
+
 \subsection{Advantages and Drawbacks}
+
 
 \section{Content Delivery Networks}
+Key-value paradigm. Data partitioning, data replication
 
-\subsection{Approaches}
+\subsection{Protocols}
+XYZ
+
+\subsection{Preprocessing}
+% MapReduce
+Dean lessons
+
+\subsection{Query Processing}
+
+\subsection{Prediction}
+
 \subsection{Advantages and Drawbacks}
+
 
 \section{Conclusion}
 
