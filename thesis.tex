@@ -347,7 +347,13 @@ Answering each of these questions will require us to investigate areas beyond pu
 
 Map generalization is a process performed by map designers to adapt and transform geographical information to retain as much as possible of the relevant geographical information in geographical map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographical data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographical information, such as choropleth maps, which eliminates the explicit representation of geographical data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising} as well as Jones and Ware~\cite{jones2005webage}.  
 
-\subsection{Batch-oriented vs. interactive}
+\subsection{Real-time vs. Batch-oriented}
+
+wang2014efficient
+
+Real-time: indexing~\cite{bereuter2013real, nutanong2012multiresolution, van1995gap, }. Primary advantage: not storing multiple representations, reparameterization. Primary drawbacks: require online query processors that are harder to scale, identical queries are reprocesses, slow.
+
+Batch Orientied
 
 
 \subsection{Model Abstraction vs. Visual Abstraction}
@@ -374,12 +380,21 @@ While this thesis focuses mainly on the holistic multi-scale selection operator,
 
 
 % EXPRESSING
-\section{Expressing Multi-scale Selection}
+\section{Expressing Spatial Transformation}
 \label{state:of:the:art:programming:multiscale:selection}
+
+
 
 There are many ways to formulate the problem of map generalization in general, and holistic multi-scale selection in particular. The subsections will cover different ways to formulate this task, weighing the pros against the cons in the context of map visualization for the web.
 
+\subsection{Low-level Spatial Languages}
 
+Fit in: Spatial extensions for SQL Postgis? Programming language library Shapely? Parallel processing languages Pigeon?
+
+Advantages: Powerful enough to express most spatial transformation, including encoding map generalization. Disadvantage: Require algoritmic thinking to express map genearlization. Few people can code in this way. Conclusion: highly suitable as target languages for higher-level map generalization languages.
+
+
+Raster analysis GDAL?
 
 \subsection{Integer Programming}
 
@@ -411,6 +426,8 @@ SQL, datalog
 % PROCESSING
 \section{Processing Data for Multi-scale Selection}
 \label{related:work:processing}
+
+MapReduce camp: eldawy2014spatialhadoop, hadoopgis, 
 
 State the requirements: high-scalability, match programming (constraints), minimize cost (objective).
 \emph{maybe state these in Introduction: problem statement, and refer to the section}.
