@@ -262,13 +262,13 @@ The contributions of this thesis cover two topics: global selection for data-dri
 
 %Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
  
-\subsection{Holistic Multi-scale Selection}
+\subsection{Declarative Multi-scale Selection}
 \label{sec:introduction:contributions:cvl}
 % NOTFINISHED
 
 Something resembling the abstract
 
-\subsection{In-Database Map Generalization}
+\subsection{In-database Processing of Multi-scale Selection}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
 
@@ -314,12 +314,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 %  #  CHAPTER  
 %  ############ 
 
-\chapter{State of the Art}
-\label{chapter:state:of:the:art}
-% Big data: The next frontier for innovation, competition, and productivity
-% Breaking the chains: On declarative data analysis and data independence in the big data era
-
-This thesis argues that GIS has become marginalized on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
+\part{State of the Art}
 
 \marcos{Related work chapter: here are the broad areas (paint the big picture). Maybe even a real picture, a figure that shows the different areas. A conceptual model of how to navigate the litterature, a map of sorts. Here are some representative works, here is how you should think about them. There will be some references, details in the related works. focus on data abstraction (map generalization, also cover some other stuff), less focus on data serving (database, key-value stores, caching, CDN, etc.).}
 
@@ -330,30 +325,38 @@ bring it to your attention, the paper is most likely dead.}
 
 A good way to approach the previous work section is that you want to tell to a story to the reader. Figure out the messages you want to get across to the reader, in what order, and then use the references to help you tell this story. It is possible to group the previous work into categories, and to usefully discuss the limitations of the entire category.}
 
-Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
+\chapter{Map Generalization}
+\label{chapter:state:of:the:art:map:generalization}
+% Big data: The next frontier for innovation, competition, and productivity
+% Breaking the chains: On declarative data analysis and data independence in the big data era
 
-%\section{Map Generalization}
-%\subsection{Batch-oriented}
-%\subsection{Interactive}
-%Discard this categorically for reasons a, b, c.
+%This thesis argues that GIS has become marginalized on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
 
-% FORMAT:
-% section{FIELD}
-% RELEVANCE TO MAP VISUALIZATION
-% subsection{CONTRIBUTION} plus-minus. First subsections are DISCARDED areas
-% subsection{CONTRIBUTION} plus-minus. Last subsection ACCEPTED area.
-
-\section{Map Generalization}
+%Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
 
 Map generalization is a process performed by map designers to adapt and transform geographical information to retain as much as possible of the relevant geographical information in geographical map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographical data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographical information, such as choropleth maps, which eliminates the explicit representation of geographical data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising} as well as Jones and Ware~\cite{jones2005webage}.  
 
-\subsection{Real-time vs. Batch-oriented}
+\section{Real-time Map Generalization}
 
-wang2014efficient
+% approaches: expressing, processing, serving
+Indexing~\cite{bereuter2013real, nutanong2012multiresolution, van1995gap}. 
 
-Real-time: indexing~\cite{bereuter2013real, nutanong2012multiresolution, van1995gap, }. Primary advantage: not storing multiple representations, reparameterization. Primary drawbacks: require online query processors that are harder to scale, identical queries are reprocesses, slow.
+% advantages
+Advantage: not storing multiple representations, reparameterization, fast one-off queries, highly suitable for situations that involve a single GIS operator.
 
-Batch Orientied
+% drawbacks
+Drawbacks: not optimized across queries, although this is not a fundamentally problem as witnessed by seminal studies of self-adjusting data structures~\cite{tarjan1985selfadjusting}. require online query processors that are harder to scale, significant repetition of work. Hard to perform data partitioning, although distributed spatial indexing techniques have been developed recently~\cite{paralleluniverse2012spacebase}.
+
+% conclusion
+Conclusion: O(log n) is too slow for maps on the web, need O(1) and ability to scale infinitely using data partitioning and data replication techniques.
+
+\section{Batch-oriented Map Generalization}
+
+% approaches
+An efficient sampling method for characterizing points of interests on maps: wang2014efficient
+
+
+Batch-orientied: sarma2012fusiontables
 
 
 \subsection{Model Abstraction vs. Visual Abstraction}
@@ -449,6 +452,12 @@ Analytic Data Engine for Visualization in Tableau (SIGMOD)~\cite{wesley2011table
 Distributed Declarative Constraint Optimization (VLDB)~\cite{liu2012cologne}
 
 
+\chapter{Serving Web Maps to Large Audiences}
+
+\section{Web services}
+
+\section{Content Delivery Networks}
+
 % SERVING
 \section{Serving Multi-scale Data for Maps}
 \label{related:work:serving}
@@ -477,75 +486,8 @@ dimensionality, or collapse, from area-referenced features to line or point refe
 features; exaggeration of the size of significant features that would otherwise be too 
 small to perceive; typification, or caricature, of the form and distribution of features
 
-%  ############
-%  #  CHAPTER  
-%  ############ 
 
-\chapter{Case study: The Digital Map Supply}
-\label{chapter:case:study}
-
-\section{Why Public Geographical Data is Important}
-
-\begin{enumerate}
-\item Take Anders' write-up (if I can find it). Either attribute or paraphrase it . Probably paraphrase and do not forget to thank him in acknowledgements.
-\item Cite offentlige data is spil, etc.
-\end{enumerate}
-
-\section{The Digital Map Supply Today}
-
-%\begin{itemize}
-%\item Diagram of Users and Providers
-%\end{itemize}
-
-\subsection{Requirements}
-\begin{itemize}
-\item SLA
-\end{itemize}
-
-\subsection{Architecture and metrics}
-\begin{enumerate}
-\item Describe the key metrics
-\item Describe the architecture (tiers, number of data centers, services running)
-\end{enumerate}
-
-1:  Budget, Requests per day, Peak Load, Unique accounts, Spatial skew, Temporal skew, Performance sensitivity, Availability over time (find Kenneths tal)
-
-\subsection{Challenges and Opportunities}
-\begin{itemize}
-\item Availability, especially for multi-source applications
-\item Performance sensitivity
-\end{itemize}	
-% 99% is not high availability 
-% 200 ms is not low latency
-% Images are not an interactive experience
-
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.8]{figs-thesis/load-latency-correlation.pdf}
-\caption{\emph{Temporal query skew:} Default}
-\label{default}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.5]{figs-thesis/heatmap-side-by-side.pdf}
-\caption{\emph{Spatial query skew:} Default}
-\label{default}
-\end{center}
-%\vspace*{-4ex}
-\end{figure}
-
-\section{Using the Contributions of this Thesis}
-
-\subsection{Glossy}
-
-\subsection{Tileheat}
-
-\section{Summary}
-
+\part{Contributions}
 
 \chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
 \label{chapter:cvl}
