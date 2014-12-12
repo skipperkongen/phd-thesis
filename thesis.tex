@@ -354,7 +354,18 @@ The field of map generalization rests on an understanding of the semantics of ge
 
 \subsection{Constant Information Density}
 
-Cite woodruff and toepfer.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.6]{figs-thesis/constant-information-density.pdf}
+\caption{\emph{Constant Information Density}: Both the left and right map show red points that represent restaurants in Z{\"u}rich area. Notice how the density of the points in the small-scale map (left) is similar to the density of points in the large-scale map (right). The principle of constant information density states that the density of information in a map should not (significantly) change between smaller-scale and larger-scale maps.}
+\label{fig:state:of:the:art:constant:information:density}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+The exacty nature of clutter in visualizations was perhaps first studied by T{\"o}pfer, who empirically observed that small scale maps tend to show the same amount of settlements per unit area as large scale maps~\cite{topfer1966principles} (see Figure~\ref{fig:state:of:the:art:constant:information:density}). The same kinds of observations was synthesized into the DataSplash system~\cite{woodruff1998constant}, which allows users to tune a multi-scale svisualization to ensure the information density remains constant across all scales. The motivation for constant information density comes from multiple studies of the effects of clutter on user performance when solving visual tasks~\cite{phillips1982investigation, springer1987retrieval, tullis1988screen}. 
+
+While density can be measured as the number of objects per unit area, other metrics for density have been proposed as well. For non-point objects, the number of vertices per unit area is another metric, while yet another is Tufte's data density metric~\cite{tufte1983visual}. Actually, the amount of percieved clutter in a visualization is hard to predict a priori~\cite{phillips1982investigation}. Nonetheless, any automated system for map generalization must rely on a quantifiable density metric, albeit with the understanding that it is merely an estimation of percieved clutter.
 
 \subsection{Ladder and Star}
 
