@@ -321,6 +321,12 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 \part{State of the Art}
 
+%\begin{quote}
+%This thesis argues that GIS has become marginalized on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for the gold standard of map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
+
+%Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographical data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
+%\end{quote}
+
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -353,22 +359,61 @@ small to perceive; typification, or caricature, of the form and distribution of 
 % approaches: expressing, processing, serving
 Indexing~\cite{bereuter2013real, nutanong2012multiresolution, van1995gap}. 
 
+\subsection{Advantages and Drawbacks}
 % advantages
 Advantage: not storing multiple representations, reparameterization, fast one-off queries, highly suitable for situations that involve a single GIS operator.
 
 % drawbacks
 Drawbacks: not optimized across queries, although this is not a fundamentally problem as witnessed by seminal studies of self-adjusting data structures~\cite{tarjan1985selfadjusting}. require online query processors that are harder to scale, significant repetition of work. Hard to perform data partitioning, although distributed spatial indexing techniques have been developed recently~\cite{paralleluniverse2012spacebase}.
 
-% conclusion
-Conclusion: O(log n) is too slow for maps on the web, need O(1) and ability to scale infinitely using data partitioning and data replication techniques.
-
 \section{Batch-oriented Map Generalization}
 
 % approaches
 An efficient sampling method for characterizing points of interests on maps: wang2014efficient
 
-
+\subsection{Advantages and Drawbacks}
+% advantages
 Batch-orientied: sarma2012fusiontables
+
+% drawbacks
+
+\section{Conclusion}
+% conclusion
+
+Conclusion: O(log n) is too slow for maps on the web, need O(1) and ability to scale infinitely using data partitioning and data replication techniques.
+
+
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+% CHAPTER
+
+%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\chapter{Serving Web Maps}
+
+% approaches: expressing, processing, serving
+
+State the requirements: high-availability, high-scalability, high-performance, interactive (constraints), minimize cost (objective).
+
+\section{Web services}
+
+\subsection{Approaches}
+\subsection{Advantages and Drawbacks}
+
+\section{Content Delivery Networks}
+
+\subsection{Approaches}
+\subsection{Advantages and Drawbacks}
+
+\section{Conclusion}
+
+
+
+
+
+
 
 
 \subsection{Model Abstraction vs. Visual Abstraction}
@@ -463,22 +508,6 @@ MapReduce~\cite{aji2013hadoopgis}.
 Analytic Data Engine for Visualization in Tableau (SIGMOD)~\cite{wesley2011tableau}.
 Distributed Declarative Constraint Optimization (VLDB)~\cite{liu2012cologne}
 
-
-%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-% CHAPTER
-
-%-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-\chapter{Serving Web Maps to Large Audiences}
-
-State the requirements: high-availability, high-scalability, high-performance, interactive (constraints), minimize cost (objective).
-
-\section{Web services}
-
-\section{Content Delivery Networks}
 
 
 
