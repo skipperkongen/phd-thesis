@@ -16,6 +16,8 @@
 %\renewcommand{\familydefault}{\sfdefault}
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
+\usepackage[font=it]{caption}
+
 
 % end Theorem environments
 \usepackage{amssymb}
@@ -24,7 +26,7 @@
 \usepackage{enumitem}
 \usepackage[T1]{fontenc}
 \usepackage[multiple]{footmisc}
-\usepackage[top=1.5in,bottom=1.5in,left=1.30in,right=1.30in]{geometry}
+\usepackage[top=1.2in,bottom=1.2in,left=1.30in,right=1.30in]{geometry}
 \usepackage{graphicx}	
 \usepackage{ifpdf}
 \usepackage{listings}
@@ -142,20 +144,20 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 % Map generalization
 The three dimensions of the image make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Digital map visualization is the process by which the geography of the Earth is visually represented in the finite three-dimensional matrix of computer screens (x, y, color). On the web, the many challenges of digital map visualization are frequently encountered by map designers who desire to layer new, and often large, geographical datasets on top of existing background maps~\cite{googlemaps, bingmaps}. Informally, this process is known as a geographical ``mash-up''. While existing background maps are generally of high-quality, the result of many hours of expert labor, new datasets presents a raw challenge for designers of geographical mash-ups: creating a legible and informative map visualization over new datasets is time consuming! Simply displaying symbols for raw geographical data on top of an existing background map will not suffice (see Figure~\ref{fig:raw:poi:data}). Indeed, one of the most fundamental challenges in digital map creation is a process known as \emph{map generalization}. Map generalization is a complex information abstraction process by which map designers seek to legibly represent as much as possible of the relevant information on maps of proportionally small scale~\cite{weibel1999generalising}. For example, a map designer may choose to \emph{select}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, or \emph{amalgamate}~\cite{haunert2006landcover} geographical information in order to emphasize the important and suppress the unimportant.
 
-% So what? Why should we care?
-The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. Given the availability of so much interesting data, more and more organizations such as news agencies are motivated to communicate spatial narratives using online maps~\cite{nytimes2010iraq,guardian2013ananas}. There are two extreme types of maps that need to be created. At one extreme, map types such as choropleth maps~\cite{jenks1963generalization} and heatmaps~\cite{wiki2014heatmap} present a highly statistical view of information~\cite{guardian2013ananas}. At the other extreme, map types such as thematic point maps present an immersive, interactive and detailed view of information~\cite{nytimes2010iraq}. While both map types are highly valuable, the former maps are straight-forward to produce using well-known methods from spatial statistics~\cite{ripley2005spatial}. In contrast, the latter maps present a fundamentally harder challenge to map designers due to the need for map generalization.
-
-This thesis proposes a new breed of map visualization systems that is specialized for map designers who create interactive geographical mash-ups for the web.
-
-
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/data-draws-the-world.pdf}
-\caption{\emph{Data symbols vs screen real-estate:} On a low scale map of Europe, the small data symbols for tourism points of interest (left map) largely cover the entire landmass (right map). Thus, for large datasets (thousands of records) displaying unfiltered data symbols is non-sensical. First, users can not discrimiate between interesting data and less interesting data. Second, users can not orient themselves as crucial spatial context is lost when map labels are eclipsed by data symbols. Third, users can not accurately interact with the data symbols to get more information. For example, there are 28 thousand data points in the vicinity of Paris; which one is the Eiffel Tower?}
+\caption{Data vs territory: On a small scale map of Europe, the data symbols for points of interest (left map) almost entirely cover the national territories (right map). It illustrates how for large datasets (thousands of records or more) it does not make sense to display unfiltered data. For example, there are 28 thousand points of interest near Paris; which one is the Eiffel Tower on the left map?}
 \label{fig:raw:poi:data}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+The web has transformed the activity of map visualization since Roger Tomlinson first conceived geographic information systems (GIS) in the 1960's~\cite{ucgis2014tomlinson}. First, the crowd of map designers has changed, from a few GIS specialists in offices to many data entusiasts on the web~\cite{hanrahan2012enthusiast}. Second, the geographic data has changed, from moderately-sized and mostly curated datasets inside organizations to huge and often user-contributed datasets on the web~\cite{gst2014digitalmapsupply, openstreetmap, zooniverse2014oldweather}. Third, the audiences of map visualizations have changed, from a few people in offices who interacted with mapping systems during business hours, to millions of people on the web who interact with mapping systems 24 x 7 and on the go. Fourth, the purpose of mapping has changed, from being mostly a professional activity, to being simultaneously a professional, personal and social activity. Admitedly, these four points are somewhat a caricature of reality, however the directionality the map visualization activity is evident all around us. Undoubtedly, the impact of the web has caused important problems that are not adequately addressed by state-of-the-art GIS. 
+
+Given the availability of so much interesting data (billions of records) in combination with potentially huge audiences (billions of people), more and more organizations such as news agencies are motivated to communicate spatial narratives using online maps~\cite{nytimes2010iraq,guardian2013ananas}. There are however two extremes in the types of maps that need to be created. At one extreme, map such as choropleth maps~\cite{jenks1963generalization} and heatmaps~\cite{wiki2014heatmap} present a highly statistical view of information~\cite{guardian2013ananas}. For example, maps that show the distribution of votes by region in an election. At the other extreme, map such as thematic point maps present an immersive, interactive and detailed view of information~\cite{nytimes2010iraq}. For example, maps that show the location of restaurants, hotels and bars. While both types of map are highly valuable, the former maps are straight-forward to produce by employing spatial statistics~\cite{ripley2005spatial}. In contrast, the latter maps present a fundamentally harder challenge to map designers due to the need for map generalization. 
+
+This thesis proposes a new breed of map visualization systems that allows data enthusiasts to create immersive, interactive maps over large geographical datasets and publish them on the web.
 
 %Data visualizations must scale well both in the size of the data~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes,scalablemaps}. Moreover,  In-database execution addresses the issue of scalable data processing where the data for visualizations is most frequently managed~\cite{wu,ferry, }; 
 
@@ -173,7 +175,7 @@ This thesis proposes a new breed of map visualization systems that is specialize
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-The web has transformed how map visualization should ideally be approached. This has opened up important new problems that are not adequately addressed by state-of-the-art geographical information systems (GIS). 
+The web has transformed the activity of map visualization. First, the crowd of map designers has changed, from a few GIS specialists to many data entusiasts~\cite{hanrahan2012enthusiast}. Second, the data has changed, from moderately-sized, rarely updated, and locally available datasets to huge, highly dynamic, and globally available datasets. Third, the audiences of map visualizations have changed, from a few people who interacted with mapping systems mainly during business hours, to millions of people who interact with mapping systems 24 x 7 and on the go. Fourth, the purpose of mapping has changed, from being mostly a professional activity, to being simultaneously a professional, personal and social activity. These changes have caused important new problems that are not adequately addressed by state-of-the-art geographical information systems (GIS). 
 
 % in-database processing: BOYAA
 First, the web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. Typically, this data is stored and managed in scalable relational database management systems (RDBMS)~\cite{wu2014case}. Therefore, it is crucial that map visualization systems are efficiently integrated with RDBMS~\cite{wu2014case}. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to an online services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced by anybody, anytime, and anywhere. For this reason, it is important that map visualizations systems, preferably systems that are well-integrated with RDBMS, can scalably process large quanties of data (millions of records).
