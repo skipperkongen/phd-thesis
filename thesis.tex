@@ -227,16 +227,10 @@ The key question is: How can we exploit a log of previous map requests to cost-e
 \label{sec:introduction:contributions}
 % NOTFINISHED
 
-\note{(I guess) these are like mini summaries of the articles. They should of course explicitely connect to the problem statements above.}
-
-Instead of presenting a complete system for creating and serving data visualizations, this thesis concentrates on specific aspects of building such a system. In Chapter~\ref{chapter:case:study} we will show how the contributions can be integrated with existing systems: a relational database (PostgreSQL with PostGIS extension) and commercial key-value stores (Redis and WMTS).
-
-The contributions of this thesis cover two topics: global selection for data-driven visualizations (see Sections~\ref{sec:introduction:contributions:cvl}~and~\ref{sec:introduction:contributions:glossy}), and adaptive pre-emptive caching of geographical data (see Section~\ref{sec:introduction:contributions:tileheat}).
-
-%Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
+Instead of presenting a complete system for map visualization on the web, this thesis focuses on four specific aspects that are encounted by map designers who must select and serve data for high-quality geographic mash-ups on the web. The purpose of these  contributions is to address the problems that where presented in Section~\ref{introduction:problem:statement}.
  
 \subsection{Equivalence to Set Multicover Problem}
-label{sec:introduction:contributions:cvl}
+\label{sec:introduction:contributions:set:multicover:problem}
  
  Figure~\ref{fig:introduction:selection:constraints} represents a contribution, but not the whole contribution.
 
@@ -253,12 +247,13 @@ label{sec:introduction:contributions:cvl}
 \subsection{Glossy SQL Extension}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
-How can....
+Section~\cite{introduction:problem:statement} presented the case for a declarative langauge that map designers can use to express multi-scale selection for map visualizations. This thesis contributes an extension to SQL which allows map designers to concisely and intuitively express multi-scale selection for maps in a familiar and productive programming style.
+
+During the design process for this SQL language extensions, some key requirements where identified: An extension to SQL for multi-scale selection must (1) allow map designers to express binary and set-based record constraints that should be satisfied by the selection, (2) allow map designers to define how record importance should be evaluated for each scale of a map, (3) allow map designers to freely define the notion of a set of scales in a map, (4) allow multi-scale selection in both the star and ladder paradigm~\cite{foerster2010challenges},  (5) allow programs to reference data stored in relational database tables.
+
+Some more details.
 
 
-While how-to queries fit nicely with the generali requirements for selection, namely, given a geographical dataset, compute a multi-scale selection that satisfies a set of constraints and objectives, they have not been considered in a multi-scale context.
-
-Crucially, a declarative language for holistic multi-scale selection must: (1) allow map designers to intuitively and concisely express constraints and objectives, (2) allow map designes to express both the star and ladder paradigm of multi-scale selection~\cite{foerster2010challenges},  (3) allow map designers to explicitly target geographical data in relational database tables. In the literature no such language has been proposed nor designed for map visualization in general, and multi-scale selection specifically. To fill this gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection that meet the requirements stated above.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -271,9 +266,12 @@ Crucially, a declarative language for holistic multi-scale selection must: (1) a
 
 \subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
-% NOTFINISHED
 
-Something resembling the abstract. 
+In Section~\cite{introduction:problem:statement} the case for in-database processing of multi-scale selection was made. This thesis makes the contribution of a translation approach that will compile a specification written in a declarative language for multi-scale selection into a query in pure relational algebra. Consequently, the translated query can be executed entirely inside a relational database, where the data is assumed to be stored.
+
+Some more details.
+
+
 
 \subsection{Prediction Framework}
 \label{sec:introduction:contributions:tileheat}
