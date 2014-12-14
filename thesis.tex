@@ -184,9 +184,12 @@ Short intro... talk about mult-scale seleciton.
 \begin{itemize}
 
 % MATHEMATICAL FOUNDATION
-\item \textbf{Mathematical Selection Framework} 
+\item \textbf{Formal Selection Model} 
 
-OK, saying that there has not been mathematical modelling before is a false claim. Figure out what this problem is about and why it has not been addressed before. Then describe it here.
+OK, this one is tricky... what is the problem that contribution 1 solves?
+
+The problem that must be addressed is how ...?
+
 
 %Typically, real-life geographical information is spatially skewed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps may appear cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, random sampling and simple record-at-a-time filtering seem like obvious ways to reduce clutter in a map, they will not work. These reduction processes do not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial} are not captured. Hence, these simple techniques can not ensure that a map legibly displays as much of the data as possible nor even that record symbols will still not overlap after filtering.
 
@@ -194,36 +197,20 @@ OK, saying that there has not been mathematical modelling before is a false clai
 
 %The idea of holistic multi-scale selection for map generalization is not itself a new idea~\cite{weibel}. Furthermore previous work has either offered direct support for holistic multi-scale selection~\cite{sarma2012fusiontables} or proposed metaheuristic frameworks that do not necessarily preclude such an operator~\cite{lamy1999application, ware2003generalization_sa}. However, in all previously published systems, there is insufficient support for user-defined constraints, objectives, and notions of scale. This dissertation focuses on the problem of holistic multi-scale selection with strong, intuitive and explicit support for user-defined constraints, objectives, and notions of scale.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
-\caption{Binary and set-based selection constraints: binary selection constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of entities. Set-based selection constraints, such as a maximum density (right image) set up conditions that must be met by all qualifying sets of objects. The nature of selection constraints is such that a given constraint can always be satisfied by a selection. In the images, selected entities are represented by black disks while filtered-out entities are represented by white disks.}
-\label{fig:introduction:holistic:selection}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let users influcence the selection of data for multi-scale maps. At one extreme, fully-automated systems completely encapsulate the logic of selection inside an algorithm library~\cite{sarma2012fusiontables}. Such systems exclude the map designer from any influence over the data selection process, including how record importance should be determined and which constraints should be enforced. At the other extreme, highly customizable systems require map designers to minutely express the selection of data through a (potentially large) set of simple predicates over record attributes~\cite{sld,mapnik}. It is very time-consuming, if not outright infeasible, to express a holistic multi-scale selection by a set of simple predicates that are evaluated record-by-record without considering the context or other records.
+\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let users influcence the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables}. Such systems exclude the map designer from any influence over the data selection process, including how record importance should be determined and which constraints should be enforced. At the other extreme, selection frameworks require map designers to write advanced and very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. While such frameworks are needed for complex map generalization tasks, such as those needed to produce a high-quality topographic map, they are not suitable for generalizing thematic overlays for geographical mash-ups. 
 
-Ideally, designers should specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system. A recent vision by Meliou, Gatterbauer and Suciu makes the case for declarative \emph{how-to} queries. The core idea is that users specify a set of constraints and an objective for a target database that should be computed from a source database (they gave an example of optimizing a stock portfolio). While how-to queries fit nicely with the requirements for holistic selection, namely, given a geographical dataset, compute a multi-scale selection that satisfies a set of constraints and objectives, they have not been considered in a multi-scale context.
+The main issue with these approaches is the level of specification needed to get the job done, which is either too little or too much to be useful for selection in geographical mapsh-ups. Ideally, designers should specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, fit the bill for such as language. However, there is a lack of declarative langauges that can express multi-scale selection for map visualizations.
 
-Crucially, a declarative language for holistic multi-scale selection must: (1) allow map designers to intuitively and concisely express constraints and objectives, (2) allow map designes to express both the star and ladder paradigm of multi-scale selection~\cite{foerster2010challenges},  (3) allow map designers to explicitly target geographical data in relational database tables. In the literature no such language has been proposed nor designed for map visualization in general, and multi-scale selection specifically. To fill this gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection that meet the requirements stated above.
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.4]{figs-thesis/abstraction-pipeline.pdf}
-\caption{\emph{Multi-scale selection pipeline:} }
-\label{fig:introduction:multiscale:selection:pipeline}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
+The key question is: what is a declarative language that allows map designers to concisely express multi-scale selection for map visualizations?
 
 % IN-DATABASE PROCESSING
-\item \textbf{In-database processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to an online services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced by anybody, anytime, and anywhere.
+\item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to an online services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced by anybody, anytime, and anywhere.
 
-A map visualization systems must be able to scalably process a specification for multi-scale selection, since the data may be large. One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for map visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored (see Figure~\cite{fig:introduction:indatabase:execution}). Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection, which has also been pointed out in a recent vision for data visualization systems~\cite{wu2014case}.
+A map visualization systems must be able to scalably process a specification for multi-scale selection, since the data may be large. One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for map visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored (see Figure~\cite{fig:introduction:indatabase:execution}). Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection~\cite{wu2014case}.
+
+The key question is: how we can leverage RDBMS technology to its full potential to scalably process multi-scale selection for map visualizations?
 
 \begin{figure}[htbp]
 \begin{center}
@@ -262,19 +249,47 @@ The contributions of this thesis cover two topics: global selection for data-dri
 
 %Short something about how the problems stated in Section~\ref{sec:introduction:problem:statement} are addressed.
  
-\subsection{Declarative Multi-scale Selection}
-\label{sec:introduction:contributions:cvl}
+ \subsection{Multi-scale Selection Model}
+ label{sec:introduction:contributions:cvl}
+ 
+ Figure~\ref{fig:introduction:selection:constraints} represents a contribution, but not the whole contribution.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
+\caption{Binary and set-based selection constraints: binary selection constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of entities. Set-based selection constraints, such as a maximum density (right image) set up conditions that must be met by all qualifying sets of objects. The nature of selection constraints is such that a given constraint can always be satisfied by a selection. In the images, selected entities are represented by black disks while filtered-out entities are represented by white disks.}
+\label{fig:introduction:selection:constraints}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+ 
+\subsection{Glossy SQL Extension}
+\label{sec:introduction:contributions:glossy}
 % NOTFINISHED
+How can....
 
-Something resembling the abstract
 
-\subsection{In-database Processing of Multi-scale Selection}
+While how-to queries fit nicely with the generali requirements for selection, namely, given a geographical dataset, compute a multi-scale selection that satisfies a set of constraints and objectives, they have not been considered in a multi-scale context.
+
+Crucially, a declarative language for holistic multi-scale selection must: (1) allow map designers to intuitively and concisely express constraints and objectives, (2) allow map designes to express both the star and ladder paradigm of multi-scale selection~\cite{foerster2010challenges},  (3) allow map designers to explicitly target geographical data in relational database tables. In the literature no such language has been proposed nor designed for map visualization in general, and multi-scale selection specifically. To fill this gap, this dissertation will study and design declarative languages for expressing holistic multi-scale selection that meet the requirements stated above.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/abstraction-pipeline.pdf}
+\caption{\emph{Multi-scale selection pipeline:} }
+\label{fig:introduction:multiscale:selection:pipeline}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+\subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
 
 Something resembling the abstract. 
 
-\subsection{Prediction for Tile Materialization}
+\subsection{Prediction Framework}
 \label{sec:introduction:contributions:tileheat}
 % NOTFINISHED
 
