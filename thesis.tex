@@ -189,7 +189,6 @@ Map generalization is traditionally the study of very domain-specific methods wi
 
 The key question is: what are the key components of multi-scale selection for map visualization and can they be captured by a more abstract and well-known model for which efficient algorithms exist?
 
-
 %Typically, real-life geographical information is spatially skewed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps may appear cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, random sampling and simple record-at-a-time filtering seem like obvious ways to reduce clutter in a map, they will not work. These reduction processes do not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial} are not captured. Hence, these simple techniques can not ensure that a map legibly displays as much of the data as possible nor even that record symbols will still not overlap after filtering.
 
 %In contrast, \emph{Holistic multi-scale selection} is a more sophisticad sampling process that filters data, according to constraints~\cite{woodruff1998constant, topfer1966principles} and objectives~\cite{harrie1999constraint} that must be satisfied. For example, a map visualization may require that unit areas of the map stay below a certain object density or that objects are separated by a minimum distance (see Figure~\ref{fig:introduction:holistic:selection}). Moreover, since in general not all data points are equally important, it is desirable to prioritize conflicted objects based on some measure of importance. Finally, to enable coherent maps over multiple scales, it is important that holistic multi-scale selction can be performed consistently over a set of scales~\cite{foerster2010challenges}.
@@ -202,14 +201,14 @@ The key question is: what are the key components of multi-scale selection for ma
 
 The main issue with these approaches is the degree of specification needed to get the job done: either too little or too much to be useful for map designers who craft geographical mapsh-ups. Ideally, designers should specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, fit the bill for such as language. However, there is a lack of declarative langauges that can efficiently express multi-scale selection for map visualizations.
 
-The key question is: what is a declarative language that allows map designers to efficiently and effectively express multi-scale selection in map visualizations?
+The key question is: what is a declarative language that allows map designers to intuitively and concisely express multi-scale selection for map visualizations?
 
 % IN-DATABASE PROCESSING
 \item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to an online services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and games~\cite{geocaching2014geocaching}, geographical information can be produced by anybody, anytime, and anywhere.
 
 A map visualization systems must be able to scalably process a specification for multi-scale selection, since the data may be large. One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for map visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored (see Figure~\cite{fig:introduction:indatabase:execution}). Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection~\cite{wu2014case}.
 
-The key question is: how we can leverage RDBMS technology to its full potential to scalably process multi-scale selection in map visualizations?
+The key question is: how we can leverage RDBMS technology to its full potential to scalably process multi-scale selection for map visualizations?
 
 \begin{figure}[htbp]
 \begin{center}
