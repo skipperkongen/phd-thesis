@@ -175,19 +175,15 @@ This thesis proposes a new breed of scalable map visualization systems that is s
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-Short intro... talk about mult-scale seleciton.
-
-\note{TEST: Each of the following sub-sections must (1) sound like a relevant problem, (2) must not have been adequately addressed by previous work.}
-
-% in-database processing: BOYAA
+Write a nice little intro here.
 
 \begin{itemize}
 
 % MATHEMATICAL FOUNDATION
-\item \textbf{Efficient Abstract Modelling} 
-Map generalization is traditionally the study of very domain-specific methods with a high focus on the geographical context. No doubt, the methods that allow production of complex topographic maps need to consider geography in a very domain-oriented fashion~\cite{}. However, multi-scale selection of data in geographic mash-ups is a much simpler problem than generalizing data for a topographic map. For this reason, the selection problem can conceivably be mapped to an abstract problem, which however captures the relevant elements of multi-scale selection. If this was possible, and the abstract problem was well-known, we would theoretically be able to exploit previous work on efficient algorithms for this problem.
+\item \textbf{Abstract Modeling} 
+Map generalization is traditionally the study of very domain-specific methods with a high focus on the geographical context. No doubt, the methods that are needed to produce cartographically challenging maps, suchs as physical and topographic maps, need to highly aware of the geographic context~\cite{}. However, multi-scale selection of data for geographic mash-ups is a arguably a much simpler problem than generalizing data for a topographic map. For this reason, the selection problem can conceivably be mapped to a more abstract and less geography-specic problem, which however still captures the relevant elements of multi-scale selection for maps. If this was possible, and the abstract problem was well-known, we would theoretically be able to exploit previous work on efficient algorithms for this problem. Additonally, we would possibly be able to reuse the algorithmic framework for non-geography related data visualization as well.
 
-The key question is: what are the key components of multi-scale selection for map visualization and can they be captured by a more abstract and well-known model for which efficient algorithms exist?
+The key question is: what are the key components of multi-scale selection for map visualization and can they be captured by a more abstract and well-known problem for which efficient algorithms exist?
 
 %Typically, real-life geographical information is spatially skewed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps may appear cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, random sampling and simple record-at-a-time filtering seem like obvious ways to reduce clutter in a map, they will not work. These reduction processes do not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial} are not captured. Hence, these simple techniques can not ensure that a map legibly displays as much of the data as possible nor even that record symbols will still not overlap after filtering.
 
@@ -221,7 +217,7 @@ The key question is: how we can leverage RDBMS technology to its full potential 
 
 
 % PREDICTIVE TILE MATERIALIZATION
-\item \textbf{Cost-effective High Performance Maps}: 
+\item \textbf{Cost-effective Tiling}: 
 TODO
 
 The key question is: How can we exploit a log of previous map requests to cost-effectively serve future map requests with high performance?
