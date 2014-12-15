@@ -236,13 +236,13 @@ Instead of presenting a complete system for map visualization on the web, this t
 
 Section~\ref{introduction:problem:statement} argued that the modeling of multi-scale selection for map visualizations would benefit from a mapping to a well-known but more abstract problem. This section shows how progress was made on this problem and the benefits that have resulted from the mapping.
 
-First, this thesis contributes an identification of equivalence between the selection problem in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multicover problem is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been contributed for this problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}. The upside of the equivalence relation forms the background for a contribution of this thesis, namely that the application of a single efficient algorithm can solve many different variations of the multi-scale selection problem in map visualization, which supports a very versatile class of user-defined constraints and record importance measures.
+First, this thesis contributes an identification of equivalence between the selection problem in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multicover problem is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been contributed for this problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}. The identification of this equivalence relation forms the backbone of this thesis.
 
-Second, this thesis proves that simple sorting can solve the set multi-cover problem to optimality for a common and important case, namely the weighted selection of geographic points subject to a tile density constraint.
+Second, this thesis shows that a restricted (yet common and important) case of the set multi-cover problem can be solved to optimality by a sorting based algorithm. The restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
 
-Third, this thesis contributes a formulation that captures a host of spatial constraints in the form for binary and set-based selection constraints. Furthermore, these two classes of constraints are formulated in terms of more abstract edge-selection constraints in a bi-partite graph. It is shown that an edge-selection constraint in bi-partitie graphs captures diverse and concrete spatial constraints such as object proximity and object density in geographical space (see Figure~\ref{fig:introduction:selection:constraints}).
+Third, this thesis contributes a formalization of binary and set-based selection constraints. Furthermore, these two classes of constraints are collapsed into a single class of edge-selection constraints in bi-partite graphs. Thus, a variety of concrete spatial constraints types, such as object proximity and object density in geographical space, can be modeled as a single abstract contraint type in graphs (see Figure~\ref{fig:introduction:selection:constraints}).
 
-The first and second contributions are presented in Chapter~\ref{chapter:cvl}  and the third contribution is presented in Chapter~\ref{chapter:glossy}.
+The first and second contributions are presented in Chapter~\ref{chapter:cvl}  while the third contribution is presented in Chapter~\ref{chapter:glossy}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -306,7 +306,8 @@ Software for the two published contributions of this thesis are made available a
 
 \section{Structure}
 \label{sec:introduction:structure}
-% DONE
+% Not good enough. Tim uses bullets that reference the contributions, Marcos used a single sparagraphs to similar effect
+
 
 The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers state-of-the-art map generalisation and visualization systems for the web abstraction, including related but non-spatial technologies such as key-value stores. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Finally, chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 
