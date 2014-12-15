@@ -168,32 +168,16 @@ Write a nice little intro here.
 
 % MATHEMATICAL FOUNDATION
 \item \textbf{Abstract Modeling} 
-Map generalization is traditionally the study of very domain-specific methods with a high focus on the geographical context. No doubt, the computational methods that are needed to produce cartographically challenging maps, suchs as physical and topographic maps, need to be highly aware of the geographic context~\cite{}. However, multi-scale selection of data for geographic mash-ups is a arguably a much simpler problem than generalizing data for a topographic map. For this reason, the selection problem can conceivably be mapped to a more abstract and less geography-specic problem, which however still captures the relevant elements of multi-scale selection for maps. If this was possible, and the abstract problem was well-known, we would theoretically be able to exploit previous work on efficient algorithms for this problem. Additonally, we would possibly be able to reuse the algorithmic framework for non-geography related data visualization as well.
+Map generalization methods can be cast into two broad categories. First there are methods that completely disregard the geographic context. For example, the Douglas-Peucker line simplification algorithm solves a purely geometric problem. Second there are methods that do consider the geographic context. For example, most methods that can appropriately generalize street networks and urban areas~\cite{lamy1999application}. While selection can belong to both categories, a recent paper argues that selection of thematic data for geographic mash-ups belongs to the first~\cite{sarma2012fusiontables}. Being free of geographic context means that, hypothetically, selection can be modelled as a well-known and abstract problem for which efficient algorithms exist. However, this is not enough. For example, while the algorithms proposed by Das Sarma et al. are highly efficient, they solve a very static selection problem. An ideal abstract modeling of the selection problem has two crucial properties: (a) it corresponds to a well-known problem for which efficient algorhtms exist and (b) it allows a suitably large class of user-defined map constraints and customizable objectives to be expressed.
 
-The key question is: what are the key components of multi-scale selection for map visualization and can they be captured by a more abstract and well-known problem for which efficient algorithms exist?
-
-%Typically, real-life geographical information is spatially skewed~\cite{xu2008skew}. Therefore, unless data is appropriately reduced, maps may appear cluttered in some areas while being completely empty in other areas (see Figure~\ref{fig:raw:poi:data}). While, random sampling and simple record-at-a-time filtering seem like obvious ways to reduce clutter in a map, they will not work. These reduction processes do not capture binary or multi-way object relations~\cite{egenhofer1991point, randell1992spatial} are not captured. Hence, these simple techniques can not ensure that a map legibly displays as much of the data as possible nor even that record symbols will still not overlap after filtering.
-
-%In contrast, \emph{Holistic multi-scale selection} is a more sophisticad sampling process that filters data, according to constraints~\cite{woodruff1998constant, topfer1966principles} and objectives~\cite{harrie1999constraint} that must be satisfied. For example, a map visualization may require that unit areas of the map stay below a certain object density or that objects are separated by a minimum distance (see Figure~\ref{fig:introduction:holistic:selection}). Moreover, since in general not all data points are equally important, it is desirable to prioritize conflicted objects based on some measure of importance. Finally, to enable coherent maps over multiple scales, it is important that holistic multi-scale selction can be performed consistently over a set of scales~\cite{foerster2010challenges}.
-
-%The idea of holistic multi-scale selection for map generalization is not itself a new idea~\cite{weibel}. Furthermore previous work has either offered direct support for holistic multi-scale selection~\cite{sarma2012fusiontables} or proposed metaheuristic frameworks that do not necessarily preclude such an operator~\cite{lamy1999application, ware2003generalization_sa}. However, in all previously published systems, there is insufficient support for user-defined constraints, objectives, and notions of scale. This dissertation focuses on the problem of holistic multi-scale selection with strong, intuitive and explicit support for user-defined constraints, objectives, and notions of scale.
-
+The key question is: how can selection of thematic data for geographic mash-ups with user-defined map constraints and customizable objectives be modelled as an abstract and well-known problem for which efficient algorithms exist?
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let users influcence the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables}. Such systems exclude the map designer from any influence over the data selection process, including how record importance should be determined and which constraints should be enforced. At the other extreme, selection frameworks require map designers to write advanced and very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the solution should match the complexity of the problem. While selection of data for thematic overlays is not as complex as the generalization of a topographic map, it is also not so trivial as to varant completely unsupervised methods. First, there are many ways to score the importance of objects based on their attributes. Second, there are at least two different ways to make maps more legible, which are to bound the proximity of symbols and the density of symbols. It makes sense that map designers should be able to influence which of these controls are used during the selection process.
+\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library and completely exclude programmers from influence~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex selection frameworks require programmers to write advanced and often very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the system should match the complexity of the problem it solves. While selection of thematic data for geographic mash-ups is simple enough that it does not require a complex and highly geography-aware framework, it is also not so trivial that it varants a completely unsupervised approach. First, there are many different ways to score the importance of objects. Second, there are at least two different ways to increase map legibility: bounding the proximity of symbols~\cite{nutanong2012multiresolution} and bounding the density of symbols~\cite{sarma2012fusiontables}. Third, two high-level approaches exist for multi-scale generalization, i.e. the star and the ladder approach~\cite{foerster2010challenges}. These approaches are suitable for selection of place names and points of interest respectively. Fourth, there are infinitely many ways to define the set of scales in a multi-scale visualization, besides the fixed ``tile pyramid'' scales.
 
-Ideally, designers could specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, fit the bill for such as language, which has driven their prolific use in data management. However, there is a lack of declarative langauges that can control a multi-scale selection pipeline for map visualizations. Since visual abstraction has been addressed by previous work~\cite{jacques1967semiologie, nickerson1994visual, wilkinson2006grammar}, this thesis will focus on model abstraction stage of the pipeline (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}).
+It makes sense that programmers can choose the constraints, objectives, multi-scale approaches and scales that makes most sense for their applications. Ideally, programmers could specify just these high-level goals in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, are the only programming languages that have this property. However, there is currently a lack of any declarative language, which mets all the requirements stated above.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.4]{figs-thesis/abstraction-pipeline.pdf}
-\caption{\emph{Multi-scale selection pipeline: the pipeline illustrated in the figure transforms consists of two stages. Stage one (model abstraction) transforms Hi-Fi tables of geographic data into filtered Lo-Fi views corresponding to the data elements that should appear on a map. Stage two (visual abstraction) transforms data records into data symbols on the map. The pipeline is controlled by a declarative specification of goals (tanned boxes) and executes processes (white boxes).}}
-\label{fig:introduction:multiscale:selection:pipeline}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
-The key question is: what is an appropriate declarative language that allows map designers to express control over multi-scale selection pipelines in map visualizations?
+The key question is: what is an appropriate declarative language for selection of thematic data, which allows programmers to specify user-defined constraints, objectives, multi-scale approaches and set of scales?
 
 % IN-DATABASE PROCESSING
 \item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to online location-based services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographical information can be produced by anybody, anytime, and anywhere.
@@ -236,13 +220,19 @@ Instead of presenting a complete system for map visualization on the web, this t
 
 Section~\ref{introduction:problem:statement} argued that the modeling of multi-scale selection for map visualizations would benefit from a mapping to a well-known but more abstract problem. This section shows how progress was made on this problem and the benefits that have resulted from the mapping.
 
-First, this thesis contributes an identification of equivalence between the selection problem in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multicover problem is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been contributed for this problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}. The identification of this equivalence relation forms the backbone of this thesis.
+First, this thesis contributes an identification of equivalence between the standard formulation of selection in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multi-cover problem, and therefore also the selection problem, is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which are in turn applicable to compute selection in map generalization. The identification of this equivalence relation forms the backbone of this thesis.
 
-Second, this thesis shows that a restricted (yet common and important) case of the set multi-cover problem can be solved to optimality by a sorting based algorithm. The restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
+Second, this thesis shows that a restricted (and very common) case of the set multi-cover problem can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
 
-Third, this thesis contributes a formalization of binary and set-based selection constraints. Furthermore, these two classes of constraints are collapsed into a single class of edge-selection constraints in bi-partite graphs. Thus, a variety of concrete spatial constraints types, such as object proximity and object density in geographical space, can be modeled as a single abstract contraint type in graphs (see Figure~\ref{fig:introduction:selection:constraints}).
+Third, this thesis contributes a formalization of binary and set-based selection constraints in map generalization. Even more, these two classes of constraints are collapsed into a single class of edge-selection constraints formulated over a bi-partite graph. By this formulation, a variety of concrete spatial constraints types, such as object proximity and object density in geographical space, can be modeled by a single contraint type in graphs (see Figure~\ref{fig:introduction:selection:constraints}).
 
-The first and second contributions are presented in Chapter~\ref{chapter:cvl}  while the third contribution is presented in Chapter~\ref{chapter:glossy}.
+Further reading:
+\vspace{-2ex}
+\begin{itemize}
+\item Details about the first and second contributions are described in Chapter~\ref{chapter:cvl}.
+\item Details about the third contribution is described in Chapter~\ref{chapter:glossy}.
+\item A previous version of Chapter~\ref{chapter:cvl} has been published in ICDE 2014~\cite{kefaloukos2014declarative}.
+\end{itemize}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -253,55 +243,67 @@ The first and second contributions are presented in Chapter~\ref{chapter:cvl}  w
 \vspace*{-4ex}
 \end{figure}
 
- 
-\subsection{Glossy SQL Syntax and Semantics}
+
+\subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
-Section~\ref{introduction:problem:statement} posits the need for declarative languages to control a multi-scale selection pipeline in map visualizations.
+Section~\ref{introduction:problem:statement} argued the need for declarative languages to control multi-scale selection processes in a map visualization pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
 
-First, this thesis contributes Glossy SQL, a syntactical extension to SQL that allows visualization designers to declaratively specify multi-scale selection for map visualizations. Furthermore, it is shown that the language captures selection, not only for multi-scale maps, but for a substantially larger class of multi-dimensional data visualizations, which includes timelines. The choice of an extension to SQL allows programmers to concisely and intuitively express multi-scale selection in a familiar and productive programming style.
+First, this thesis contributes the \emph{syntax} of Glossy SQL, which allows programmers to declaratively express multi-scale selection. The use cases that Glossy SQL covers include multi-scale timelines, maps and cluster visualizations. Programmers can declaratively express binary and set-based constraints that must be satisfied by a valid multi-scale selection. Additionally, programmers can declaratively define how the importance of records should be measured at each scale of the selection. Finally, programmers can explicitely and declaratively define the ordered set of tuples that represent the scales of a visualizaton. Multi-scale selection can be declared to be either iterative or recursive, with semantics that  correspond to star and ladder generalization respectively~\cite{foerster2010challenges}. A particular design goal that has been met is that queries in Glossy SQL must be compact yet highly readable. The longest Glossy SQL query in this thesis is just 14 lines of code!
 
-Second, this thesis contributes a structural operational semantics for Glossy SQL in terms of equivalent relational algebra queries. Furthermore, this facilitates compilers that translate Glossy SQL into relational queries for scalable execution in relational databases.
+Second, this thesis contributes a \emph{structural operational semantics} for Glossy SQL expressed in terms of relational algebra. The results show that Glossy SQL, and thus multi-scale selection, can be expressed entirely in pure relational algebra. For example, the 14-line Glossy SQL query mentioned above translates into a single 255-line relational algebra query.
 
-These contributions are presented in Chapter~\cite{chapter:glossy}..
+Further reading:
+
+\vspace{-2ex}
+\begin{itemize}
+\item The details of this part are described in Chapter~\ref{chapter:glossy}
+\item A publication is currently in submission.
+\end{itemize}
 
 \subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
 
-In Section~\cite{introduction:problem:statement} the case for scalable in-database processing of multi-scale selection was made.
+Section~\ref{introduction:problem:statement} argued the case for in-database processing of multi-scale selection.
 
-First, this thesis contributes a compiler for Glossy SQL that translates queries for multi-scale selection into a query in pure relational algebra. The compiler targets the commercial PostgreSQL RDBMS, which is prolifically used in the geographic community due to high-quality spatial extensions.
+First, this thesis contributes a compiler that translates queries in Glossy SQL into equivalent queries in pure relational algebra. The compiler targets the commercial PostgreSQL RDBMS~\cite{PostgreSQL}, which is popular in the geographic data community due to its high-quality spatial extension~\cite{PostGIS}.
 
-Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets.
+Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets. The results show that the Glossy compiler generates relational algebra queries that scalably process multi-scale selection inside the PostgreSQL RDBMS. The compiler is tested with geographical as well as non-geographical datasets.
 
-These contributions are presented in Chapter~\cite{chapter:glossy}. A prototype for the Glossy language and compiler is presented and experimentally evaluated in Chapter~\cite{chapter:cvl}.
+Further reading:
+\vspace{-2ex}
+\begin{itemize}
+\item The details about this part are described in Chapter~\ref{chapter:glossy}.
+\item A prototype of the Glossy language and compiler is presented and experimentally evaluated in Chapter~\ref{chapter:cvl} (CVL language and compiler).
+\item A publication is currently in submission.
+\end{itemize}
 
-\subsection{Prediction Framework}
+
+\subsection{Tile Prediction Framework}
 \label{sec:introduction:contributions:tileheat}
 % NOTFINISHED
 
-Something resembling the abstract
-
-\subsection{Publications}
-% DONE
-
-Previous versions of the chapters describing the contributions of this thesis have been previously published in or submitted to international conferences. The publications and submissions are listed below: 
-
+Further reading:
+\vspace{-2ex}
 \begin{itemize}
-\item \textbf{Chapter~\ref{chapter:glossy} -- Holistic Multi-scale Selection~\cite{glossy}}: Pimin Konstantin Kefaloukos, and Marcos Vaz Salles. Glossy: Global Selection for Data Visualizations. In submission. 
-\item \textbf{Chapter~\ref{chapter:cvl} -- In-Database Map Generalization~\cite{declarative:cartography}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In ICDE, 2014. 
-\item \textbf{Chapter~\ref{chapter:tileheat} -- Prediction for Tile Materialization~\cite{tileheat}}: Pimin Konstantin Kefaloukos, Marcos Vaz Salles, and Martin Zachariasen. Declarative Cartography: In-Database Map Generalization of Geospatial Datasets. In SIGSPATIAL, 2012. 
+\item The details about this part are described in Chapter~\ref{chapter:tileheat}.
+\item A previous version of this chapter has been published in SIGSPATIAL 2012~\cite{kefaloukos2012tileheat}.
 \end{itemize}
+
+
 
 \subsection{Data and Software}
 % DONE
 
-Software for the two published contributions of this thesis are made available as open source software on Github. The software for the paper which is in submission will be made available after publication:
+Software for the two published contributions of this thesis are made available as open source software on Github. A paper that details the Glossy language and compiler is currently in submission; software for Glossy will be made available after publication.
 
+Repositories:
+
+\vspace{-2ex}
 \begin{itemize}
-\item \textbf{Glossy SQL compiler}: pending
-\item \textbf{Glossy SQL prototype}: \url{https://github.com/skipperkongen/declarative-cartography}
-\item \textbf{Tileheat}: \url{https://github.com/skipperkongen/tileheat}
+\item Glossy compiler: \emph{pending publication}
+\item CVL compiler: \url{https://github.com/skipperkongen/declarative-cartography}
+\item Tileheat: \url{https://github.com/skipperkongen/tileheat}
 \end{itemize}
 
 \section{Structure}
@@ -338,7 +340,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Map Generalization}
+\chapter{State-of-the-art Map Generalization}
 \label{chapter:state:of:the:art:map:generalization}
 % Big data: The next frontier for innovation, competition, and productivity
 % Breaking the chains: On declarative data analysis and data independence in the big data era
