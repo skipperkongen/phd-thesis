@@ -155,22 +155,9 @@ The three dimensions of an image (x, y, color) make the visual perception our mo
 
 The web has transformed the activity of map visualization since Roger Tomlinson first conceived geographic information systems (GIS) in the 1960's~\cite{ucgis2014tomlinson}. First, the crowd of map designers has changed, from a few GIS specialists in offices to many data entusiasts on the web~\cite{hanrahan2012enthusiast}. Second, the geographic data has changed, from moderately-sized and mostly curated datasets inside organizations to huge and often user-contributed datasets on the web~\cite{gst2014digitalmapsupply, openstreetmap, zooniverse2014oldweather}. Third, the audiences of map visualizations have changed, from a few people in offices who interact with mapping systems during business hours, to millions of people on the web who interact with mapping systems 24 x 7 and on the go. Fourth, the purpose of mapping has changed, from being mostly a professional activity, to being simultaneously a professional, personal and social activity. Admitedly, these four points are somewhat a caricature of reality, however the directionality of where map visualization is going is evident all around us. Undoubtedly, the impact of the web has caused important problems that are not adequately addressed by state-of-the-art GIS. 
 
-Given these new opportunities on the web, i.e. so much interesting data (millions of records) and potentially huge audiences (millions of people), more and more individuals and organizations (e.g. news agencies) are motivated to communicate spatial narratives on web maps~\cite{guardian2013ananas,nytimes2010iraq}. Some of these maps are easy to produce, whle others are more difficult. There are two extremes in the types of maps that are being created. At one extreme, map such as choropleth maps~\cite{jenks1963generalization} and heatmaps~\cite{wiki2014heatmap} present a highly statistical view of information~\cite{guardian2013ananas}. For example, maps that show the distribution of votes by region in an election. At the other extreme, map such as thematic point maps present an immersive, interactive and detailed view of information~\cite{nytimes2010iraq}. For example, maps that show the location of restaurants, hotels and tourist attractions. While both types of map are highly valuable, the former maps are straight-forward to produce using spatial statistics~\cite{ripley2005spatial}. In contrast, the latter maps present a fundamentally harder challenge to map designers due to the need for map generalization. For the latter type of maps, the generalization methods of selection and simplification are most appropriate, since they maintain the identity of individual records where amalgamation does not.
+Given these new opportunities on the web, i.e. so much interesting data (millions of records) and potentially huge audiences (millions of people), more and more individuals and organizations (e.g. news agencies) are motivated to communicate spatial narratives on interactive web maps~\cite{bradshaw2013online}. Some of these maps are easy to produce, whle others are more difficult. There are two extremes in the types of maps that are being created. At one extreme, map such as choropleth maps~\cite{jenks1963generalization} and heatmaps~\cite{wiki2014heatmap} present a highly statistical view of information~\cite{guardian2013ananas}. For example, maps that show the distribution of votes by region in an election. At the other extreme, map such as thematic point maps present an immersive, interactive and detailed view of information~\cite{nytimes2010iraq}. For example, maps that show the location of restaurants, hotels and tourist attractions. While both types of map are highly valuable, the former maps are straight-forward to produce using spatial statistics~\cite{ripley2005spatial}. In contrast, the latter maps present a fundamentally harder challenge to map designers due to the need for map generalization. For the latter type of maps, the generalization methods of selection and simplification seem to be most appropriate, since they maintain the identity of individual records where amalgamation does not. For this reason, this thesis will focus on the specification and scalable processing of multi-scale selection of large geographical information sets.
 
-This thesis proposes a new breed of scalable map visualization systems that is specialized for data enthusiasts who wish to efficiently express multi-scale data selections for immersive, interactive web maps over large geographical datasets.
-
-%Data visualizations must scale well both in the size of the data~\cite{Im2013visreduce, battle2013dynamicreduction} and the size of the audience~\cite{viegas2007manyeyes,scalablemaps}. Moreover,  In-database execution addresses the issue of scalable data processing where the data for visualizations is most frequently managed~\cite{wu,ferry, }; 
-
-% declarative languages and visual design interfaces address the issue of intuitive creation of compelling and complex data visualizations~\cite{wu, someothers}. This dissertation investigates the design of a data visualization management system that meets all of these requirements, simultaneously. To address the short-comings of GIS for the web, this dissertation makes the case for a new category of systems: Map Visualization Management Systems (MVMS). The vision of MVMS is influences by the visions of Reverse Data Management~\cite{meliou2011reverse} and Data Visualization Management Systems (DVMS), while specialized for the particular challenges of map visualization (see Figure~\ref{fig:mvms}).
-
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[scale=.6]{figs-thesis/data-visualization-management-system.pdf}
-%\caption{TODO}
-%\label{fig:mvms}
-%\end{center}
-%\vspace*{-4ex}
-%\end{figure}
+This thesis picks up a challenge for computer science, which was put forward by geographers more than fifteen years ago~\cite{weibel1998perspectives}. While numerous works have addressed the challenge, the web has dramatically changed the base conditions for performing map visualization in the recent years. Therefore, the goal of this thesis is to contributes new knowledge that can be put into scalable map visualization systems on the web; systems that are specialized for data enthusiasts who wish to design immersive, interactive web maps over large and constantly emerging geographical datasets.
 
 \section{Problem statement}
 \label{introduction:problem:statement}
@@ -181,7 +168,7 @@ Write a nice little intro here.
 
 % MATHEMATICAL FOUNDATION
 \item \textbf{Abstract Modeling} 
-Map generalization is traditionally the study of very domain-specific methods with a high focus on the geographical context. No doubt, the methods that are needed to produce cartographically challenging maps, suchs as physical and topographic maps, need to highly aware of the geographic context~\cite{}. However, multi-scale selection of data for geographic mash-ups is a arguably a much simpler problem than generalizing data for a topographic map. For this reason, the selection problem can conceivably be mapped to a more abstract and less geography-specic problem, which however still captures the relevant elements of multi-scale selection for maps. If this was possible, and the abstract problem was well-known, we would theoretically be able to exploit previous work on efficient algorithms for this problem. Additonally, we would possibly be able to reuse the algorithmic framework for non-geography related data visualization as well.
+Map generalization is traditionally the study of very domain-specific methods with a high focus on the geographical context. No doubt, the computational methods that are needed to produce cartographically challenging maps, suchs as physical and topographic maps, need to be highly aware of the geographic context~\cite{}. However, multi-scale selection of data for geographic mash-ups is a arguably a much simpler problem than generalizing data for a topographic map. For this reason, the selection problem can conceivably be mapped to a more abstract and less geography-specic problem, which however still captures the relevant elements of multi-scale selection for maps. If this was possible, and the abstract problem was well-known, we would theoretically be able to exploit previous work on efficient algorithms for this problem. Additonally, we would possibly be able to reuse the algorithmic framework for non-geography related data visualization as well.
 
 The key question is: what are the key components of multi-scale selection for map visualization and can they be captured by a more abstract and well-known problem for which efficient algorithms exist?
 
@@ -195,9 +182,18 @@ The key question is: what are the key components of multi-scale selection for ma
 % DECLARATIVE SPECIFICATION
 \item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let users influcence the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables}. Such systems exclude the map designer from any influence over the data selection process, including how record importance should be determined and which constraints should be enforced. At the other extreme, selection frameworks require map designers to write advanced and very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the solution should match the complexity of the problem. While selection of data for thematic overlays is not as complex as the generalization of a topographic map, it is also not so trivial as to varant completely unsupervised methods. First, there are many ways to score the importance of objects based on their attributes. Second, there are at least two different ways to make maps more legible, which are to bound the proximity of symbols and the density of symbols. It makes sense that map designers should be able to influence which of these controls are used during the selection process.
 
-Ideally, designers could specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, fit the bill for such as language, which has driven their prolific use in data management. However, there is a lack of declarative langauges that can efficiently express multi-scale selection for map visualizations.
+Ideally, designers could specify just the high-level constraints and objectives for a map in a versatile and concise specification language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative languages, such as SQL, fit the bill for such as language, which has driven their prolific use in data management. However, there is a lack of declarative langauges that can control a multi-scale selection pipeline for map visualizations. Since visual abstraction has been addressed by previous work~\cite{jacques1967semiologie, nickerson1994visual, wilkinson2006grammar}, this thesis will focus on model abstraction stage of the pipeline (see Figure~\ref{fig:introduction:multiscale:selection:pipeline}).
 
-The key question is: what is an appropriate declarative language that allows map designers to express multi-scale selection for map visualizations?
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/abstraction-pipeline.pdf}
+\caption{\emph{Multi-scale selection pipeline: the pipeline illustrated in the figure transforms consists of two stages. Stage one (model abstraction) transforms Hi-Fi tables of geographic data into filtered Lo-Fi views corresponding to the data elements that should appear on a map. Stage two (visual abstraction) transforms data records into data symbols on the map. The pipeline is controlled by a declarative specification of goals (tanned boxes) and executes processes (white boxes).}}
+\label{fig:introduction:multiscale:selection:pipeline}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+The key question is: what is an appropriate declarative language that allows map designers to express control over multi-scale selection pipelines in map visualizations?
 
 % IN-DATABASE PROCESSING
 \item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographical mash-ups. While geographical data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to online location-based services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographical information can be produced by anybody, anytime, and anywhere.
@@ -218,11 +214,13 @@ The key question is: how we can leverage RDBMS technology to its full potential 
 
 % PREDICTIVE TILE MATERIALIZATION
 \item \textbf{Prediction and Rendering of Hot Tiles}: 
-Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{}. There are two extreme approached to rendering a set of tiles. At one extreme, the entire tile set is preemptively materialized. As we will see shortly, this is wasteful as most tiles are never actually requested. At the other extreme, individual map tiles are lazily materialized and only rendered when they are actually requested by a user. As we will see shortly, this results in high average latency.
+Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{}. There are two extreme approaches to rendering tiles. At one extreme, the entire tile set is preemptively materialized. As we will see shortly, this is wasteful as most tiles are never actually requested. At the other extreme, individual map tiles are lazily materialized and only rendered when they are actually requested by a user. As we will see shortly, this results in high average latency.
 
 Studies have shown that requests for maps are skewed in several interesting and exploitable ways. First, studies have shown that there is a strong spatial skew in the areas of a map that are most often requested~\cite{fisher07hotmap}. A preliminary study found that this is true of the map provider studied in this PhD project~\cite{gst2014digitalmapsupply} (see Figure~\ref{foo}). In fact, most tiles are never requested. Second, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal skew in the number of map requests that have to be processed per hour of the day (see Figure~\ref{foo}). Generally, this is probably true of other map providers as well. Third, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal correlation between the amount of concurrent map tile (rendering) requests and the average latency it takes to render a map tile (see Figure~\ref{foo}). This is fairly intuitive and is probably true of other map providers as well. The third point clearly demonstrates the drawback of lazy tile rendering. In summary, (a) users only request a tiny fraction of the map, (b) users predominantly requests maps during certain parts of the day, and (c) when many users are simultaneously requesting unrendered map tiles the average latency goes up.
 
-A log of requests is typically recorded by a map provider. The map provider studied in this PhD project has a log of every request that has been received for the past five years, which includes information about the time of day and the area of the map that was requested. This is probably typical. However, information about which person made the request is not logged. This is probably also typical. From this log, this conducted the preliminary studies that where mentioned above. However, the log may not only explicitely tell us something about the past, it may also implicitely tell us something about the future. Currently, there is a lack of methods that optimize the preemptive materialization of tiles, temporally and spatially. On the one hand, if such a method could predict the set of hot tiles in the futre, which could save a lot of CPU-cycles and I/O during preemptive (partial) tile materialization by only materializing the hot set. On the other hand, if such a method could tell us when to preemptively materialize the hot tiles so as to not collide with many concurrent user requests, we could improve the average latency of map requests. 
+A log of requests is typically recorded by a map provider. The map provider studied in this PhD project has a log of every request that has been received for the past five years, which includes information about the time of day and the area of the map that was requested. However, the log may not only (explicitely) tell us something about the past, it may also (implicitely) tell us something about the future. Potentially, a log can be used to answer spatial and temporal questions about the tiles: Where are the tiles that will be requested? When will the tiles be requested?
+
+Currently, there is a lack of log-based methods for optimizing a preemptive tile materialization process, both temporally and spatially. On the one hand, such a method help us to select a hot tiles to materialize. This could save a lot of CPU-cycles and I/O. On the other hand, such a method could tell us when to materialize the hot tiles. This could improve the average latency of map requests. 
 
 The key question is: How can we exploit a log of previous map requests to cost-effectively materialize a hot set of tiles and lower the average latency of map requests?
 \end{itemize}
@@ -233,55 +231,50 @@ The key question is: How can we exploit a log of previous map requests to cost-e
 
 Instead of presenting a complete system for map visualization on the web, this thesis focuses on four specific aspects that are encounted by map designers who must select and serve data for high-quality geographic mash-ups on the web. The purpose of these  contributions is to address the problems that where presented in Section~\ref{introduction:problem:statement}.
  
-\subsection{Equivalence to Set Multicover Problem}
+\subsection{Set Multi-cover Formulation}
 \label{sec:introduction:contributions:set:multicover:problem}
 
 Section~\ref{introduction:problem:statement} argued that the modeling of multi-scale selection for map visualizations would benefit from a mapping to a well-known but more abstract problem. This section shows how progress was made on this problem and the benefits that have resulted from the mapping.
 
-First, this thesis contributes an identification of equivalence between the selection problem in map generalization and the set multicover problem. There is an downside and upside to this equivalence relation. The downside is that the set multicover problem is NP-hard~\cite{}. The upside is that several efficient approximation algorithms have been studied for this problem, which includes an algorithm with $O(??)$ complexity. The upside of the equivalence relation forms the background for a contribution of this thesis, namely that the application of a single efficient algorithm can solve many different variations of the multi-scale selection problem in map visualization, which supports a very versatile class of user-defined constraints and record importance measures.
+First, this thesis contributes an identification of equivalence between the selection problem in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multicover problem is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been contributed for this problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}. The upside of the equivalence relation forms the background for a contribution of this thesis, namely that the application of a single efficient algorithm can solve many different variations of the multi-scale selection problem in map visualization, which supports a very versatile class of user-defined constraints and record importance measures.
 
-Second, this thesis contributes a formulation that expresses a host of concrete binary and set-based selectin constraints in terms of edge-selection constraints in a bi-partite graph. For example, this formulation captures diverse constraints such as object proximity and object density in geographical space (see Figure~\ref{fig:introduction:selection:constraints}).
+Second, this thesis proves that simple sorting can solve the set multi-cover problem to optimality for a common and important case, namely the weighted selection of geographic points subject to a tile density constraint.
 
-Third, this thesis proves that simple sorting can solve the set multi-cover problem to optimality for common and important cases, namely the selection of geographic points subject to a tile density constraint.
+Third, this thesis contributes a formulation that captures a host of spatial constraints in the form for binary and set-based selection constraints. Furthermore, these two classes of constraints are formulated in terms of more abstract edge-selection constraints in a bi-partite graph. It is shown that an edge-selection constraint in bi-partitie graphs captures diverse and concrete spatial constraints such as object proximity and object density in geographical space (see Figure~\ref{fig:introduction:selection:constraints}).
+
+The first and second contributions are presented in Chapter~\ref{chapter:cvl}  and the third contribution is presented in Chapter~\ref{chapter:glossy}.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.45]{figs-thesis/holistic-selection.pdf}
-\caption{Binary and set-based selection constraints: binary selection constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of entities. Set-based selection constraints, such as a maximum density (right image) set up conditions that must be met by all qualifying sets of objects. The nature of selection constraints is such that a given constraint can always be satisfied by a selection. In the images, selected entities are represented by black disks while filtered-out entities are represented by white disks.}
+\includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
+\caption{Binary and set-based selection constraints: binary selection constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of entities. Set-based selection constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying sets of objects. The nature of selection constraints is such that a given constraint can always be satisfied by a selection. In the images, selected entities are represented by black disks while filtered-out entities are represented by white disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
  
-\subsection{Glossy SQL Extension}
+\subsection{Glossy SQL Syntax and Semantics}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
-Section~\ref{introduction:problem:statement} posits the need for declarative languages to express multi-scale selection in map visualizations. This thesis contributes an extension to SQL which addresses this need, not only for map visualizations, but for a substantially larger class of data visualizations, which includes zoomable timelines. Moreover, the choice of an extension to SQL allows programmers to concisely and intuitively express multi-scale selection in a familiar and productive programming style. This was important, since programmer productivity is a major design goal.
+Section~\ref{introduction:problem:statement} posits the need for declarative languages to control a multi-scale selection pipeline in map visualizations.
 
-During the design process, some key design goals where identified: An extension to SQL for multi-scale selection must (1) allow programmers to express scale-dependent binary and set-based constraints that should be satisfied by a valid selection, (2) allow programmers to define how record importance should be evaluated for each scale, (3) allow programmers to freely define a set of tuples that generalize the notion of scales, (4) allow multi-scale selection in both the star and ladder paradigm~\cite{foerster2010challenges},  (5) allow programmers to reference data tables in relational databases.
+First, this thesis contributes Glossy SQL, a syntactical extension to SQL that allows visualization designers to declaratively specify multi-scale selection for map visualizations. Furthermore, it is shown that the language captures selection, not only for multi-scale maps, but for a substantially larger class of multi-dimensional data visualizations, which includes timelines. The choice of an extension to SQL allows programmers to concisely and intuitively express multi-scale selection in a familiar and productive programming style.
 
-Some more details.
+Second, this thesis contributes a structural operational semantics for Glossy SQL in terms of equivalent relational algebra queries. Furthermore, this facilitates compilers that translate Glossy SQL into relational queries for scalable execution in relational databases.
 
-
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.4]{figs-thesis/abstraction-pipeline.pdf}
-\caption{\emph{Multi-scale selection pipeline:} }
-\label{fig:introduction:multiscale:selection:pipeline}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
+These contributions are presented in Chapter~\cite{chapter:glossy}..
 
 \subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
 
-In Section~\cite{introduction:problem:statement} the case for in-database processing of multi-scale selection was made. This thesis makes the contribution of a translation approach that will compile a specification written in a declarative language for multi-scale selection into a query in pure relational algebra. Consequently, the translated query can be executed entirely inside a relational database, where the data is assumed to be stored.
+In Section~\cite{introduction:problem:statement} the case for scalable in-database processing of multi-scale selection was made.
 
-Some more details.
+First, this thesis contributes a compiler for Glossy SQL that translates queries for multi-scale selection into a query in pure relational algebra. The compiler targets the commercial PostgreSQL RDBMS, which is prolifically used in the geographic community due to high-quality spatial extensions.
 
+Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets.
 
+These contributions are presented in Chapter~\cite{chapter:glossy}. A prototype for the Glossy language and compiler is presented and experimentally evaluated in Chapter~\cite{chapter:cvl}.
 
 \subsection{Prediction Framework}
 \label{sec:introduction:contributions:tileheat}
@@ -306,9 +299,9 @@ Previous versions of the chapters describing the contributions of this thesis ha
 Software for the two published contributions of this thesis are made available as open source software on Github. The software for the paper which is in submission will be made available after publication:
 
 \begin{itemize}
-\item \textbf{Holistic Multi-scale Selection}: pending
-\item \textbf{In-Database Map Generalization}: \url{https://github.com/skipperkongen/declarative-cartography}
-\item \textbf{Prediction for Tile Materialization}: \url{https://github.com/skipperkongen/tileheat}
+\item \textbf{Glossy SQL compiler}: pending
+\item \textbf{Glossy SQL prototype}: \url{https://github.com/skipperkongen/declarative-cartography}
+\item \textbf{Tileheat}: \url{https://github.com/skipperkongen/tileheat}
 \end{itemize}
 
 \section{Structure}
