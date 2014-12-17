@@ -152,21 +152,8 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 % Map generalization
 %The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Digital map visualization (henceforth, map visualization) is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. Alas, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
 
-The funnel that motivates our contributions.
-\begin{itemize}
-\item Maps are really cool
-\item Requirements for web and mobile maps: PoCID, iOS6
-\item Only maps of large data need information abstraction, whether area partitions (haunert, gap) or points (pia, da sarma). in typical map application no need for complex information abstraction, since the hard maps (background maps) already exist.
-\item On-the-fly methods do not cost-effectively scale to massive audiences. ARGUE THIS POINT WELL
-\item scalable batch-oriented data abstraction methods, which sacrifice consistency for query time performance, are the only approach that will cost-effectively scale to massive audiences (e.g. vector tiles); mention content delivery networks, data partionining and replication.
-\item However, current batch-oriented methods either too automatic or too complex for map designers. ARGUE THIS POINT WELL
-\item New paragraph:
-\item From user perspective, only data that is requested needs to be consistent
-\item Reliable prediction can enable us to batch-process only the data that is requested in the future, which will (a) decrease the window of inconsistency, and (b) would be cheaper as well.
-\end{itemize}
 
-
-Digital map visualization is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Indeed2, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
+Digital map visualization studies how the geography of Earth can be represented on a computer screen. The three dimensions of a digital image make the visual perception our most powerful perceptive system, however, images are finite and have only three dimensions and the consequences of these limits are important~\cite{bertin1973semiologie}. No doubt, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -177,23 +164,28 @@ Digital map visualization is the process by which map designers represent the ge
 \vspace*{-4ex}
 \end{figure}
 
-Web and mobile mapping applications typically combine emerging thematic foreground data with the spatial context of existing background map~\cite{bereuter2012algorithms}, which is informally known as a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). While existing background maps are generally of high quality, the result of many hours of expert labor, large thematic datasets presents a raw challenge for the would-be designer of a mash-up. Computer screens can legibly display just a few thousand distinct symbols, thus, if more data is intersected by the viewport it will have to be abstracted to remain legible.
-% funnel from here.
-% - Maps are really cool
-% - Requirements for web and mobile maps: PoCID, iOS6
-% - only maps of large data need information abstraction, whether area partitions (haunert, gap) or points (pia, da sarma).
-% - in typical map application no need for complex information abstraction, since the hard maps (background maps) already exist.
-% - On-the-fly methods do not cost-effectively scale to massive audiences
-% - scalable batch-oriented data abstraction methods, which sacrifice consistency for query time performance, are the only approach that will cost-effectively scale to massive audiences (e.g. vector tiles); mention content delivery networks, data partionining and replication.
-% - however, current batch-oriented methods either too automatic or too complex for map designers.
-% - new paragraph:
-% - from user perspective, only data that is requested needs to be consistent
-% - prediction would enable us to batch-process only the data that is needed, which would decrease the window of inconsistency and would be cheaper as well.
+%The funnel that motivates our contributions.
+%\begin{itemize}
+%\item Maps are really cool
+%\item Requirements for web and mobile maps: PoCID, iOS6
+%\item Only maps of large data need information abstraction, whether area partitions (haunert, gap) or points (pia, da sarma). in typical map application no need for complex information abstraction, since the hard maps (background maps) already exist.
+%\item On-the-fly methods do not cost-effectively scale to massive audiences. ARGUE THIS POINT WELL
+%\item scalable batch-oriented data abstraction methods, which sacrifice consistency for query time performance, are the only approach that will cost-effectively scale to massive audiences (e.g. vector tiles); mention content delivery networks, data partionining and replication.
+%\item However, current batch-oriented methods either too automatic or too complex for map designers. ARGUE THIS POINT WELL
+%\item New paragraph:
+%\item From user perspective, only data that is requested needs to be consistent
+%\item Reliable prediction can enable us to batch-process only the data that is requested in the future, which will (a) decrease the window of inconsistency, and (b) would be cheaper as well.
+%\end{itemize}
+
+
+Web and mobile mapping applications typically combine emerging thematic foreground data with the spatial context of existing background map, which is a process informally known as a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why are they cool? 
+Mash-ups are important because they combine new and relevant spatial information with existing high-quality background maps that provide the spatial context in which the new information must be understood~\cite{bereuter2012algorithms} % Why is it hard?
+Any high-quality map must satisfy several and mutually adversarial design goals. Tricky trade-offs are required to display as much as possible of the relevant information while also remaining legible~\cite{jones2005webage}: as data grows in size beyond a few thousand records, symbols on the map will become indistinquishable from each other (see Figure~\ref{fig:raw:poi:data}). At this point, there is a need for geographic information abstraction, which is also known as map generalization~\cite{weibel1999generalising}. For example, a map designer may choose to \emph{select}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. % Why is the state-of-the-art not good enough?
 
 % Where does Reactive tree, BLG-tree fit in?
 
 
-: creating legible and informative maps over new datasets is time consuming and difficult! Simply displaying unfiltered symbols for large geographic data on top of an existing background map will not suffice (see Figure~\ref{fig:raw:poi:data}). Indeed, one of the most fundamental challenges encountered by map designers is how to represent as much as possible of the relevant information on a small scale map that must remain legible~\cite{jones2005webage}. For example, a map designer may choose to \emph{select}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} geographic information in order to emphasize the important and suppress the unimportant. Weibel and Dutton present a good overview of this field~\cite{weibel1999generalising}, which is known inside geography as \emph{map generalization}.
+: creating legible and informative maps over new datasets is time consuming and difficult! Simply displaying unfiltered symbols for large geographic data on top of an existing background map will not suffice (see Figure~\ref{fig:raw:poi:data}). Indeed, one of the most fundamental challenges encountered by map designers is how to represent as much as possible of the relevant information on a small scale map that must remain legible~\cite{jones2005webage}. For example, Weibel and Dutton present a good overview of this field~\cite{weibel1999generalising}, which is known inside geography as \emph{map generalization}.
 
 \begin{figure}[htbp]
 \begin{center}
