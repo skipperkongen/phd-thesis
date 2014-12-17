@@ -152,6 +152,20 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 % Map generalization
 %The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Digital map visualization (henceforth, map visualization) is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. Alas, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
 
+The funnel that motivates our contributions.
+\begin{itemize}
+\item Maps are really cool
+\item Requirements for web and mobile maps: PoCID, iOS6
+\item Only maps of large data need information abstraction, whether area partitions (haunert, gap) or points (pia, da sarma). in typical map application no need for complex information abstraction, since the hard maps (background maps) already exist.
+\item On-the-fly methods do not cost-effectively scale to massive audiences. ARGUE THIS POINT WELL
+\item scalable batch-oriented data abstraction methods, which sacrifice consistency for query time performance, are the only approach that will cost-effectively scale to massive audiences (e.g. vector tiles); mention content delivery networks, data partionining and replication.
+\item However, current batch-oriented methods either too automatic or too complex for map designers. ARGUE THIS POINT WELL
+\item New paragraph:
+\item From user perspective, only data that is requested needs to be consistent
+\item Reliable prediction can enable us to batch-process only the data that is requested in the future, which will (a) decrease the window of inconsistency, and (b) would be cheaper as well.
+\end{itemize}
+
+
 Digital map visualization is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Indeed2, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
 
 \begin{figure}[htbp]
