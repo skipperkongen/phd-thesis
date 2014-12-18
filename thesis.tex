@@ -153,12 +153,12 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 %The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Digital map visualization (henceforth, map visualization) is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. Alas, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
 
 
-Digital map visualization studies how the geography of the Earth can be represented on a computer screen. No doubt, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim} (TODO: find pages quoted by Weibel and Dutton and add to bibtex). While the three dimensions of an  image make the visual perception our most powerful perceptive system, images are finite and have only three dimensions and the consequences of these limits are important~\cite{bertin1973semiologie}.
+%Digital map visualization studies how the geography of the Earth can be represented on a computer screen. It is fundamentally challenging to represent something as enormous as a planet on something as small as a computer screen~\cite{dillard1974pilgrim}, therefore,  (TODO: find pages quoted by Weibel and Dutton and add to bibtex). While the three dimensions of an  image make the visual perception our most powerful perceptive system, images are finite and have only three dimensions and the consequences of these limits are important~\cite{bertin1973semiologie}.
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Geographic mash-ups}: UK census statistics for \% people with non-english as main language displayed on a background map (left); Wikileaks data for casualties during the Iraq War (2003-2011) displayed on a background map (right). The maps are reproduced from The Guardian's Data Blog with background maps \textcopyright 2014 Google.}
+\caption{\textbf{Geographic mash-ups}: Two examples of maps that visualize thematic foreground data on top of common background maps. (left) UK statistics for \% people who speak a non-english language as their first language; (right) Wikileaks data for casualties during the Iraq War (2003-2011). The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \vspace*{-4ex}
@@ -178,9 +178,11 @@ Digital map visualization studies how the geography of the Earth can be represen
 %\end{itemize}
 
 
-Web and mobile mapping applications typically combine emerging thematic foreground data with the spatial context of existing background map, which is a process informally known as a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it cool? 
-Mash-ups are important because they combine new and relevant spatial information with existing high-quality background maps that provide the spatial context in which the new information should be understood~\cite{bereuter2012algorithms} % Why is it hard?
-Any high-quality map must satisfy several and mutually adversarial design goals. Tricky trade-offs are required to display as much as possible of the relevant information while also remaining legible~\cite{jones2005webage}: as data grows in size beyond a few thousand records, symbols on the map will become indistinquishable from each other (see Figure~\ref{fig:raw:poi:data}). At this point, there is a need for geographic information abstraction, which is also known as map generalization~\cite{weibel1999generalising}. For example, a map designer may choose to \emph{select}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. % Why is the state-of-the-art not good enough?
+Map visualization studies how the geography of the Earth can be represented, most recently on computer screens and historically on pieces of paper. Since ancient times the requirements for this process have been to represent as much as possible of the relevant information on images that are legible, useful, and to some degree aesthetically pleasing. The three dimensions of an image make the visual perception our most powerful perceptive system, but images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. As an entire planet is scaled down and projected on a computer screen, invariably, map designers are faced with the need to abstract the information~\cite{weibel1997generalization}.
+
+Web and mobile mapping applications typically present ermerging thematic foreground data in the context of existing background map that provide the spatial context for so-called geographic mash-ups (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it cool? 
+Mash-ups are important because they combine news-worthy or simply interesting spatial information with existing high-quality background maps that provide the spatial context in which a geographic narrative unfolds~\cite{bereuter2012algorithms}. % Why is it hard?
+High-quality map must display as much as possible of the relevant information while also remaining legible or even beautiful~\cite{jones2005webage}, however, as data grows in size beyond a few thousand records, symbols on the map will begin to become indistinquishable (see Figure~\ref{fig:raw:poi:data}). At this point, there is a need for geographic information abstraction, which is also known as map generalization~\cite{weibel1999generalising}. For example, a map designer may choose to \emph{select}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. % Why is the state-of-the-art not good enough?
 Map generalization approaches can be divided into two polar opposites, namely on-the-fly~\cite{bereuter2013real,van1995gap,nutanong2012multiresolution} generalization and batch-oriented~\cite{schmid2013opensciencemap,haunert2006landcover,sarma2012fusiontables} generalization. Initially, on-the-fly generalization seems to have all the benefits, such as only storing the data once and the opportunity to react individually to users' behavior. However, on-the-fly methods do not cost-effectively scale to massive amounts of concurrent users, since they rely on datastructures that while efficient for single queries are difficult to partition and scale with the number of concurrent queries~\cite{}. In contrast, batch-oriented methods  gets an input data set and returns an output data set using algorithms, rules, or constraints without the intervention of humans, which allows effortless scalability to massive amounts of concurrent users. The materialized and abstracted data can be partitioned and replicated inside highly scalable content delivery networks (CDN)~\cite{barroso2009datacenter}, for example as vector tiles~\cite{gaffuri12vectortiles} which partition the data in a multi-scale linearization scheme~\cite{hilbert1891ueber, zcurve}. However, the most crucial drawback of a batch-oriented approach is that it sacrifices consistency in order to gain scalability. When the base data changes, the materialized information abstraction becomes an inconsistent view of the data. To make it consistent again, the abstraction must be computed from scratch. Given a requirement that a map must by highly scalable, for example in a geospatial data infrastructure~\cite{gst2014digitalmapsupply}, batch-oriented approaches are presently the only viable option for the majority of map generalization use cases. A few exceptions exist where scalable on-the-fly methods have been proposed for very specific problems, such as select-distinct~\cite{nutanong2012multiresolution}. While a batch-oriented approach is are generally needed for high-scalability maps on the web, the current state-of-the-art in batch-oriented map generalization is suboptimal for abstraction of thematic foreground data. % Why?
 Currently, batch-oriented approaches belong to two categories, either fully automatic systems~\cite{sarma2012fusiontables} or very advanced and domain-oriented systems~\cite{lamy1999application, ware2003generalization_sa}. % Yeah, what is wrong with them?
 
@@ -391,7 +393,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Geographic Information Abstraction}
+\chapter{Map Generalization}
 \label{chapter:state:of:the:art:map:generalization}
 
 
@@ -402,7 +404,26 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 %Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographic data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
 
-% Design space
+% Use cases (from weibel)
+1. Creation and maintenance of spatial databases at multiple scales,
+2. cartographic visualization at variable scales, 
+3. data reduction.
+
+% Design space (from weibel)
+1. Knowledge-based systems (ontology based, datalog, etc),
+2. algorithms and datastructures (on-the-fly and batch-oriented).  
+
+% Older surveys from the 90's
+1. Buttenfield and McMaster (1991),
+2. M{\"u}ller et al. (1995),
+3. Weibel (1995),
+4. Molenaar (1996)
+% Modern surveys?
+
+% Basic condition in cartography (while I'm not doing cartography, my methods abstract and prepare the data for cartographic visualization. Therefore, the conditions below are relevant):
+Halving the scale e.g. from  1:50,000 to 100,000 results in a quartering of the space available for drawing.
+Minimum dimensions in cartography, such as 0.35 mm for the length of a black square (e.g. representing a building) and 0.25 mm between the double lines typically used to draw roads.
+
 
 
 
@@ -412,9 +433,13 @@ The purpose of this chapter is to convince a critical reader that the contributi
 
 \section{Overview of Process}
 
-The field of map generalization rests on an understanding of the semantics of geographic information and the visual cognition process in humans. This understanding has over time been translated into a set of principles, which maps should adhere to. To test the claim that multi-scale selection is a sufficient generalization operator for designers who seek to create a multi-scale geographic mash-up, the selection operator must be evaluated in the context of these well-known principles to see if it meets all the requirements. This section reviews the most important principles and design objectives that have been formulated in the map generalization (and related) literature. While compliance with these principles is not a sufficient requirement in itself, it is however a necessary requirement.
+%The field of map generalization rests on an understanding of the semantics of geographic information and the visual cognition process in humans. This understanding has over time been translated into a set of principles, which maps should adhere to. To test the claim that multi-scale selection is a sufficient generalization operator for designers who seek to create a multi-scale geographic mash-up, the selection operator must be evaluated in the context of these well-known principles to see if it meets all the requirements. This section reviews the most important principles and design objectives that have been formulated in the map generalization (and related) literature. While compliance with these principles is not a sufficient requirement in itself, it is however a necessary requirement.
 
-\subsection{Model versus Visual Abstraction}
+\subsection{Map Visualization Pipeline}
+
+1. Data modeling,
+2. model abstraction,
+3. visual abstraction.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -425,12 +450,14 @@ The field of map generalization rests on an understanding of the semantics of ge
 \vspace*{-4ex}
 \end{figure}
 
+\subsection{Data Abstraction versus Visual Abstraction}
+
 In map generalization, Gr{\"u}nreich proposed a model that divides map generalization into two separate tasks of model generalization and cartographic generalization (see Figure~\ref{fig:state:of:the:art:gruenreich}). While this is a very useful distinction, the terms are not natural outside the domain of geography, for example in data visualization. To bridge the worlds of map visualization and data visualization, the terms \emph{model abstraction} and \emph{visual abstraction} will be prefered. Paraphrasing and perhaps stretching the original definitions, model abstraction is concerned with \emph{what} to display, while visual abstraction is concerned with \emph{how} to display it. For example, holistic multi-scale selection is a type of model abstraction, since we are choosing what records to display. In constrast, the choice of symbols, say red circles, to visually represent the selected data points would be a type of visual abstraction. Clearly, these tasks are not entirely orthogonal. For example,  choosing larger symbols would intuitively mean that we should select fewer objects (larger symbols means room for fewer objects).
 
 \emph{what do I want to say with the following???}
 While the area of visual abstraction is somewhat outside the scope of this thesis, it should be briefly touched upon. The reason that visual abstraction is mostly outside the scope of this thesis is that visual abstraction is not an area with significant unsolved problems in the context of maps. Seminal work by Bertin~\cite{jacques1967semiologie} and Nickerson~\cite{nickerson1994visual} studies the semiology of graphics, which subsumes visual expression in maps. However, the reason why visual abstraction may still merit a brief discussion is the presence of recent work in data visualization that puts graphical abstraction languages at the center of the data visualization process. For example, the Ermac~\cite{wu2014case} and ggplot2~\cite{wickham2009ggplot2} system are heavily influenced by Wilkinson's work on the Grammer of Graphics~\cite{wilkinson2006grammar}. While these data visualization systems deal mostly , such as Ermac and , can mostly ignore model abstraction, since the primary use case is statistical visualization. Statistical data can be transformed into well-known statistical charts following fairly straight-forward proceduces. Another system which is related to Ermac is ggplot2~\cite{wickham2009ggplot2}, which is also influenced by the Grammar of Graphics. The basic idea behind the Grammar of Graphics is that a graphical abstraction framework should formalize the fundamental graphical primitives rather than simply maintain a catalogue of chart types. The preference for fundamental principles over soon-to-be obsoleted recipies is a sound principle~\cite{koch2013abstraction}, which has also inspired this thesis' contribution of a fundamental declarative language for expressing holistic multi-scale selection.
 
-\subsection{Goals}
+\subsection{Principles}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -440,6 +467,9 @@ While the area of visual abstraction is somewhat outside the scope of this thesi
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+% From cartography
+Minimum dimensions in cartography, such as 0.35 mm for the length of a black square (e.g. representing a building) and 0.25 mm between the double lines typically used to draw roads.
 
 % constraints
 The exacty nature of clutter in visualizations was perhaps first studied by T{\"o}pfer, who empirically observed that small scale maps tend to show the same amount of settlements per unit area as large scale maps~\cite{topfer1966principles} (see Figure~\ref{fig:state:of:the:art:constant:information:density}). The same kinds of observations was synthesized into the DataSplash system~\cite{woodruff1998constant}, which allows users to tune a multi-scale svisualization to ensure the information density remains constant across all scales. The motivation for constant information density comes from multiple studies of the effects of clutter on user performance when solving visual tasks~\cite{phillips1982investigation, springer1987retrieval, tullis1988screen}. 
@@ -471,7 +501,6 @@ There is Pia and GAP, there is Da Sarma, and there is Nutanong. Are Pia and Nuta
 
 % see GAP-tree for muller-paper
 M{\"u}uller et al. distinguish between batch and interactive generalization.
-
 
 
 %The application of multi-scale selection, as it has been defined in Section~\ref{introduction:problem:statement}, can satisfy all of the principles and design objectives outlined above. \emph{explain a bit further}.
