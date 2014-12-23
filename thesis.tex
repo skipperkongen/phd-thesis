@@ -434,8 +434,10 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 \chapter{Map Generalization}
 \label{chapter:state:of:the:art:map:generalization}
 
-% mention where to get more info on traditional generalization
-This thesis focuses on generalization of geographic data in relational databases. Map generalization is a big and complex field, which on record has been studied for decades. Off the record, it has probably been studied for thousands of years. Consequently, there is a lot of related work. However, the purpose of this section is not to give a comprehensive overview of map generalization, as this is too big an area. For that, the reader is refered to the survey by Weibel and Dutton~\cite{weibel1997generalization}, as well as a paper by Jones and Ware~\cite{jones2005webage}. A recent book by Mackaness, Ruas, and Sarjakoski attempts to collect the state of knowledge in generalization as of 2011~\cite{mackaness2011generalisation}. As yet, there seems to be a lack of surveys that investigates the recent challenges and approaches in map generalization, while also relating broadly the recent work in modern data visualization. While these sources will not give a accurate impression of where generalization is going, it will give a good impression of where generalization has come from.
+Map generalization is a process performed by map designers to adapt and transform geographic information to retain as much as possible of the relevant geographic information in geographic map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographic data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographic information, such as the choropleth map, which eliminates the explicit representation of geographic data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising}, Jones and Ware~\cite{jones2005webage}
+
+The purpose of this chapter is to convince a critical reader that the contributions of this thesis are sensible and furthermore that important gaps in map visualization have been closed. This chapter must be read with an understanding of the challenges that are addressed, namely the challenges of expressing, processing and serving thematic overlays in geographic mash-ups for the web. In constrast, previous work has probably addressed all the major challenges of creating general-purpose or ``background'' maps, such as political, physical, topographic, and road maps, which is evident by the abundance of high-quality maps found online.
+
 
 In contrast to the older geography literature on map generalization, recent studies of map generalization tend to make fewer geography-specific distinctions; it is as though the recent literature deliberately departs from the heavy complexity of ``traditional'' map generalization and seeks out a simpler analysis. An explanation could be that map generalization for complex cartographic problems, such as maps of the physical earth, is generally a closed field. The many background maps that are provided online by private companies, as well as the national mapping agencies, certainly support this explanation. While arguably map generalization has been solved for the production of topographic, physical and other types of background maps, the web has opened up new challenges for the generalization of emerging foreground data. This claim is supported by the appearance of a new wave of map generalization studies that focus on the generalization of emering foreground data, and mostly point sets. Indeed, the challenges that are addressed are different from those that are addressed by traditional cartography and generalization.
 
@@ -458,25 +460,9 @@ For each of these areas, the work is judged in relation to the requirements brou
 % Big data: The next frontier for innovation, competition, and productivity
 % Breaking the chains: On declarative data analysis and data independence in the big data era
 
-%This thesis argues that GIS has become marginalized for addressing the current challenges in maps on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
+This thesis argues that GIS has become marginalized for addressing the current challenges in maps on the web, and therefore it is necessary to study the design of a next-generation map visualization system, designed from the ground up for the realities of the web. A case is made for map visualization systems that deliver high-quality multi-scale map visualizations, while being superbly integrated with relational database, highly productive for non-experts, highly scalable in data volume (millions of records), highly available even through system maintenance, and can effortlessly serve concurrent requests to large numbers (millions) of online users. The system does not have to be perfect, or even better in all dimensions than previous work. It simply has to be better-suited for map visualizations on the web. Specifically, some previous work will propose more features or features that more cleverly through out. However, case by case, gaps will be identified between the related work and what the gold standard for map visualization systems should be on the web.
 
-%Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographic data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
-
-% Use cases (from weibel)
-1. Creation and maintenance of spatial databases at multiple scales,
-2. cartographic visualization at variable scales, 
-3. data reduction.
-
-% Design space (from weibel)
-1. Knowledge-based systems (ontology based, datalog, etc),
-2. algorithms and datastructures (on-the-fly and batch-oriented).  
-
-% Older surveys from the 90's
-1. Buttenfield and McMaster (1991),
-2. M{\"u}ller et al. (1995),
-3. Weibel (1995),
-4. Molenaar (1996)
-% Modern surveys?
+Answering each of these questions will require us to investigate areas beyond pure map visualization. For example, work in \emph{map generalization} addresses the problem of geographic data abstraction for multiple scales~\cite{weibel1999generalising}; work in \emph{data management} addresses the issue of managing data for visualizations; work in \emph{programming languages} addresses the issue of expressing the data transformations~\cite{sql}; work in \emph{graphics} addresses the issue of representating data visually~\cite{wickham2009ggplot2, wilkinson2006grammar}; work in \emph{data management} addresses the issue of processing millions of records~\cite{wow-so-many-to-choose-from}; work in \emph{distributed systems} addresses the issue of serving data to millions of users~\cite{wow-so-many-to-choose-from}. All of these topics play a key role in map visualization. This chapter scans the intersection between map visualization and the related work and compares the results against the requirements of a Map Visualization Management System (see Chapter~\ref{cha:introduction}).
 
 % Basic condition in cartography (while I'm not doing cartography, my methods abstract and prepare the data for cartographic visualization. Therefore, the conditions below are relevant):
 Halving the scale e.g. from  1:50,000 to 100,000 results in a quartering of the space available for drawing.
@@ -485,15 +471,106 @@ Minimum dimensions in cartography, such as 0.35 mm for the length of a black squ
 
 
 
-Map generalization is a process performed by map designers to adapt and transform geographic information to retain as much as possible of the relevant geographic information in geographic map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographic data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographic information, such as the choropleth map, which eliminates the explicit representation of geographic data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising}, Jones and Ware~\cite{jones2005webage}
 
-The purpose of this chapter is to convince a critical reader that the contributions of this thesis are sensible and furthermore that important gaps in map visualization have been closed. This chapter must be read with an understanding of the challenges that are addressed, namely the challenges of expressing, processing and serving thematic overlays in geographic mash-ups for the web. In constrast, previous work has probably addressed all the major challenges of creating general-purpose or ``background'' maps, such as political, physical, topographic, and road maps, which is evident by the abundance of high-quality maps found online. 
-
-\section{Overview of Process}
+\section{Overview of Map Generalization}
 
 %The field of map generalization rests on an understanding of the semantics of geographic information and the visual cognition process in humans. This understanding has over time been translated into a set of principles, which maps should adhere to. To test the claim that multi-scale selection is a sufficient generalization operator for designers who seek to create a multi-scale geographic mash-up, the selection operator must be evaluated in the context of these well-known principles to see if it meets all the requirements. This section reviews the most important principles and design objectives that have been formulated in the map generalization (and related) literature. While compliance with these principles is not a sufficient requirement in itself, it is however a necessary requirement.
 
-\subsection{Map Visualization Pipeline}
+\subsection{Purpose)
+
+% Use cases (from weibel)
+1. Creation and maintenance of spatial databases at multiple scales,
+2. cartographic visualization at variable scales, 
+3. data reduction.
+
+\subsection{Further Reading}
+
+% mention where to get more info on traditional generalization
+This thesis focuses on generalization of geographic data in relational databases. Map generalization is a big and complex field, which on record has been studied for decades. Off the record, it has probably been studied for thousands of years. Consequently, there is a lot of related work. However, the purpose of this section is not to give a comprehensive overview of map generalization, as this is too big an area. For that, the reader is refered to the survey by Weibel and Dutton~\cite{weibel1997generalization}, as well as a paper by Jones and Ware~\cite{jones2005webage}. A recent book by Mackaness, Ruas, and Sarjakoski attempts to collect the state of knowledge in generalization as of 2011~\cite{mackaness2011generalisation}. As yet, there seems to be a lack of surveys that investigates the recent challenges and approaches in map generalization, while also relating broadly the recent work in modern data visualization. While these sources might not give a accurate impression of where generalization is going, it will give a good impression of where generalization has come from.
+
+% Older surveys from the 90's
+1. Buttenfield and McMaster (1991),
+2. M{\"u}ller et al. (1995),
+3. Weibel (1995),
+4. Molenaar (1996)
+% Modern surveys?
+
+
+\section{Constraints}
+
+% Unary constraints
+\subsection{Unary Constraints}
+
+Briefly explain what is meant by a unary constraint
+
+\minisec{Minimum Dimensions}
+  % Minimum dimensions
+Minimum dimensions in cartography, such as 0.35 mm for the length of a black square (e.g. representing a building) and 0.25 mm between the double lines typically used to draw roads.
+
+% Object-relative constraints
+\subsection{Object-relative Constraints}
+
+Briefly explain what is meant by an object-relative constraint
+
+\minisec{Minimum Proximity}
+  % Minimum proximity
+
+% Space-relative constraints
+\subsection{Space-relative Constraints}
+
+Briefly explain what is meant by a space-relative constraint
+
+\minisec{Constant Information Density}
+  % Constant information density
+The exacty nature of clutter in visualizations was perhaps first studied by T{\"o}pfer, who empirically observed that small scale maps tend to show the same amount of settlements per unit area as large scale maps~\cite{topfer1966principles} (see Figure~\ref{fig:state:of:the:art:constant:information:density}). The same kinds of observations was synthesized into the DataSplash system~\cite{woodruff1998constant}, which allows users to tune a multi-scale svisualization to ensure the information density remains constant across all scales. The motivation for constant information density comes from multiple studies of the effects of clutter on user performance when solving visual tasks~\cite{phillips1982investigation, springer1987retrieval, tullis1988screen}. 
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.6]{figs-thesis/constant-information-density.pdf}
+\caption{Constant Information Density: Both the left and right map show red points that represent restaurants in Z{\"u}rich area. Notice how the density of the points in the small-scale map (left) is similar to the density of points in the large-scale map (right). The principle of constant information density states that the density of information in a map should not (significantly) change between smaller-scale and larger-scale maps.}
+\label{fig:state:of:the:art:constant:information:density}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+% Density metrics
+While density can be measured as the number of objects per unit area, other metrics for density have been proposed as well. For non-point objects, the number of vertices per unit area is another metric, while yet another is Tufte's data density metric~\cite{tufte1983visual}. Actually, the amount of percieved clutter in a visualization is hard to predict a priori~\cite{phillips1982investigation}. Nonetheless, any automated system for map generalization must rely on a quantifiable density metric, albeit with the understanding that it is merely an estimation of percieved clutter.
+
+\section{Operators}
+
+\subsection{Select}
+
+\subsection{Project}
+
+\subsection{Aggregate}
+
+
+
+
+\subsection{Principles}
+
+
+
+
+% Conflicts
+\minisec
+
+The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
+
+\minisec{Minimize overlaps}
+\minisec{Respect relative importance of entries}
+\minisec{Maximize spatial fullness}
+\minisec{Provide panning/zooming consistency}
+\minisec{Enable efficient sampling}
+\minisec{Support filtering conditions}
+
+% objectives
+
+Haunert, Da Sarma, 
+
+\subsection{Operators}
+
+\subsection{Process Model}
 
 1. Data modeling,
 2. model abstraction,
@@ -515,39 +592,6 @@ In map generalization, Gr{\"u}nreich proposed a model that divides map generaliz
 \emph{what do I want to say with the following???}
 While the area of visual abstraction is somewhat outside the scope of this thesis, it should be briefly touched upon. The reason that visual abstraction is mostly outside the scope of this thesis is that visual abstraction is not an area with significant unsolved problems in the context of maps. Seminal work by Bertin~\cite{jacques1967semiologie} and Nickerson~\cite{nickerson1994visual} studies the semiology of graphics, which subsumes visual expression in maps. However, the reason why visual abstraction may still merit a brief discussion is the presence of recent work in data visualization that puts graphical abstraction languages at the center of the data visualization process. For example, the Ermac~\cite{wu2014case} and ggplot2~\cite{wickham2009ggplot2} system are heavily influenced by Wilkinson's work on the Grammer of Graphics~\cite{wilkinson2006grammar}. While these data visualization systems deal mostly , such as Ermac and , can mostly ignore model abstraction, since the primary use case is statistical visualization. Statistical data can be transformed into well-known statistical charts following fairly straight-forward proceduces. Another system which is related to Ermac is ggplot2~\cite{wickham2009ggplot2}, which is also influenced by the Grammar of Graphics. The basic idea behind the Grammar of Graphics is that a graphical abstraction framework should formalize the fundamental graphical primitives rather than simply maintain a catalogue of chart types. The preference for fundamental principles over soon-to-be obsoleted recipies is a sound principle~\cite{koch2013abstraction}, which has also inspired this thesis' contribution of a fundamental declarative language for expressing holistic multi-scale selection.
 
-\subsection{Principles}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.6]{figs-thesis/constant-information-density.pdf}
-\caption{Constant Information Density: Both the left and right map show red points that represent restaurants in Z{\"u}rich area. Notice how the density of the points in the small-scale map (left) is similar to the density of points in the large-scale map (right). The principle of constant information density states that the density of information in a map should not (significantly) change between smaller-scale and larger-scale maps.}
-\label{fig:state:of:the:art:constant:information:density}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
-% From cartography
-Minimum dimensions in cartography, such as 0.35 mm for the length of a black square (e.g. representing a building) and 0.25 mm between the double lines typically used to draw roads.
-
-% constraints
-The exacty nature of clutter in visualizations was perhaps first studied by T{\"o}pfer, who empirically observed that small scale maps tend to show the same amount of settlements per unit area as large scale maps~\cite{topfer1966principles} (see Figure~\ref{fig:state:of:the:art:constant:information:density}). The same kinds of observations was synthesized into the DataSplash system~\cite{woodruff1998constant}, which allows users to tune a multi-scale svisualization to ensure the information density remains constant across all scales. The motivation for constant information density comes from multiple studies of the effects of clutter on user performance when solving visual tasks~\cite{phillips1982investigation, springer1987retrieval, tullis1988screen}. 
-
-While density can be measured as the number of objects per unit area, other metrics for density have been proposed as well. For non-point objects, the number of vertices per unit area is another metric, while yet another is Tufte's data density metric~\cite{tufte1983visual}. Actually, the amount of percieved clutter in a visualization is hard to predict a priori~\cite{phillips1982investigation}. Nonetheless, any automated system for map generalization must rely on a quantifiable density metric, albeit with the understanding that it is merely an estimation of percieved clutter.
-
-The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
-
-\minisec{Minimize overlaps}
-\minisec{Respect relative importance of entries}
-\minisec{Maximize spatial fullness}
-\minisec{Provide panning/zooming consistency}
-\minisec{Enable efficient sampling}
-\minisec{Support filtering conditions}
-
-% objectives
-
-Haunert, Da Sarma, 
-
-\subsection{Operators}
 
 \minisec{Concrete Categorization}
 
@@ -573,9 +617,21 @@ There is Pia and GAP, there is Da Sarma, and there is Nutanong. Are Pia and Nuta
 M{\"u}uller et al. distinguish between batch and interactive generalization.
 
 
+\subsection{Requirements for map visualization on the web}
+
+Specification
+- Developer-facing
+- User-facing
+
+
+Processing
+
+Data integration
+
+
 %The application of multi-scale selection, as it has been defined in Section~\ref{introduction:problem:statement}, can satisfy all of the principles and design objectives outlined above. \emph{explain a bit further}.
 
-\section{Real-time Map Generalization}
+\section{On-the-fly Map Generalization}
 Real-time map generalization defers the application of operators to the last possible moment. The advantages of this approach are that 
 
 
