@@ -161,7 +161,6 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 
 \chapter{Introduction}
 \label{chapter:introduction}
-% NOTFINISHED
 
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
@@ -175,39 +174,77 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \vspace*{-4ex}
 \end{figure}
 
-TODO
+% situation
+\minisec{Geographic Mash-ups}
+
+\minisec{Process}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.47]{figs-thesis/map-visualization-pipeline.pdf}
+\caption{\textbf{Map Visualization Process}: TODO.}
+\label{fig:introduction:background:process}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
 
 \section{Requirements}
 TODO
-% situation
 
-\subsection{Authoring Maps}
-\minisec{Designer Requirements}
-Time-efficient and Intuitive
-Multi-scale
-Data Abstraction (constraints and objectives)
-Visual Abstraction
 
-\minisec{Processing Requirements}
+\subsection{Multi-scale Maps}
+Map Gen spiel.
+
+Geometric, semantic and visual constraints and objectives 
+
+Unary, object-relative and space-relative constraints.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
+\caption{\textbf{Object-relative and space-relative conflicts}: object-relative constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects. Space-relative constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces. In the figure, objects that are in conflict are grouped by red circles; in the examples, conflicts are resolved by selection; selected objects are represented by black disks, while filtered-out objects are represented by white disks.}
+\label{fig:introduction:selection:constraints}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+
+
+Data abstraction: holistic select-project-aggregate
+Visual abstraction: symbolization
+
+\subsection{Data Processing}
 Scalability
 Data Integration
 Low Cost
 
-\subsection{Serving Maps}
+\subsection{Map Design interfaces}
 
-\minisec{User Requirements}
+Time-efficient
+Intuitive
+Control over what to display: Data Abstraction
+Control over how to display: Visual Abstraction
+
+\subsection{Map Consumer Interfaces}
 Besides HQ maps...
 High Availability
 High Scalability
-Customizability
-
-\minisec{Provider Requirements}
-Low Cost
+Customizable
 
 \section{State-of-the-Art Map Visualization}
 
-\subsection{Pipeline}
 \subsection{Vector Tiles}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
+\caption{\textbf{Vector tiles}: TODO.}
+\label{fig:introduction:background:vector:tiles}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
 
 
 \section{Problem statement}
@@ -218,35 +255,33 @@ Write a nice little intro here.
 \begin{itemize}
 
 % MATHEMATICAL FOUNDATION
-\item \textbf{Mathematical Modeling}
-Selection of data for maps can be intuitively understood as filtering objects subject to some criteria, however many different concrete semantics have been explored. Despite the prolific work, there is a lack of a selection model that supports all the usual cartographic principles. For example, selection is mostly considered as a context-independent operation in both map generalization~\cite{weibel1999generalising} and relational databases~\cite{sql}, that is, data returned from an iterator is filtered according to unary predicates. Even though unary selection can be computed efficiently, the selection is not guaranteed to met important cartographic principles, such as acceptable density, no symbol overlaps etc. More advanced selection semantics, such as top-k~\cite{rocha2011efficient}, the filtering problem~\cite{sarma2012fusiontables}, and select-distinct~\cite{nutanong2012multiresolution}, address only a subset of cartographic principles each. The problem with all these approaches is that they hard-code the constraint types that can be enforced during selection. This limits the use cases that each method covers.
+\item \textbf{Unified Selection Model}
+While selection of data for maps can be intuitively understood as filtering objects subject to some criteria, many different selection models have been explored. The models can be categorised broadly into context-independent~\cite{weibel1999generalising} and context-dependent~\cite{schmid2013opensciencemap} selection models. Within context-dependent selection, models with different selection criteria have been proposed separately, such as weighted selection~\cite{rocha2011efficient}, weighted selection with density bounds~\cite{sarma2012fusiontables} and weighted selection with proximity bounds~\cite{nutanong2012multiresolution}. Each of these models require separate selection algorithms.
 
-What is needed is a model for holistic selection semantics that supports user-defined unary constraints (e.g. attribute filtering), space-relative constraints (e.g. maximum density) as well as object-relative constraints (e.g. minimum proximity) for multi-scale maps. Furthermore, cross scale constraints such as zoom-consistency must optionally be enforced by the selection. Additionally, the model must support scale-dependent and user-defined ranking of objects. Ideally, a well-studied and efficient algorithm can solve holistic selection instances, in the same fashion that sorting solves top-k selection instances. This will allow selection implementations to latch on to the latest research in algorithms. Such a model of selection would be superior to previous methods because of the high coverage of use cases in map visualization, essentially eclipsing all other methods.
+What is needed is a model for holistic selection of geographic data that supports user-defined unary constraints (e.g. attribute filtering), object-relative constraints (e.g. minimum proximity), as well as space-relative constraints (e.g. maximum density)~\cite{woodruff1998constant} for multi-scale maps. Furthermore, cross scale constraints such as zoom-consistency must optionally be enforced by the selection. Additionally, the model must support scale-dependent and user-defined ranking of objects. Ideally, a well-studied and efficient algorithm can solve all instances of the model, in the same fashion that top-k selection can be solved by sorting.
 
 The key question is: \emph{how can holistic selection of thematic data with user-defined map constraints and customizable objectives be modelled as an abstract and well-known problem for which efficient algorithms exist?}
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Selection}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the system should match the complexity of the problem it solves. While selection of thematic data for geographic mash-ups is simple enough that it does not require a complex and highly geography-aware framework, it is also not so trivial that it varants a completely unsupervised approach. Specifically:
+\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{lamy1999application, ware2003generalization_sa}. Optimially, programmers use systems that are only as complex as the problems they solve. While selection of thematic data for geographic mash-ups is simple enough that it does not justify a highly complex approach, it is also not so trivial that it justifies a completely automated approach. Specifically:
 
 \begin{enumerate}
-\item There are many different ways to score the importance of objects.
-\item There are at least two different ways to increase map legibility: bounding the proximity of symbols~\cite{nutanong2012multiresolution} and bounding the density of symbols~\cite{woodruff1998constant}.
-\item There are at least two important process models for multi-scale map generalization, namely the star and the ladder approach~\cite{foerster2010challenges}. 
-\item There are many different ways to define the set of scales in a multi-scale visualization, besides the static ``tile pyramid'' scales~\cite{mbtile12}.
+\item There are at many ways to score the importance of objects;
+\item There are at least three important categories of constraints: unary constraints, binary object-relative constraints and space-relative constraints. Each category contains many possible constraint formulations;
+\item There are at least two important models for processing multi-scale selection of geographic data, namely the star and the ladder model~\cite{foerster2010challenges};
+\item There are many different ways to define a set of scales for a multi-scale visualization.
 \end{enumerate}
 
-It makes sense that programmers can at choose the constraints, objectives, multi-scale approaches and scales that make the most sense for their map visualization. Ideally, programmers could specify just these high-level constraints and objectives in a versatile and concise specification language, while leaving the minute selection of data to the system, which is also known as a how-to query~\cite{meliou2011reverse}. Declarative languages, such as SQL, are well suited for expressing how-to queries. However, there is currently a lack of a declarative language for geographically oriented how-to queries.
+It makes sense that programmers can at specify the constraints and objectives that make the most sense for their map visualization, while leaving the minute selection of data to the system. In a recent vision, Meliou, Gatterbauer, and Suciu have proposed extensions to the SQL that add syntax for holistic constraints and objectives to the query language~\cite{meliou2011reverse}. The core idea is that declarative queries express a feasible space of solutions, vis-a-vis the constraints, and that a combinatorial solvers can compute an optimal solution within this space, vis-a-vis the objective. While their idea of declarative ``how-to'' queries was exemplified by selection of a financial data, there is no reason why the idea would not also work for geographic data. However, there currently a lack of syntactic and semantic descriptions of a declarative language for expressing geographic how-to queries, i.e. holistic selection of geographical data subject to constraints and objectives.
 
-The key question is: \emph{what is the design of an declarative language that allows programmers to efficiently express map constraints, objectives, multi-scale approaches and scales for the selection of geographic data for multi-scale maps?}
-
-\item \textbf{Data Integration} TODO
+The key question is: \emph{what is the syntax and semantics of an declarative language that allows programmers to concisely express holistic selection of geographic data for multi-scale map visualizations?}
 
 % IN-DATABASE PROCESSING
-\item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographic mash-ups. While geographic data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to online location-based services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographic information can be produced by anybody, anytime, and anywhere.
+\item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographic mash-ups. While geographic data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographic information can be produced by anybody, anytime, and anywhere.
 
-A map visualization systems must be able to scalably process a specification for multi-scale selection, since the data may be large. One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a higher-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for map visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored. Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection of geographic information.
+Consequently, a map visualization systems must be able to scalably process a specification for multi-scale selection over large datasets (millions of records). One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for data visualizations is typically stored and managed in RDBMS~\cite{wu2014case} it makes sense to process the data where it is stored. Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection of geographic information, other than to extract data for post-processing using simple bounding-box and attribute filtering queries~\cite{wms, }.
 
-The key question is: \emph{how we can leverage RDBMS technology to its full potential to scalably process multi-scale selection for map visualizations?}
+The key question is: \emph{how we can scalably process holistic multi-scale selection of geographic data inside an RDBMS?}
 
 % PREDICTIVE TILE MATERIALIZATION
 \item \textbf{Predictive Content Serving}: 
@@ -285,15 +320,6 @@ Further reading:
 \item Details about the third contribution is described in Chapter~\ref{chapter:glossy}.
 \item A previous version of Chapter~\ref{chapter:cvl} has been published in ICDE 2014~\cite{kefaloukos2014declarative}.
 \end{itemize}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
-\caption{Binary and set-based selection constraints: binary selection constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of entities. Set-based selection constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying sets of objects. The nature of selection constraints is such that a given constraint can always be satisfied by a selection. In the images, selected entities are represented by black disks while filtered-out entities are represented by white disks.}
-\label{fig:introduction:selection:constraints}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
 
 
 \subsection{Glossy Language: Syntax and Semantics}
