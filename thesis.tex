@@ -181,12 +181,24 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.47]{figs-thesis/map-visualization-pipeline.pdf}
+\includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline.pdf}
 \caption{\textbf{Map Visualization Process}: TODO.}
 \label{fig:introduction:background:process}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+\minisec{Vector Tiles}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
+\caption{\textbf{Vector tiles}: TODO.}
+\label{fig:introduction:background:vector:tiles}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
 
 
 \section{Requirements}
@@ -194,11 +206,9 @@ TODO
 
 
 \subsection{Multi-scale Maps}
-Map Gen spiel.
+Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to legibly represent as much as possible of the relevant information in a restricted medium~\cite{jones2005webage,weibel1997generalization}. Naturally, a map must trade-off acurate representation of data that intersects the viewport (geographic boundary of the map) with data abstraction, which may omit, modify or aggregate map objects in order to increase the legibility and usefulness of the map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}.
 
-Geometric, semantic and visual constraints and objectives 
-
-Unary, object-relative and space-relative constraints.
+This section does not attempt a full survey of map generalization, since the field is much to large to cover in a few pages. However, in the following some of the core requirements for multi-scale maps will be outlined.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -208,6 +218,23 @@ Unary, object-relative and space-relative constraints.
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+\minisec{Geometric Constraints in Multi-scale Maps} 
+
+Map designers distinguish between ``good'' maps and ``bad'' maps by evaluating cartographic constraints, which includes geometric constraints. Most of these constraints are fundamental to human visual perception, and are not limited to maps. To gain an overview of the many types of geometric constraints, the following list provides a classification of the constraint types:
+
+\begin{itemize}
+
+\item \textbf{Unary Constraints}: Maps show the world as if from above. However, it is more important to render feature legible than to show features at their actual size. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}.
+
+When displaying high-resolution multi-line and polygon objects on a screen, several vertices may be confined within the same pixel. In this case, it makes sense to limit the complexity of objects to what can be represented by the medium, and consequently prune details that do not show up. This saves storage and more importantly I/O when loading and transmitting geographic data for display.
+
+\item \textbf{Object-relative Constraints}: When object overlap or are very close to each other, they are said to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}. Because too many conflicts make a map illegible, conflicts should be limited or avoided all together (see Figure~\ref{fig:introduction:selection:constraints}). The exception is when different layers of information, e.g. an ocean and an oil drilling platform naturally layer on top of each other. For other types of geographic information, for example semantic peers like points of interest, symbols should not overlap. Because symbol size does not reflect actual size on the ground, objects that are separate in reality may overlap on the map.
+
+\item \textbf{Space-relative Constraints}: One of the earliest impirical observations about geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. In maps, this has been called the Radical Law and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should probably be abstracted by selection or aggregation (see Figure~\ref{fig:introduction:selection:constraints}).
+
+\item \textbf{Cross-scale Constraints}: When maps are zoomed in and out, the abstraction that is presented will generally change. Cross-scale constraint state limitations on how the abstraction may change between zoom levels. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in. This has been called the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map.
+\end{itemize}
 
 
 
@@ -232,18 +259,6 @@ High Availability
 High Scalability
 Customizable
 
-\section{State-of-the-Art Map Visualization}
-
-\subsection{Vector Tiles}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
-\caption{\textbf{Vector tiles}: TODO.}
-\label{fig:introduction:background:vector:tiles}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
 
 
 
