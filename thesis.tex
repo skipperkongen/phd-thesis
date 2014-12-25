@@ -107,7 +107,8 @@
 
 \sloppy
 
-\title{Declarative Geographic Data Visualization Pipeline}
+%\title{Declarative Selection for Online Geographic Data Visualizations}
+\title{Declarative and Scalable Geographic Data Visualization Pipeline}
 %\title{Geodata Visualization Management Systems}
 %\title{Building Scalable Data Visualization Management Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
@@ -164,11 +165,6 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
-% Map generalization
-%The three dimensions of an image (x, y, color) make the visual perception our most powerful perceptive system. But images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Digital map visualization (henceforth, map visualization) is the process by which map designers represent the geography of Earth in the finite 3-D pixel matrix on a computer screen. Alas, it is fundamentally challenging to represent something as enormous as planet Earth on something as small as a computer screen~\cite{dillard1974pilgrim}.
-
-
-%Digital map visualization studies how the geography of the Earth can be represented on a computer screen. It is fundamentally challenging to represent something as enormous as a planet on something as small as a computer screen~\cite{dillard1974pilgrim}, therefore,  (TODO: find pages quoted by Weibel and Dutton and add to bibtex). While the three dimensions of an  image make the visual perception our most powerful perceptive system, images are finite and have only three dimensions and the consequences of these limits are important~\cite{bertin1973semiologie}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -179,77 +175,47 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \vspace*{-4ex}
 \end{figure}
 
-%The funnel that motivates our contributions.
-%\begin{itemize}
-%\item Maps are really cool
-%\item Requirements for web and mobile maps: PoCID, iOS6
-%\item Only maps of large data need information abstraction, whether area partitions (haunert, gap) or points (pia, da sarma). in typical map application no need for complex information abstraction, since the hard maps (background maps) already exist.
-%\item On-the-fly methods do not cost-effectively scale to massive audiences. ARGUE THIS POINT WELL
-%\item scalable batch-oriented data abstraction methods, which sacrifice consistency for query time performance, are the only approach that will cost-effectively scale to massive audiences (e.g. vector tiles); mention content delivery networks, data partionining and replication.
-%\item However, current batch-oriented methods either too automatic or too complex for map designers. ARGUE THIS POINT WELL
-%\item New paragraph:
-%\item From user perspective, only data that is requested needs to be consistent
-%\item Reliable prediction can enable us to batch-process only the data that is requested in the future, which will (a) decrease the window of inconsistency, and (b) would be cheaper as well.
-%\end{itemize}
+TODO
+
+\section{State-of-the-Art Map Visualization on the Web}
+TODO
+% situation
+% state-of-the-art
+
+\subsection{Processing Pipeline}
+% Architecture: Gr{\"u}nreich model., Flower model
+
+\subsection{Multi-scale Content Authoring}
+% requirements
+
+What and how to display
+
+\minisec{Constraints and Objectives}
+TODO
+
+\minisec{Data Abstraction}
+What to display
+
+Select, Project and Aggregate
+
+\minisec{Visual Abstraction}
+How to display.
+
+Symbolize
+
+\subsection{Content Delivery}
+
+\minisec{High-availability and Scalability}
+TODO
+
+\minisec{Vector Tiles}
+Data partitioning and replication
+
+Vector tiles
+
+Content delivery networks
 
 
-Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to legibly represent as much as possible of the relevant information. While the three dimensions of an image make the visual perception our most powerful perceptive system, images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Furthermore, real-estate in computer screens is at a premium and only a few thousand data symbols can be distinguished from each other (see Figure~\ref{fig:raw:poi:data}). As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed set of pixels. Sooner or later, map designers are faced with the need to abstract the information in order to produce a legible map. For example, a map designer may choose to \emph{sample}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. In the context of maps, this process is known as \emph{map generalization}~\cite{weibel1997generalization}. 
-
-\note{Generalization encompasses a reduction of the complexity in a map, emphasizing the essential while suppressing the unimportant, maintaining logical and unambiguous relations between map objects, and preserving aesthetic quality. The main objective then is to create maps of high graphical clarity, so that the map image is easily perceived and the message that the map intends to deliver can be readily understood.}
-
-Map generalization has been studied for a long time. However, the web has dramatically transformed the activity of map visualization since Roger Tomlinson kick-started the digital age of maps with the invention of geographic information systems (GIS) in the 1960's~\cite{ucgis2014tomlinson}. Since then the:
-
-\begin{enumerate}
-\item map designers have changed: from a few GIS specialists to many data enthusiasts~\cite{hanrahan2012enthusiast};
-\item geographic datasets have changed: from moderately-sized and mostly curated geographic datasets inside organizations to big, integrated, and often user-contributed geographic datasets on the web~\cite{gst2014digitalmapsupply, openstreetmap, zooniverse2014oldweather}:
-\item map audiences have changed: from a few professional, to millions of people on the web who interact with mobile maps 24 x 7 and on the go;
-\item map purposes have changed: from being mostly a professional or educational activity, to being simultaneously a professional, educational, personal and social activity on the web. 
-\end{enumerate}
-
-
-
-Web and mobile mapping applications typically display thematic foreground data -- for example geocoded events or locations -- on top of an existing background map~\cite{bereuter2012algorithms}. This process is informally known as a \emph{geographic mash-up} (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it cool? 
-Geographic mash-ups are important because they communicate spatial narratives over news-worthy or otherwise interesting spatial information sources, which are combined with existing high-quality background maps that provide the familiar geographic context in which the spatial narrative can be understood. % Why is it hard?
-While physical and topographic background maps are generally of very high quality, the fruit of time-intensive expert labor, emerging thematic datasets present map designers with an acute and unsatisfied need for data abstraction.  % Why is the state-of-the-art not good enough?
-Certainly, many decades of work have investigated automatic map generalization methods, so why is there still a need for more work in this already well-explored field? 
-
-First, the requiments of modern web maps call for methods that can cost-effectively scale to large amounts of concurrent online users with high performance and high availability~\cite{gst2014digitalmapsupply}. To analyze the state of the art, map generalization methods can be divided into two polar opposites, namely on-the-fly methods~\cite{bereuter2013real,van1995gap,nutanong2012multiresolution} and batch-oriented methods~\cite{schmid2013opensciencemap,haunert2006landcover,sarma2012fusiontables}. On one hand, on-the-fly generalization seems to have all the benefits, such as only storing the data once and the ability to adapt individually to the preferences of users~\cite{van1995gap}. However, there is a lack of work in on-the-fly methods that cost-effectively scale to massive amounts of concurrent users, except for a few special cases such as select-distinct~\cite{nutanong2012multiresolution}. On-the-fly methods are fundamentally hard to scale with the number of concurrent requests, since they typically rely on algorithms and datastructures that are difficult to partition and thus inhibit cost-effective scale-out processing~\cite{}. On the other hand, batch-oriented methods gets an input data set and returns an output data set in a single step that involves algorithms, rules, or constraints without the intervention of humans. Once materialized, the generalized data can be cost-efficiently and scalably served online, since spatial data can be partitioned~\cite{gaffuri12vectortiles,hilbert1891ueber,morton1966computer}, replicated and therefore distributed with high scalability and high availability~\cite{barroso2009datacenter}, for example on content delivery networks (CDN)~\cite{dilley2002cdn}. A substantial drawback of batch-oriented methods is that data consistency is sacrified in order to gain scalability. Whenever the base data changes, the materialized information abstraction becomes an inconsistent abstract view of the data. To make it consistent again, the abstraction must be computed from scratch. Given the basic requirements for high scalability and availability that online maps demand, for example in geospatial data infrastructures~\cite{gst2014digitalmapsupply}, batch-oriented methods are presently the only viable option for generalization in high-demand web maps. 
-
-State-of-the-art batch-oriented map generalization methods are suboptimal for abstraction of thematic foreground data. % Why? 
-Currently, batch-oriented approaches belong to two categories, either fully automatic systems~\cite{sarma2012fusiontables} or very advanced and domain-oriented systems~\cite{lamy1999application, ware2003generalization_sa}. % Yeah, what is wrong with them?
-
-While data integration is a fundamentally hard problem, outstanding work in the field has made the problem easier to address than ever~\cite{marcosthesis}. For example, relational databases~\cite{importantdatabasedataintegrationwork}. As a result, bla bla bla~\cite{citeplaceswheretheyareused}. Relational databases combine a flexible data model with a powerful query language~\cite{codd1970relational}, namely the relational data model and relational algebra. Furthermore, decades of work in query optimization and processing has yielded highly efficient execution of relational algebra queries over large datasets~\cite{graefe1993query,kossmann2000survey}. Logically, recent work in data visualization increasingly propose that visualization pipelines should be integrated with relational databases in order to leverate the performance the performance of the query processing~\cite{wu2014case}. However there is currently a lack of similar database integrated methodologies for map visualization. While there are fundamental differences between data visualization and map visualization, the common ground is that both deal with the visual representation of massive datasets. these differences do not imply that a similar technique would have similar benefits across the two domains. % why is map visualization different?
-
-While distributed systems have progressed ime
-
-% Where does Reactive tree, BLG-tree fit in? wang2014spatialsampling is about estimating aggregates
-
-
-: creating legible and informative maps over new datasets is time consuming and difficult! Simply displaying unfiltered symbols for large geographic data on top of an existing background map will not suffice (see Figure~\ref{fig:raw:poi:data}). Indeed, one of the most fundamental challenges encountered by map designers is how to represent as much as possible of the relevant information on a small scale map that must remain legible~\cite{jones2005webage}. For example, Weibel and Dutton present a good overview of this field~\cite{weibel1999generalising}, which is known inside geography as \emph{map generalization}.
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
-\caption{\textbf{Data vs. territory}: On a small scale map of Europe, the data symbols for points of interest (left) almost entirely cover the national territories (right). It illustrates how for large datasets (thousands of records or more) it does not make sense to display unfiltered data. For example, there are 28 thousand points of interest near Paris; which one is the Eiffel Tower on the left map?}
-\label{fig:raw:poi:data}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
-Map generalization has been studied for a long time. However, the web has dramatically transformed the activity of map visualization since Roger Tomlinson kick-started the digital age of maps with the invention of geographic information systems (GIS) in the 1960's~\cite{ucgis2014tomlinson}. Since then:
-
-\begin{enumerate}
-\item the crowd of map designers has changed: from a few GIS specialists in offices to many data enthusiasts on the web~\cite{hanrahan2012enthusiast};
-\item the geographic data has changed: from moderately-sized and mostly curated datasets inside organizations to big and often user-contributed datasets on the public web~\cite{gst2014digitalmapsupply, openstreetmap, zooniverse2014oldweather}:
-\item the audiences of maps have changed: from a few professional, to millions of people on the web who interact with maps 24 x 7 and on the go;
-\item the purpose of maps has changed: from being mostly a professional activity, to being simultaneously a professional, personal and social activity. 
-\end{enumerate}
-
-Admitedly, these four points are somewhat a caricature, however the directionality of where map visualization is going is evident all around us. Undoubtedly, the impact of the web has caused important challenges that are not adequately addressed by state-of-the-art GIS. 
-
-There are two extremes in the types of maps that are being created. At one extreme, map such as choropleth maps~\cite{jenks1963generalization} and heatmaps~\cite{wiki2014heatmap} present a highly statistical view of information~\cite{guardian2013ananas}, however they are straight-forward to create using spatial statistics. At the other extreme, map such as thematic point maps present an immersive, interactive and detailed view of information~\cite{nytimes2010iraq}. While both types of map are highly valuable, the latter maps present a fundamental challenge to map designers due to the need for map generalization. While many generalization operators exist, only selection will generally produce a legible map where users can interact with individual records. Displacement requires empty spaces somewhere in the map, so it will not always work. Simplification does not increase significantly increase legibility. Aggregation, such as amalgamation, eliminates the possibility for interaction with individual base objects.
-
-For all the reasons mentioned above, this thesis will concentrate on selection of thematic data for (multi-scale) maps. A specific goal of this thesis is the study of methods that can be incorporated into map systems that are specialized for data enthusiasts (i.e. not GIS specialists). An important use case is the rapid design of interactive web maps over large and constantly emerging geographic point sets.
 
 \section{Problem statement}
 \label{introduction:problem:statement}
@@ -259,7 +225,7 @@ Write a nice little intro here.
 \begin{itemize}
 
 % MATHEMATICAL FOUNDATION
-\item \textbf{Holistic Selection Model}
+\item \textbf{Mathematical Modeling}
 Selection of data for maps can be intuitively understood as filtering objects subject to some criteria, however many different concrete semantics have been explored. Despite the prolific work, there is a lack of a selection model that supports all the usual cartographic principles. For example, selection is mostly considered as a context-independent operation in both map generalization~\cite{weibel1999generalising} and relational databases~\cite{sql}, that is, data returned from an iterator is filtered according to unary predicates. Even though unary selection can be computed efficiently, the selection is not guaranteed to met important cartographic principles, such as acceptable density, no symbol overlaps etc. More advanced selection semantics, such as top-k~\cite{rocha2011efficient}, the filtering problem~\cite{sarma2012fusiontables}, and select-distinct~\cite{nutanong2012multiresolution}, address only a subset of cartographic principles each. The problem with all these approaches is that they hard-code the constraint types that can be enforced during selection. This limits the use cases that each method covers.
 
 What is needed is a model for holistic selection semantics that supports user-defined unary constraints (e.g. attribute filtering), space-relative constraints (e.g. maximum density) as well as object-relative constraints (e.g. minimum proximity) for multi-scale maps. Furthermore, cross scale constraints such as zoom-consistency must optionally be enforced by the selection. Additionally, the model must support scale-dependent and user-defined ranking of objects. Ideally, a well-studied and efficient algorithm can solve holistic selection instances, in the same fashion that sorting solves top-k selection instances. This will allow selection implementations to latch on to the latest research in algorithms. Such a model of selection would be superior to previous methods because of the high coverage of use cases in map visualization, essentially eclipsing all other methods.
@@ -267,7 +233,7 @@ What is needed is a model for holistic selection semantics that supports user-de
 The key question is: \emph{how can holistic selection of thematic data with user-defined map constraints and customizable objectives be modelled as an abstract and well-known problem for which efficient algorithms exist?}
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Programmability}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the system should match the complexity of the problem it solves. While selection of thematic data for geographic mash-ups is simple enough that it does not require a complex and highly geography-aware framework, it is also not so trivial that it varants a completely unsupervised approach. Specifically:
+\item \textbf{Declarative Selection}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{ware2003generalization_sa,lamy1999application}. Intuitively, the complexity of the system should match the complexity of the problem it solves. While selection of thematic data for geographic mash-ups is simple enough that it does not require a complex and highly geography-aware framework, it is also not so trivial that it varants a completely unsupervised approach. Specifically:
 
 \begin{enumerate}
 \item There are many different ways to score the importance of objects.
@@ -280,6 +246,8 @@ It makes sense that programmers can at choose the constraints, objectives, multi
 
 The key question is: \emph{what is the design of an declarative language that allows programmers to efficiently express map constraints, objectives, multi-scale approaches and scales for the selection of geographic data for multi-scale maps?}
 
+\item \textbf{Data Integration} TODO
+
 % IN-DATABASE PROCESSING
 \item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized in geographic mash-ups. While geographic data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to online location-based services, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographic information can be produced by anybody, anytime, and anywhere.
 
@@ -288,7 +256,7 @@ A map visualization systems must be able to scalably process a specification for
 The key question is: \emph{how we can leverage RDBMS technology to its full potential to scalably process multi-scale selection for map visualizations?}
 
 % PREDICTIVE TILE MATERIALIZATION
-\item \textbf{Prediction and Rendering of Hot Tiles}: 
+\item \textbf{Predictive Content Serving}: 
 Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{}. There are two extreme approaches to rendering tiles. At one extreme, the entire tile set is preemptively materialized. As we will see shortly, this is wasteful as most tiles are never actually requested. At the other extreme, individual map tiles are lazily materialized and only rendered when they are actually requested by a user. As we will see shortly, this results in high average latency.
 
 Studies have shown that requests for maps are skewed in several interesting and exploitable ways. First, studies have shown that there is a strong spatial skew in the areas of a map that are most often requested~\cite{fisher07hotmap}. A preliminary study found that this is true of the map provider studied in this PhD project~\cite{gst2014digitalmapsupply} (see Figure~\ref{foo}). In fact, most tiles are never requested. Second, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal skew in the number of map requests that have to be processed per hour of the day (see Figure~\ref{foo}). Generally, this is probably true of other map providers as well. Third, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal correlation between the amount of concurrent map tile (rendering) requests and the average latency it takes to render a map tile (see Figure~\ref{foo}). This is fairly intuitive and is probably true of other map providers as well. The third point clearly demonstrates the drawback of lazy tile rendering. In summary, (a) users only request a tiny fraction of the map, (b) users predominantly requests maps during certain parts of the day, and (c) when many users are simultaneously requesting unrendered map tiles the average latency goes up.
@@ -335,7 +303,7 @@ Further reading:
 \end{figure}
 
 
-\subsection{Glossy Language}
+\subsection{Glossy Language: Syntax and Semantics}
 \label{sec:introduction:contributions:glossy}
 % NOTFINISHED
 Section~\ref{introduction:problem:statement} argued the need for declarative languages to control multi-scale selection processes in a map visualization pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
@@ -352,7 +320,7 @@ Further reading:
 \item A publication is currently in submission.
 \end{itemize}
 
-\subsection{Glossy Compiler}
+\subsection{Glossy Compiler: Implementation and Evaluation}
 \label{sec:introduction:contributions:glossy}
 
 Section~\ref{introduction:problem:statement} argued the case for in-database processing of multi-scale selection.
@@ -370,7 +338,7 @@ Further reading:
 \end{itemize}
 
 
-\subsection{Tile Prediction Framework}
+\subsection{Tileheat: Geographic Request Prediction}
 \label{sec:introduction:contributions:tileheat}
 % NOTFINISHED
 
@@ -431,7 +399,7 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Map Generalization}
+\chapter{Data Abstraction for Maps}
 \label{chapter:state:of:the:art:map:generalization}
 
 Map generalization is a process performed by map designers to adapt and transform geographic information to retain as much as possible of the relevant geographic information in geographic map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographic data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographic information, such as the choropleth map, which eliminates the explicit representation of geographic data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising}, Jones and Ware~\cite{jones2005webage}
@@ -476,7 +444,7 @@ Minimum dimensions in cartography, such as 0.35 mm for the length of a black squ
 
 %The field of map generalization rests on an understanding of the semantics of geographic information and the visual cognition process in humans. This understanding has over time been translated into a set of principles, which maps should adhere to. To test the claim that multi-scale selection is a sufficient generalization operator for designers who seek to create a multi-scale geographic mash-up, the selection operator must be evaluated in the context of these well-known principles to see if it meets all the requirements. This section reviews the most important principles and design objectives that have been formulated in the map generalization (and related) literature. While compliance with these principles is not a sufficient requirement in itself, it is however a necessary requirement.
 
-\subsection{Purpose)
+\subsection{Purpose}
 
 % Use cases (from weibel)
 1. Creation and maintenance of spatial databases at multiple scales,
@@ -553,7 +521,7 @@ While density can be measured as the number of objects per unit area, other metr
 
 
 % Conflicts
-\minisec
+\minisec{Conflicts}
 
 The iOS6 Apple Maps API was evaluated 	according to six core design objectives.
 
@@ -711,7 +679,7 @@ This thesis proposes a batch-oriented, declarative, in-database approach for mul
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Serving Maps on the Web}
+\chapter{Data Serving for Maps}
 
 % approaches: expressing, processing, serving
 
