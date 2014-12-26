@@ -174,30 +174,39 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \vspace*{-4ex}
 \end{figure}
 
-% situation
-\minisec{Geographic Mash-ups}
+% The change: the web
+Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has dramatically changed the activity of map visualization; a shift which has significantly marginalized the role of traditional GIS. First, interactive maps are now distributed to and consumed by billions of people 27 x 7 and on the go~\cite{foo}. Second, maps must now be designed by data enthusiasts with heterogenous skill levels, not only by GIS specialists, and often in conditions with high time-pressure~\cite{openstreetmap2010haiti,lomet2012warstories}. Third, vast repositories (billions of records) of geographic information are now available for map visualization and millions of new records are created each day~\cite{openstreetmap2014stats}. Fourth, focus has shifted from design of general-purpose background map layers, such as physical or topographic maps, to the design of thematic overlays, suchs as point of interest (POI) or news-worthy events (see Figure~\ref{fig:introduction:background:mashups}). In these ways, the Web has significant altered the stage for map visualization, which creates new challenges that can not adequately addressed by GIS alone.
 
-\minisec{Process}
+On the Web, user audiences generally expect services to have high availability and low latency, and map providers like all other service providers must recognize the importance of these expectations. However, satisfying the constraints while keeping costs down is a challenge, which can potentially be addressed by application of distributed systems theory~\cite{beaver2010haystack,gaffuri12vectortiles,pilchin2007dynamo}. 
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline.pdf}
-\caption{\textbf{Map Visualization Process}: TODO.}
-\label{fig:introduction:background:process}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
+On the Web, map designers of various skill levels must craft map visualizations that meet specific design goals. However, map design is a holistic information optimization task of high computational complexity, often an NP-hard problem~\cite{haunert2006landcover,sarma2012fusiontables}, which means that humans and computers must work together. Thus, efficient and effective specification (by humans) of map visualizations is a challenge, which should be addressed by human-computer interaction~\cite{satyanarayan2014lyra} and programming language~\cite{meliou2011reverse,wilkinson2006grammar} theory. 
 
-\minisec{Vector Tiles}
+On the Web, map visualizations can seemlessly integrate with massive datasets in the cloud, which are frequently stored and exposed by relational database management systems (RDBMS). Scalable processing of massive datasets in RDBMS is a challenge, which must be addressed by appropriate application of database theory~\cite{wu2014case}.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
-\caption{\textbf{Vector tiles}: TODO.}
-\label{fig:introduction:background:vector:tiles}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
+% The constant: the human
+While much has changed, some things remain constant. Homo Sapiens, the principal designer and audience of map visualizations, has remained essentially unchanged for thousands of years. While the Web has impacted when, why and how map visualizations are created and consumed, the ability of humans to visually absorb the three dimensional image of a map is limited in important and constant ways~\cite{jacques1967semiologie}. Consequently, map visualizations on computer displayes are, to a great extent, subject to the same visual constraints and objectives as maps on papyrus. It is important that knowledge that has been obtained in the pre-Web years of maps is not disregarded.
+
+% The sum of both: success
+In a sense, one chapter has closed in the book of map visualization, while another chapter is just about to open. On one hand, the chapter that has mapped the mountains, roads, cities and oceans of the physical Earth has closed, which is evidenced by the many online background maps provided by private companies~\cite{googlemaps,bingmaps,stamen} and national mapping agencies~\cite{gst2014digitalmapsupply}. On the other hand, the daily emergence of billions of geocoded data records on Web~\cite{cohen2011journalism,planetlabs2014flock1,openstreetmap,sankaranarayanan2009twitterstand,zooniverse2014oldweather} is opening a new chapter that must be written. This thesis will focus on the efficient and effective processing of emerging geographic information for thematic map visualization, both from a human and system perspective. The life cycle of a map has two stages; it is first created and then distributed. This thesis will study and address selected and important challenges in both stages of the map life cycle.
+
+
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline.pdf}
+%\caption{\textbf{Map Visualization Process}: TODO.}
+%\label{fig:introduction:background:process}
+%\end{center}
+%\vspace*{-4ex}
+%\end{figure}
+
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
+%\caption{\textbf{Vector tiles}: TODO.}
+%\label{fig:introduction:background:vector:tiles}
+%\end{center}
+%\vspace*{-4ex}
+%\end{figure}
 
 
 
@@ -206,7 +215,10 @@ TODO
 
 
 \subsection{Multi-scale Maps}
-Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to legibly represent as much as possible of the relevant information in a restricted medium~\cite{jones2005webage,weibel1997generalization}. Naturally, a map must trade-off acurate representation of data that intersects the viewport (geographic boundary of the map) with data abstraction, which may omit, modify or aggregate map objects in order to increase the legibility and usefulness of the map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}.
+Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{jones2005webage,weibel1997generalization,bertin1973semiologie}. Naturally, a map must trade-off \emph{acurate representation} of data that intersects the geographic boundary of the map with \emph{lossy abstraction} of data, which may omit~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, modify~\cite{douglas1973algorithms,lonergan2001iterative} or aggregate~\cite{haunert2006landcover} map objects in order to emphasize the important and suppress the unimportant. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}.
+
+While the three dimensions of an image make the visual perception our most powerful perceptive system, images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Furthermore, real-estate in computer screens is at a premium and only a few thousand data symbols can be distinguished from each other (see Figure~\ref{fig:raw:poi:data}). As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed set of pixels. Sooner or later, map designers are faced with the need to abstract the information in order to produce a legible map. For example, a map designer may choose to \emph{sample}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. In the context of maps, this process is known as \emph{map generalization}~\cite{weibel1997generalization}. 
+
 
 This section does not attempt a full survey of map generalization, since the field is much to large to cover in a few pages. However, in the following some of the core requirements for multi-scale maps will be outlined.
 
