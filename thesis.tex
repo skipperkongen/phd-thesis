@@ -160,46 +160,44 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \chapter{Introduction}
 \label{chapter:introduction}
 
+\vspace{-5ex}
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Geographic mash-ups}: Two examples of maps that visualize thematic foreground data on top of common background maps. (left) UK statistics for \% people who speak a non-english language as their first language; (right) Wikileaks data for casualties during the Iraq War (2003-2011). The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
+\caption{\textbf{Geographic mash-ups}: Two examples of maps that visualize thematic foreground data on top of common background maps. UK statistics for \% people who speak a non-english language as their first language (left); Wikileaks data for casualties during the 2003-2011 Iraq War (right). The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
 % The change: the web
-Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{jones2005webage,weibel1997generalization,bertin1973semiologie}. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that are not adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, the thesis studies three orthogonal topics in map visualization: (1) User-friendly map design, (2) scalable data processing for maps, and (3) high-availability and high-scalability distribution of map data.
+Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{bertin1973semiologie,jones2005webage,weibel1997generalization}. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that are not adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, the thesis studies three orthogonal topics in map visualization: (1) User-friendly map design, (2) scalable data processing for maps, and (3) high-availability and high-scalability distribution of map data.
 
-\minisec{Thematic map applications}
+\minisec{Thematic Maps on the Web} % Thematic maps are important
+Thematic mapping applications on the Web are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to their target groups. Thematic maps increase the level of transparency and enlightenment in our society -- they can even save lives. % What are they exactly?
+Thematic maps are typically composed of two distinct layers of information. The \emph{thematic map layer} consists of foreground data, such as news-worthy geographic events, which is typically the primary content of the map. The \emph{contextual map layer} consists of background data, such as a topographic map, which provides that spatial context in which the former layer may be understood. Such a composition of thematic and contextual layers is sometimes informally called a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it hard?? 
 
-Web and mobile mapping applications are typically composed of two distinct layers of information. The \emph{thematic layer} consists of foreground data, such as news-worthy geographic events, which is typically the primary information communicated by a web map. The \emph{contextual layer} consists of background data, such as a topographic map, which provides that spatial context in which the former can be understood. Such a composition of thematic and contextual layers is sometimes informally called a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it cool? 
-Geographic mash-ups are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to their target groups. % Why is it hard?
-While contextual map layers have become a commodity on the web~\cite{googlemaps, bingmaps, digitalmap}, the thematic layer presents a challenge to map designers. The source mateterial for the thematic layer typically consists of raw and emerging geographic information, such as user-contributed data~\cite{openstreetmap,zooniverse2014oldweather}, which must first be molded into a presentable visual representation.
+Contextual map layers have become a commodity that is readily availably from private companies~\cite{googlemaps, bingmaps} and national mapping agencies~\cite{gst2014digitalmapsupply}. In contrast, thematic map layers presents a challenge to map designers. The source mateterial for the thematic layer typically consists of raw and emerging geographic information, such as user-contributed data~\cite{openstreetmap,zooniverse2014oldweather}, which must first be molded by map designers into a presentable visual representation (see Figure~\ref{fig:raw:poi:data}).
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
+\caption{\textbf{Data vs. territory}: On a small scale map of Europe, the data symbols for ``raw'' points of interest (left) almost entirely cover the national territories (right). It illustrates how for large datasets (thousands of records or more) it does not make sense to display unfiltered data. For example, there are 28 thousand points of interest near Paris; which one is the Eiffel Tower on the left map?}
+\label{fig:raw:poi:data}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
 
 % Why is the state-of-the-art not good enough?
-There are two extremes in the types of thematic layers that are being created. At one extreme, choropleth~\cite{guardian2013ananas} and heatmap~\cite{wiki2014heatmap} layers present statistical and agggregated views of information, which are (fairly) straight-forward to create using spatial statistics~\cite{ripley2005spatial}. At the other extreme, thematic point maps present an immersive and detailed view of information~\cite{bereuter2013real, sarma2012fusiontables,nutanong2012multiresolution}, which fundamentally challenges map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. 
+There are two extremes types of thematic map layers that are being created. At one extreme, choropleth~\cite{guardian2013ananas} and heatmap~\cite{wiki2014heatmap} layers present a statistical and aggregated view of geographic information, which is fairly straight-forward to produce using spatial statistics~\cite{ripley2005spatial}. An example is the left map in Figure~\ref{fig:introduction:background:mashups}. At the other extreme, thematic point maps present an immersive and detailed view of information~\cite{bereuter2013real, sarma2012fusiontables,nutanong2012multiresolution}, which fundamentally challenges map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. An example is the right map in Figure~\ref{fig:introduction:background:mashups}.  
 
 \texttt{CODE FREEZE ABOVE}
 
-Maps design has become attractive to large numbers of data enthusiasts with heterogenous skill levels, not only GIS specialists, who must craft compelling map visualizations -- often under high time-pressure~\cite{,}. With a few exceptions (e.g. Choropleth maps), map design offers a holistic information optimization challenge of high computational complexity, often an NP-hard problem~\cite{sarma2012fusiontables,haunert2006landcover}. This means that humans and computers must work together. Efficient and effective specification of holistic map designs is thus a fundamental challenge, which may be addressed by a combination of human-computer interfaces~\cite{satyanarayan2014lyra} and programming languages~\cite{meliou2011reverse,wilkinson2006grammar}. 
 
-Map processing systems must scalably handle vast repositories of geographic information that are available on the Web -- with millions of records created each day~\cite{openstreetmap2014stats}. Map processing systems on the web can seemlessly integrate with massive datasets in the cloud, which are frequently stored and exposed by relational database management systems (RDBMS). Scalable processing of massive datasets in RDBMS is a challenge, which must be addressed by studies in databases~\cite{wu2014case}.
-
-Interactive web maps are now consumed by billions of people -- 27 x 7 and on the go~\cite{foo}. Users on the Web generally expect high availability and low latency for applications on the web, and map providers like all other application providers must recognize the importance of these expectations. However, satisfying the constraints while keeping costs down is a challenge, which can be addressed by studies in distributed systems~\cite{beaver2010haystack,gaffuri12vectortiles,pilchin2007dynamo}. 
-
-
-
-Web and mobile mapping applications typically display thematic foreground data ? for example geocoded events or locations ? on top of an existing background map. This process is informally known as a geographic mash-up (see Figure~\ref{fig:introduction:background:mashups}). Thematic maps are important because they communicate spatial narratives over news-worthy or otherwise interesting spatial information sources, which are combined with existing high-quality background maps that provide the familiar geographic context in which the spatial narrative can be understood. While physical and topographic background maps are generally of very high quality, the fruit of time-intensive expert labor, emerging thematic datasets present map designers with an acute and unsatisfied need for data abstraction. Certainly, many decades of work have investigated automatic map general- ization methods, so why is there still a need for more work in this already well-explored field?
-
-On one hand, the work that mapped the mountains, roads, cities and oceans of the physical Earth is complete, which is evidenced by the many online background maps provided by private companies~\cite{googlemaps,bingmaps,stamen} and national mapping agencies~\cite{gst2014digitalmapsupply}. On the other hand, the daily emergence of billions of geocoded data records on the Web~\cite{cohen2011journalism,planetlabs2014flock1,openstreetmap,sankaranarayanan2009twitterstand,zooniverse2014oldweather} creates a raw challenge for map designers, which must be addressed. Such map, the focus has shifted away from methods for creating background maps, to methods for creating thematic overlays also known as ``geographic mash-ups''. On this category of maps, thematic , suchs as point of interest (POI) or news-worthy events, which are displayed over the spatial context of existing background maps (see Figure~\ref{fig:introduction:background:mashups}). 
-
-
-This thesis will focus on the efficient and effective processing of emerging geographic information for thematic map visualization, both from a human and system perspective. The life cycle of a map has two stages; it is first created and then distributed. This thesis will study and address selected and important challenges in both stages of the map life cycle.
 
 
 
@@ -223,15 +221,17 @@ This thesis will focus on the efficient and effective processing of emerging geo
 %\end{figure}
 
 \section{Requirements}
+\label{introduction:requirements}
 
-While the web has added new requirements for map visualization, one thing remains constant. Homo Sapiens, the principal designer and audience of map visualizations, has remained biologically unchanged probably for thousands of years. Even as the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to visually absorb three dimensional images, such as maps, is still limited in much the same way as always~\cite{jacques1967semiologie}. Therefore, maps on the Web must observ some of the well-studied principles that guide map design on paper. 
+This section briefly covers some of the important requirements for online maps which is a precursor for the problem statement in Section~\ref{introduction:problem:statement}.
 
-\subsection{Map Constraints}
+\subsection{Map Constraints and Objectives}
 
-While the three dimensions of an image make the visual perception our most powerful perceptive system, images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Real-estate in computer screens is at a premium and only a few thousand data symbols can be distinguished from each other (see Figure~\ref{fig:raw:poi:data}). As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed set of pixels. Sooner or later, map designers are faced with the need to abstract the information in order to produce a legible map. For example, a map designer may choose to \emph{sample}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. In the context of maps, this process is known as \emph{map generalization}~\cite{weibel1997generalization}. 
+Homo Sapiens, the principal designer and audience of map visualizations, has remained biologically unchanged probably for thousands of years. Even as the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to visually perceive images like maps suffers from the same limitations as always~\cite{bertin1973semiologie}. Therefore, maps on the Web must observe most of the well-studied principles that have guided map design on paper. 
+
+%As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed-size space of pixels. As scale decreases, map designers are faced with the need to abstract the information in order to produce a legible map (see Figure~\ref{fig:raw:poi:data}). Map constraints quantify the need to abstract geographic information on a map.
 
 
-This section does not attempt a full survey of map generalization, since the field is much to large to cover in a few pages. However, in the following some of the core requirements for multi-scale maps will be outlined.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -242,30 +242,17 @@ This section does not attempt a full survey of map generalization, since the fie
 \vspace*{-4ex}
 \end{figure}
 
-\minisec{Constraints in Multi-scale Maps} 
+\emph{Unary constraints} establish conditions that must be met be individual map objects. Maps show the world as if from above. However, it is more important to render feature legible than to show features at their true relative scale. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. Furthermore, when displaying high-resolution multi-line and polygon objects on a computer display, several consequtive vertices may be contained within the same pixel. In this case, it makes sense to limit the complexity of objects to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage and more importantly I/O when loading and transmitting geographic data for display.
 
-Map designers distinguish between ``good'' maps and ``bad'' maps by evaluating cartographic constraints, which includes geometric constraints. Many of these constraints are fundamental to human visual perception, and are not limited to maps. To gain an overview of the many types of geometric constraints, the following list provides a classification of the constraint types:
+\emph{Object-relative constraints} set up conditions that must be satisifed by all qualifying pairs of objects. When two objects overlap or are very close to each other, they are said to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}. Because too many conflicts make a map illegible, conflicts should be limited or avoided all together (see Figure~\ref{fig:introduction:selection:constraints}). The exception is when different layers of information, e.g. an ocean and an oil drilling platform naturally layer on top of each other. For other types of geographic information, for example semantic peers like points of interest, symbols should not overlap. Because symbol size does not reflect actual size on the ground, objects that are separate in reality may overlap on the map. One can imagine non-geometric object-relative constraints also, such as semantic object-relative constraints like only selecting one bull per cow herd. In this contrieved example, bulls in the same cow herd would be in conflict with each other. 
 
-\begin{itemize}
+\emph{Space-relative constraints} state conditions that must be satisfied by qualifying spaces in the map, for example for each tile in a tiled map. One of the earliest impirical observations about geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. In maps, this has been called the Radical Law and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should probably be abstracted by selection or aggregation (see Figure~\ref{fig:introduction:selection:constraints}).
 
-\item \textbf{Unary Constraints}: Maps show the world as if from above. However, it is more important to render feature legible than to show features at their true relative scale. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}.
+When maps are zoomed in and out, the data abstraction generally changes in response to reduced or increased scale. \emph{Cross-scale constraints} state limitations on how the abstraction may transition between neighboring zoom levels. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in, which is termed the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map. In map generalization process models these two approaches are termed the ladder and star approach respectively~\cite{foerster2010challenges}.
 
-When displaying high-resolution multi-line and polygon objects on a computer display, several consequtive vertices may be contained within the same pixel. In this case, it makes sense to limit the complexity of objects to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage and more importantly I/O when loading and transmitting geographic data for display.
+\emph{Objectives} foo.
 
-\item \textbf{Object-relative Constraints}: When object overlap or are very close to each other, they are said to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}. Because too many conflicts make a map illegible, conflicts should be limited or avoided all together (see Figure~\ref{fig:introduction:selection:constraints}). The exception is when different layers of information, e.g. an ocean and an oil drilling platform naturally layer on top of each other. For other types of geographic information, for example semantic peers like points of interest, symbols should not overlap. Because symbol size does not reflect actual size on the ground, objects that are separate in reality may overlap on the map. One can imagine non-geometric object-relative constraints also, such as semantic object-relative constraints like only selecting one bull per cow herd. In this contrieved example, bulls in the same cow herd would be in conflict with each other. 
-
-\item \textbf{Space-relative Constraints}: One of the earliest impirical observations about geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. In maps, this has been called the Radical Law and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should probably be abstracted by selection or aggregation (see Figure~\ref{fig:introduction:selection:constraints}).
-
-\item \textbf{Cross-scale Constraints}: When maps are zoomed in and out, the abstraction that is presented will generally change. Cross-scale constraint state limitations on how the abstraction may change between zoom levels. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in. This has been called the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map.
-\end{itemize}
-
-\subsection{Objectives in Multi-scale Maps}
-
-\subsection{Operators}
-
-A map that simultaneously optimizes objectives and satisfies constraints must generally trade accurate representation of geographic information for abstract representation of geographic information. Intuitively, data is abstracted to the point where the information becomes legible. Geographic information may be selected~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, projected~\cite{douglas1973algorithms,lonergan2001iterative} or aggregated~\cite{haunert2006landcover} in order to better emphasize the important and suppress the unimportant on a map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}.
-
-A major goal of this thesis is to help the fields of map visualization and relational data management to converge. Therefore, this thesis adopts a relationally inspired terminology for the operators that transform geographic information during the map generalization process, hence \emph{select}, \emph{project}, and \emph{aggregate}.
+A map that simultaneously optimizes objectives and satisfies constraints must generally trade accurate representation of geographic information for abstract representation of geographic information. Intuitively, data is abstracted to the point where the information becomes legible and the map useful. Geographic information may be selected~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, projected~\cite{douglas1973algorithms,lonergan2001iterative} or aggregated~\cite{haunert2006landcover} in order to better emphasize the important and suppress the unimportant on a map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. A major goal of this thesis is to help the fields of map visualization and relational data management to converge. Therefore, this thesis adopts a relationally inspired operator set to describe the transformations during the map generalization process:
 
 \begin{itemize}
 \item \textbf{Select} 
@@ -273,50 +260,39 @@ A major goal of this thesis is to help the fields of map visualization and relat
 \item \textbf{Aggregate}
 \end{itemize}
 
+\subsection{Design Process}
+Humans must control two aspects of the map design process: (1) what information to display, and (2) how to display the information. For example, what information to display can be altered by selection, projection and aggragation of the available data; how to display the information can be altered for example by representing information by different visual variables~\cite{bertin1973semiologie}. Because the map design process is partly a human task, it must ideally be performed by time-efficient and intuitive methods. Furthermore, the map design method must allow humans to create maps that satisfy and optimize the types of constraints and objectives that were outlined in the previous section.
 
 
-Data abstraction: holistic select-project-aggregate
-Visual abstraction: symbolization
 
 \subsection{Data Processing}
 Scalability
 Data Integration
 Low Cost
 
-\subsection{Map Design interfaces}
-
-Time-efficient
-Intuitive
-Control over what to display: Data Abstraction
-Control over how to display: Visual Abstraction
-
-\subsection{Map Web Applications}
+\subsection{Online Map Applications}
 Besides HQ maps...
 High Availability
 High Scalability
 Customizable
 
-
-
-
-
 \section{Problem statement}
 \label{introduction:problem:statement}
 
-Write a nice little intro here.
+Given the requirements for online maps that were outlined in Section~\ref{introduction:requirements}, this section will list some important gaps between state-of-the-art mapping systems and a hypothetical mapping system that satisfies all the requirements. These problems are addressed by the thesis contributions that are introduced in Section~\ref{sec:introduction:contributions}.
 
 \begin{itemize}
 
 % MATHEMATICAL FOUNDATION
 \item \textbf{Unified Selection Model}
-While selection of data for maps can be intuitively understood as filtering objects subject to some criteria, many different selection models have been explored. The models can be categorised broadly into context-independent~\cite{weibel1999generalising} and context-dependent~\cite{schmid2013opensciencemap} selection models. Within context-dependent selection, models with different selection criteria have been proposed separately, such as weighted selection~\cite{rocha2011efficient}, weighted selection with density bounds~\cite{sarma2012fusiontables} and weighted selection with proximity bounds~\cite{nutanong2012multiresolution}. Each of these models require separate selection algorithms.
+While selection of data for maps can be intuitively understood as filtering objects subject to some criteria, many different selection models have been explored. State-of-the-art models can be categorised broadly into context-independent~\cite{weibel1999generalising} and context-dependent~\cite{schmid2013opensciencemap} selection models. Within context-dependent selection, models with different selection criteria have been proposed separately, such as weighted selection~\cite{rocha2011efficient}, weighted selection with density bounds~\cite{sarma2012fusiontables} and weighted selection with proximity bounds~\cite{nutanong2012multiresolution}. Each of these models require separate selection algorithms.
 
 What is needed is a model for holistic selection of geographic data that supports user-defined unary constraints (e.g. attribute filtering), object-relative constraints (e.g. minimum proximity), as well as space-relative constraints (e.g. maximum density)~\cite{woodruff1998constant} for multi-scale maps. Furthermore, cross scale constraints such as zoom-consistency must optionally be enforced by the selection. Additionally, the model must support scale-dependent and user-defined ranking of objects. Ideally, a well-studied and efficient algorithm can solve all instances of the model, in the same fashion that top-k selection can be solved by sorting.
 
 The key question is: \emph{how can holistic selection of thematic data with user-defined map constraints and customizable objectives be modelled as an abstract and well-known problem for which efficient algorithms exist?}
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{lamy1999application, ware2003generalization_sa}. Optimially, programmers use systems that are only as complex as the problems they solve. While selection of thematic data for geographic mash-ups is simple enough that it does not justify a highly complex approach, it is also not so trivial that it justifies a completely automated approach. Specifically:
+\item \textbf{Declarative Specification}: There are currently two extremes in how state-of-the-art mapping systems let programmers specify the selection of data for multi-scale maps. At one extreme, fully-automated selection systems completely encapsulate the logic inside an algorithm library~\cite{sarma2012fusiontables, nutanong2012multiresolution}. At the other extreme, complex programmable selection frameworks require programmers to write highly advanced and often very geography-specific code~\cite{lamy1999application, ware2003generalization_sa}. While selection of thematic data for geographic mash-ups is simple enough that it does not mandate a highly advanced and time-consuming approach, it is also not so trivial that it justifies a fully-automated approach. Specifically:
 
 \begin{enumerate}
 \item There are at many ways to score the importance of objects (scale-dependent, scale-independent, etc.);
