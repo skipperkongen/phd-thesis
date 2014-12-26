@@ -195,22 +195,6 @@ Contextual map layers have become a commodity that is readily availably from pri
 % Why is the state-of-the-art not good enough?
 There are two extremes types of thematic map layers that are being created. At one extreme, choropleth~\cite{guardian2013ananas} and heatmap~\cite{wiki2014heatmap} layers present a statistical and aggregated view of geographic information, which is fairly straight-forward to produce using spatial statistics~\cite{ripley2005spatial}. An example is the left map in Figure~\ref{fig:introduction:background:mashups}. At the other extreme, thematic point maps present an immersive and detailed view of information~\cite{bereuter2013real, sarma2012fusiontables,nutanong2012multiresolution}, which fundamentally challenges map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. An example is the right map in Figure~\ref{fig:introduction:background:mashups}.  
 
-\texttt{CODE FREEZE ABOVE}
-
-
-
-
-
-
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline.pdf}
-%\caption{\textbf{Map Visualization Process}: TODO.}
-%\label{fig:introduction:background:process}
-%\end{center}
-%\vspace*{-4ex}
-%\end{figure}
-
 %\begin{figure}[htbp]
 %\begin{center}
 %\includegraphics[scale=.5]{figs-thesis/vector-tiles.pdf}
@@ -220,10 +204,25 @@ There are two extremes types of thematic map layers that are being created. At o
 %\vspace*{-4ex}
 %\end{figure}
 
+\texttt{CODE FREEZE ABOVE}
+
 \section{Requirements}
 \label{introduction:requirements}
 
-This section briefly covers some of the important requirements for online maps which is a precursor for the problem statement in Section~\ref{introduction:problem:statement}.
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline.pdf}
+\caption{\textbf{Map visualization pipeline}: TODO.}
+\label{fig:introduction:requirements:pipeline}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+
+Mapping systems on the web have many moving parts. It is important to identify what the individual parts are along with their requirements. On the one hand, this allows us to establish whether state-of-the-art systems meet the requirementes. On the other hand, this it allows us to enumerate and gauge the size of the gaps between state-of-the-art mapping systems and a hypothetical mapping system that meets the requirements. Mapping systems can be viewed as a data transformation pipeline where raw data models enter in one end and legible and useful maps exit out the other. The map pipeline interfaces with humans at two stages, during the design stage and during the consumption stage (see Figure~\ref{fig:introduction:requirements:pipeline}).
+
+
+This section briefly covers some of the important requirements for online maps which is a precursor for the problem statement in Section~\ref{sec:introduction:problem:statement}.
 
 \subsection{Map Constraints and Objectives}
 
@@ -277,7 +276,7 @@ High Scalability
 Customizable
 
 \section{Problem statement}
-\label{introduction:problem:statement}
+\label{sec:introduction:problem:statement}
 
 Given the requirements for online maps that were outlined in Section~\ref{introduction:requirements}, this section will list some important gaps between state-of-the-art mapping systems and a hypothetical mapping system that satisfies all the requirements. These problems are addressed by the thesis contributions that are introduced in Section~\ref{sec:introduction:contributions}.
 
