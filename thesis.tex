@@ -154,9 +154,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 % CHAPTER
-
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 \chapter{Introduction}
@@ -175,19 +173,39 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \end{figure}
 
 % The change: the web
-Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has dramatically changed the activity of map visualization; a shift which has significantly marginalized the role of traditional GIS. First, interactive maps are now distributed to and consumed by billions of people 27 x 7 and on the go~\cite{foo}. Second, maps must now be designed by data enthusiasts with heterogenous skill levels, not only by GIS specialists, and often in conditions with high time-pressure~\cite{openstreetmap2010haiti,lomet2012warstories}. Third, vast repositories (billions of records) of geographic information are now available for map visualization and millions of new records are created each day~\cite{openstreetmap2014stats}. Fourth, focus has shifted from design of general-purpose background map layers, such as physical or topographic maps, to the design of thematic overlays, suchs as point of interest (POI) or news-worthy events (see Figure~\ref{fig:introduction:background:mashups}). In these ways, the Web has significant altered the stage for map visualization, which creates new challenges that can not adequately addressed by GIS alone.
+Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that are not adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, the thesis studies three orthogonal topics in map visualization: (1) User-friendly map design, (2) scalable data processing for maps, and (3) high-availability and high-scalability distribution of map data.
 
-On the Web, user audiences generally expect services to have high availability and low latency, and map providers like all other service providers must recognize the importance of these expectations. However, satisfying the constraints while keeping costs down is a challenge, which can potentially be addressed by application of distributed systems theory~\cite{beaver2010haystack,gaffuri12vectortiles,pilchin2007dynamo}. 
+\minisec{Thematic map applications}
 
-On the Web, map designers of various skill levels must craft map visualizations that meet specific design goals. However, map design is a holistic information optimization task of high computational complexity, often an NP-hard problem~\cite{haunert2006landcover,sarma2012fusiontables}, which means that humans and computers must work together. Thus, efficient and effective specification (by humans) of map visualizations is a challenge, which should be addressed by human-computer interaction~\cite{satyanarayan2014lyra} and programming language~\cite{meliou2011reverse,wilkinson2006grammar} theory. 
+Web and mobile mapping applications are typically composed of two distinct layers of information. The \emph{thematic layer} consists of foreground data, such as news-worthy geographic events, which is typically the primary information communicated by a web map. The \emph{contextual layer} consists of background data, such as a topographic map, which provides that spatial context in which the former can be understood. Such a composition of thematic and contextual layers is sometimes informally called a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it cool? 
+Geographic mash-ups are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to their target groups. % Why is it hard?
+While the contextual layer has become a commodity on the web~\cite{googlemaps, bingmaps, digitalmap}, the thematic layer presents a challenge to map designers. The source mateterial for the thematic layer typically consists of raw and emerging geographic information, such as user-contributed data~\cite{openstreetmap,zooniverse2014oldweather}, which must first be molded into a presentable visual representation.
 
-On the Web, map visualizations can seemlessly integrate with massive datasets in the cloud, which are frequently stored and exposed by relational database management systems (RDBMS). Scalable processing of massive datasets in RDBMS is a challenge, which must be addressed by appropriate application of database theory~\cite{wu2014case}.
+% Why is the state-of-the-art not good enough?
+There are two extremes in the types of thematic layers that are being created. At one extreme, choropleth~\cite{guardian2013ananas} and heatmap~\cite{wiki2014heatmap} layers present statistical and agggregated views of information, which are (fairly) straight-forward to create using spatial statistics~\cite{ripley2005spatial}. At the other extreme, thematic point maps present an immersive and detailed view of information~\cite{bereuter2013real, sarma2012fusiontables,nutanong2012multiresolution}, which fundamentally challenges map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. 
 
-% The constant: the human
-While much has changed, some things remain constant. Homo Sapiens, the principal designer and audience of map visualizations, has remained essentially unchanged for thousands of years. While the Web has impacted when, why and how map visualizations are created and consumed, the ability of humans to visually absorb the three dimensional image of a map is limited in important and constant ways~\cite{jacques1967semiologie}. Consequently, map visualizations on computer displayes are, to a great extent, subject to the same visual constraints and objectives as maps on papyrus. It is important that knowledge that has been obtained in the pre-Web years of maps is not disregarded.
+\texttt{CODE FREEZE ABOVE}
 
-% The sum of both: success
-In a sense, one chapter has closed in the book of map visualization, while another chapter is just about to open. On one hand, the chapter that has mapped the mountains, roads, cities and oceans of the physical Earth has closed, which is evidenced by the many online background maps provided by private companies~\cite{googlemaps,bingmaps,stamen} and national mapping agencies~\cite{gst2014digitalmapsupply}. On the other hand, the daily emergence of billions of geocoded data records on Web~\cite{cohen2011journalism,planetlabs2014flock1,openstreetmap,sankaranarayanan2009twitterstand,zooniverse2014oldweather} is opening a new chapter that must be written. This thesis will focus on the efficient and effective processing of emerging geographic information for thematic map visualization, both from a human and system perspective. The life cycle of a map has two stages; it is first created and then distributed. This thesis will study and address selected and important challenges in both stages of the map life cycle.
+While map generalization is a fundamental challenge in web maps, it is not the only challenge.
+
+While many decades of work have been invested in automatic map generalization methods there is still a need for more work in this already well-explored field:
+
+\minisec{Map Design}: Maps design has become attractive to large numbers of data enthusiasts with heterogenous skill levels, not only GIS specialists, who must craft compelling map visualizations -- often under high time-pressure~\cite{,}. With a few exceptions (e.g. Choropleth maps), map design offers a holistic information optimization challenge of high computational complexity, often an NP-hard problem~\cite{sarma2012fusiontables,haunert2006landcover}. This means that humans and computers must work together. Efficient and effective specification of holistic map designs is thus a fundamental challenge, which may be addressed by a combination of human-computer interfaces~\cite{satyanarayan2014lyra} and programming languages~\cite{meliou2011reverse,wilkinson2006grammar}. 
+
+\minisec{Map Processing}: Map processing systems must scalably handle vast repositories of geographic information that are available on the Web -- with millions of records created each day~\cite{openstreetmap2014stats}. Map processing systems on the web can seemlessly integrate with massive datasets in the cloud, which are frequently stored and exposed by relational database management systems (RDBMS). Scalable processing of massive datasets in RDBMS is a challenge, which must be addressed by studies in databases~\cite{wu2014case}.
+
+\minisec{Map Distribution}: Interactive maps are now distributed to and consumed by billions of people -- 27 x 7 and on the go~\cite{foo}. Users on the Web generally expect high availability and low latency for applications on the web, and map providers like all other application providers must recognize the importance of these expectations. However, satisfying the constraints while keeping costs down is a challenge, which can be addressed by studies in distributed systems~\cite{beaver2010haystack,gaffuri12vectortiles,pilchin2007dynamo}. 
+
+
+
+Web and mobile mapping applications typically display thematic foreground data ? for example geocoded events or locations ? on top of an existing background map. This process is informally known as a geographic mash-up (see Figure~\ref{fig:introduction:background:mashups}). Thematic maps are important because they communicate spatial narratives over news-worthy or otherwise interesting spatial information sources, which are combined with existing high-quality background maps that provide the familiar geographic context in which the spatial narrative can be understood. While physical and topographic background maps are generally of very high quality, the fruit of time-intensive expert labor, emerging thematic datasets present map designers with an acute and unsatisfied need for data abstraction. Certainly, many decades of work have investigated automatic map general- ization methods, so why is there still a need for more work in this already well-explored field?
+
+On one hand, the work that mapped the mountains, roads, cities and oceans of the physical Earth is complete, which is evidenced by the many online background maps provided by private companies~\cite{googlemaps,bingmaps,stamen} and national mapping agencies~\cite{gst2014digitalmapsupply}. On the other hand, the daily emergence of billions of geocoded data records on the Web~\cite{cohen2011journalism,planetlabs2014flock1,openstreetmap,sankaranarayanan2009twitterstand,zooniverse2014oldweather} creates a raw challenge for map designers, which must be addressed. Such map, the focus has shifted away from methods for creating background maps, to methods for creating thematic overlays also known as ``geographic mash-ups''. On this category of maps, thematic , suchs as point of interest (POI) or news-worthy events, which are displayed over the spatial context of existing background maps (see Figure~\ref{fig:introduction:background:mashups}). 
+
+
+This thesis will focus on the efficient and effective processing of emerging geographic information for thematic map visualization, both from a human and system perspective. The life cycle of a map has two stages; it is first created and then distributed. This thesis will study and address selected and important challenges in both stages of the map life cycle.
+
+
 
 
 %\begin{figure}[htbp]
@@ -208,16 +226,17 @@ In a sense, one chapter has closed in the book of map visualization, while anoth
 %\vspace*{-4ex}
 %\end{figure}
 
-
-
 \section{Requirements}
-TODO
+
+While much has changed, some things remain constant. Homo Sapiens, the principal designer and audience of map visualizations, has remained biologically unchanged probably for thousands of years. While the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to visually absorb three dimensional images, such as maps, is limited in important and constant ways~\cite{jacques1967semiologie}. Therefore, maps on the Web must observ the same well-studied principles as maps on paper:
+
+
 
 
 \subsection{Multi-scale Maps}
 Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{jones2005webage,weibel1997generalization,bertin1973semiologie}. Naturally, a map must trade-off \emph{acurate representation} of data that intersects the geographic boundary of the map with \emph{lossy abstraction} of data, which may omit~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, modify~\cite{douglas1973algorithms,lonergan2001iterative} or aggregate~\cite{haunert2006landcover} map objects in order to emphasize the important and suppress the unimportant. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}.
 
-While the three dimensions of an image make the visual perception our most powerful perceptive system, images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Furthermore, real-estate in computer screens is at a premium and only a few thousand data symbols can be distinguished from each other (see Figure~\ref{fig:raw:poi:data}). As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed set of pixels. Sooner or later, map designers are faced with the need to abstract the information in order to produce a legible map. For example, a map designer may choose to \emph{sample}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. In the context of maps, this process is known as \emph{map generalization}~\cite{weibel1997generalization}. 
+While the three dimensions of an image make the visual perception our most powerful perceptive system, images have only three dimensions and the consequences of this limit are important~\cite{bertin1973semiologie}. Real-estate in computer screens is at a premium and only a few thousand data symbols can be distinguished from each other (see Figure~\ref{fig:raw:poi:data}). As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed set of pixels. Sooner or later, map designers are faced with the need to abstract the information in order to produce a legible map. For example, a map designer may choose to \emph{sample}~\cite{topfer1966principles}, \emph{simplify}~\cite{douglas1973algorithms},  \emph{displace}~\cite{lonergan2001iterative}, and \emph{amalgamate}~\cite{haunert2006landcover} the geographic information in order to emphasize the important and suppress the unimportant. In the context of maps, this process is known as \emph{map generalization}~\cite{weibel1997generalization}. 
 
 
 This section does not attempt a full survey of map generalization, since the field is much to large to cover in a few pages. However, in the following some of the core requirements for multi-scale maps will be outlined.
@@ -265,11 +284,12 @@ Intuitive
 Control over what to display: Data Abstraction
 Control over how to display: Visual Abstraction
 
-\subsection{Map Consumer Interfaces}
+\subsection{Map Web Applications}
 Besides HQ maps...
 High Availability
 High Scalability
 Customizable
+
 
 
 
@@ -304,7 +324,7 @@ It makes sense that programmers can at specify the constraints and objectives th
 The key question is: \emph{what is the syntax and semantics of an declarative language that allows programmers to concisely express holistic selection of geographic data for multi-scale map visualizations?}
 
 % IN-DATABASE PROCESSING
-\item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap, zooniverse2014oldweather} datasets that can be visualized on maps. While geographic data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographic information can be produced by anybody, anytime, and anywhere.
+\item \textbf{In-database Processing}: The web offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} datasets that can be visualized on maps. While geographic data is characterized by great diversity, is also reaches great volume. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online, such as dating~\cite{tinder2014tinder}, transportation~\cite{drivr2014drivr} and shopping~\cite{}, geographic information can be produced by anybody, anytime, and anywhere.
 
 Consequently, a map visualization systems must be able to scalably process a specification for multi-scale selection over large datasets (millions of records). One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language such as SQL, which reuses optimization techniques that are built-in to SQL query engines~\cite{boncz2005pathfinder, boncz2006monetdb, grust2009ferry}. Additionally, since data for visualizations is typically stored and managed in relational database management systems (RDBMS)~\cite{wu2014case} it makes sense to process the data where it is stored. Despite the obvious opportunity, state-of-the-art map visualization systems do not significantly leverage RDBMS technology to process multi-scale selection of geographic information, other than to extract data for post-processing using simple bounding-box and attribute filtering queries~\cite{wms, }.
 
