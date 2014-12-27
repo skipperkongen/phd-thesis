@@ -212,19 +212,16 @@ There are two extremes types of thematic map layers that are being created. At o
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline-3.pdf}
-\caption{\textbf{Map visualization pipeline}: First, ``reality'' is captured in a primary data model (1). Next, the primary data model is transformed into abstract models that satisfy constraints and objectives for human visual interaction and perception: either a multi-scale data view (2) or a multi-scale data view (3). The data view is a logical map, i.e. only what should be displayed; the image view is a physical map, i.e. both what should be displayed and how it should be displayed. Finally, the multi-scale views are distributed over the internet to map clients that render the geographic information on computer displays (4). In the case where a data view is distributed to the client, the data view is transformed into an image view client-side (5).}
+\caption{\textbf{Map visualization pipeline}: First, ``reality'' is captured in a primary data model (1). Next, the primary data model is transformed into abstract models that satisfy constraints and objectives for human visual interaction and perception: either a multi-scale data view (2) or a multi-scale data view (3). The data view is a logical map, i.e. only what should be displayed; the image view is a physical map, i.e. both what should be displayed and how it should be displayed. Finally, the multi-scale views are distributed over the Internet to mapping clients that render the geographic information on digital displays (4). In the case where a data view is distributed to the client, the data view is transformed into an image view client-side (5).}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
 
-Mapping systems on the web have many moving parts. It is important to identify what the individual parts are along with their requirements. On the one hand, this allows us to establish whether state-of-the-art systems meet the requirementes. On the other hand, this it allows us to enumerate and gauge the size of the gaps between state-of-the-art mapping systems and a hypothetical mapping system that meets the requirements. 
+Mapping systems on the web have many moving parts (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to identify what the individual parts are along with their requirements. On the one hand, this allows us to establish whether state-of-the-art systems meet the requirementes. On the other hand, this it allows us to enumerate and gauge the size of the gaps between state-of-the-art mapping systems and a hypothetical mapping system that meets the requirements. Moreover, humans interact with the pipeline at several stages. It is important to identify the nature of the interaction, and the requirements for the interfaces that facilitate it.
 
 \texttt{CODE FREEZE ABOVE}
-
-Mapping system are data transformation pipeline where raw data models enter in one end and legible and useful maps exit out the other. The map pipeline interfaces with humans at two stages, during the design stage and during the consumption stage (see Figure~\ref{fig:introduction:requirements:pipeline}).
-
 
 This section briefly covers some of the important requirements for online maps which is a precursor for the problem statement in Section~\ref{sec:introduction:problem:statement}.
 
