@@ -160,23 +160,22 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \chapter{Introduction}
 \label{chapter:introduction}
 
-\vspace{-5ex}
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Geographic mash-ups}: Two examples of maps that visualize thematic foreground data on top of common background maps. UK statistics for \% people who speak a non-english language as their first language (left); Wikileaks data for casualties during the 2003-2011 Iraq War (right). The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
+\caption{\textbf{Thematic maps}: Two examples of maps that visualize thematic foreground data on top of common background maps. UK statistics for \% people who speak a non-english language as their first language (left); Wikileaks data for casualties during the 2003-2011 Iraq War (right). The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
 % The change: the web
-Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{bertin1973semiologie,jones2005webage,weibel1997generalization}. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that are not adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, the thesis studies three orthogonal topics in map visualization: (1) User-friendly map design, (2) scalable data processing for maps, and (3) high-availability and high-scalability distribution of map data.
+Map visualization studies how the geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a restricted medium~\cite{bertin1973semiologie,jones2005webage,weibel1997generalization}. This is an acute example of a big data challenge, since there is generally more geographic data available for visualization than what can be legibly represented on (say) a computer screen. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that can not be adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, the thesis studies three orthogonal topics in map visualization: (1) User-friendly map design, (2) scalable data processing for maps, and (3) high-availability and high-scalability distribution of map data.
 
-\minisec{Thematic Maps on the Web} % Thematic maps are important
+\minisec{Thematic Mapping Applications on the Web} % Thematic maps are important
 Thematic mapping applications on the Web are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to their target groups. Thematic maps increase the level of transparency and enlightenment in our society -- they can even save lives. % What are they exactly?
 Thematic maps are typically composed of two distinct layers of information. The \emph{thematic map layer} consists of foreground data, such as news-worthy geographic events, which is typically the primary content of the map. The \emph{contextual map layer} consists of background data, such as a topographic map, which provides that spatial context in which the former layer may be understood. Such a composition of thematic and contextual layers is sometimes informally called a ``geographic mash-up'' (see Figure~\ref{fig:introduction:background:mashups}}). % Why is it hard?? 
 
@@ -212,18 +211,19 @@ There are two extremes types of thematic map layers that are being created. At o
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline-3.pdf}
-\caption{\textbf{Map visualization pipeline}: First, ``reality'' is captured in a primary data model (1). Next, the primary data model is transformed into abstract models that satisfy constraints and objectives for human visual interaction and perception: either a multi-scale data view (2) or a multi-scale data view (3). The data view is a logical map, i.e. only what should be displayed; the image view is a physical map, i.e. both what should be displayed and how it should be displayed. Finally, the multi-scale views are distributed over the Internet to mapping clients that render the geographic information on digital displays (4). In the case where a data view is distributed to the client, the data view is transformed into an image view client-side (5).}
+\caption{\textbf{Multi-scale web mapping pipeline}: Typical web mapping pipelines transform geographic data between progressively more abstract and scale-dependent models of reality: First, reality is modelled as a set of discrete high-fidelity objects in a primary data model (1). Second, the primary data model is geometrically and semantically transformed into an multi-scale data model (2). Third, the multiscale data model is (optionally) visually transformed into a multi-scale map model (3). Fourth, multi-scale models are distributed over the Internet for display in mobile and web mapping clients (4). Fifth, when multi-scale data models are distributed to clients, they must be transformed into multi-scale map models client-side (5).}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
 
-Mapping systems on the web have many moving parts (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to identify what the individual parts are along with their requirements. On the one hand, this allows us to establish whether state-of-the-art systems meet the requirementes. On the other hand, this it allows us to enumerate and gauge the size of the gaps between state-of-the-art mapping systems and a hypothetical mapping system that meets the requirements. Moreover, humans interact with the pipeline at several stages. It is important to identify the nature of the interaction, and the requirements for the interfaces that facilitate it.
+A typical multi-scale web mapping pipeline has many moving parts (see Figure~\ref{fig:introduction:requirements:pipeline}). Mapping pipelines consists of \emph{components} that encapsulate geographic data in various states and \emph{pipes} that move and transform geographic data between the components. Left-to-right, the geographic information transitions from a set of high-fidelity objects stored in a database to a set of scale-dependent graphics displayed in a zoomable map interface. It is important to identify the requirements for each component and pipe in the system along with any human-computer interfaces, since this allows us to characterize any gaps that may exist between state-of-the-art mapping pipelines and a hypothetical mapping pipeline, which meets the all requirements of web-based mapping applications.
+
+This section focuses on the requirements for online thematic mapping applications, which is a precursor for the problem statement in Section~\ref{sec:introduction:problem:statement}.
 
 \texttt{CODE FREEZE ABOVE}
 
-This section briefly covers some of the important requirements for online maps which is a precursor for the problem statement in Section~\ref{sec:introduction:problem:statement}.
 
 \subsection{Map Constraints and Objectives}
 
