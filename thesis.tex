@@ -26,6 +26,11 @@
 \setlist{nosep}
 \setlist{itemsep=0.3ex}
 
+% for boxes
+\usepackage{mdframed}
+\newmdenv[topline=false,bottomline=false,rightline=false,linewidth=2]{emphpar}
+
+
 
 % end Theorem environments
 \usepackage{amssymb}
@@ -163,6 +168,10 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \section{Background and Motivation}
 \label{sec:introduction:background:and:motivation}
 
+\begin{emphpar}
+\textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to pick out, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible}. Maps present geographic information in legible form, which is selected with the purpose that a viewer may gain intelligence about the World.
+\end{emphpar}
+
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
@@ -173,7 +182,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \end{figure}
 
 % The change: the web
-Map visualization studies how the vast geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on highly restricted mediums~\cite{bertin1973semiologie,jones2005webage,weibel1997generalization}. This is an acute example of a big data challenge, since there is generally more geographic data available for visualization than can be legibly represented by (say) a set of pixels on a computer screen. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that can not be adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, this thesis will study three orthogonal topics in map visualization: (1) Effective and efficient map design, (2) scalable data processing for maps, and (3) highly available and scalable distribution of maps. The focus will be on thematic maps since they are currently the most challenging, useful and simultaneously most frequently created type of maps (see Figure~\ref{fig:introduction:background:mashups}}). In contrast, the challenge of producing ``general purpose'' maps, such as topographic and physical maps, has arguably been adequately addressed~\cite{lamy1999application, ware2003generalization_sa}.
+Map visualization studies how the vast geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on highly restricted mediums~\cite{bertin1973semiologie,jones2005webage,weibel1997generalization}. Map visualization is a big data abstraction challenge: there is generally more geographic information available than what the restricted mediums can be legible represent without abstracting the information. Roger Tomlinson was one of the pioneers who kick-started the digital age of maps in the 1960's, with the introduction of geographic information systems (GIS). However, the rise of the Web has significant altered the stage for map visualization, which has created new challenges that can not be adequately addressed by traditional GIS alone. This thesis aims to study and close some important gaps between traditional GIS and requirements for map visualization on the web. Specifically, this thesis will study three orthogonal topics in map visualization: (1) Effective and efficient map design, (2) scalable data processing for maps, and (3) highly available and scalable distribution of maps. The focus will be on thematic maps since they are currently the most challenging, useful and simultaneously most frequently created type of maps (see Figure~\ref{fig:introduction:background:mashups}}). In contrast, the challenge of producing ``general purpose'' maps, such as topographic and physical maps, has arguably been adequately addressed by previous work~\cite{lamy1999application, ware2003generalization_sa}.
 
 \minisec{Thematic Mapping Applications on the Web} % Thematic maps are important
 Web and mobile mapping applications are typically thematic~\cite{bereuter2013real} Thematic mapping applications are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to highly motivated target groups. Thematic maps increase the level of transparency and enlightenment in our society -- they can even save lives. % What are they exactly?
