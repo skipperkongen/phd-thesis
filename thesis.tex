@@ -188,8 +188,6 @@ Map visualization studies how the vast geography of the Earth can be displayed, 
 Web and mobile mapping applications are typically thematic~\cite{bereuter2013real} Thematic mapping applications are important since they allow map designers -- such as journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} -- to communicate relevant and focused spatial information to highly motivated target groups. Thematic maps increase the level of transparency and enlightenment in our society -- they can even save lives. % What are they exactly?
 Thematic maps are typically composed of two distinct layers of information: First, the \emph{thematic map layer} consists of foreground data, such as news-worthy geographic events, which is the primary information provided by the map. Second, the \emph{contextual map layer} consists of background data, such as a topographic map, which provides that spatial context in which the former information may be understood. % Why is it hard?? 
 
-While contextual map layers have become a commodity that is readily availably from both private companies~\cite{googlemaps, bingmaps} and national mapping agencies~\cite{gst2014digitalmapsupply}, thematic map layers often presents a challenge to map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. The source mateterial for a thematic map layer typically consists of raw and emerging geographic information, such as user-contributed data~\cite{openstreetmap,zooniverse2014oldweather}, which must first be molded into a presentable visual representation (see Figure~\ref{fig:raw:poi:data}).
-
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
@@ -199,6 +197,7 @@ While contextual map layers have become a commodity that is readily availably fr
 \vspace*{-4ex}
 \end{figure}
 
+While contextual map layers have become a commodity that is readily availably from both private companies~\cite{googlemaps, bingmaps} and national mapping agencies~\cite{gst2014digitalmapsupply}, thematic map layers often presents a challenge to map designers due to the need for \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. The source mateterial for a thematic map layer typically consists of raw and emerging geographic information, such as user-contributed data~\cite{openstreetmap,zooniverse2014oldweather}, which must first be molded into a presentable visual representation (see Figure~\ref{fig:raw:poi:data}).
 
 % Why is the state-of-the-art not good enough?
 There are two extremes types of thematic map layers that are being created. At one extreme, choropleth~\cite{guardian2013ananas} and heatmap~\cite{wiki2014heatmap} layers represent a statistical and aggregated view of geographic information, which is fairly straight-forward to produce using spatial statistics~\cite{ripley2005spatial}. An example is the left map in Figure~\ref{fig:introduction:background:mashups}. At the other extreme, thematic point maps represent an immersive and detailed view of information~\cite{bereuter2013real, sarma2012fusiontables,nutanong2012multiresolution}, which fundamentally challenges map designers due to the need for holistic abstraction of source map data. An example is the right map in Figure~\ref{fig:introduction:background:mashups}, which shows holistic selection of geographic points in Google Fusion Tables~\cite{lomet2012warstories}.  
@@ -214,7 +213,7 @@ There are two extremes types of thematic map layers that are being created. At o
 
 
 
-\section{Requirements of Web Mapping}
+\section{Requirements}
 \label{introduction:requirements}
 
 \begin{figure}[htbp]
@@ -226,19 +225,31 @@ There are two extremes types of thematic map layers that are being created. At o
 \vspace*{-4ex}
 \end{figure}
 
-
 A typical multi-scale web mapping pipeline has many moving parts, which consists of \emph{components} that encapsulate geographic data in various states and \emph{pipes} that move and transform geographic data between the components (see Figure~\ref{fig:introduction:requirements:pipeline}). Left-to-right, the geographic information transitions from a set of high-fidelity objects stored in a database to a set of scale-dependent graphics displayed in a zoomable map interface. It is important to identify the requirements for each component and pipe in the system along with any human-computer interfaces, since this allows us to characterize any gaps that may exist between state-of-the-art mapping pipelines and a hypothetical mapping pipeline, which meets all of the requirements.
 
 This section focuses on the requirements for online thematic mapping applications, which is a precursor for the problem statement in Section~\ref{sec:introduction:problem:statement}.
 
+\subsection{Map Constraints}
+
+Satisfaction of basic map constraints is perhaps the most fundamental requirement of a mapping system. Homo Sapiens, the principal designer and audience of map visualizations, has remained biologically unchanged probably for thousands of years. Even as the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to perceive graphic information has remained powerful, yet fundamentally limited~\cite{bertin1973semiologie}. Consequently, modern maps on the Web must be guided by the same well-studied principles as ancient maps on print. In the schematic representation of mapping pipeline that is shown in Figure~\ref{fig:introduction:requirements:pipeline}), map constraints guide the data abstraction over transitions 2, 3 and 5.
+
+Map constraints can be classified into two broad categories and five fundamental types: the first three types quantify the need for change (unary, binary and space constraints); the last two types prohibit specific changes (topological and cross-scale constraints):
+
+\begin{itemize}
+
+\item \textbf{Unary constraints} establish conditions that must be met be individual map objects; a map object that violates a unary conditions is in conflict and may by definition not appear in its current form on a map. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. Furthermore, when displaying detailed multi-lines and polygons on a computer display, consequtive vertices may be indistinguishable to the human eye. Such objects should be \emph{simplified} to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage, speeds up processing, cuts down on I/O, for example when geographic data is transmitted over the Internet.
+
+\item \textbf{Binary constraints} set up conditions that must be satisifed by all qualifying pairs of objects. Two objects that violate a binary constraint are \emph{in conflict} and may by definition not appear in their current form on a map. For example, two objects that overlap or are very close to each other may be defined to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}, which is a geometric binary constraint. However, not all binary constraints are geometric. For example, a constraint that limits the number of bulls per cow herd to one, is an example of a semantic binary constraints. Here, two bulls in the same cow herd would be in conflict with each other, no matter their geometric relationship to each other.
+
+\item \textbf{Space constraints} state conditions that must be satisfied by spaces, for example for each tile in a tiled map. One of the earliest impirical observations about geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. This principle is termed the \emph{Radical Law} and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should be abstracted by selection or aggregation in order to reduce the density (see Figure~\ref{fig:introduction:selection:constraints}).
+
+\item \textbf{Cross-scale constraints} apply to maps that are zoomed in and out. \emph{Cross-scale constraints} state limitations on how the logical and visual map may transition between neighboring zoom levels. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in, which is termed the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map. In map generalization process models these two approaches are termed the ladder and star approach respectively~\cite{foerster2010challenges}.
+
+\item \textbf{Topological constraints} express invariants over the relationships between geographic information objects, which must not change during an abstraction process~\cite{egenhofer1991categorizing,randell1992spatial}. For example, the relative positions of distinct objects must be maintained; the primary logic of circulation in a road network must be maintained~\cite{schmid2013opensciencemap}; holes may not appear in surfaces where no holes were before~\cite{van1995gap}; river networks must be pruned from the leaves~\cite{shreve1966statistical}; etc.
+
 \texttt{CODE FREEZE ABOVE}
 
-
-\subsection{Visual Constraints}
-
-Homo Sapiens, the principal designer and audience of map visualizations, has remained biologically unchanged probably for thousands of years. Even as the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to perceive images is fundamentally limited~\cite{bertin1973semiologie}. Consequently, maps on the Web must observe most of the well-studied principles that have govern map design on paper.
-
-%As sections of the planet are scaled down and projected onto a screen, invariably, more data will have to be shoe-horned into a fixed-size space of pixels. As scale decreases, map designers are faced with the need to abstract the information in order to produce a legible map (see Figure~\ref{fig:raw:poi:data}). Map constraints quantify the need to abstract geographic information on a map.
+\end{itemize}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -249,22 +260,9 @@ Homo Sapiens, the principal designer and audience of map visualizations, has rem
 \vspace*{-4ex}
 \end{figure}
 
-\begin{itemize}
+\subsection{Operators}
 
-\item \textbf{Unary constraints} establish conditions that must be met be individual map objects. Maps show the world as if from above. However, it is more important to render feature legible than to show features at their true relative scale. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. Furthermore, when displaying detailed multi-lines and polygons on a computer display, consequtive vertices may indistinguishable to the human eye. In this case, it makes sense to \emph{simplify} objects to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage, speeds up processing, cuts down on I/O, for example when geographic data is transmitted over the Internet.
-
-\item \textbf{Object-relative constraints} set up conditions that must be satisifed by all qualifying pairs of objects. When two objects overlap or are very close to each other, they are said to be in \emph{conflict}~\cite{weibel1997generalization, nutanong2012multiresolution}. Because too many conflicts make a map illegible, conflicts should be limited or avoided all together (see Figure~\ref{fig:introduction:selection:constraints}). The exception is when different layers of information, e.g. an ocean and an oil drilling platform naturally layer on top of each other. For other types of geographic information, for example semantic peers like points of interest, symbols should not overlap. Because symbol size does not reflect actual size on the ground, objects that are separate in reality may overlap on the map. One can imagine non-geometric object-relative constraints also, such as semantic object-relative constraints like only selecting one bull per cow herd. In this contrieved example, bulls in the same cow herd could be said to be in conflict with each other. 
-
-\item \textbf{Space-relative constraints} state conditions that must be satisfied by all qualifying subspaces in the map, for example for each tile in a tiled map. One of the earliest impirical observations about geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. This principle is termed the \emph{Radical Law} and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should be abstracted by selection or aggregation in order to reduce the density (see Figure~\ref{fig:introduction:selection:constraints}).
-
-\item \textbf{Cross-scale constraints} apply to maps that are zoomed in and out. \emph{Cross-scale constraints} state limitations on how the logical and visual map may transition between neighboring zoom levels. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in, which is termed the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map. In map generalization process models these two approaches are termed the ladder and star approach respectively~\cite{foerster2010challenges}.
-
-\end{itemize}
-
-
-\emph{Objectives} foo.
-
-A map that simultaneously optimizes objectives and satisfies constraints must generally trade accurate representation of geographic information for abstract representation of geographic information. Intuitively, data is abstracted to the point where the information becomes legible and the map useful. Geographic information may be selected~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, projected~\cite{douglas1973algorithms,lonergan2001iterative} or aggregated~\cite{haunert2006landcover} in order to better emphasize the important and suppress the unimportant on a map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. A major goal of this thesis is to help the fields of map visualization and relational data management to converge. Therefore, this thesis adopts a relationally inspired operator set to describe the transformations during the map generalization process:
+In order to satisfy constraintsA map that simultaneously optimizes objectives and satisfies constraints must generally trade accurate representation of geographic information for abstract representation of geographic information. Intuitively, data is abstracted to the point where the information becomes legible and the map useful. Geographic information may be selected~\cite{nutanong2012multiresolution,sarma2012fusiontables,schmid2013opensciencemap}, projected~\cite{douglas1973algorithms,lonergan2001iterative} or aggregated~\cite{haunert2006landcover} in order to better emphasize the important and suppress the unimportant on a map. This process is known as \emph{map generalization}~\cite{harrie2007modelling,mackaness2011generalisation,weibel1997generalization}. A major goal of this thesis is to help the fields of map visualization and relational data management to converge. Therefore, this thesis adopts a relationally inspired operator set to describe the transformations during the map generalization process:
 
 \begin{itemize}
 \item \textbf{Select} 
