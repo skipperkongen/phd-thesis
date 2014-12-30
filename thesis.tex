@@ -221,27 +221,26 @@ There are two extremes types of thematic map layers that are being created. At o
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline-3.pdf}
-\caption{Logical tasks in a web mapping pipeline.}
+\caption{Logical web mapping pipeline.}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-Typical web mapping pipelines have many moving parts. However, most web mapping pipelines perform the same logical tasks (see Figure~\ref{fig:introduction:requirements:pipeline}). The logical tasks are to (1) capture ``reality'' in a primary data model, (2) derive logical map content from the primary data model, (3) derive graphical map content from the logical map content, and (4) distribute map content over the Internet to web and mobile mapping clients. Optionally, graphical interpretation of the logical data may be performed client-side~\cite{gaffuri12vectortiles}.
+Logically, most web mapping pipelines consist of the same high-level stages (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to study the tasks and requirements of each stage in the logical pipeline. This allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on stage two (logical abstraction) and stage four (content distribution), since this is were the biggest challenges in web mapping are currently found.
 
-It is important to study the tasks and requirements of each stage in the pipeline. This allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied among others in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on stage two (logical abstraction) and stage four (content distribution), since this is were the biggest challenges in web mapping are currently found.
-
-\subsection{Logical Abstraction}
+\subsection{Logical Abstraction: Requirements}
 \label{introduction:web:mapping:pipelines:logical:abstraction}
 % describe
-In stage two of the web mapping pipelines, high-fidelity information in the primary data model is logically adapted for display on multi-scale maps. The outcome of this stage is a logical data model which contains the subset of information that should appear at each scale of a multi-scale map. The logical information objects are derived from the primary data model in a process which is known as \emph{model generalization} in the geographic literature~\cite{gruenreich1985cag}. 
+Homo Sapiens, the principal designer and audience of map visualizations, has probably remained cognitively unchanged for thousands of years. Even as the Web has impacted when, why and how maps are created and consumed, the basic ability of humans to comprehend maps has remained powerful, yet fundamentally limited~\cite{bertin1973semiologie}. Consequently, modern maps on the Web must be guided by the same well-studied principles as ancient maps on print.
 
-Homo Sapiens, the principal designer and audience of map visualizations, has probably remained cognitively unchanged for thousands of years. Even as the Web has impacted when, why and how maps are created and consumed, the basic ability of humans to perceive information on maps has remained powerful, yet fundamentally limited~\cite{bertin1973semiologie}. Consequently, modern maps on the Web must be guided by the same well-studied principles as ancient maps on print.
+In stage two of the previously defined web mapping pipeline, the primary data model is logically adapted for display on multi-scale maps. The outcome of this process is a multi-scale logical model of the information that should appear on the map, i.e. what should be dispayed rather than how it should be displayed. This process is known as \emph{model generalization} in the geographic literature~\cite{gruenreich1985cag}. 
+
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces. In the figure, objects that violate a constraint are circled by red lines; objects that are consequently deleted are shown as white disks; objects that are kept are shown as black disks.}
+\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces in the map. In the figure, objects that violate a constraint are circled by red lines; objects that are consequently deleted are shown as white disks; objects that are kept are shown as black disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
@@ -266,37 +265,27 @@ Map constraints can be classified as follows:
 
 \end{itemize}
 
-Map constraints only distinguish feasible maps from infeasible maps. They do not quantify the degree of relevance of a feasible map. \emph{Map objectives} quantify the total utility of a map through an mathematical \emph{objective functions}. One type of objective is to penalize violated constraints, and minimize the sum of penalties. Another type of objective is to score objects by their importance, and maximize the sum of scores, which is arguably the most intuitive approach (see Figure~\ref{fig:introduction:selection:constraints}). 
+Map constraints only distinguish feasible maps from infeasible maps. They do not by themselves quantify the relevance of maps. In contrast, \emph{map objectives} quantify the total utility of a map through a measurable \emph{objective function}. One type of map objective is to penalize violated map constraints, and minimize the sum of penalties. Another type of map objective is to score objects by their importance, and maximize the sum of scores, which is arguably the most intuitive approach (see Figure~\ref{fig:introduction:selection:constraints}).
 
+\subsection{Logical Abstraction: State of the Art}
 
-\minisec{State-of-the-Art Logical Map Design} Current approaches to logical map design are characterized by two extreme categories: fully-automatic selection of geographic information and complex map generalization of geographic information. 
+Current approaches to logical map design are characterized by two extremes: (1) automatic selection for simple maps, and (2) full-featured map generalization for complex maps. 
 
-\begin{itemize}
-\item \textbf{Automatic Selection}
-
-% describe
-The primary use case for automatic selection is the rapid design of thematic point maps from databases of geocoded information. Apart from graphical customization, such as the styling of map symbols, the adaptation of geographic information for the map proceeds without the involvement of humans~\cite{google2014maps,}.
-
-% identify
-State-of-the-art automatic selection systems arbitrarily offer support for either unary~\cite{mapnik,sld,vizzuality2012cartodb}, binary~\cite{nutanong2012multiresolution}, or space constraints~\cite{sarma2012fusiontables}. Furthermore, map designers have no way to indicate how important objects are relative to each other, which at best means that an opaque ranking method is applied by the system.
+\minisec{Automatic Selection} The primary use case for automatic selection of geographic information is the rapid design of thematic point maps over databases of geocoded information~\cite{google2014maps}. Users are assumed to have no knowledge of advanced topics such as map generalization. Therefore, the constraints and objectives for selection are encapsulated inside system libraries that arbitrarily offer support for a certain constraint types. For example, systems may support automatically applied binary~\cite{nutanong2012multiresolution} or space constraints~\cite{sarma2012fusiontables}. Additionally, map objectives are unspecified, which means that at best an opaque ranking method is applied by the system.
 
 % discuss
-While automatic selection is highly time-efficient for map designers it also highly non-expressive. Map designers have no influence over the constraints and objectives that are applied during the selection process (see Section~\ref{sec:introduction:requirements:map:content}). This severely limits the control that map designers have over the design process, which is probably suboptimal for most cases. Automatic selection frameworks obviously lack alternative map generalization operators, such as displacement and aggregation. However, this is arguably less of a problem, because selection is probably sufficient for most thematic point map designs.
+While automatic selection is highly time-efficient for map designers it also highly non-expressive. Map designers have no influence over the constraints and objectives that are applied during the selection process (see Section~\ref{sec:introduction:requirements:map:content}). This severely limits the control that map designers have over the design process, which is probably suboptimal for most real cases. Automatic selection frameworks obviously lack alternative map generalization operators, such as displacement and aggregation. However, this is arguably less of a problem, because selection is probably sufficient for most thematic point map designs. In summary, expressivity is entirely traded for productivity.
 
-\item \textbf{Map Generalization}
-% describe
-The primary use case for full-featured map generalization is the production of complex cartographic representations of the Earth, such as topographic and physical maps. When creating maps over diverse types of geographic information -- suchs as streets, river networks, mountain ranges, and urban constructions -- complex methods are warranted.
+\minisec{Map Generalization} The primary use case for full-featured map generalization is the production of complex cartographic representations of the Earth, such as topographic and physical maps. When creating maps over diverse types of geographic information -- suchs as streets, river networks, mountain ranges, and urban constructions -- complex methods are warranted. % describe
 
 % identify
 Map generalization requires the holistic application of multiple operators -- such as selection, displacement, amalgamation, exaggeration, and collapse~\cite{weibel1999generalising} -- which has been modelled in complex frameworks with agent-based~\cite{lamy1999application} and metaheuristic search~\cite{ware2003generalization_sa} methodologies.
 
 % discuss
-While map generalization encompasses powerful methodologies, the demand for the kind of maps that can be produced by such powerful tools is arguably vaining. The abundant supply of high-quality background maps from private companies and national mapping agencies, together with the constant emergence of user-contributed and currated thematic data, has shifted demand towards the design of simpler foreground layers. Furthermore, the demand for foreground map design is rising faster than the number of domain experts who master map generalization techniques, which is a fundamental human resources challenge. Finally, map generalization is a complex and time-consuming, and thus costly, even for domain experts.
-
-\end{itemize}
+While map generalization encompasses powerful methodologies, the demand for the kind of maps that can be produced by such powerful tools is arguably vaining. The abundant supply of high-quality background maps from private companies and national mapping agencies, together with the constant emergence of user-contributed and currated thematic data, has shifted demand towards the design of simpler foreground layers. Furthermore, the demand for foreground map design is rising faster than the number of domain experts who master map generalization techniques, which is a fundamental human resources challenge. Finally, map generalization is a complex and time-consuming, and thus costly, even for domain experts. In summary, productivity is significantly sacrificed for expressivity.
 
 
-\subsection{Content Distribution}
+\subsection{Content Distribution: Requirements}
 
 \label{sec:introduction:requirements:map:content}
 
@@ -305,7 +294,7 @@ In stage 4, the map content is distributed over the Internet to web and mobile m
 
 
 
-\subsection{State-of-the-Art Map Serving}
+\subsection{Content Distribution: State of the Art}
 
 \minisec{Vector Tiles}
 
