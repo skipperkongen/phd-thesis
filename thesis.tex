@@ -238,7 +238,7 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
 
 \begin{itemize}
 
-\item \textbf{Constraints}: map constraints, such as unary~\cite{de2004simplifying,douglas1973algorithms,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, establish quantifiable conditions that must be satisfied by the map state. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{weibel1997generalization}.
+\item \textbf{Constraints}: map constraints, such as unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, establish quantifiable conditions that must be satisfied by the map state. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{shea1989cartographic,weibel1997generalization}.
 
 \item \textbf{Objectives}: the utility of maps is quantified by an objective function, which computes a numeric sum based on the map state. One type of map objective is to assign a penalty to violated map constraints, and minimize the sum of penalties. Another type of map objective is to score objects by their importance, and maximize the sum of scores, which is arguably the most intuitive approach (see Figure~\ref{fig:introduction:selection:constraints}).
 
@@ -255,7 +255,7 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
 \vspace*{-4ex}
 \end{figure}
 
-\subsection{Stage Four: Content distribution} In stage four, the map content is distributed over the Internet to web and mobile mapping clients. Service level aggrements quantify the requirements that map content distrubtions must met. There are two main requirements for the distribution of map content:
+\subsection{Stage Four: Content distribution} In stage four, the map content is distributed over the Internet to web and mobile mapping clients. Service level aggrements (SLA) establish the conditions that must be met during the distribution of map content. The main requirements are:
 
 \begin{itemize}
 \item \textbf{High availability}: map content must be highly available. This can be quantified in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. Many national mapping agencies are contractly obligated to met ``two nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. Consequently, online map users have come to expect high availability, i.e. ``four nines'' or more, which presents a challenge to national mapping agencies. 
@@ -263,29 +263,6 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
  \end{itemize}
 
 One of the most critical challenges in content distribution on the Web -- including map content -- is how to sustain high availability and acceptable latency while keeping down the cost.
-
-\section{State-of-the-Art}
-
-Current approaches to logical map design are characterized by two extremes: (1) automatic selection for simple maps, and (2) full-blown map generalization for complex maps. 
-
-\subsection{Automatic Selection} 
-% describe and identify
-The primary use case for automatic selection of geographic information is the rapid design of thematic point maps over databases of geocoded information~\cite{google2014maps}. Users are assumed to have limited mapping skills. Therefore, the constraints and objectives of selection are completely encapsulated inside system libraries. Additionally, different systems offer support for different constraint types. For example, systems may support automatically applied proximity~\cite{nutanong2012multiresolution} or density constraints~\cite{sarma2012fusiontables}. Additionally, map objectives are unspecified, which means that at best an opaque ranking method is applied by the system.
-
-% discuss
-%While automatic selection is highly time-efficient for map designers it also highly non-expressive. Map designers have no influence over the constraints and objectives that are applied during the selection process (see Section~\ref{introduction:web:mapping:pipelines}). This severely limits the control that map designers have over the design process, which is probably suboptimal for most real cases. Automatic selection frameworks obviously lack alternative map generalization operators, such as displacement and aggregation. However, this is arguably less of a problem, because selection is probably sufficient for most thematic point map designs. In summary, expressivity is entirely traded for productivity.
-
-\subsection{Map Generalization}
-% describe and identify
-The primary use case for full-blown map generalization is the production of complex cartographic representations of the Earth, such as topographic and physical maps. When creating maps that contain diverse geographic information categories -- suchs as streets, hydrology, land use, mountain ranges, and urban constructions -- complex methods are warranted. Map generalization requires the holistic application of multiple operators -- such as selection, displacement, amalgamation, exaggeration, and collapse~\cite{weibel1999generalising} -- which has been modelled in complex frameworks with agent-based~\cite{lamy1999application} and metaheuristic search~\cite{ware2003generalization_sa} methodologies.
-
-% discuss
-%While map generalization encompasses powerful methodologies, the demand for the kind of maps that can be produced by such powerful tools is arguably vaining. The abundant supply of high-quality background maps from private companies and national mapping agencies, together with the constant emergence of user-contributed and currated thematic data, has shifted demand towards the design of simpler foreground layers. Furthermore, the demand for foreground map design is rising faster than the number of domain experts who master map generalization techniques, which is a fundamental human resources challenge. Finally, map generalization is a complex and time-consuming, and thus costly, even for domain experts. In summary, productivity is significantly sacrificed for expressivity.
-
-\subsection{Vector Tiles}
-% describe and identify
-
-% discuss
 
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
@@ -445,6 +422,37 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 \chapter{Selection of Map Content}
 \label{chapter:state:of:the:art:map:generalization}
+
+\section{State-of-the-art Specification}
+
+This thesis makes the case for declarative specification of logical map content. Arguably, this proposal occupies a balanced point in the design space, in-between fully-automatic and specification-less systems and highly complex programmable systems. In this section tours the design space of logical map content specification and argues the point for declarative specification.
+
+Current proposals for logical abstraction of geographic information are characterized by two extremes: (1) automatic selection for simple maps, and (2) full-blown map generalization for complex maps. 
+
+\subsection{Automatic Selection} 
+% describe and identify
+The primary use case for automatic selection of geographic information is the rapid design of thematic point maps over databases of geocoded information~\cite{google2014maps}. Users are assumed to have limited mapping skills. Therefore, the constraints and objectives of selection are completely encapsulated by the system. Additionally, different systems satisfy different constraints. For example, systems may automatically apply either a proximity~\cite{nutanong2012multiresolution} or density constraint~\cite{sarma2012fusiontables} without support for parameterization. Additionally, map objectives are unspecified, which means that at best an opaque ranking method is applied by the system.
+
+% discuss
+%While automatic selection is highly time-efficient for map designers it also highly non-expressive. Map designers have no influence over the constraints and objectives that are applied during the selection process (see Section~\ref{introduction:web:mapping:pipelines}). This severely limits the control that map designers have over the design process, which is probably suboptimal for most real cases. Automatic selection frameworks obviously lack alternative map generalization operators, such as displacement and aggregation. However, this is arguably less of a problem, because selection is probably sufficient for most thematic point map designs. In summary, expressivity is entirely traded for productivity.
+
+\subsection{Integer Programming}
+
+\subsection{Procedural Map Generalizaiton}
+% describe and identify
+The primary use case for full-blown map generalization is the production of complex cartographic representations of the Earth, such as topographic and physical maps. When creating maps that contain diverse geographic information categories -- suchs as streets, hydrology, land use, mountain ranges, and urban constructions -- complex methods are warranted. Map generalization requires the holistic application of multiple operators -- such as selection, displacement, amalgamation, exaggeration, and collapse~\cite{weibel1999generalising} -- which has been modelled in complex frameworks with agent-based~\cite{lamy1999application} and metaheuristic search~\cite{ware2003generalization_sa} methodologies.
+
+
+
+
+
+
+
+
+
+
+
+
 
 Map generalization is a process performed by map designers to adapt and transform geographic information to retain as much as possible of the relevant geographic information in geographic map, subject to constraints of legibility~\cite{weibel1999generalising}. To create an uncluttered map, geographic data can be \emph{selected}~\cite{sarma2012fusiontables}, \emph{simplified}~\cite{douglas1973algorithms},  \emph{displaced}~\cite{lonergan2001iterative}, and \emph{amalgamated}~\cite{haunert2006landcover}. A more aggressive approach is \emph{statistical aggregation} of geographic information, such as the choropleth map, which eliminates the explicit representation of geographic data altogether~\cite{friendly2008milestones}. For a more complete overview of this complex field, you are refered to the works of Weibel and Dutton~\cite{weibel1999generalising}, Jones and Ware~\cite{jones2005webage}
 
@@ -723,7 +731,7 @@ This thesis proposes a batch-oriented, declarative, in-database approach for mul
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Data Serving for Maps}
+\chapter{Map Content Distribution}
 
 % approaches: expressing, processing, serving
 
