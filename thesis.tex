@@ -215,22 +215,28 @@ There are two extremes types of thematic map layers that are being created. At o
 
 
 
-\section{Requirements}
+\section{Web Mapping Pipelines}
 \label{introduction:requirements}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/map-visualization-pipeline-3.pdf}
-\caption{Logical stages of web mapping pipelines.}
+\caption{Logical tasks in a web mapping pipeline.}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-Typical web mapping pipelines have many moving parts. However, all web mapping pipelines perform the same logical tasks (see Figure~\ref{fig:introduction:requirements:pipeline}). The tasks are to (1) capture ``reality'' in a primary data model, (2) derive logical map content from the primary data model, (3) derive graphical map content from the logical map content, and (4) distribute map content over the Internet to web and mobile mapping clients. Optionally, logical map content can be distributed to clients and in this case graphical map content is derived client-side~\cite{gaffuri12vectortiles}. It is important to describe the requirements for each part in the pipeline, since this allows us to compare state-of-the-art pipelines to a hypothetical pipeline that meets all of the requirements. With the exception of stage 1, the important requirements for all stages are outlined in the following sections. 
+Typical web mapping pipelines have many moving parts. However, most web mapping pipelines perform the same logical tasks (see Figure~\ref{fig:introduction:requirements:pipeline}). The logical tasks are to (1) capture ``reality'' in a primary data model, (2) derive logical map content from the primary data model, (3) derive graphical map content from the logical map content, and (4) distribute map content over the Internet to web and mobile mapping clients. Optionally, graphical interpretation of the logical data may be performed client-side~\cite{gaffuri12vectortiles}.
 
-\subsection{Map Content}
-Logical mapping is concerned with \emph{what} geographic information should appear on a map, which corresponds to stage 2 in Figure~\ref{fig:introduction:requirements:pipeline}. In contrast, graphical mapping is concerned with \emph{how} geographic information should appear on a map (i.e. the graphical expression of data), which corresponds to stage 3 in Figure~\ref{fig:introduction:requirements:pipeline}. In truth, these two views of the map content are interdependent. For example, bigger graphical symbols may result in less data being selected since symbols are more likely to overlap. For this reason, the requirements for logical and graphical map content are treated together in the following.
+It is important to understand the requirements for each stage in the pipeline. This allows us to test for gaps between state-of-the-art pipelines and a hypothetical pipeline that meets all of the requirements.
+
+\subsection{Requirements}
+\label{sec:introduction:requirements:map:content}
+
+In stage 1 of a mapping pipeline, ``reality'' is captured in a primary data model that consists of discrete data objects. While the data modeling process and its requirements is beyond the scope of this thesis, it has been thoroughly described in previous work~\cite{friis2001requirements,goodchild1992geographical}.
+
+In stage 2 and 3 of the mapping pipeline, the primary data model is transformed into a legible and consistent geographic map content. The outcome of stage 2 is a logical map content model, i.e. \emph{what} is the geographic information that should appear on the map. The outcome of stage 3 is a graphical map content model, i.e. \emph{how} should the geographic information be graphically represented on the map. In truth, these two processes are interdependent. For example, bigger graphical symbols may results in less information since symbols are more likely to overlap. For this reason, the requirements for logical and graphical map content are treated together in the following.
 
 Map content must satisfy \emph{map constraints} that ensure the legibility and consistency of a map. For example, a proximity constraint may trigger that a map symbol is deleted because it overlaps a more important map symbol, which would compromise legibility. As another example, a topology constraint may prohibit the deletion of a river segment because it would result in an disconnected river network, which would be inconsistent with reality. Homo Sapiens, the principal designer and audience of map visualizations, has probably remained cognitively unchanged for thousands of years. Even as the Web has impacted when, why and how map visualizations are created and consumed, the basic ability of humans to perceive information on maps has remained powerful, yet fundamentally limited~\cite{bertin1973semiologie}. Consequently, modern maps on the Web must be guided by the same well-studied principles as ancient maps on print.
 
@@ -250,32 +256,24 @@ Some important map constraints are:
 
 \end{itemize}
 
-Map constraints alone do not enable the ranking of feasible maps, which requires the introduction of an \emph{map objective}. One approach is to introduce penalties for violated constraints, and minimize the sum of penalties. Another approach is to introduce a scoring function for objects, and maximize the sum of scores for objects that appear in the map (see Figure~\cite{fig:introduction:selection:constraints}). 
+Map constraints alone do not enable the ranking of feasible maps, which requires the introduction of \emph{map objectives}. One type of objective is to introduce a penalty for violated constraints, and minimize the sum of penalties. Another type of objective is to introduce a scoring function over the map objects, and maximize the sum of scores for objects that appear in the map subject to the constraints (see Figure~\ref{fig:introduction:selection:constraints}). 
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Object-relative and space-relative conflicts}: object-relative constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects. Space-relative constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces. In the figure, objects that are in conflict are grouped by red circles; in the examples, conflicts are resolved by selection; selected objects are represented by black disks, while filtered-out objects are represented by white disks.}
+\caption{\textbf{Object-relative and space-relative conflicts}: object-relative constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects. Space-relative constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces. In the figure, objects that are in conflict are circled by red lines; objects that are deleted in order to resolve the conflicts are represented by white disks; objects that are selected are represented by black disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-\subsection{Design Process}
-Humans must control two aspects of the map design process: (1) what information to display, and (2) how to display the information. For example, what information to display can be altered by selection, projection and aggragation of the available data; how to display the information can be altered for example by representing information by different visual variables~\cite{bertin1973semiologie}. Because the map design process is partly a human task, it must ideally be performed by time-efficient and intuitive methods. Furthermore, the map design method must allow humans to create maps that satisfy and optimize the types of constraints and objectives that were outlined in the previous section.
+In stage 4, the map content is distributed over the Internet to web and mobile mapping clients. The primary requirements for this process is that map content is highly available and that the content serving process is highly scalable, i.e. can sustain acceptable latency for an increasing number of concurrent map clients.One of the most critical challenges is to fullfill these requirements while keeping down the cost.
 
+\subsection{State-of-the-Art Map Creation}
 
+\subsection{State-of-the-Art Map Serving}
 
-\subsection{Data Processing}
-Scalability
-Data Integration
-Low Cost
-
-\subsection{Online Map Applications}
-Besides HQ maps...
-High Availability
-High Scalability
-Customizable
+\minisec{Vector Tiles}
 
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
