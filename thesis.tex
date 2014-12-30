@@ -113,7 +113,7 @@
 \sloppy
 
 %\title{Declarative Selection for Online Geographic Data Visualizations}
-\title{Declarative and Scalable Geographic Data Visualization Pipeline}
+\title{Declarative and Scalable Web Mapping Systems}
 %\title{Geodata Visualization Management Systems}
 %\title{Building Scalable Data Visualization Management Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
@@ -267,9 +267,33 @@ Map constraints alone do not enable the ranking of feasible maps, which requires
 \vspace*{-4ex}
 \end{figure}
 
+
 In stage 4, the map content is distributed over the Internet to web and mobile mapping clients. The primary requirements for this process is that map content is highly available and that the content serving process is highly scalable, i.e. can sustain acceptable latency for an increasing number of concurrent map clients.One of the most critical challenges is to fullfill these requirements while keeping down the cost.
 
-\subsection{State-of-the-Art Map Creation}
+\subsection{State-of-the-Art Map Design}
+
+Stages 2 and 3 in the web mapping pipeline are concerned with map design. Currently, state-of-the-art map design systems are fall into two extreme categories: fully-automatic selection of geographic information and complex map generalization of geographic information. 
+
+\minisec{Automatic Selection}
+% describe
+The primary use case for automatic selection is the rapid design of thematic point maps from databases of geocoded information. Apart from graphical customization, such as the styling of map symbols, the adaptation of geographic information for the map proceeds without the involvement of humans~\cite{google2014maps,}.
+
+% identify
+State-of-the-art automatic selection systems arbitrarily offer support for either unary~\cite{mapnik,sld,vizzuality2012cartodb}, binary~\cite{nutanong2012multiresolution}, or space constraints~\cite{sarma2012fusiontables}. Furthermore, map designers have no way to indicate how important objects are relative to each other, which at best means that an opaque ranking method is applied by the system.
+
+% discuss
+While automatic selection is highly time-efficient for map designers it also highly non-expressive. Map designers have no influence over the constraints and objectives that are applied during the selection process (see Section~\ref{sec:introduction:requirements:map:content}). This severely limits the control that map designers have over the design process, which is probably suboptimal for most cases. Automatic selection frameworks obviously lack alternative map generalization operators, such as displacement and aggregation. However, this is arguably less of a problem, because selection is probably sufficient for most thematic point map designs.
+
+\minisec{Map Generalization}
+% describe
+The primary use case for full-featured map generalization is the production of complex cartographic representations of the Earth, such as topographic and physical maps. When creating maps over diverse types of geographic information -- suchs as streets, river networks, mountain ranges, and urban constructions -- complex methods are warranted.
+
+% identify
+Map generalization requires the holistic application of multiple operators -- such as selection, displacement, amalgamation, exaggeration, and collapse~\cite{weibel1999generalising} -- which has been modelled in complex frameworks with agent-based~\cite{lamy1999application} and metaheuristic search~{ware2003generalization_sa} methodologies.
+
+% discuss
+While map generalization encompasses powerful methodologies, the demand for the kind of maps that can be produced by such powerful tools is arguably vaining. The abundant supply of high-quality background maps from private companies and national mapping agencies, together with the constant emergence of user-contributed and currated thematic data, has shifted demand towards the design of simpler foreground layers. Furthermore, the demand for foreground map design is rising faster than the number of domain experts who master map generalization techniques, which is a fundamental human resources challenge. Finally, map generalization is a complex and time-consuming, and thus costly, even for domain experts.
+
 
 \subsection{State-of-the-Art Map Serving}
 
@@ -289,7 +313,7 @@ While selection of data for maps can be intuitively understood as filtering obje
 Ideally, a well-studied and efficient algorithm can solve all instances, in the same fashion that sorting solves top-k selection.
 
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Specification}: State-of-the-art mapping systems are currently polarized into two extreme approaches for selection of geographic data: fully-automated selection~\cite{sarma2012fusiontables, nutanong2012multiresolution} and complex programmable map generalization frameworks~\cite{lamy1999application, ware2003generalization_sa}. There is currently a lack of systems that offer map designers a balanced solution that is simple, yet programmable. In contrast, existing solutions are either too inflexible or too time-consuming.
+\item \textbf{Declarative Specification}: There is currently a lack of systems that offer map designers a balanced solution between automated selection and map generalization. Ideally, a map design interface for thematic maps is simple, yet programmable. In contrast, state-of-the-art interfaces are either too inflexible or too time-consuming.
 
 It makes sense that programmers can declaratively specify map constraints and objectives in a high-level geographic selection language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Declarative specifications are concise and intuitive and therefore highly productive for programmers. Moreover, many declarative languages are highly optimizable since computational frameworks can be swapped out in the background~\cite{eldawy2014pigeon,thusoo2009hive}, for example by targeting a 
 
@@ -330,9 +354,9 @@ Further reading:
 \end{itemize}
 
 
-\subsection{Glossy Language: Syntax and Semantics}
+\subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
-% NOTFINISHED
+% : Syntax and Semantics
 Section~\ref{introduction:problem:statement} argued the need for declarative languages to control multi-scale selection processes in a map visualization pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
 
 First, this thesis contributes the \emph{syntax} of Glossy SQL, which allows programmers to declaratively express multi-scale selection. The use cases that Glossy SQL covers include multi-scale timelines, maps and cluster visualizations. Programmers can declaratively express binary and set-based constraints that must be satisfied by a valid multi-scale selection. Additionally, programmers can declaratively define how the importance of records should be measured at each scale of the selection. Finally, programmers can explicitely and declaratively define the ordered set of tuples that represent the scales of a visualizaton. Multi-scale selection can be declared to be either iterative or recursive, with semantics that  correspond to star and ladder generalization respectively~\cite{foerster2010challenges}. A particular design goal that has been met is that queries in Glossy SQL must be compact yet highly readable. The longest Glossy SQL query in this thesis is just 14 lines of code!
@@ -347,8 +371,9 @@ Further reading:
 \item A publication is currently in submission.
 \end{itemize}
 
-\subsection{Glossy Compiler: Implementation and Evaluation}
+\subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
+% : : Implementation and Evaluation
 
 Section~\ref{introduction:problem:statement} argued the case for in-database processing of multi-scale selection.
 
@@ -381,8 +406,6 @@ Further reading:
 \item The details about this part are described in Chapter~\ref{chapter:tileheat}.
 \item A previous version of this chapter has been published in SIGSPATIAL 2012~\cite{kefaloukos2012tileheat}.
 \end{itemize}
-
-
 
 \subsection{Data and Software}
 % DONE
