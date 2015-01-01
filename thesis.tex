@@ -190,12 +190,13 @@ Map visualization studies how the vast geography of the Earth can be displayed, 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
-\caption{\textbf{Raw geographic information}: On a small scale map of Europe, the data symbols for ``raw'' points of interest (left) almost entirely cover the national territories (right). It illustrates how for large datasets (thousands of records or more) it does not make sense to display unfiltered data. For example, there are 28 thousand points of interest near Paris; which one is the Eiffel Tower on the left map?}
+\caption{\textbf{Unfiltered geographic information}: On a small scale map of Europe, the symbols for unfiltered points of interest from OpenStreetMap (left) almost entirely cover most national territories (right). It illustrates how for large datasets (thousands of records or more) it generally does not make sense to display unfiltered geographic information on a map.}
 \label{fig:introduction:background:raw:poi}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
+This thesis has studied the operations of a national mapping agency~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. While little has been written about this, the effect is evident to anyone working with maps and geographic information on the web. The outset of this thesis was to understand the techniques that have enabled the success of commercial mapping providers, see if the techniques can be improved, and finally transfer the knowledge into the public domain. While this promethean goal implicitly motivates this thesis, its contributions are necessarily more focused on fewer, yet important challenges within this larger picture.
 
 % The changes and challenges caused by the web.
 The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} maps are produced and consumed, which has also shifted the use cases for map generalization. Consequently, new challenges of map creation and map distribution have emerged, which cannot be adequately addressed by traditional geographic information systems (GIS). In a nutshell, GIS was developed for another time and situation~\cite{ucgis2014tomlinson}.
@@ -213,7 +214,7 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 %\minisec{National Mapping Agencies in the Future}
 %National mapping agencies create and distribute curated map content of on the Web~\cite{gst2014digitalmapsupply}. The maps are of high quality and potential valuable to society~\cite{gst2012friedata}. However, similar maps are also being distributed by private corporations, such as Google and Microsoft, which creates a competive situation. In fact, multi-national corporations, such as Google and Microsoft -- rutinely operate at one or two orders of magnitude higher availability (99.999\% versus 99.5\%) and performance (40 msec versus 400 msec per map requrest) compared to national mapping agencies. Evidently, computer science heavy organizations like Google and Microsoft have adapted better to the reality of Web mapping than national mapping agencies -- while simultaneously serving maps to orders of magnitude larger audiences. This puts pressure on national mapping agencies, who must catch up or become irrelevant. To support the adoption of best practice Web maps in national mapping agencies, this thesis aims to disclose a set of low-cost techniques for serving map content online with high availability and high scalability.
 
-\section{Requirements}
+\section{Web Mapping Pipelines}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -224,12 +225,32 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 \vspace*{-4ex}
 \end{figure}
 
-Web mapping pipelines execute four logical stages (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to study the tasks and requirements of each stage in the logical pipeline. This allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
+The web mapping process can be modeled as a four-stage logical pipeline (see Figure~\ref{fig:introduction:requirements:pipeline}). The pipeline captures the life cycle of geographic information, from initial data modeling to final display on a digital map. It is important to study the tasks and requirements of each stage in the logical pipeline, since this allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
 
 Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on the remaining stages, namely stage two (logical abstraction) and stage four (content distribution), since this is were the biggest challenges in web mapping are currently found.
 
 
-\subsection{Stage Two: Logical abstraction} Even as the Web has impacted when, why and how maps are created and consumed, the basic ability of humans to comprehend maps has remained powerful, yet fundamentally limited~\cite{bertin1973semiologie}. Consequently, geographic information must be appropriately adapted for the various scales of a multi-scale map. Crucially, geographic information on a map must simulataneously be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). These conditions can be evaluated by \emph{constraints} and \emph{objectives}, which quantify the feasibility and utility of maps~\cite{harrie1999constraint,weibel1997generalization}:
+\subsection{Selection of Geographic Information} 
+Geographic information must be adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as a means for adapting information, since aggregation is mostly, while not always, a straight-forward process. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). The six design goals of the iOS6 Apple Maps API concretize this further: 
+
+\begin{enumerate}
+\item minimize overlaps
+\item respect relative importance of entries
+\item maximize spatial fullness
+\item provide panning/zooming consistency
+\item enable efficient sampling
+\item support filtering conditions
+\end{enumerate}
+
+This example list of \emph{constraints} and \emph{objectives} illustrates one way to quantify the feasibility and utility of a map. More formally: 
+
+\begin{itemize}
+
+\item \textbf{Constraints}, such as unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, define the feasibility of a map. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{shea1989cartographic,weibel1997generalization}.
+
+\item \textbf{Objectives}, such as minimization of conflict~\cite{bader2001energy,haunert2006landcover,sester2000generalization} or maximization of content~\cite{sarma2012fusiontables,nutanong2012multiresolution}, quantify the utility of a map. Quantifiable objectives facilitate combinatorial optimization over a search space of maps.
+
+\end{itemize}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -240,27 +261,20 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
 \vspace*{-4ex}
 \end{figure}
 
+The generalization operator of \emph{selection} can, if modeled appropriately, meet all of these requirements.
+
+\subsection{Distribution of Geographic Information} In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. A service level aggrements (SLA) establishes the success criteria for this process. There are three typical dimensions of an SLA:
 
 \begin{itemize}
+\item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be defined in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge. 
 
-\item \textbf{Constraints}: map constraints, such as unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, establish quantifiable conditions that must be satisfied by the map state. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{shea1989cartographic,weibel1997generalization}.
+\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency. As online 
 
-\item \textbf{Objectives}: the utility of maps is quantified by an objective function, which computes a numeric sum based on the map state. One type of map objective is to assign a penalty to violated map constraints, and minimize the sum of penalties. Another type of map objective is to score objects by their importance, and maximize the sum of scores, which is arguably the most intuitive approach (see Figure~\ref{fig:introduction:selection:constraints}).
+\item \textbf{Scalability} is the property that performance (i.e. latency) can be retained for increasing data volumes and/or number of concurrent users. In the mapping pipeline that was studied for this thesis, the latency roughly doubles in the middle of the day when the number of concurrent requests is highest.
 
 \end{itemize}
 
-Finally, it is informative to review the six design goals that were stated for the iOS6 Apple Maps API: (1) minimize overlaps, (2) respect relative importance of entries, (3) maximize spatial fullness, (4) provide panning/zooming consistency, (5) enable efficient sampling, and (6) support filtering conditions.
-
-
-\subsection{Stage Four: Content distribution} In stage four, the map content is distributed over the Internet to web and mobile mapping clients. A service level aggrements (SLA) establishes the absolute conditions that must be met by a map distribution:
-
-\begin{itemize}
-\item \textbf{High availability}: map content must be highly available, which can be expressed in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are contractly obligated to met ``two nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distribution, national mapping agencies are presented with a challenge. 
-
-\item \textbf{High scalability}: map content distribution must be highly scalable, that is, acceptable latency must be sustained for an increasing number of concurrent clients.
- \end{itemize}
-
-One of the most critical challenges in content distribution on the Web -- including map content -- is how to sustain high availability and acceptable latency while keeping down the cost.
+Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
