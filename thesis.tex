@@ -335,11 +335,11 @@ Further reading:
 \subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
 % : Syntax and Semantics
-Section~\ref{introduction:problem:statement} argued the need for declarative languages to control multi-scale selection processes in a map visualization pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
+Section~\ref{sec:introduction:problem:statement} argued the need for a declarative language for selection of geographic information in a web mapping  pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
 
-First, this thesis contributes the \emph{syntax} of Glossy SQL, which allows programmers to declaratively express multi-scale selection. The use cases that Glossy SQL covers include multi-scale timelines, maps and cluster visualizations. Programmers can declaratively express binary and set-based constraints that must be satisfied by a valid multi-scale selection. Additionally, programmers can declaratively define how the importance of records should be measured at each scale of the selection. Finally, programmers can explicitely and declaratively define the ordered set of tuples that represent the scales of a visualizaton. Multi-scale selection can be declared to be either iterative or recursive, with semantics that  correspond to star and ladder generalization respectively~\cite{foerster2010challenges}. A particular design goal that has been met is that queries in Glossy SQL must be compact yet highly readable. The longest Glossy SQL query in this thesis is just 14 lines of code!
+First, this thesis contributes the \emph{syntax} of Glossy SQL, which allows programmers to declaratively express multi-scale selection of geographic and non-geographic data sources. The use cases that Glossy SQL covers include multi-scale timelines, maps and cluster visualizations. Programmers can declaratively express constraints that must be satisfied by a multi-scale selection. Additionally, programmers can declaratively define how the importance of records should be measured at each scale of the selection. Finally, programmers can define an ordered set of scales for visualizaton. The syntax expresses both iterative or recursive queries, with semantics that correspond to the star and ladder approach in generalization, respectively~\cite{foerster2010challenges}. A particular design goal that has been met is that queries in Glossy SQL must be compact yet highly readable. The longest Glossy SQL query in this thesis is just 14 lines of code!
 
-Second, this thesis contributes a \emph{structural operational semantics} for Glossy SQL expressed in terms of relational algebra. The results show that Glossy SQL, and thus multi-scale selection, can be expressed entirely in pure relational algebra. For example, the 14-line Glossy SQL query mentioned above translates into a single 255-line relational algebra query.
+Second, this thesis contributes the \emph{semantics} of Glossy SQL, which is expressed in terms of relational algebra. This semantics forms the foundation of the Glossy Compiler.
 
 Further reading:
 
@@ -353,11 +353,11 @@ Further reading:
 \label{sec:introduction:contributions:glossy}
 % : : Implementation and Evaluation
 
-Section~\ref{introduction:problem:statement} argued the case for in-database processing of multi-scale selection.
+Section~\ref{sec:introduction:problem:statement} made the case for in-database processing of multi-scale selection. The Glossy compiler translates queries in Glossy SQL into relational algebra, which can be processed on top of relational databases.
 
-First, this thesis contributes a compiler that translates queries in Glossy SQL into equivalent queries in pure relational algebra. The compiler targets the commercial PostgreSQL RDBMS~\cite{PostgreSQL}, which is popular in the geographic data community due to its high-quality spatial extension~\cite{PostGIS}.
+First, this thesis contributes an optimized implementation of the Glossy compiler, which targets the commercial PostgreSQL RDBMS~\cite{PostgreSQL}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{PostGIS}.
 
-Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets. The results show that the Glossy compiler generates relational algebra queries that scalably process multi-scale selection inside the PostgreSQL RDBMS. The compiler is tested with geographic as well as non-geographic datasets.
+Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets. The results show that the Glossy selection system is scalable for a wide range of evaluated test cases, geographic as well as non-geographic.
 
 Further reading:
 \vspace{-2ex}
