@@ -310,18 +310,18 @@ Rendering and serving of so-called map tiles is currently the typical way to imp
 \label{sec:introduction:contributions}
 % NOTFINISHED
 
-Instead of presenting a complete system for map visualization on the web, this thesis focuses on four specific aspects that are encounted by map designers who must select and serve data for high-quality geographic mash-ups on the web. The purpose of these  contributions is to address the problems that where presented in Section~\ref{introduction:problem:statement}.
+Instead of presenting a complete web mapping pipeline, this thesis addresses the gaps that were identified in Section~\ref{sec:introduction:problem:statement}.
  
 \subsection{Set Multi-cover Formulation}
 \label{sec:introduction:contributions:set:multicover:problem}
 
-Section~\ref{introduction:problem:statement} argued that the modeling of multi-scale selection for map visualizations would benefit from a mapping to a well-known but more abstract problem. This section shows how progress was made on this problem and the benefits that have resulted from the mapping.
+Section~\ref{sec:introduction:problem:statement} made the case for a unified model for selection of geographic information.
 
-First, this thesis contributes an identification of equivalence between the standard formulation of selection in map generalization and the set multi-cover problem. There is an downside and upside to this equivalence relation. The downside is that the set multi-cover problem, and therefore also the selection problem, is NP-hard~\cite{vazirani2001approximation}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which are in turn applicable to compute selection in map generalization. The identification of this equivalence relation forms the backbone of this thesis.
+First, this thesis contributes a unified model for selection of geographic information. The model is based on an equivalence between the problem of selecting geographic information for maps and the more abstract set multi-cover problem. Consequently, selection of geographic information can be interpreted as selection of edges in a bi-partite graph. There is an downside and upside to this mathematical equivalence relation. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can be directly used for selection of geographic information.
 
-Second, this thesis shows that a restricted (and very common) case of the set multi-cover problem can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
+Second, it is shown that a restricted case of the set multi-cover problem, which frequenty occurs in maps, can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
 
-Third, this thesis contributes a formalization of binary and set-based selection constraints in map generalization. Even more, these two classes of constraints are collapsed into a single class of edge-selection constraints formulated over a bi-partite graph. By this formulation, a variety of concrete spatial constraints types, such as object proximity and object density in geographic space, can be modeled by a single contraint type in graphs (see Figure~\ref{fig:introduction:selection:constraints}).
+Third, it is shown how to express a variety of use cases in the unified selection model, which includes both geographic and non-geographic use cases. It is shown how diverse constraints, such as proximity and density constraints, can be modeled as a single constraint on selection of edges.
 
 Further reading:
 \vspace{-2ex}
