@@ -232,7 +232,7 @@ To understand the process of web mapping, it must be modeled at a more granular 
 Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on the remaining stages, namely stage two (logical abstraction) and stage four (content distribution), since the biggest challenges in web mapping are currently found here.
 
 
-\subsection{Selection of Geographic Information} 
+\subsection{Holistic Selection of Geographic Information} 
 Geographic information must be logically adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as the primary means for information abstraction. Selection is a challenging but useful way to adapt geographic information for maps. In contrast, aggregation is mostly, while not always, a straight-forward process. The remaining generalizion techniques, such as simplification and collapse, do not preclude selection. For example, simplification is primarily a means for saving data storage and I/O, which is orthogonal to the goals of selection~\cite{weibel1997generalization}.
 
 It is important to understand the requirements of selection. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). The six design goals of the iOS6 Apple Maps API concretize this further: 
@@ -246,7 +246,7 @@ It is important to understand the requirements of selection. Even as the Web has
 \item support filtering conditions
 \end{enumerate}
 
-This example list of \emph{constraints} and \emph{objectives} illustrates one way to quantify the feasibility and utility of a map. More formally: 
+This example list of \emph{constraints} and \emph{objectives} illustrates concrete ways to quantify the feasibility and utility of a map. A more abstract and formal view of constraints and objectives is the following: 
 
 \begin{itemize}
 
@@ -265,12 +265,14 @@ This example list of \emph{constraints} and \emph{objectives} illustrates one wa
 \vspace*{-4ex}
 \end{figure}
 
-\subsection{Distribution of Geographic Information} In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. A service level aggrements (SLA) establishes the success criteria for this process. There are three typical dimensions of an SLA:
+While the concrete formulation of constraints and objectives depends on the map that is being designed, any map design process must be guided by some set of constraints and objectives, such as the ones described above. Specifically, holistic selection of geographic information for maps requires holistic constraints and objectives.
+
+\subsection{Distribution of Geographic Information} In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
 
 \begin{itemize}
-\item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be defined in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge.
+\item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be quantified in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge.
 
-\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency. As online 
+\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency, which is quantified as the number of milliseconds that a request may take to complete. Studies have shown that user satisfaction is highly sensitive to variation in latency~\cite{hamilton2009costoflatency}.
 
 \item \textbf{Scalability} is the property that performance (i.e. latency) can be retained for increasing data volumes and/or number of concurrent users. In the mapping pipeline that was studied for this thesis, the latency roughly doubles in the middle of the day when the number of concurrent requests is highest.
 
