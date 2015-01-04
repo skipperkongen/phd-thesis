@@ -274,24 +274,28 @@ While the concrete formulation of constraints and objectives depends on the map 
 
 \item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency, which is quantified as the number of milliseconds that a request may take to complete. Studies have shown that user satisfaction is highly sensitive to high -- as well as variation in -- latency~\cite{hamilton2009costoflatency}.
 
-\item \textbf{Scalability} is the property that performance (i.e. latency) can be retained for increasing data volumes and/or number of concurrent users. In the mapping pipeline that was studied for this thesis, the latency roughly doubles in the middle of the day when the number of concurrent requests is highest.
+\item \textbf{Scalability} is the property that operational levels, such as acceptable latency, can be sustained for increasing values of some fundamental quantity, typically data volume or concurrency level. To be truely scalable, an architecture must be able to scale with a sub-proportional increase in cost~\cite{vogels2006podcast}.
 
 \end{itemize}
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
-\subsection{On-the-fly vs. Batch-oriented Selection}
-\minisec{On-the-fly selection}
-At first, on-the-fly selection of geographic information objects for maps seems like an ideal approach for a number of reasons. 
+\subsection{Achitecture}
+
+Two important opposite approaches have been studied for generalization of geographic information, namely \emph{real-time} (or on-the-fly) generalization~\cite{} and \emph{batch-oriented} generalization~\cite{frank1994multiscaletree}. While the requirements for \emph{what} should be the produced are the same for the two approaches, vis-a-vis map requirements and objectives, these two approaches differ in \emph{when} the results are produced. The distinctions as well as the pros and cons of each approach is discussed below.
+
+\minisec{Real-time approach}
+Real-time generalization adapts geographical information at the time when a user request for information is recieved~\cite{bereuter2013real,van1995gap}. At first, real-time selection seems like an ideal approach for two reasons. 
 
 First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update of data, such as a transaction, a selection algorithm always computes solutions based on the most recent and consistent state of the data.
 
-Second, user preferences can be considered part of the input. Therefore, selection of geographic information can be tailored to individual users needs, for example by letting a recommendation algorithm assign relevance measures to objects.
+Second, user preferences and context of usage can be considered as part of the input to selection. Therefore, selection of geographic information can be tailored to individual users needs, for example by letting a recommendation algorithm play a role in assigment of object importance.
 
-However, the complexity of any selection algorithm is certainly greater than $O(1)$, which is the complexity of retrieving pre-selected data from a key-value store. To speed up on-the-fly selection, the data will be indexed. While indexing structures, such as quad-trees and GAP-trees, allow polynomial-time evaluation of selection, this is true only of one-shot queries. To interface with large audiences, a mapping system must also be scalable. Unfortunately, on-the-fly selection is hard to scale in a cost-efficient way. In contrast, retrieval of pre-selected data from a key-value store is easy and cheap to scale to any number of concurrent users if certain trade-offs can be accepted (bounded staleness of information).
+Typically, an indexing structure, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}, is the factor that facilitates fast real-time generalization. However, there are several issues with real-time generalization in a Web context. While indexing structures enable fast generalization, the complexity of any selection algorithm is high compared to $O(1)$, which is the complexity of retrieving pre-selected data from a key-value store~\cite{pilchin2007dynamo}. Furthermore, the scalability of real-time generalization algorithms is usually only considered for increases in data volume, while it is ignore for increases in concurrency level. This is critical, because in a Web context there is typically a high and variable level of concurrency, which implies that the generalization method must be scalable in the number of concurrent queries. Unfortunately, there is a lack of studies into real-time generalization approaches that efficiently scale in the number of concurrent requests. The na{\"i}ve approach is to replicate the entire index which is costly.
 
-\minisec{Batch-oriented solutions}
-Batch-oriented selection of geographic information compute materialized views over the original state of the data. Subsequently, the selected data can be partioned and replicated on a content delivery network (CDN), which allows immense scalability in the distribution phase of the web mapping pipeline. Of course, this scalability comes at a price, which is primarily composed of increased storage cost, bounded staleness of data, and inability to respond flexibly to user preferences during selection. However, batch-oriented solutions offer a better trade-off than on-the-fly solutions when maps are distributed to large audiences. 
+
+\minisec{Batch-oriented approach}
+Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards}. Subsequently, the selected data can be partioned and replicated on a content delivery network (CDN), which allows immense scalability in the distribution phase of the web mapping pipeline. Of course, this scalability comes at a price, which is primarily composed of increased storage cost, bounded staleness of data, and inability to respond flexibly to user preferences during selection. However, batch-oriented solutions offer a better trade-off than on-the-fly solutions when maps are distributed to large audiences. 
 
 First, while batch-oriented solutions need more storage, disk space have become the cheapest resource to scale in cloud infrastructures. Furthermore, entirely in-memory storage architectures, such as RAMCloud~\cite{ousterhout2011ramcloud}, have become budget feasible and highly resilient to failure, which is a trend that is bound to strengthen over time.
 
