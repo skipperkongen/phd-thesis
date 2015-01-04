@@ -353,14 +353,7 @@ Second, it is shown that a restricted and frequently occuring case of holistic s
 
 Third, it is shown the unified models subsumes a variety of geographic as well as non-geographic use cases for holistic selection. For example, selection for time lines and clustering outputs is subsumed by the model.
 
-Further reading:
-\vspace{-2ex}
-\begin{itemize}
-\item The first and second contributions are described in Chapter~\ref{chapter:cvl}.
-\item The third contribution is described in Chapter~\ref{chapter:glossy}.
-\item A previous version of Chapter~\ref{chapter:cvl} has been published in ICDE 2014~\cite{kefaloukos2014declarative}.
-\end{itemize}
-
+The first and second contributions are described in Chapter~\ref{chapter:cvl}. The third contribution is described in Chapter~\ref{chapter:glossy}.
 
 \subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
@@ -373,13 +366,7 @@ Second, this thesis contributes the \emph{semantics} of Glossy SQL, which are ex
 
 Third, it is shown how to express both geographic and non-geographic use cases for holistic selection in Glossy SQL using highly concise statements. The longest Glossy SQL query in this thesis, which solves a real-world use case, is just 14 lines of code!
 
-Further reading:
-
-\vspace{-2ex}
-\begin{itemize}
-\item The details of this part are described in Chapter~\ref{chapter:glossy}
-\item A publication is currently in submission.
-\end{itemize}
+The details of this part are described in Chapter~\ref{chapter:glossy}.
 
 \subsection{Glossy Compiler}
 \label{sec:introduction:contributions:glossy}
@@ -391,13 +378,7 @@ First, this thesis contributes an implementation of the Glossy compiler, which t
 
 Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The results show that the Glossy selection system is scalable and performant.
 
-Further reading:
-\vspace{-2ex}
-\begin{itemize}
-\item The details about this part are described in Chapter~\ref{chapter:glossy}.
-\item A prototype of the Glossy language and compiler is presented and experimentally evaluated in Chapter~\ref{chapter:cvl} (CVL language and compiler).
-\item A publication is currently in submission.
-\end{itemize}
+The details about this part are described in Chapter~\ref{chapter:glossy}, while a prototype of the Glossy language and compiler is presented and experimentally evaluated in Chapter~\ref{chapter:cvl} (CVL language and compiler).
 
 
 \subsection{Tileheat: Prediction Algorithm}
@@ -409,26 +390,25 @@ A log of requests is typically recorded by a map provider. The map provider stud
 
 Currently, there is a lack of log-based methods for optimizing a preemptive tile materialization process, both temporally and spatially. On the one hand, such a method help us to select a hot tiles to materialize. This could save a lot of CPU-cycles and I/O. On the other hand, such a method could tell us when to materialize the hot tiles. This could improve the average latency of map requests. 
 
+The details about this part are described in Chapter~\ref{chapter:tileheat}.
 
-Further reading:
-\vspace{-2ex}
-\begin{itemize}
-\item The details about this part are described in Chapter~\ref{chapter:tileheat}.
-\item A previous version of this chapter has been published in SIGSPATIAL 2012~\cite{kefaloukos2012tileheat}.
-\end{itemize}
-
-\subsection{Data and Software}
+\subsection{Software and Publications}
 % DONE
 
-Software for the two published contributions of this thesis are made available as open source software on Github. A paper that details the Glossy language and compiler is currently in submission; software for Glossy will be made available after publication.
+The software contributions of this thesis are made available as open source software on Github:
 
-Repositories:
-
-\vspace{-2ex}
 \begin{itemize}
-\item Glossy compiler: \emph{pending publication}
+\item Glossy compiler (not yet available since a corresponding publication is in submission): \url{https://github.com/skipperkongen/glossy}
 \item CVL compiler: \url{https://github.com/skipperkongen/declarative-cartography}
 \item Tileheat: \url{https://github.com/skipperkongen/tileheat}
+\end{itemize}
+
+Previous versions of some of the chapters in this thesis have been published of submitted to international conferences:
+
+\begin{itemize}
+\item \textbf{Chapter 3}: \emph{Declarative Cartography: In-database Map Generalization of Spatial Datasets}. Kefaloukos, Pimin K. and Salles, Marcos V.  and Zachariasen, Martin. In ICDE '14.
+\item \textbf{Chapter 4}: In submission
+\item \textbf{Chapter 5}: \emph{TileHeat: A Framework for Tile Selection}. Kefaloukos, Pimin K. and Salles, Marcos V.  and Zachariasen, Martin. In ACM SIGSPATIAL '12.
 \end{itemize}
 
 \section{Structure}
@@ -439,7 +419,7 @@ Repositories:
 The remainder of this thesis is organized as follows. 
 \begin{itemize}
 \item Chapter~\ref{chapter:related:work} covers the related work.
-\item Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} describe the contributions this thesis. 
+\item Chapters~\ref{chapter:cvl} (unified selection model), \ref{chapter:glossy} (Glossy SQL and compiler), and \ref{chapter:tileheat} (TileHeat prediction algorithm) describe the contributions this thesis. 
 \item Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 \end{itemize}
 
@@ -454,66 +434,7 @@ The remainder of this thesis is organized as follows.
 \chapter{Related Work}
 \label{chapter:related:work}
 
-\section{Map Generalization Process Models}
-
-\subsection{Constraint-based Modelling}
-
- which is a type of constraint-based modeling of the map generalization process. More approaches in 1.3.3, 1.3.4, 1.3.5, 1.3.6 of \cite{harrie2007modelling}.
-
-\minisec{Combinatorial Optimization} In combinatorial optimization a solution that maximizes/minimizes a real-valued objective function is found in a discrete search space, which is confined by a set of constraints. For selection, the search space consists of any solution that can be achieved by deleting a subset of an input set of geographic information objects. If a solution violates a constraint, then the solution is deemed infeasible. The objective function takes as input a (feasible) solution and outputs a real value which represents the utility of the solution. The objective is either to maximize or minimize the objective function.
-
-This thesis proposes a combinatorial optimization approach to selection of geographic information on multi-scale maps.
-
-This thesis categorizes constraints in map generalization as follows:
-
-\begin{itemize}
-
-\item \textbf{Unary constraints}, which establish conditions that must be met be individual map objects; a map object that violates a unary conditions is in conflict and may by definition not appear in its current form on a map. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. Furthermore, when displaying detailed multi-lines and polygons on a computer display, consequtive vertices may be indistinguishable to the human eye. Such objects should be \emph{simplified} to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage, speeds up processing, cuts down on I/O, for example when geographic data is transmitted over the Internet.
-
-\item \textbf{Binary constraints}, which set up conditions that must be satisifed by all qualifying pairs of objects. Two objects that violate a binary constraint are \emph{in conflict} and may by definition not appear in their current form on a map. For example, two objects that overlap or are very close to each other may be defined to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}, which is a geometric binary constraint. However, not all binary constraints are geometric. For example, a constraint that limits the number of bulls per cow herd to one, is an example of a semantic binary constraints. Here, two bulls in the same cow herd would be in conflict with each other, no matter their geometric relationship to each other.
-
-\item \textbf{Space constraints}, which state conditions that must be satisfied by spaces in the map, for example for each tile in a tiled map. One of the earliest impirical observations in geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. This principle is termed the \emph{Radical Law} and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should be abstracted by selection or aggregation in order to reduce the density (see Figure~\ref{fig:introduction:selection:constraints}).
-
-\item \textbf{Cross-scale constraints}, which apply to maps that are zoomed in and out. Cross-scale constraints state limitations on how logical map content may transition over a set of ordered map scales. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in, which is termed the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map. In map generalization process models these two approaches are termed the \emph{ladder} and \emph{star} approach respectively~\cite{foerster2010challenges}.
-
-\item \textbf{Topological constraints}, which express invariants over the relationships between geographic information objects, which must not change during an abstraction process~\cite{egenhofer1991categorizing,randell1992spatial}. For example, the relative positions of distinct objects must be maintained; the primary logic of connectivity in a road network must be maintained~\cite{schmid2013opensciencemap}; holes may not appear in surfaces where no holes were before~\cite{van1995gap}; river networks must be pruned from the leaves~\cite{shreve1966statistical}; etc.
-
-\end{itemize}
-
-However, this is not the only way to categorize constraints. More in 1.3.2 of \cite{harrie2007modelling}.
-
-\subsection{Map Generalization Operators}
-
-This thesis studies a selection framework that supports the following operators:
-
-\begin{itemize}
-\item \textbf{Selection}
-\item \textbf{Simplification}
-\item \textbf{Exaggeration}
-\item \textbf{Collapse}
-\end{itemize}
-
-However, these are not the only operators that have been proposed in the map generalization literature. More in 4.2 of \cite{weibel1999generalising}.
-
-\subsection{Process Modelling}
-
-This thesis models the generalization process, specifically the selection process, as a global optimization problem. However, this is not the only way to model the generalization process. 
-
-\subsection{Real-time versus Batch-oriented}
-
-This thesis proposes a batch-oriented approach to map generalization. However, on-the-fly methods have also been proposed. Bereuter and Van Oosterom.
-
-
-
-\section{Must Consider}
-Map Generalization: Nutanong, QuadTree, Fusion Tables
-
-Spatial Analysis: HadoopGIS, SpatialHadoop, Pigeon, Greenplum, IBM Netezza, Teradata, Oracle Spatial, MS SQL Server Spatial, and PostGIS.
-
-
-
-
-
+TODO
 
 
 \chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
@@ -1107,11 +1028,11 @@ Tourism (500K) & Proximity & LPGA & 2h 18m & 1.24 \\
 
 \begin{figure*}[tb]
   \begin{minipage}{0.49\linewidth}
-    \centerline{\includegraphics[width=0.75\linewidth]{./figs-cvl/scal_pnt_30m_synthetic.pdf}}
+    \centerline{\includegraphics[width=1.0\linewidth]{./figs-cvl/scal_pnt_30m_synthetic.pdf}}
     \centerline{(a) Scalability for point data}
   \end{minipage} \hfill
   \begin{minipage}{0.49\linewidth}
-    \centerline{\includegraphics[width=0.75\linewidth]{./figs-cvl/scal_lin_30k_uswaterway.pdf}}
+    \centerline{\includegraphics[width=1.0\linewidth]{./figs-cvl/scal_lin_30k_uswaterway.pdf}}
     \centerline{(b) Scalability for complex shape data}
   \end{minipage} \hfill
 %  \vspace{-0ex}
@@ -1174,15 +1095,15 @@ Zones (30K) & Proximity & LPGA & --- & --- \\
 
 \begin{figure*}[tb]
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_A.pdf}}
+    \centerline{\includegraphics[width=1\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_A.pdf}}
     \centerline{(a) LPGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_heuristic_A.pdf}}
+    \centerline{\includegraphics[width=1\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_heuristic_A.pdf}}
     \centerline{(b) SGA + Visibility}
   \end{minipage} \hfill
   \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_B.pdf}}
+    \centerline{\includegraphics[width=1\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
 %  \vspace{-1ex}
@@ -1236,7 +1157,7 @@ The proposed approach integrates seamlessly with existing database technology, a
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Glossy: Global Selections for Data Visualizations}
+\chapter{Glossy: Language and Compiler}
 \label{chapter:glossy}
 \lstset{
   language=sql
@@ -1246,39 +1167,47 @@ The proposed approach integrates seamlessly with existing database technology, a
 \section{Introduction}
 \label{sec:glossy:introduction}
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.99\linewidth]{figs-glossy/airports.png}
+\caption{A visualization of airports in a geographic map requires the selection of the airports with the most traffic out of a larger set of airports. The visualization should display more airports as we zoom into geographic regions for more detail.}
+\label{fig:example:airports}
+\end{center}
+\end{figure}
+
 We are faced with unprecedented data volumes in organizations across a wide variety of sectors~\cite{manyika2011bigdata}. In this context, data visualization of large and complex data is attracting renewed attention in data management and visual analytics~\cite{fekete2012dmvis,morton2014visclean,wu2014case}. Computational journalism~\cite{cohen2011journalism}, data science~\cite{kandel2012interviewstudy}, and citizen activism~\cite{viegas2009manyeyes} are just a few examples of the new types of applications that require visualizations to help humans make sense of large datasets. To support these applications, it is crucial to abstract data in a way that reduces its volume, given that the amount of pixels in a display is often insufficient to convey detailed information about a large dataset.
+
+\newpage
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.99\linewidth]{figs-glossy/rappers_viz.pdf}
+\caption{A visualization of rappers according to their vocabulary requires selecting the most popular rappers for each word bracket out of a much larger set of artists. The visualization should display more rappers as we zoom into word brackets for more detail. Note that even though the visualization organizes rappers in a word line (1-D), it uses the popularity dimension of the artist to both aid selection and to shade the surviving bubbles.}
+\label{fig:example:rappers}
+\end{center}
+\end{figure}
+
 
 Two of the most intuitive data reduction operations are to aggregate or select data. Data aggregation provides insights into the characteristics of datasets as a whole; however, this overview comes at the price of potentially losing valuable detail. Data selection, on the other hand, allows users to examine particular examples to get a more nuanced understanding of the data; however, this detail comes at the price of potentially being overwhelming. Recent studies indicate that data scientists find it difficult to express information needs for visualizations in existing query and programming languages, creating a substantial gap to be closed in current technology~\cite{kandel2012interviewstudy}.
  
-\begin{figure*}[!t]
-     \begin{minipage}{0.62\linewidth}
-        \centerline{\includegraphics[width=0.99\linewidth]{figs-glossy/rappers_viz.pdf}}
-        \vspace{-1ex}
-        \caption{A visualization of rappers according to their vocabulary requires selecting the most popular rappers for each word bracket out of a much larger set of artists. The visualization should display more rappers as we zoom into word brackets for more detail. Note that even though the visualization organizes rappers in a word line (1-D), it uses the popularity dimension of the artist to both aid selection and to shade the surviving bubbles.}\label{fig:example:rappers}
-    \end{minipage} \hfill
-       \begin{minipage}{0.36\linewidth}
-        \centerline{\includegraphics[width=0.99\linewidth]{figs-glossy/parallel_coordinates.pdf}}
-        \vspace{-1ex}
-        \caption{A visualization of k-means clusters with parallel coordinates requires us to limit to $n$ the number of lines that can cut through each dimension line segment for any vertical unit of space, at a scale-dependent resolution. Line widths are set by distances to cluster centers.} \label{fig:example:clusters}
-    \end{minipage} \hfill
-\end{figure*}
-\begin{figure*}[!t]
-     \begin{minipage}{0.62\linewidth}
-        \centerline{\includegraphics[width=0.99\linewidth]{figs-glossy/airports.png}}
-        \vspace{-1ex}
-        \caption{A visualization of airports in a geographic map requires the selection of the airports with the most traffic out of a larger set of airports. The visualization should display more airports as we zoom into geographic regions for more detail.}\label{fig:example:airports}
-    \end{minipage} \hfill
-       \begin{minipage}{0.36\linewidth}
-        \centerline{\includegraphics[width=0.96\linewidth]{figs-glossy/placenames_viz.png}}
-        \vspace{-1ex}
-        \caption{A visualization with placenames in a geographic map requires displaying or omitting labels according to scale.} \label{fig:example:placenames}
-    \end{minipage} \hfill
-\end{figure*}
- 
 Despite the wealth of existing work on data visualization, most systems have either focused on abstracting data by aggregation~\cite{blais2014generating,lins2013nanocubes,stolte2003multiscale,vartak2014seedb}, or on devising techniques to squeeze a whole dataset into the available pixels~\cite{keim1995visdb,kruskal1978multidimensional}. The problem of creating visualizations that explicitly show representative items from a large underlying dataset has received far less attention. Nevertheless, the importance of this problem is significant. Figures~\ref{fig:example:rappers} to~\ref{fig:example:placenames} illustrate a few visualizations that crucially depend on data selection. These visualizations vary substantially in dimensionality, going from a single axis in the case of Figure~\ref{fig:example:rappers} to a parallel coordinates plot of multiple dimensions in Figure~\ref{fig:example:clusters} to two-dimensional geographic maps in Figures~\ref{fig:example:airports} and~\ref{fig:example:placenames}. Furthermore, these visualizations employ multiple scales to allow users to zoom into the data and see more records from the underlying dataset in an interactive fashion. Moreover, these visualizations are becoming ever more necessary for human understanding as we move towards an age of large datasets and data enthusiasts~\cite{hanrahan2012enthusiast,markl2014breaking}. Even though previous work has targeted particular examples of such visualizations, e.g., for spatiotemporal data~\cite{jugel2014m4,kefaloukos2014declarative,sarma2012fusiontables}, a generic solution to multi-scale data selection has remained elusive. Such a solution should ideally be able to globally sample records, while respecting user-defined constraints and notions of record importance, and at the same time elegantly reuse database technology to operate on large datasets.   
 
+\newpage
 
-In this paper, we introduce Glossy (GLObal Selection SYstem), a system that computes global selections over records stored in an RDBMS. In short, Glossy's novelty and utility rests on three pillars: (a) Glossy SQL, an extension of SQL that allows visualization developers to express global selection in a concise, yet familiar, query language, (b) an efficient translation of Glossy SQL into pure SQL, which allows Glossy to harness the power of mature query optimizers and indexed tables at runtime, (c) support for global selection over any type of tabular data, not just data within a certain domain (e.g., temporal or spatial data). With Glossy, multi-scale global selections of data for all the visualizations in Figures~\ref{fig:example:rappers}--\ref{fig:example:placenames} can be achieved concisely in a common declarative framework.  
+\begin{figure*}[!t]
+  \begin{minipage}{0.49\linewidth}
+    \centerline{\includegraphics[width=0.973\linewidth]{figs-glossy/parallel_coordinates.pdf}}
+    \caption{A visualization of k-means clusters with parallel coordinates requires us to limit the number of lines that can cut through each dimension line segment for any vertical unit of space, at a scale-dependent resolution. Line widths are set by distances to cluster centers.} \label{fig:example:clusters}
+  \end{minipage} \hfill
+  \begin{minipage}{0.49\linewidth}
+    \centerline{\includegraphics[width=0.99\linewidth]{figs-glossy/placenames_viz.png}}
+    \caption{A visualization with place names in a geographic map requires displaying or omitting labels according to scale. When zooming in, global place names should be replaced by local place names. For example, city names should replace country names.} \label{fig:example:placenames}
+  \end{minipage}
+\end{figure*}
+
+
+
+In this paper, we introduce Glossy (GLObal Selection SYstem), a system that computes global selections over records stored in an RDBMS. In short, Glossy's novelty and utility rests on three pillars: (a) Glossy SQL, an extension of SQL that allows visualization developers to express global selection in a concise, yet familiar, query language, (b) an efficient translation of Glossy SQL into relational algebra, which allows Glossy to harness the power of mature query optimizers and indexed tables at runtime, (c) support for global selection over any type of tabular data, not just data within a certain domain (e.g., temporal or spatial data). With Glossy, multi-scale global selections of data for all the visualizations in Figures~\ref{fig:example:rappers}--\ref{fig:example:placenames} can be achieved concisely in a common declarative framework.  
 
 \subsection{Our Contributions}
 
@@ -1436,11 +1365,9 @@ locus_constraint ::=
   LIMIT {integer_expression} 
     [SCALE {LINEAR | LOG}] 
 \end{lstlisting}
-\vspace*{-2ex}
 \caption{Syntax of Glossy SQL extension.}
 \label{fig:glossy:sql:syntax}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 Figure~\ref{fig:glossy:sql:syntax} presents the syntax of Glossy SQL. The main features exposed through this syntax are discussed below. 
@@ -1457,10 +1384,8 @@ Another important input to global selection is the specification of constraints 
 \begin{figure}[t]
 \centering
 \scalebox{0.60}{\includegraphics{figs-glossy/constraints.pdf}}
-\vspace{-2ex}
 \caption{Schematic representation of how records (solid circles) are organized into conflicts (empty circles) by different types of constraints: (a) A pair constraint, (b) A simple locus constraint, and (c) A complex locus constraint.} 
 \label{fig:constraints:schematic}
-\vspace{-2ex}
 \end{figure}
 
 A locus constraint binds together sets of records, where each set is informally the result of mapping the input records to a common identifier termed a locus. The set of loci can be thought of as a user-specified discretization of a space. For example, a density constraint is a locus constraint in which each locus corresponds to a unit area at a given scale. While a simple locus constraint uses a function that maps each record to exactly one locus, a complex locus constraint maps each record to a set of loci, i.e., the mapping function is a table function. The conflict structure of simple and complex locus constraints is illustrated in Figures~\ref{fig:constraints:schematic}(b) and~\ref{fig:constraints:schematic}(c).
@@ -1503,11 +1428,9 @@ SUBJECT TO
    FILTER BY name <> 'Digital Underground'
    LIMIT 20 SCALE LINEAR
 \end{lstlisting}
-\vspace*{-2ex}
 \caption{Selecting rappers on a line in Glossy SQL}
 \label{fig:glossy:sql:rappers}
 \end{center}
-\vspace*{-5ex}
 \end{figure}
 
 \minisec{POI selected by star rating}
@@ -1540,11 +1463,9 @@ AND
        DistancePixels(x.coord, y.coord, x.zoom) < 10
    DROP ONE
 \end{lstlisting}
-\vspace*{-2ex}
 \caption{Selecting POI on a map in Glossy SQL}
 \label{fig:glossy:sql:poi}
 \end{center}
-\vspace*{-5ex}
 \end{figure}
 
 \minisec{Placenames selected by relevance}
@@ -1574,20 +1495,9 @@ SUBJECT TO
    MAP BY TileCenters(polygon, zoom)
    LIMIT 10
 \end{lstlisting}
-\vspace*{-2ex}
 \caption{Selecting placenames on a map in Glossy SQL}
 \label{fig:glossy:sql:placenames}
 \end{center}
-\vspace*{-4ex}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\scalebox{0.40}{\includegraphics{figs-glossy/tourism_viz.png}}
-\vspace{-1ex}
-\caption{Combined visualization of POI and placenames.} 
-\label{fig:tourism:viz}
-\vspace{-2ex}
 \end{figure}
 
 \minisec{Additional Examples}
@@ -1606,6 +1516,14 @@ For brevity, we focus on the examples of Figures~\ref{fig:glossy:sql:rappers} to
 
 % We are presenting Glossy as an extension of SQL. Important that 
 % the semantics of e.g. SELECT, WHERE, FROM, etc remain the same as in SQL.
+
+\begin{figure}[t]
+\centering
+\scalebox{0.40}{\includegraphics{figs-glossy/tourism_viz.png}}
+\caption{Combined visualization of POI and placenames.} 
+\label{fig:tourism:viz}
+\end{figure}
+
 
 Armed with the intuitive understanding developed above, we formalize the semantics of Glossy SQL in this section. The semantics for a single scale is specified in terms of a global selection operator $\Sigma$ in Section~\ref{sec:semantics:global:selection}. Based on this specification, Section~\ref{sec:semantics:multiscale} defines the semantics of multi-scale global selection.
 
