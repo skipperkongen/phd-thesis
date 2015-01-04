@@ -272,7 +272,7 @@ While the concrete formulation of constraints and objectives depends on the map 
 \begin{itemize}
 \item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be quantified in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge.
 
-\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency, which is quantified as the number of milliseconds that a request may take to complete. Studies have shown that user satisfaction is highly sensitive to variation in latency~\cite{hamilton2009costoflatency}.
+\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency, which is quantified as the number of milliseconds that a request may take to complete. Studies have shown that user satisfaction is highly sensitive to high -- as well as variation in -- latency~\cite{hamilton2009costoflatency}.
 
 \item \textbf{Scalability} is the property that performance (i.e. latency) can be retained for increasing data volumes and/or number of concurrent users. In the mapping pipeline that was studied for this thesis, the latency roughly doubles in the middle of the day when the number of concurrent requests is highest.
 
@@ -280,12 +280,35 @@ While the concrete formulation of constraints and objectives depends on the map 
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
+\subsection{On-the-fly vs. Batch-oriented Selection}
+\minisec{On-the-fly selection}
+At first, on-the-fly selection of geographic information objects for maps seems like an ideal approach for a number of reasons. 
+
+First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update of data, such as a transaction, a selection algorithm always computes solutions based on the most recent and consistent state of the data.
+
+Second, user preferences can be considered part of the input. Therefore, selection of geographic information can be tailored to individual users needs, for example by letting a recommendation algorithm assign relevance measures to objects.
+
+However, the complexity of any selection algorithm is certainly greater than $O(1)$, which is the complexity of retrieving pre-selected data from a key-value store. To speed up on-the-fly selection, the data will be indexed. While indexing structures, such as quad-trees and GAP-trees, allow polynomial-time evaluation of selection, this is true only of one-shot queries. To interface with large audiences, a mapping system must also be scalable. Unfortunately, on-the-fly selection is hard to scale in a cost-efficient way. In contrast, retrieval of pre-selected data from a key-value store is easy and cheap to scale to any number of concurrent users if certain trade-offs can be accepted (bounded staleness of information).
+
+\minisec{Batch-oriented solutions}
+Batch-oriented selection of geographic information compute materialized views over the original state of the data. Subsequently, the selected data can be partioned and replicated on a content delivery network (CDN), which allows immense scalability in the distribution phase of the web mapping pipeline. Of course, this scalability comes at a price, which is primarily composed of increased storage cost, bounded staleness of data, and inability to respond flexibly to user preferences during selection. However, batch-oriented solutions offer a better trade-off than on-the-fly solutions when maps are distributed to large audiences. 
+
+First, while batch-oriented solutions need more storage, disk space have become the cheapest resource to scale in cloud infrastructures. Furthermore, in-memory storage architectures, such as RAMCloud~\cite{ousterhout2011ramcloud}, have become feasible and highly resilient to failure.
+
+
+
+but indexed for fast algorithmic transformation. ince it can respond individually to user requests for maps. 
+
+applies a selection algorithm in response to a user's map request. The advantage is that 
+
+
+
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
 
-Given the requirements for an online wepping mapping pipeline, which were outlined in Section~\ref{sec:introduction:web:mapping:pipelines}, this section lists four important gaps between state-of-the-art mapping systems and a hypothetical mapping system that satisfies all the requirements.
+Given the requirements for an online wepping mapping pipeline, which were outlined in Section~\ref{sec:introduction:web:mapping:pipelines}, this section lists four important gaps between state-of-the-art mapping systems and a hypothetical mapping system that satisfies all the requirements. Specifically, a selection-based mapping system for large web-audiences is considered. Since on-the-fly selection is expensive to scale to large concurrent audiences, a batch-oriented approach is considered as the most viable option.
 
-This thesis investigates and addresses four gaps in state-of-the-art web mapping systems:
+This thesis studies four gaps in state-of-the-art batch-oriented, selection-based web mapping systems, namely:
 
 \begin{itemize}
 
@@ -356,11 +379,11 @@ Further reading:
 \label{sec:introduction:contributions:glossy}
 % : : Implementation and Evaluation
 
-Section~\ref{sec:introduction:problem:statement} made the case for in-database processing of multi-scale selection. The Glossy compiler translates queries in Glossy SQL into relational algebra, which can be processed on top of relational databases.
+Section~\ref{sec:introduction:problem:statement} made the case for in-database processing of multi-scale selection. The Glossy compiler translates queries in Glossy SQL into relational algebra, which can be processed on top of spatial relational databases management systems (SDBMS).
 
-First, this thesis contributes an optimized implementation of the Glossy compiler, which targets the commercial PostgreSQL RDBMS~\cite{PostgreSQL}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}.
+First, this thesis contributes an optimized implementation of the Glossy compiler, which targets the commercial PostgreSQL SDBMS~\cite{postgresql,postgis}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}.
 
-Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range of real-life datasets. The results show that the Glossy selection system is scalable for a wide range of evaluated test cases, geographic as well as non-geographic.
+Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases using real-life datasets. The results show that the Glossy selection system is scalable and performant for the evaluated test cases.
 
 Further reading:
 \vspace{-2ex}
@@ -371,7 +394,7 @@ Further reading:
 \end{itemize}
 
 
-\subsection{Tileheat: Geographic Request Prediction}
+\subsection{Tileheat: Prediction Algorithm}
 \label{sec:introduction:contributions:tileheat}
 
 Studies have shown that requests for maps are skewed in several interesting and exploitable ways. First, studies have shown that there is a strong spatial skew in the areas of a map that are most often requested~\cite{fisher07hotmap}. A preliminary study found that this is true of the map provider studied in this PhD project~\cite{gst2014digitalmapsupply} (see Figure~\ref{foo}). In fact, most tiles are never requested. Second, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal skew in the number of map requests that have to be processed per hour of the day (see Figure~\ref{foo}). Generally, this is probably true of other map providers as well. Third, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal correlation between the amount of concurrent map tile (rendering) requests and the average latency it takes to render a map tile (see Figure~\ref{foo}). This is fairly intuitive and is probably true of other map providers as well. The third point clearly demonstrates the drawback of lazy tile rendering. In summary, (a) users only request a tiny fraction of the map, (b) users predominantly requests maps during certain parts of the day, and (c) when many users are simultaneously requesting unrendered map tiles the average latency goes up.
@@ -407,7 +430,12 @@ Repositories:
 % Not good enough. Tim uses bullets that reference the contributions, Marcos used a single sparagraphs to similar effect
 
 
-The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state:of:the:art} covers state-of-the-art map generalisation and visualization systems for the web abstraction, including related but non-spatial technologies such as key-value stores. Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} cover the theoretical and experimental details of the main contributions this thesis. Finally, chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
+The remainder of this thesis is organized as follows. 
+\begin{itemize}
+\item Chapter~\ref{chapter:related:work} covers the related work.
+\item Chapters~\ref{chapter:cvl}, ~\ref{chapter:glossy}, and ~\ref{chapter:tileheat} describe the contributions this thesis. 
+\item Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
+\end{itemize}
 
 %Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. 
 
@@ -419,6 +447,57 @@ The remainder of this thesis is organized as follows. Chapter~\ref{chapter:state
 
 \chapter{Related Work}
 \label{chapter:related:work}
+
+\section{Map Generalization Process Models}
+
+\subsection{Constraint-based Modelling}
+
+ which is a type of constraint-based modeling of the map generalization process. More approaches in 1.3.3, 1.3.4, 1.3.5, 1.3.6 of \cite{harrie2007modelling}.
+
+\minisec{Combinatorial Optimization} In combinatorial optimization a solution that maximizes/minimizes a real-valued objective function is found in a discrete search space, which is confined by a set of constraints. For selection, the search space consists of any solution that can be achieved by deleting a subset of an input set of geographic information objects. If a solution violates a constraint, then the solution is deemed infeasible. The objective function takes as input a (feasible) solution and outputs a real value which represents the utility of the solution. The objective is either to maximize or minimize the objective function.
+
+This thesis proposes a combinatorial optimization approach to selection of geographic information on multi-scale maps.
+
+This thesis categorizes constraints in map generalization as follows:
+
+\begin{itemize}
+
+\item \textbf{Unary constraints}, which establish conditions that must be met be individual map objects; a map object that violates a unary conditions is in conflict and may by definition not appear in its current form on a map. For example, impirical studies have shown that building symbols should be no smaller than 0.35 mm and roads should be no narrower than 0.25 mm. These limits are known as \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. Furthermore, when displaying detailed multi-lines and polygons on a computer display, consequtive vertices may be indistinguishable to the human eye. Such objects should be \emph{simplified} to the coarsest level of detail that is indistinguishable from all finer levels of detail. This saves storage, speeds up processing, cuts down on I/O, for example when geographic data is transmitted over the Internet.
+
+\item \textbf{Binary constraints}, which set up conditions that must be satisifed by all qualifying pairs of objects. Two objects that violate a binary constraint are \emph{in conflict} and may by definition not appear in their current form on a map. For example, two objects that overlap or are very close to each other may be defined to be in conflict~\cite{weibel1997generalization, nutanong2012multiresolution}, which is a geometric binary constraint. However, not all binary constraints are geometric. For example, a constraint that limits the number of bulls per cow herd to one, is an example of a semantic binary constraints. Here, two bulls in the same cow herd would be in conflict with each other, no matter their geometric relationship to each other.
+
+\item \textbf{Space constraints}, which state conditions that must be satisfied by spaces in the map, for example for each tile in a tiled map. One of the earliest impirical observations in geographic maps is that information density on published maps tends to be constant and independent of the map scale~\cite{topfer1966principles}. This principle is termed the \emph{Radical Law} and is also known as the \emph{Principle of Constant Information Density}~\cite{woodruff1998constant}. When information density on parts of the map reaches some threshold, the information should be abstracted by selection or aggregation in order to reduce the density (see Figure~\ref{fig:introduction:selection:constraints}).
+
+\item \textbf{Cross-scale constraints}, which apply to maps that are zoomed in and out. Cross-scale constraints state limitations on how logical map content may transition over a set of ordered map scales. For some map objects, for example point of interest (POI) maps, it is more logical if POI do not disappear when zooming in, which is termed the Zoom-Consistency constraint~\cite{sarma2012fusiontables}. For other map objects, most notably place names, it is entirely appropriate that objects disappear when zooming in. For example, global place names (e.g. ``Europe'') should probably be replaced by local place names (``Paris'', ``London'', or ``Copenhagen'') when zooming in on a map. In map generalization process models these two approaches are termed the \emph{ladder} and \emph{star} approach respectively~\cite{foerster2010challenges}.
+
+\item \textbf{Topological constraints}, which express invariants over the relationships between geographic information objects, which must not change during an abstraction process~\cite{egenhofer1991categorizing,randell1992spatial}. For example, the relative positions of distinct objects must be maintained; the primary logic of connectivity in a road network must be maintained~\cite{schmid2013opensciencemap}; holes may not appear in surfaces where no holes were before~\cite{van1995gap}; river networks must be pruned from the leaves~\cite{shreve1966statistical}; etc.
+
+\end{itemize}
+
+However, this is not the only way to categorize constraints. More in 1.3.2 of \cite{harrie2007modelling}.
+
+\subsection{Map Generalization Operators}
+
+This thesis studies a selection framework that supports the following operators:
+
+\begin{itemize}
+\item \textbf{Selection}
+\item \textbf{Simplification}
+\item \textbf{Exaggeration}
+\item \textbf{Collapse}
+\end{itemize}
+
+However, these are not the only operators that have been proposed in the map generalization literature. More in 4.2 of \cite{weibel1999generalising}.
+
+\subsection{Process Modelling}
+
+This thesis models the generalization process, specifically the selection process, as a global optimization problem. However, this is not the only way to model the generalization process. 
+
+\subsection{Real-time versus Batch-oriented}
+
+This thesis proposes a batch-oriented approach to map generalization. However, on-the-fly methods have also been proposed. Bereuter and Van Oosterom.
+
+
 
 \section{Must Consider}
 Map Generalization: Nutanong, QuadTree, Fusion Tables
