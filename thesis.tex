@@ -280,7 +280,7 @@ While the concrete formulation of constraints and objectives depends on the map 
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
-\section{Achitectures}
+\section{Overview of Approaches}
 \label{sec:introduction:architectures}
 
 Two important high-level architectures have been proposed for generalization of geographic information, namely \emph{real-time} (or on-the-fly) generalization~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented} generalization~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards}. While the requirements for \emph{what} should be the produced are the same for the two approaches, vis-a-vis map constraints and objectives, these two approaches differ in \emph{when} the results are produced. The distinctions as well as the pros and cons of each approach in a Web context are discussed below.
@@ -312,40 +312,40 @@ In conclusion, batch-oriented generalization is the only viable option for scala
 
 Given the requirements for a scalable web mapping pipeline (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
 
-Four gaps have been identified and will be addressed by this thesis:
+In the following sections describe four gaps that that will be addressed by this thesis.
 
-\begin{itemize}
-
+\subsection{Unified Selection Model}
+\label{sec:introduction:problem:statement:one}
 % MATHEMATICAL FOUNDATION
-\item \textbf{Unified Selection Model}.
 While selection of geographic information can be intuitively understood as filtering objects subject to some criteria, many different selection models have been proposed, such as space-relative~\cite{sarma2012fusiontables}, object-relative~\cite{nutanong2012multiresolution} and unary~\cite{rocha2011efficient} selection models. However, each of the proposed models express an incomplete aspect of the overall selection process. Clearly, there is a need for a unified model that combines all of the incomplete models in a complete model for selection. Specifically, what is needed is a model for holistic selection of geographic information for maps that supports: \emph{user-defined constraints} (unary, object-relative, space-relative, and cross-scale constraints), as well as \emph{user-defined objectives} (custom importance measures). Ideally, a well-studied and efficient algorithm solves all instances of the unified model, in the same fashion that sorting solves all instances of the top-k selection model.
 
+\subsection{Declarative Programming}
+\label{sec:introduction:problem:statement:two}
 % DECLARATIVE SPECIFICATION
-\item \textbf{Declarative Programming}. 
 Selection of geographic information for maps today is mostly polarized into two extremes: non-programmable selection~\cite{sarma2012fusiontables} and complex programmable selection~\cite{lamy1999application}. Neither extreme is optimal. While the former approach is probably suboptimal for most real cases since map designers are entirely excluded from the selection process, the latter approach is  very time-consuming and thus expensive to use even for experts. There is currently a lack of a simple, yet programmable approach for selection, which is at the same time expressive and productive for non-technical map designers. As a programming approach, it makes sense that map designers can focus on high-level constraints and objectives for a map in a declarative language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Unfortunately, there currently does not exist such a declarative language for holistic specification of selection for maps.
 
 % Scalable Processing
-\item \textbf{Scalable Processing}.
+\subsection{Scalable Processing}
+\label{sec:introduction:problem:statement:three}
 The Web today offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap,twitter2014twitter,zooniverse2014oldweather} datasets that can be visualized on maps, which are typically managed in a spatial relational database management systems (SDBMS)~\cite{wu2014case}. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online~\cite{endomondo2014endomondo,tinder2014tinder,twitter2014twitter} geographic information can be produced by anybody, anytime, and anywhere. Therefore, mapping systems must be able to scalably process multi-scale selection over large relational datasets (millions of records).
 
 One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language for spatial data analysis such as SQL~\cite{postgis} or Pig~\cite{eldawy2014pigeon}, which can be executed on highly optimized engines for large-scale data processing, such as parallel SDBMS~\cite{waas2009beyond} and spatial cluster computing systems~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}. A similar approach has been successfully tested for processing of XQuery~\cite{boncz2006monetdb} and Machine Learning~\cite{hellerstein12madlib}. Since data for maps is typically stored in a SDBMS, it makes sense to process the data where it is stored~\cite{grust2009ferry}. Despite the obvious opportunity, state-of-the-art mapping systems do not significantly leverage SDBMS or cluster computing to process holistic selection of geographic information for maps.
 
 % PREDICTIVE TILE MATERIALIZATION
-\item \textbf{Low-cost Tile Materialization}.
+\subsection{Low-cost Tile Materialization}
+\label{sec:introduction:problem:statement:four}
 Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{mbtile12}. There are two extreme approaches to rendering tiles. At one extreme, the entire tile set is preemptively materialized, for example on a MapReduce cluster~\cite{dean2009designs,dean04mapreduce}. However, this is wasteful since most tiles are never or rarely requested~\cite{fisher07hotmap}. At the other extreme, individual map tiles are lazily materialized or prefetched real-time~\cite{kang2001prefetching,kim2001prefetching,lee2001prefetching}. However, this results in high average latency since workloads are temporally skewed, which causes high concurrency levels during peak load~\cite{kefaloukos2012tileheat}. A better approach is to predict popular tiles well in advance, and materialize a hot set during a low-load period and serve it with low latency during high-load periods. This assumes that slightly stale geographic information is acceptable, which is typically the case~\cite{sarma2012fusiontables}. A hypothesis is that a request log can be used to predict future tile requests.
-
-\end{itemize}
 
 \section{Contributions of this Thesis}
 \label{sec:introduction:contributions}
 % NOTFINISHED
 
-Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}.
+Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}. These contributions address challenges in stage two and stage four of the pipeline that was described in Section~\ref{sec:introduction:web:mapping:pipelines}.
  
-\subsection{Set Multi-cover Formulation}
+\subsection{Set Multi-cover Equivalence}
 \label{sec:introduction:contributions:set:multicover:problem}
 
-Section~\ref{sec:introduction:problem:statement} made the case for a unified model for selection of geographic information.
+Section~\ref{sec:introduction:problem:statement:one} made the case for a unified model for selection of geographic information.
 
 First, this thesis contributes a unified model for selection of geographic information. The model is based on an equivalence between the problem of selecting geographic information for maps and the more abstract set multi-cover problem. Consequently, selection of geographic information can be completely expressed as a problem of edge-selection in a bi-partite graph. There is an downside and upside to this mathematical equivalence relation. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information.
 
@@ -358,7 +358,7 @@ The first and second contributions are described in Chapter~\ref{chapter:cvl}. T
 \subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
 % : Syntax and Semantics
-Section~\ref{sec:introduction:problem:statement} argued the need for a declarative language in which map designers can specify selection of geographic information for maps. This section introduces the declarative language contributions of this thesis: Glossy SQL
+Section~\ref{sec:introduction:problem:statement:two} argued the need for a declarative language in which map designers can specify selection of geographic information for maps. This section introduces the declarative language contributions of this thesis: Glossy SQL
 
 First, this thesis contributes the \emph{syntax} of Glossy SQL. The syntactic constructs of Glossy SQL let programmers declaratively express constraints (unary, binary, set and cross-scale constraints), object-weighting functions and scale definitions for multi-scale selection.
 
@@ -372,7 +372,7 @@ The details of this part are described in Chapter~\ref{chapter:glossy}.
 \label{sec:introduction:contributions:glossy}
 % : : Implementation and Evaluation
 
-Section~\ref{sec:introduction:problem:statement} made the case for scalable in-database processing of multi-scale selection. This section introduces the data processing contributions of this thesis: The Glossy compiler. The compiler translates statements in Glossy SQL into relational algebra queries, which can be scalably processed on top of a spatial relational databases management system (SDBMS).
+Section~\ref{sec:introduction:problem:statement:three} made the case for scalable in-database processing of multi-scale selection. This section introduces the data processing contributions of this thesis: The Glossy compiler. The compiler translates statements in Glossy SQL into relational algebra queries, which can be scalably processed on top of a spatial relational databases management system (SDBMS).
 
 First, this thesis contributes an implementation of the Glossy compiler, which targets the commercial PostgreSQL SDBMS~\cite{postgresql,postgis}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}.
 
@@ -381,8 +381,9 @@ Second, this thesis contributes an experimental evaluation of the Glossy SQL com
 The details about this part are described in Chapter~\ref{chapter:glossy}, while a prototype of the Glossy language and compiler is presented and experimentally evaluated in Chapter~\ref{chapter:cvl} (CVL language and compiler).
 
 
-\subsection{Tileheat: Prediction Algorithm}
+\subsection{Tile Request Prediction Algorithm}
 \label{sec:introduction:contributions:tileheat}
+Section~\ref{sec:introduction:problem:statement:four} explained the need for low-cost tile materialization. This section describes a log-based prediction algorithm for partial materialization of tiles, which tis a contribution of this thesis. 
 
 Studies have shown that requests for maps are skewed in several interesting and exploitable ways. First, studies have shown that there is a strong spatial skew in the areas of a map that are most often requested~\cite{fisher07hotmap}. A preliminary study found that this is true of the map provider studied in this PhD project~\cite{gst2014digitalmapsupply} (see Figure~\ref{foo}). In fact, most tiles are never requested. Second, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal skew in the number of map requests that have to be processed per hour of the day (see Figure~\ref{foo}). Generally, this is probably true of other map providers as well. Third, a preliminary study found that, for the map provider studied in this PhD project, there is a strong temporal correlation between the amount of concurrent map tile (rendering) requests and the average latency it takes to render a map tile (see Figure~\ref{foo}). This is fairly intuitive and is probably true of other map providers as well. The third point clearly demonstrates the drawback of lazy tile rendering. In summary, (a) users only request a tiny fraction of the map, (b) users predominantly requests maps during certain parts of the day, and (c) when many users are simultaneously requesting unrendered map tiles the average latency goes up.
 
