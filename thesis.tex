@@ -340,24 +340,24 @@ Rendering and serving of so-called map tiles is currently the typical way to imp
 \label{sec:introduction:contributions}
 % NOTFINISHED
 
-Instead of presenting a complete web mapping pipeline, this thesis addresses the gaps that were identified in Section~\ref{sec:introduction:problem:statement}.
+Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}.
  
 \subsection{Set Multi-cover Formulation}
 \label{sec:introduction:contributions:set:multicover:problem}
 
 Section~\ref{sec:introduction:problem:statement} made the case for a unified model for selection of geographic information.
 
-First, this thesis contributes a unified model for selection of geographic information. The model is based on an equivalence between the problem of selecting geographic information for maps and the more abstract set multi-cover problem. Consequently, selection of geographic information can be interpreted as selection of edges in a bi-partite graph. There is an downside and upside to this mathematical equivalence relation. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can be directly used for selection of geographic information.
+First, this thesis contributes a unified model for selection of geographic information. The model is based on an equivalence between the problem of selecting geographic information for maps and the more abstract set multi-cover problem. Consequently, selection of geographic information can be completely expressed as a problem of edge-selection in a bi-partite graph. There is an downside and upside to this mathematical equivalence relation. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information.
 
-Second, it is shown that a restricted case of the set multi-cover problem, which frequenty occurs in maps, can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. In this frequently occuring case the sets are disjoint.
+Second, it is shown that a restricted and frequently occuring case of holistic selection can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint.
 
-Third, it is shown how to express a variety of use cases in the unified selection model, which includes both geographic and non-geographic use cases. It is shown how diverse constraints, such as proximity and density constraints, can be modeled as a single constraint on selection of edges.
+Third, it is shown the unified models subsumes a variety of geographic as well as non-geographic use cases for holistic selection. For example, selection for time lines and clustering outputs is subsumed by the model.
 
 Further reading:
 \vspace{-2ex}
 \begin{itemize}
-\item Details about the first and second contributions are described in Chapter~\ref{chapter:cvl}.
-\item Details about the third contribution is described in Chapter~\ref{chapter:glossy}.
+\item The first and second contributions are described in Chapter~\ref{chapter:cvl}.
+\item The third contribution is described in Chapter~\ref{chapter:glossy}.
 \item A previous version of Chapter~\ref{chapter:cvl} has been published in ICDE 2014~\cite{kefaloukos2014declarative}.
 \end{itemize}
 
@@ -365,11 +365,13 @@ Further reading:
 \subsection{Glossy Language}
 \label{sec:introduction:contributions:glossy}
 % : Syntax and Semantics
-Section~\ref{sec:introduction:problem:statement} argued the need for a declarative language for selection of geographic information in a web mapping  pipeline. This section introduces the declarative language contributions of this thesis: Glossy SQL
+Section~\ref{sec:introduction:problem:statement} argued the need for a declarative language in which map designers can specify selection of geographic information for maps. This section introduces the declarative language contributions of this thesis: Glossy SQL
 
-First, this thesis contributes the \emph{syntax} of Glossy SQL, which allows programmers to declaratively express multi-scale selection of geographic and non-geographic data sources. The use cases that Glossy SQL covers include multi-scale timelines, maps and cluster visualizations. Programmers can declaratively express constraints that must be satisfied by a multi-scale selection. Additionally, programmers can declaratively define how the importance of records should be measured at each scale of the selection. Finally, programmers can define an ordered set of scales for visualizaton. The syntax expresses both iterative or recursive queries, with semantics that correspond to the star and ladder approach in generalization, respectively~\cite{foerster2010challenges}. A particular design goal that has been met is that queries in Glossy SQL must be compact yet highly readable. The longest Glossy SQL query in this thesis is just 14 lines of code!
+First, this thesis contributes the \emph{syntax} of Glossy SQL. The syntactic constructs of Glossy SQL let programmers declaratively express constraints (unary, binary, set and cross-scale constraints), object-weighting functions and scale definitions for multi-scale selection.
 
-Second, this thesis contributes the \emph{semantics} of Glossy SQL, which is expressed in terms of relational algebra. This semantics forms the foundation of the Glossy Compiler.
+Second, this thesis contributes the \emph{semantics} of Glossy SQL, which are expressed in terms of relational algebra.
+
+Third, it is shown how to express both geographic and non-geographic use cases for holistic selection in Glossy SQL using highly concise statements. The longest Glossy SQL query in this thesis, which solves a real-world use case, is just 14 lines of code!
 
 Further reading:
 
@@ -383,11 +385,11 @@ Further reading:
 \label{sec:introduction:contributions:glossy}
 % : : Implementation and Evaluation
 
-Section~\ref{sec:introduction:problem:statement} made the case for in-database processing of multi-scale selection. The Glossy compiler translates queries in Glossy SQL into relational algebra, which can be processed on top of spatial relational databases management systems (SDBMS).
+Section~\ref{sec:introduction:problem:statement} made the case for scalable in-database processing of multi-scale selection. This section introduces the data processing contributions of this thesis: The Glossy compiler. The compiler translates statements in Glossy SQL into relational algebra queries, which can be scalably processed on top of a spatial relational databases management system (SDBMS).
 
-First, this thesis contributes an optimized implementation of the Glossy compiler, which targets the commercial PostgreSQL SDBMS~\cite{postgresql,postgis}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}.
+First, this thesis contributes an implementation of the Glossy compiler, which targets the commercial PostgreSQL SDBMS~\cite{postgresql,postgis}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}.
 
-Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases using real-life datasets. The results show that the Glossy selection system is scalable and performant for the evaluated test cases.
+Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The results show that the Glossy selection system is scalable and performant.
 
 Further reading:
 \vspace{-2ex}
