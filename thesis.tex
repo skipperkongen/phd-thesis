@@ -114,7 +114,8 @@
 
 %\title{Declarative Selection for Online Geographic Data Visualizations}
 %\title{Declarative and Scalable Web Mapping Systems}
-\title{Declarative Cartography}
+\title{Declarative Web Mapping}
+%\title{Declarative Cartography for Scalable Web Mapping Pipelines}
 %\title{Geodata Visualization Management Systems}
 %\title{Building Scalable Data Visualization Management Systems}
 %\title{Declarative Selection for Multi-scale Visualizations Systems}
@@ -173,16 +174,15 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \begin{emphpar}
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible}. 
 
-Map makers select geographic information for presentation on legible maps; maps help their viewers comprehend the World.
+Geographic information, which has been carefully \emph{selected} and displayed on a \emph{legible} map, helps the viewing audience to \emph{comprehend} the World.
 \end{emphpar}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Thematic maps}: Two examples of thematic maps that show highly specific foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
+\caption{\textbf{Maps on the Web}: Two examples of maps that show thematic foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
 \label{fig:introduction:background:mashups}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 % Background
@@ -437,7 +437,7 @@ The remainder of this thesis is organized as follows.
 TODO
 
 
-\chapter{Declarative Cartography: In-Database Map Generalization of Geospatial Datasets}
+\chapter{Unified Model for Selection of Geographic Information}
 \label{chapter:cvl}
 \lstset{
   language=cvl
@@ -1609,7 +1609,7 @@ The semantics of multi-scale Glossy SQL queries can be specified by a conceptual
 
 The algorithm iterates over the sequence $S$ one tuple at a time. Each tuple is cross-joined with the the current input tuples in $R$. In the case of an iterative multi-scale Glossy SQL query, these input tuples always correspond to the entire input relation $I$; in the case of a recursive multi-scale Glossy SQL query, however, the input tuples in $R$ correspond to the surviving tuples from the global selection of the previous scale. The algorithm derives the conflict set $\mathbb{C}$ from the constraints in the query in a way that is sensitive to the current input and scale. This process consists of producing conflict sets consistent with Definitions~\ref{def:conflict:set:pair} and~\ref{def:conflict:set:locus} from the previous subsection, but considering $L_I$ as the input relation. The output for the current scale $L_O$ is the result of the global selection over $L_I$ with conflict set $\mathbb{C}$ and weighting function $w$. This partial output is collected into a global output relation, which is projected according to the query before the final result is produced.  
 
-\section{Pure SQL Translation}
+\section{Compilation to Relation Algebra}
 \label{sec:sql:translation}
 
 In this section, we present the translation of the Glossy SQL syntax introduced in Section~\ref{sec:syntax} to SQL. Without loss of generality, we conform to the SQL dialect and function library offered by PostgreSQL\footnote{http://www.postgresql.org/}, as used in the implementation of Glossy. Extension to other relational DBMS is conceptually straightforward.  
@@ -1951,7 +1951,7 @@ As future work, we plan to explore how to incorporate data aggregation features 
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Tileheat: A Framework For Tile Selection}
+\chapter{Tileheat: Tile Request Prediction Algorithm}
 \label{chapter:tileheat}
 \section{Introduction}
 
