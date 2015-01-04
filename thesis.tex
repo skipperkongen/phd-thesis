@@ -229,7 +229,7 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 
 To understand the process of web mapping, it must be modeled at a more granular level. The web mapping process can be modeled as a four-stage logical pipeline that moves geographic information through a life cycle that begins with data modeling and ends with graphic display on a map (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to study the tasks and requirements of each stage in the logical pipeline, since this allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
 
-Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on the remaining stages, namely stage two (logical abstraction) and stage four (content distribution), since the biggest challenges in web mapping are currently found here.
+Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on the remaining stages, namely stage two (logical abstraction) and stage four (content distribution), since the biggest challenges in web mapping are currently found here. Stage two corresponds loosely to \emph{model generalization} in the process model by Gr{\"u}nreich~\cite{gruenreich1985cag}, while stage three corresponds loosely to \emph{cartographic generalization}.
 
 
 \subsection{Selection of Geographic Information} 
@@ -340,12 +340,12 @@ Rendering and serving of so-called map tiles is currently the typical way to imp
 \label{sec:introduction:contributions}
 % NOTFINISHED
 
-Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}. These contributions address challenges in stage two () and stage four () of the pipeline that was described in Section~\ref{sec:introduction:web:mapping:pipelines}. The focus areas are schematically highlighted in Figure~\ref{fig:introduction:contributions:highlights}.
+Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}. These contributions address challenges in stage two (logical abstraction) and stage four (content distribution) of the pipeline that was described in Section~\ref{sec:introduction:web:mapping:pipelines}. The focus areas are schematically highlighted in Figure~\ref{fig:introduction:contributions:highlights}.
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.6]{figs-thesis/map-visualization-pipeline-4.pdf}
-\caption{\textbf{Contribution focus}: stage two (logical abstraction) and stage four (content distribution) of the web mapping pipeline.}
+\caption{\textbf{Contribution focus}: this thesis concentrates on stage two (logical abstraction) and stage four (content distribution) of the web mapping pipeline that was schematized in Section~\ref{sec:introduction:web:mapping:pipelines}.}
 \label{fig:introduction:contributions:highlights}
 \end{center}
 \end{figure}
@@ -354,9 +354,9 @@ Instead of presenting a complete batch-oriented web mapping pipeline, the follow
 \subsection{Set Multi-cover Equivalence}
 \label{sec:introduction:contributions:set:multicover:problem}
 
-Section~\ref{sec:introduction:problem:statement:one} made the case for a unified model for selection of geographic information.
+Section~\ref{sec:introduction:problem:statement:one} made the case for a unified model for selection of geographic information. This section describes the progress that was made in this regard.
 
-First, this thesis contributes a unified model for selection of geographic information. The model is based on an equivalence between the problem of selecting geographic information for maps and the more abstract set multi-cover problem. Consequently, selection of geographic information can be completely expressed as a problem of edge-selection in a bi-partite graph. There is an downside and upside to this mathematical equivalence relation. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information.
+First, this thesis contributes a unified model for selection of geographic information that is based on an equivalence relation between the selection problem in geographic maps and the more abstract set multi-cover problem. Due to the identification of this relation, selection of geographic information can be abstractly expressed as an edge-selection problem in bi-partite graphs. There is a downside and upside to this mathematical equivalence. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information.
 
 Second, it is shown that a restricted and frequently occuring case of holistic selection can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint.
 
