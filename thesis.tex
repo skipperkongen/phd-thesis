@@ -296,7 +296,7 @@ However, there are several issues with real-time generalization in a Web context
 In conclusion, real-time generalization is currently an infeasible approach for web mapping pipelines that target large Web audiences.
 
 \minisec{Batch-oriented approach}
-Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to this approach.
+Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to a batch-oriented approach.
 
 First, since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Distributed data analytical systems, such as spatial parallel databases and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}, can be wielded to make the process highly scalable with regard to data volume. For example, while highly scalable batch-oriented systems, such as Apache Hadoop or Apache Spark, cannot be used for real-time generalization, they are intrinsically appropriate for batch-oriented generalization of geographic information.
 
