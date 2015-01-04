@@ -174,7 +174,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \begin{emphpar}
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible}. 
 
-\emph{Legible} maps enable humans to \emph{comprehend} geographic information.
+\emph{Legible} maps enable humans to \emph{comprehend} geographic information. One way to ensure a legible map is to \emph{select} data holistically according to constraints and objectives that ensure the feasibility and utility of a map. Maps breed spatial intelligence.
 \end{emphpar}
 
 \begin{figure}[htbp]
@@ -233,9 +233,22 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
 
 
 \subsection{Selection of Geographic Information} 
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.32]{figs-thesis/holistic-selection.pdf}
+\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces in the map. In the figure, objects that violate a constraint are circled by red lines; objects that are consequently deleted are shown as white disks; objects that are kept are shown as black disks.}
+\label{fig:introduction:selection:constraints}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
 Geographic information must be logically adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as the primary means for information abstraction. Selection is a challenging but useful way to adapt geographic information for maps. In contrast, aggregation is mostly, while not always, a straight-forward process. The remaining generalizion techniques, such as simplification and collapse, do not preclude selection. For example, simplification is primarily a means for saving data storage and I/O, which is orthogonal to the goals of selection~\cite{weibel1997generalization}.
 
-It is important to understand the requirements of selection. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). The six design goals of the iOS6 Apple Maps API concretize this further: 
+It is important to understand the requirements of selection. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). These are properties that can be ensured by \emph{constraints} and \emph{objectives}~\cite{harrie2007modelling}.
+
+\newpage
+The six design goals of the iOS6 Apple Maps API concretize the concept of constraints and objectives: 
 
 \begin{enumerate}
 \item minimize overlaps
@@ -246,24 +259,15 @@ It is important to understand the requirements of selection. Even as the Web has
 \item support filtering conditions
 \end{enumerate}
 
-This example list of \emph{constraints} and \emph{objectives} illustrates concrete ways to quantify the feasibility and utility of a map. A more abstract and formal view of constraints and objectives is the following: 
+This example list of constraints and objectives illustrates concrete ways to quantify the feasibility and utility of a map. A more abstract and formal view of constraints and objectives is the following: 
 
 \begin{itemize}
 
-\item \textbf{Constraints}, such as unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, define the feasibility of a map. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{shea1989cartographic,weibel1997generalization}.
+\item \textbf{Constraints}, such as unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap}, define a search space of feasible maps. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator~\cite{shea1989cartographic,weibel1997generalization}.
 
-\item \textbf{Objectives}, such as minimization of conflict~\cite{bader2001energy,haunert2006landcover,sester2000generalization} or maximization of content~\cite{sarma2012fusiontables,nutanong2012multiresolution}, quantify the utility of a map. Quantifiable objectives facilitate combinatorial optimization over a search space of maps.
+\item \textbf{Objectives}, such as minimization of conflict~\cite{bader2001energy,haunert2006landcover,sester2000generalization} or maximization of content~\cite{sarma2012fusiontables,nutanong2012multiresolution}, quantify the utility of a map. Real-valued objective functions facilitate combinatorial optimization over a search space of maps.
 
 \end{itemize}
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.35]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces in the map. In the figure, objects that violate a constraint are circled by red lines; objects that are consequently deleted are shown as white disks; objects that are kept are shown as black disks.}
-\label{fig:introduction:selection:constraints}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
 
 While the concrete formulation of constraints and objectives depends on the map that is being designed, any map design process must be guided by some set of constraints and objectives, such as the ones described above. Specifically, holistic selection of geographic information for maps requires holistic constraints and objectives.
 
