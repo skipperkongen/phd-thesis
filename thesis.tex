@@ -293,7 +293,7 @@ However, the complexity of any selection algorithm is certainly greater than $O(
 \minisec{Batch-oriented solutions}
 Batch-oriented selection of geographic information compute materialized views over the original state of the data. Subsequently, the selected data can be partioned and replicated on a content delivery network (CDN), which allows immense scalability in the distribution phase of the web mapping pipeline. Of course, this scalability comes at a price, which is primarily composed of increased storage cost, bounded staleness of data, and inability to respond flexibly to user preferences during selection. However, batch-oriented solutions offer a better trade-off than on-the-fly solutions when maps are distributed to large audiences. 
 
-First, while batch-oriented solutions need more storage, disk space have become the cheapest resource to scale in cloud infrastructures. Furthermore, in-memory storage architectures, such as RAMCloud~\cite{ousterhout2011ramcloud}, have become feasible and highly resilient to failure.
+First, while batch-oriented solutions need more storage, disk space have become the cheapest resource to scale in cloud infrastructures. Furthermore, entirely in-memory storage architectures, such as RAMCloud~\cite{ousterhout2011ramcloud}, have become budget feasible and highly resilient to failure, which is a trend that is bound to strengthen over time.
 
 
 
