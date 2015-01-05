@@ -5,7 +5,8 @@
 \newtheorem{claim}{Claim}
 \newtheorem{class}{Class}
 \newtheorem{definition}{Definition}
-\newtheorem{example}{Use Case}
+\newtheorem{ex}{Example}
+\newtheorem{usecase}{Use Case}
 \newtheorem{observation}{Observation}
 \newtheorem{property}{Property}
 \newtheorem{proposition}{Proposition}
@@ -311,7 +312,20 @@ There are three drawbacks of a batch-oriented approach that are quite obvious. H
 
 In conclusion, batch-oriented generalization is the only viable option for scalable web mapping pipelines. While batch-oriented generalization suffers from one significant drawback,  namely the difficulty of adapting content to individual users, this drawback must be tolerated since there is (currently) no alternative.
 
-\minisec{Example: Points of Interest Logical Map} Foo bar.
+\minisec{Example: \emph{Vector Tiles for Points of Interest (POI)}}
+Tiling of vector data, just as tiling of raster data, is a way to partition and primarily distribute geographic information to mapping clients~\cite{gaffuri12vectortiles}. A vector dataset is partitioned into tiles by intersecting it with a set of multi-scale cells, such that each object falls into one or more cells at each scale. Moreover each tile contains either the identifiers of the intersected geographic objects (index tiles), or the the geographic objects that have been geometrically cropped to the boundaries the cell~\cite{gaffuri12vectortiles}. While the two approaches are functionally equivalent, one may perform better than the other for particular datasets and workloads. Since the tiles contains data as opposed to images, the information that is distributed is a \emph{logical map}, i.e. pertains to \emph{what} the map contains, not \emph{how} is should be graphically expressed.
+
+There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of symbols may be chosen such that the efficiency of the graphic expression is maximized~\cite{jacques1967semiologie}. Second, tiled vector data can be scalable stored and distributed on a content delivery network (CDN), which facilitate high availability and acceptable latency for Web maps~\ref{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, contributes a CPU that is utilized to transform data into graphics.
+
+Since small scale maps generally intersect larger quantities of geographic objects than large scale maps, there is a need to bound the amount of data in each tiles. Otherwise, small scale tiles would be very larger and take much longer to transmit over the Internet than large scale tiles. To keep the amount of information in each tile constant independently of the scale, the vector data must be generalized. A batch-oriented approach to generalization of content for vector tiles, is particularly useful for scalable web maps. This content generalization and the distribution steps for vector tiles is schematized in Figure~\ref{fig:introduction:approaches:vector:tiles}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.45]{figs-thesis/batch-oriented-poi.pdf}
+\caption{\textbf{Creation and distribution of tiled vector data}: 1, 2, 3, 4, A, B}
+\label{fig:introduction:approaches:vector:tiles}
+\end{center}
+\end{figure}
 
 
 
@@ -1287,16 +1301,16 @@ While many datasets are small enough to be visualized directly, Glossy focuses o
 
 Timelines are a prime example of a visualization technique organized around a single dimension. Glossy can easily handle the problem of data reduction for ``thin'' timelines, e.g., displaying the price of a stock or another single-variable function, by directly encoding the analysis of a recent study~\cite{jugel2014m4}. However, a far more interesting use case for Glossy's global selection approach is visualizing ``broad'' timelines, i.e., timelines showing relevant events at each time frame. The example below illustrates such a use case.
 
-\begin{example}[Historical events]
+\begin{usecase}[Historical events]
 \label{ex:historical:events}
 Consider a multi-scale visualization that shows a timeline of human civilization. Historical events are gathered into differently sized time buckets, e.g., centuries, decades and years, depending on the scale. For each bucket, we select the most important historical events.~To convey an impression of the activity level of each period, we select fewer events for buckets will low historical activity. \mathendbox
-\end{example}
+\end{usecase}
 
 Non-temporal datasets can also be transformed for one-dimensional visualization. First, we must choose which axis in the dataset to explore. Then, we proceed in a  manner similar to the use case of a historical timeline. An example of non-temporal data selection is illustrated below, namely selecting musicians according to the size of their active vocabulary.
 
-\begin{example}[Vocabulary Sizes]\label{ex:rappers}
+\begin{usecase}[Vocabulary Sizes]\label{ex:rappers}
 Two aspects that distinguish musicians (e.g., rappers) are their popularity and the size of their vocabulary, as recorded in their lyrics. We can visualize these differences among artists by positioning rappers on a word-count line. The line is divided into buckets of word-count intervals and for each bucket we select the $k$ most popular rappers. If we zoom on the line, the interval sizes should become smaller, which consequently means that we get more buckets. This in turn means that we can select more rappers. To communicate that not all buckets have an equal amount of rappers who fall into their interval, we select fewer than $k$ for buckets that have low rapper counts. Finally, we would like to ensure that our favorite artist appears at all zoom levels regardless of the artist's popularity.~\footnote{Inspired by the visualization at~http://rappers.mdaniels.com.s3-website-us-east-1.amazonaws.com/. Figure~\ref{fig:example:rappers} is the result of reproducing their methodology over raw data sources, and employing Glossy SQL for data selection.} \mathendbox
-\end{example}
+\end{usecase}
 
 The example of visualizing rappers described above is illustrated further in Figure~\ref{fig:example:rappers}.
 
@@ -1305,18 +1319,18 @@ The example of visualizing rappers described above is illustrated further in Fig
 
 Digital maps are widely used to visualize geographic data that has been projected into two dimensions. From cartography, we know that spatial data must be abstracted according to scale in order to make a useful map~\cite{neun2009mapgeneralization,ware2003generalization_sa}. Advanced techniques are needed to abstract the topographical data, such as street networks and buildings, that compose the base maps exposed by a host of web services such as Google Maps.\footnote{http://maps.google.com} However, the far more interesting use cases of layering user data on top of these base maps are a perfect fit for the global selection approach of Glossy. Two examples of such spatial data are points of interest and place names. 
 
-\begin{example}[Points of interest (POI)]
+\begin{usecase}[Points of interest (POI)]
 \label{ex:poi}
 Points of interest (e.g., hotels or tourist attractions) are often shown on zoomable maps as an overlay on top of a background map. On a good POI map, items must not disappear when zooming in, a property referred to as zoom consistency~\cite{sarma2012fusiontables}. In addition, modern maps are gridded into tiles at each scale, and web services often transfer tiles individually. It is thus natural to adopt tiles as a bucketing mechanism for information on a map. 
 For each tile, we select at most $k$ POI prioritized by the number of positive reviews given to each POI (notice that this rank is scale-independent). Additionally, as each POI needs to be represented by a symbol, we should make sure not to select POI too close in space to each other, as measured by their scale-dependent distance in pixels on the map. \mathendbox
-\end{example}
+\end{usecase}
 
 While points of interest should satisfy zoom consistency, this is not generally true of any overlay data. For placename labels, it would be odd to show the labels ``Italy'' and ``Europe'' on a map zoomed to a Roman neighborhood, even though Rome is situated in both Italy and Europe. Conversely, it would be odd to display the label ``Monti'', a Roman neighborhood, on a map of Europe, even though ``Monti'' is a part of Europe. An example of selecting this type of overlay data is given below.
 
-\begin{example}[Placenames]
+\begin{usecase}[Placenames]
 \label{ex:placenames}
 To select placenames for a zoomable map, we assume that the territory associated with a label is represented by a crude polygon. Furthermore, we assume that we know the importance of each placename. For each scale and each map tile, we want to select at most $k$ labels prioritized by importance. Additionally, for a given scale, we only consider labels with a territory area that is roughly equal to the area of tiles at the given scale. While these labels may overlap, common functionality exists in most mapping software to rotate, displace and hide labels as needed. Consequently, we simply set $k$ high enough to account for possible label loss. \mathendbox
-\end{example}
+\end{usecase}
 
 Displaying airports worldwide is a similar use case to displaying POI, illustrated further in Figure~\ref{fig:example:airports}. The example of placenames is illustrated in Figure~\ref{fig:example:placenames}. 
 
@@ -1325,9 +1339,9 @@ Displaying airports worldwide is a similar use case to displaying POI, illustrat
 
 Visualizing the output of clustering algorithms such as k-Means is an interesting example of multidimensional visualization. One approach to visualize the result is to employ a multivariate visualization scheme such as parallel coordinates~\cite{card1999infovizbook,wong1994infovizsurvey}. In the following, we show how to produce a multi-scale parallel coordinates visualization using global selection.
 
-\begin{example}[Cluster representatives]\label{ex:clusters}
+\begin{usecase}[Cluster representatives]\label{ex:clusters}
 Assume we wish to visualize the results of running k-Means against a given multidimensional dataset. Each record contains an attribute with its corresponding cluster label. In a zoomable parallel coordinates plot, where records are represented by polylines, we may wish to limit to $n$ the number of polylines that can cut through each dimension line segment for any vertical unit of space, at a scale-dependent resolution. This procedure is similar to the one we employed for placenames and tiles in a map. In contrast, we may wish to rank records in a more interesting way: by taking their distance to the cluster centroid as a ranking function. \mathendbox
-\end{example}
+\end{usecase}
 
 As we can see from these many examples, several patterns of data selection are reoccurring in a variety of visualization use cases of different dimensionality. Glossy's notion of global selection is designed to capture these patterns into an elegant syntax and well-defined semantics.  
 
