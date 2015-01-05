@@ -285,12 +285,16 @@ While the concrete formulation of constraints and objectives depends on the map 
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
-\section{Overview of Approaches}
+\section{Overview of State-of-the-Art}
 \label{sec:introduction:architectures}
 
-Two important high-level architectures have been proposed for generalization of geographic information, namely \emph{real-time} (or on-the-fly) generalization~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented} generalization~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards}. While the requirements for \emph{what} should be the produced are the same for the two approaches, vis-a-vis map constraints and objectives, these two approaches differ in \emph{when} the results are produced. The distinctions as well as the pros and cons of each approach in a Web context are discussed below.
+State-of-the-Art mapping pipelines are distinquished, among other things, by \emph{when} selection of data is performed relative to when a request for map data is recieved, either \emph{real-time} or \emph{in advance}. Moreover, mapping pipelines are distinguished by the type of data that they send to mapping clients, which is either \emph{graphics} or \emph{information}, which can be turned into graphics by the client.
 
-\subsection{Real-time approach}
+\subsection{When to Perform Selection}
+
+Two important high-level approaches have been proposed for generalization of geographic information, namely \emph{real-time} (or on-the-fly) generalization~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented} generalization~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards}. While the requirements for \emph{what} should be the produced are the same for the two approaches, vis-a-vis map constraints and objectives, these two approaches differ in \emph{when} the results are produced. The distinctions as well as the pros and cons of each approach in a Web context are discussed below.
+
+\minisec{Real-time approach}
 Real-time generalization adapts geographical information at the time when a user requests geographic information for a map. Typically, an indexing structure, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}, is the factor that facilitates fast real-time generalization algorithms. At first, real-time selection seems like an ideal approach for two reasons. 
 
 First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update mechanism, such as transactions~\cite{gray1981transaction}, a selection algorithm always computes solutions based on the most recent and consistent state of the data. However, this is only true if the atomic update propagates to the index as well, which is a significant consideration given that data is typically managed outside the map generalization framework.
@@ -301,7 +305,7 @@ However, there are several issues with real-time generalization in a Web context
 
 In conclusion, real-time generalization is currently an infeasible approach for web mapping pipelines that target large Web audiences.
 
-\subsection{Batch-oriented approach}
+\minisec{Batch-oriented approach}
 Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to a batch-oriented approach.
 
 First, since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Distributed data analytical systems, such as spatial parallel databases and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}, can be wielded to make the process highly scalable with regard to data volume. For example, while highly scalable batch-oriented systems, such as Apache Hadoop or Apache Spark, cannot be used for real-time generalization, they are intrinsically appropriate for batch-oriented generalization of geographic information.
@@ -312,20 +316,29 @@ There are three drawbacks of a batch-oriented approach that are quite obvious. H
 
 In conclusion, batch-oriented generalization is the only viable option for scalable web mapping pipelines. While batch-oriented generalization suffers from one significant drawback,  namely the difficulty of adapting content to individual users, this drawback must be tolerated since there is (currently) no alternative.
 
-\minisec{Example: \emph{Vector Tiles for Points of Interest (POI)}}
-Tiling of vector data, just as tiling of raster data, is a way to partition and primarily distribute geographic information to mapping clients~\cite{gaffuri12vectortiles}. A vector dataset is partitioned into tiles by intersecting it with a set of multi-scale cells, such that each object falls into one or more cells at each scale. Moreover each tile contains either the identifiers of the intersected geographic objects (index tiles), or the the geographic objects that have been geometrically cropped to the boundaries the cell~\cite{gaffuri12vectortiles}. While the two approaches are functionally equivalent, one may perform better than the other for particular datasets and workloads. Since the tiles contains data as opposed to images, the information that is distributed is a \emph{logical map}, i.e. pertains to \emph{what} the map contains, not \emph{how} is should be graphically expressed.
+\subsection{How to Distribute Maps Using Tiles}
+A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile. Once the tiles have been created, a content delivery network (CDN) can store and distribute the tiles to mapping clients with high scalability, availability and performance~\cite{dilley2002cdn}. An advantage of tiles is that they can be addressed using discrete and three-dimensional cell coordinates. For this reason, tiles can be accessed in a key-value query model. There are two types of geographic data, and therefore two types of tiles: \emph{raster tiles} that contain graphics and \emph{vector tiles} that contain information or data. Below, the pros and cons of each type of tile is discussed.
 
-There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of symbols may be chosen such that the efficiency of the graphic expression is maximized~\cite{jacques1967semiologie}. Second, tiled vector data can be scalable stored and distributed on a content delivery network (CDN), which facilitate high availability and acceptable latency for Web maps~\ref{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, contributes a CPU that is utilized to transform data into graphics.
+\minisec{Raster Tiles}
+
+\minisec{Vector Tiles}
+A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile: either a list of identifiers or the data objects themselves. Tiled vector data can be distributed to mapping clients, and only then will it be graphically expressed. As such, distribution of tiled vector data corresponds to distribution of a \emph{logical map}, i.e. \emph{what} information the map contains, not \emph{how} the information is graphically expressed.
+
+~\cite{gaffuri12vectortiles}
+
+There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, clients may choose the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of information symbols such that the efficiency of graphic communication is maximized~\cite{jacques1967semiologie}. Second, content delivery network (CDN) can store  tiled vector data for highly scalabe, available and performant distribution~\cite{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, essentially contributes a CPU to the mapping pipeline, which is utilized to render information as graphics.
 
 Since small scale maps generally intersect larger quantities of geographic objects than large scale maps, there is a need to bound the amount of data in each tiles. Otherwise, small scale tiles would be very larger and take much longer to transmit over the Internet than large scale tiles. To keep the amount of information in each tile constant independently of the scale, the vector data must be generalized. A batch-oriented approach to generalization of content for vector tiles, is particularly useful for scalable web maps. This content generalization and the distribution steps for vector tiles is schematized in Figure~\ref{fig:introduction:approaches:vector:tiles}.
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.45]{figs-thesis/batch-oriented-poi.pdf}
-\caption{\textbf{Creation and distribution of tiled vector data}: 1, 2, 3, 4, A, B}
+\caption{\textbf{Creation and distribution of tiled vector data}: a generalization algorithm selects geographic information for each scale (1); a multi-scale tiling scheme partitions information over variable resolution grids (2); multi-scale tiles are stored on a CDN (3); mapping clients pull data from CDN (4). Tiles contain vector data (A), or identifiers of intersected data (B).}
 \label{fig:introduction:approaches:vector:tiles}
 \end{center}
 \end{figure}
+
+
 
 
 
