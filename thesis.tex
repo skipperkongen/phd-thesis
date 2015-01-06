@@ -221,19 +221,32 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.6]{figs-thesis/map-visualization-pipeline-3.pdf}
-\caption{Logical web mapping pipeline.}
+\includegraphics[scale=.6]{figs-thesis/mapping-states.pdf}
+\caption{States and transitions of a mapping pipeline.}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-To understand the process of web mapping, it must be modeled at a more granular level. The web mapping process can be modeled as a four-stage logical pipeline that moves geographic information through a life cycle that begins with data modeling and ends with graphic display on a map (see Figure~\ref{fig:introduction:requirements:pipeline}). It is important to study the tasks and requirements of each stage in the logical pipeline, since this allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
+The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen. The mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. The intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphic model}~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
 
-Stage one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Stage three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. This thesis will focus on the remaining stages, namely stage two (logical abstraction) and stage four (content distribution), since the biggest challenges in web mapping are currently found here. Stage two corresponds loosely to \emph{model generalization} in the process model by Gr{\"u}nreich~\cite{gruenreich1985cag}, while stage three corresponds loosely to \emph{cartographic generalization}.
+While the final state is a straight-forward rendering of the graphic model, the three intermediate states require further explanation:
+
+\begin{enumerate}
+\item \textbf{Data model}: the data model captures reality as a set of discrete geographic information objects. Geographic information objects associate a geometry, such as a \emph{point}, \emph{line} or \emph{area}, with a set of \emph{qualitative}, \emph{ordered} and \emph{quantitative} components~\cite{jacques1967semiologie}.
+\item \textbf{Logical model}: the logical model logically abstracts the data model by \emph{selection}, \emph{projection} and \emph{aggregration} of the information objects, in order to emphasize the important and suppress the irrelevant. The logical model captures \emph{what} information the digital map contains. It should be noted that the term projection is used here as it is used in databases, i.e. the modification of an information object.
+\item \textbf{Graphic model}: the graphic model graphically abstracts the logical model into a set of graphic symbols, in order to maximize the efficiency of visual \emph{perception} and \emph{comprehension} in the digital map. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{jacques1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
+\end{enumerate}
+
+It is important to study the tasks and requirements that are associated with each transition and state in the pipeline, since this allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
+
+Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. Transition four (rendering) is outside the scope of this thesis. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for logical abstraction are discussed in Section~\ref{sec:introduction:requirements:logical:model}.
+
+The above view of a mapping pipeline is agnostic of the existance of the Web and the Internet. In contrast, a \emph{web mapping pipeline} allows the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web.
 
 
-\subsection{Selection of Geographic Information} 
+\subsection{Logical Abstraction} 
+\label{sec:introduction:requirements:logical:model}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -244,7 +257,7 @@ Stage one (data modeling) has been studied in previous work by Friis-Christensen
 \vspace*{-4ex}
 \end{figure}
 
-Geographic information must be logically adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as the primary means for information abstraction. Selection is a challenging but useful way to adapt geographic information for maps. In contrast, aggregation is mostly, while not always, a straight-forward process. The remaining generalizion techniques, such as simplification and collapse, do not preclude selection. For example, simplification is primarily a means for saving data storage and I/O, which is orthogonal to the goals of selection~\cite{weibel1997generalization}.
+Geographic information must be logically adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as the primary means for logical abstraction of information. Selection challenging but useful way to adapt geographic information for maps. In contrast, aggregation is mostly, while not always, a straight-forward process. The remaining generalizion techniques, such as simplification and collapse, do not preclude selection. For example, simplification is primarily a means for saving data storage and I/O, which is orthogonal to the goals of selection~\cite{weibel1997generalization}.
 
 It is important to understand the requirements of selection. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). These are properties that can be ensured by \emph{constraints} and \emph{objectives}~\cite{harrie2007modelling}.
 
