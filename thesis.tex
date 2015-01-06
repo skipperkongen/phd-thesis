@@ -221,14 +221,14 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.6]{figs-thesis/mapping-states.pdf}
+\includegraphics[scale=.5]{figs-thesis/mapping-states.pdf}
 \caption{\textbf{States and transitions of a digital mapping pipeline}: data modelling (1); logical abstraction (2); graphical abstraction (3); rendering (4).}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen. The mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. The intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphical model}~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
+The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen. This mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. These intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphical model}~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
 
 While the final state is a straight-forward rendering of the graphical model, the three intermediate states require further explanation:
 
@@ -245,24 +245,21 @@ Transition one (data modeling) has been studied in previous work by Friis-Christ
 The above view of a mapping pipeline is agnostic of the existence of the Web or the Internet. In contrast, a \emph{web mapping pipeline} requires the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web and over the Internet. These requirements are discussed in Section~\ref{sec:introduction:requirements:distribution}.
 
 
-\subsection{Logical Abstraction} 
+\subsection{Requirements of Logical Abstraction} 
 \label{sec:introduction:requirements:logical:abstraction}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.32]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces in the map. In the figure, objects that violate a constraint are circled by red lines; objects that are consequently deleted are shown as white disks; objects that are kept are shown as black disks.}
+\caption{\textbf{Binary and space constraints}: binary constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Space constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying spaces in the map. Objects that violate a constraint are in conflict (circled by red lines); this situation must be remedied, for example by selection (kept objects are shown as black disks; deleted objects are shown as white disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-Geographic information must be logically adapted for display on maps, which generally requires the derivation of an appropriate subset of information, or alternatively aggregation. This thesis focuses on \emph{selection} as the primary means for logical abstraction of information. Selection challenging but useful way to adapt geographic information for maps. In contrast, aggregation is mostly, while not always, a straight-forward process. The remaining generalizion techniques, such as simplification and collapse, do not preclude selection. For example, simplification is primarily a means for saving data storage and I/O, which is orthogonal to the goals of selection~\cite{weibel1997generalization}.
+As the scale of a map decreases, geographic information must be logically and graphically adapted for display on maps~\cite{weibel1999generalising}. This section discusses the constraints and objectives that drive logical abstraction. The means of logical abstraction are covered by selection, projection and aggregation of geographic information objects. This thesis focuses on selection as the primary means for logical abstraction of information. In contrast to selection in relational algebra, selection of geographic information is a holistic process, which cannot be computed by simple object-by-object predicate filtering~\cite{harrie2007modelling}. 
 
-It is important to understand the requirements of selection. Even as the Web has impacted when, why and how maps are created and consumed, maps must (still) be \emph{legible}, \emph{consistent} (with reality), and \emph{relevant} (for the purpose of the map). These are properties that can be ensured by \emph{constraints} and \emph{objectives}~\cite{harrie2007modelling}.
-
-\newpage
-The six design goals of the iOS6 Apple Maps API concretize the concept of constraints and objectives: 
+Even as the Web has impacted when, why and how maps are created and consumed, information that is displayed on maps must (still) be legible, consistent with reality, and relevant for the purpose of the map. The six design goals of the iOS6 Apple Maps API concretize this further: 
 
 \begin{enumerate}
 \item minimize overlaps
@@ -273,7 +270,7 @@ The six design goals of the iOS6 Apple Maps API concretize the concept of constr
 \item support filtering conditions
 \end{enumerate}
 
-This example list of constraints and objectives illustrates concrete ways to quantify the feasibility and utility of a map. A more abstract and formal view of constraints and objectives is the following: 
+While the above example of design goals is illustrative, a goal of this thesis is to derive a more formal classification of constraints and objectives for logical abstraction of geographic information. In doing so, this thesis adopts a combinatorial optimization model of the map generalisation process~\cite{harrie2007modelling}: 
 
 \begin{itemize}
 
@@ -285,7 +282,7 @@ This example list of constraints and objectives illustrates concrete ways to qua
 
 While the concrete formulation of constraints and objectives depends on the map that is being designed, any map design process must be guided by some set of constraints and objectives, such as the ones described above. Specifically, holistic selection of geographic information for maps requires holistic constraints and objectives.
 
-\subsection{Distribution of Content} 
+\subsection{Requirements of Content Distribution} 
 \label{sec:introduction:requirements:distribution}
 In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
 
