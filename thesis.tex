@@ -216,37 +216,37 @@ Third, the Web has caused a change in when and where maps are consumed by their 
 %\minisec{National Mapping Agencies in the Future}
 %National mapping agencies create and distribute curated map content of on the Web~\cite{gst2014digitalmapsupply}. The maps are of high quality and potential valuable to society~\cite{gst2012friedata}. However, similar maps are also being distributed by private corporations, such as Google and Microsoft, which creates a competive situation. In fact, multi-national corporations, such as Google and Microsoft -- rutinely operate at one or two orders of magnitude higher availability (99.999\% versus 99.5\%) and performance (40 msec versus 400 msec per map requrest) compared to national mapping agencies. Evidently, computer science heavy organizations like Google and Microsoft have adapted better to the reality of Web mapping than national mapping agencies -- while simultaneously serving maps to orders of magnitude larger audiences. This puts pressure on national mapping agencies, who must catch up or become irrelevant. To support the adoption of best practice Web maps in national mapping agencies, this thesis aims to disclose a set of low-cost techniques for serving map content online with high availability and high scalability.
 
-\section{Requirements of Web Mapping Pipelines}
+\section{Requirements of a Web Mapping Pipeline}
 \label{sec:introduction:web:mapping:pipelines}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.6]{figs-thesis/mapping-states.pdf}
-\caption{States and transitions of a mapping pipeline.}
+\caption{\textbf{States and transitions of a digital mapping pipeline}: data modelling (1); logical abstraction (2); graphical abstraction (3); rendering (4).}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen. The mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. The intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphic model}~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
+The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen. The mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. The intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphical model}~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
 
-While the final state is a straight-forward rendering of the graphic model, the three intermediate states require further explanation:
+While the final state is a straight-forward rendering of the graphical model, the three intermediate states require further explanation:
 
 \begin{enumerate}
 \item \textbf{Data model}: the data model captures reality as a set of discrete geographic information objects. Geographic information objects associate a geometry, such as a \emph{point}, \emph{line} or \emph{area}, with a set of \emph{qualitative}, \emph{ordered} and \emph{quantitative} components~\cite{jacques1967semiologie}.
-\item \textbf{Logical model}: the logical model logically abstracts the data model by \emph{selection}, \emph{projection} and \emph{aggregration} of the information objects, in order to emphasize the important and suppress the irrelevant. The logical model captures \emph{what} information the digital map contains. It should be noted that the term projection is used here as it is used in databases, i.e. the modification of an information object.
-\item \textbf{Graphic model}: the graphic model graphically abstracts the logical model into a set of graphic symbols, in order to maximize the efficiency of visual \emph{perception} and \emph{comprehension} in the digital map. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{jacques1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
+\item \textbf{Logical model}: the logical model logically abstracts the data model by \emph{selection}, \emph{projection} and \emph{aggregration} of the information objects, in order to emphasize the important and suppress the irrelevant. The logical model captures \emph{what} information the digital map contains. It should be noted that here the term projection is used as it is used in databases, i.e. the denote modification of an information object.
+\item \textbf{Graphical model}: the graphical model graphically abstracts the logical model into a set of symbols, such that the conditions for efficient \emph{visual perception} and \emph{comprehension} in the digital map are maximized. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{jacques1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
 \end{enumerate}
 
 It is important to study the tasks and requirements that are associated with each transition and state in the pipeline, since this allows us to evaluate state-of-the-art pipelines against a hypothetical pipeline that meets all of the requirements. 
 
-Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. Transition four (rendering) is outside the scope of this thesis. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for logical abstraction are discussed in Section~\ref{sec:introduction:requirements:logical:model}.
+Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. Transition four (rendering) is outside the scope of this thesis. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for logical abstraction are discussed in Section~\ref{sec:introduction:requirements:logical:abstraction}.
 
-The above view of a mapping pipeline is agnostic of the existance of the Web and the Internet. In contrast, a \emph{web mapping pipeline} allows the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web.
+The above view of a mapping pipeline is agnostic of the existence of the Web or the Internet. In contrast, a \emph{web mapping pipeline} requires the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web and over the Internet. These requirements are discussed in Section~\ref{sec:introduction:requirements:distribution}.
 
 
 \subsection{Logical Abstraction} 
-\label{sec:introduction:requirements:logical:model}
+\label{sec:introduction:requirements:logical:abstraction}
 
 \begin{figure}[htbp]
 \begin{center}
@@ -285,7 +285,9 @@ This example list of constraints and objectives illustrates concrete ways to qua
 
 While the concrete formulation of constraints and objectives depends on the map that is being designed, any map design process must be guided by some set of constraints and objectives, such as the ones described above. Specifically, holistic selection of geographic information for maps requires holistic constraints and objectives.
 
-\subsection{Distribution of Geographic Information} In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
+\subsection{Distribution of Content} 
+\label{sec:introduction:requirements:distribution}
+In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
 
 \begin{itemize}
 \item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be quantified in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge.
