@@ -233,14 +233,14 @@ The digital mapping process can be modelled as a pipeline that translates betwee
 While the final state is reached by a straight-forward rendering of the graphical model, the three intermediate states and their connecting transitions require further explanation:
 
 \begin{enumerate}
-\item \textbf{Data model}: the data model behind a map captures reality as a set of discrete geographic information objects. Geographic information objects associate a \emph{geometry}, such as a point, line or area, with a set of \emph{qualitative}, \emph{ordered} and/or \emph{quantitative components}~\cite{jacques1967semiologie}.
+\item \textbf{Data model}: the data model behind a map captures reality as a set of discrete geographic information objects. Geographic information objects associate a \emph{geometry}, such as a point, line or area, with a set of \emph{qualitative}, \emph{ordered} and/or \emph{quantitative components}~\cite{bertin1967semiologie}.
 \item \textbf{Logical model}: the logical model of a map logically abstracts the data model by \emph{selection}, \emph{projection} and \emph{aggregration} of the geographic information objects, in order to emphasize the important and suppress the irrelevant. The logical model captures what information the digital map \emph{contains}, but not how it is \emph{displayed}. It should be noted that here the term projection is used as it is used in databases, i.e. the denote modification of an information object.
-\item \textbf{Graphical model}: the graphical model of a map graphically abstracts the logical model into a set of symbols, such that the conditions for efficient \emph{visual perception} and \emph{comprehension} in the digital map are maximized. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{jacques1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
+\item \textbf{Graphical model}: the graphical model of a map graphically abstracts the logical model into a set of symbols, such that the conditions for efficient \emph{visual perception} and \emph{comprehension} in the digital map are maximized. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{bertin1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
 \end{enumerate}
 
 There is an important interplay between the logical and graphical model. Different graphical abstractions may trigger the need for new logical abstractions, even through the graphical abstraction step is downstream from the logical abstraction step in Figure~\ref{fig:introduction:requirements:pipeline}. For example, choosing symbols of larger size in the graphical model means that information objects are more likely to overlap. This in turn may requires a renewal of the logical model, such that objects are selected that are futher apart. In conclusion, the ordering of these two states is somewhat arbitrary, and can be sensibly modeled either way.
 
-Research must study the requirements of the mapping pipeline, since this allows researchers to compare state-of-the-art pipelines against hypothetical pipelines that meets all of the requirements. Naturally, mapping pipelines have been studied extensively in the literature. Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1973semiologie}. Transition four (rendering of symbols) is fairly straight-forward and will not be discussed further. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for this step are discussed in Section~\ref{sec:introduction:requirements:logical:abstraction}.
+Research must study the requirements of the mapping pipeline, since this allows researchers to compare state-of-the-art pipelines against hypothetical pipelines that meets all of the requirements. Naturally, mapping pipelines have been studied extensively in the literature. Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1967semiologie}. Transition four (rendering of symbols) is fairly straight-forward and will not be discussed further. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for this step are discussed in Section~\ref{sec:introduction:requirements:logical:abstraction}.
 
 The above view of a mapping pipeline is agnostic of the existence of the Web or the Internet. In contrast, a \emph{web mapping pipeline} requires the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web and over the Internet. These requirements are discussed in Section~\ref{sec:introduction:requirements:distribution}.
 
@@ -344,7 +344,7 @@ A method to achieve scalable maps is to partition the geographic data over a fix
 
 ~\cite{gaffuri12vectortiles}
 
-There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, clients may choose the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of information symbols such that the efficiency of graphic communication is maximized~\cite{jacques1967semiologie}. Second, content delivery network (CDN) can store  tiled vector data for highly scalabe, available and performant distribution~\cite{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, essentially contributes a CPU to the mapping pipeline, which is utilized to render information as graphics.
+There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, clients may choose the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of information symbols such that the efficiency of graphic communication is maximized~\cite{bertin1967semiologie}. Second, content delivery network (CDN) can store  tiled vector data for highly scalabe, available and performant distribution~\cite{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, essentially contributes a CPU to the mapping pipeline, which is utilized to render information as graphics.
 
 Since small scale maps generally intersect larger quantities of geographic objects than large scale maps, there is a need to bound the amount of data in each tiles. Otherwise, small scale tiles would be very larger and take much longer to transmit over the Internet than large scale tiles. To keep the amount of information in each tile constant independently of the scale, the vector data must be generalized. A batch-oriented approach to generalization of content for vector tiles, is particularly useful for scalable web maps. This content generalization and the distribution steps for vector tiles is schematized in Figure~\ref{fig:introduction:approaches:vector:tiles}.
 
@@ -499,6 +499,33 @@ The remainder of this thesis is organized as follows.
 \label{chapter:related:work}
 
 \minisec{Generalization}
+
+\section{Algorithms}
+
+\section{Spatial Analytics}
+Glossy and CVL compilers target a spatial database managment system engine and its query language SQL with spatial UDFs. Other spatial analytics systems or query languages could have been targeted.
+
+\subsection{Systems}
+
+Other scalable options include Parallel Databases, such as Greenplum, Oracle Spatial, Vertica?
+
+Other scalable options include Cluster Computing Systems, such as SpatialHadoop and HadoopGIS.
+
+\subsection{Query Languages}
+
+MapReduce with UDFs
+SQL or related, such as Pig Latin/Pigeon with UDFs
+
+
+
+
+
+\subsection{Analytics Programming Languages}
+
+
+Compiler targets scalable spatial analytics systems, which include 
+
+Their prograp
 
 
 
