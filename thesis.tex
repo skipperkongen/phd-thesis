@@ -528,6 +528,10 @@ Spatial analysis includes formal technique for analyzing spatial information obj
 At a broad level, spatial analytics can be categorized into programmable approaches and non-programmable approaches. The following sections will focus mainly on programmable approaches, while non-programmable approaches are briefly surveyed in the last section. Each section will describe some of the systems in the given category, as well as how they are programmed (if at all) plus their primary advantages and limitations.
 
 
+\subsection{Geographic Information Systems}
+
+TODO
+
 \subsection{Key-Value Stores}
 Geocouch, MongoDB, Cassandra, Riak.
 
@@ -536,25 +540,18 @@ Programmed in a variety of native languages.
 Hmmm, what to say.
 
 \subsection{Databases}
-Databases with spatial datatypes and functions include single-instance databases~\cite{postgres,mssql,oracle} and distributed databases~\cite{greenplum, vertica}.
+Databases with spatial datatypes and functions include single-instance databases~\cite{postgresql,mssql,oracle} and distributed databases~\cite{greenplum, vertica}.
 
 Programmed in SQL.
 
 Very flexible, very scalable, algebra does not require knowledge of $n$
 
 \subsection{Cluster Computing}
-Scalable spatial analytics systems can be built on top of a scalable and general purpose cluster computing system, such as Apache Hadoop~\cite{apachehadoop} or Apache Spark~\cite{zaharia2010spark}. The advantage is that these systems offer unlimited scalability in storage and compute capacity through a scale-out architecture.
+Recently, highly scalable cluster computing systems, such as Apache Hadoop~\cite{apachehadoop} or Apache Spark~\cite{zaharia2010spark}, have appeared. These systems, which can be programmed using functional~\cite{dean04mapreduce, epfl2014scala} and declarative~\cite{olston2008pig,thusoo2010hive} paradigms, offer almost unlimited scalability in storage and compute capacity through a scale-out architecture. 
 
-Example of spatial analytics systems on clusters include Hive~\cite{witayangkurn2012spatialhive}, SpatialHadoop~\cite{aji2012hadoopspatial} and HadoopGIS~\cite{aji2013hadoopgis}.
+Spatial analytics systems can be scalably implemented on top of a general purpose clusters, which is typically implemented by developing a set of spatial UDFs in the extension language of the cluster, which for Hadoop and Spark is any JVM language. Once the UDFs are in place, a high-level declarative query language, such as HiveQL~\cite{witayangkurn2012spatialhive} and Pig Latin~\cite{eldawy2014pigeon}, can be used to execute highly scalable spatial analytics queries over large amounts of data that is stored in the distributed filesystem of the cluster. These queries are transformed into MapReduce jobs by the system implementation. MapReduce has been shown to scalable compute spatial analytics problems.~\cite{cary2009experiences}.
 
-
-such as Hive with spatial UDFs~\cite{witayangkurn2012spatialhive}, SpatialHadoop~\cite{aji2012hadoopspatial} and HadoopGIS~\cite{},  Mature cluster computing systems are freely available, such as the disk-based Apache Hadoop~\cite{apachehadoop} as well as the in-memory Apache Spark~\cite{zaharia2010spark} systems. A spatial analytics systems is typically implemented on top of cluster systems by developing a set of spatial UDFs in the extension language of the cluster, for example any JVM language for Hadoop. Once the UDFs are in place, a high-level query language, such as HiveQL~\cite{thusoo2010hive}, MapReduce jobs~\cite{}, and Pig Latin~\cite{eldawy2014pigeon}, can be used to execute highly scalable spatial analytics queries over large amounts of data that is stored in the distributed filesystem of the cluster.
-
-Typically, a spatial analytics systems on top of a consiste, such as   have been implementes on top of these systems. 
-
-Programmed as MapReduce jobs~\cite{}, or queries in HiveQL~\cite{witayangkurn2012spatialhive} or other declarative languages, such as Pig Latin with spatial extensions~\cite{eldawy2014pigeon}.
-
-Very flexible, very scalable, query languages does not require knowledge of $n$. However, spatial data is usually not managed in the filesystem of the cluster, so before it can be processed the data needs to be moved from its primary location, which is typically an SDBMS.
+Performing spatial analytics on a Hadoop or Spark clusters has both advantages and drawbacks. The two main advantages are that clusters can be programmed in highly productive query languages, such as languages in the SQL familiy, and that clusters provide highly scalable means to process huge quanties of geographic information. These drawbacks are countered by some significant drawbacks. First, spatial data is usually not managed in the distributed filesystem of a cluster. So, before data can be processed it must be moved from its primary location, which is typically an SDBMS. Naturally, this incurs a substantial amount of I/O. Second, any indexes that may have been present in the SDBMS are lost and have to be reimplemented on the cluster for processing of advanced queries, such as spatial joins~\cite{zhang2009sjmr} However, these are perhaps minor problems and not fundamental ones. For this reason spatial analytics on clusters it is an interesting approach, also in a support role for scalable generalization of large quanties of geographic information.
 
 \subsection{Conclusion}
 
