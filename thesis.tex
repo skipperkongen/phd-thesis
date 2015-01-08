@@ -498,35 +498,63 @@ The remainder of this thesis is organized as follows.
 \chapter{Related Work}
 \label{chapter:related:work}
 
-\section{Generalization}
-This thesis proposes a unified model for selection. What other types of operators exist?
 
-\section{Spatial Analytics}
+
+\section{Generalization Methods}
+In conventional cartography, map generalization is responsible for reducing complexity in a map in a scale reduction process, emphasizing the essential while suppressing the unimportant, maintaining logical and unambiguous relations between map objects, and preserving aesthetic quality~\cite{weibel1999generalising}.
+
+The generalization process can be modelled in many ways~\cite{harrie2007modelling}. However, this section will review work in two specific categories: algorithmic approaches and programmable approaches.
+
+\subsection{Algorithmic approach}
+In algorithmic approaches to spatial analysis, a programmer has pre-specified the entire logic for generalization. To let map designers influence the generalization process, some algorithms accept user-defined input parameters, while other do not.
+
+\subsection{Programmable approach}
+In a programmable approach, the logic of generalization is specified to a large extent by the map designer or tool designer.
+
+\subsection{Linear Programming}
+Many problems in generalization can be formulated as variants of linear programming, such as mixed integer programs, integer programs, and 0-1 integer programs. For example, selection can be formulated as 0-1 integer programming with binary decision variables, while displacement~\cite{ware2003generalization_sa} and aggregation~\cite{haunert2010area} can be modelled with integer decision variables.
+
+There are many solvers for available for integer programs. Integer programming solvers fall into two camps. On one hand, problem-specific solvers aim to solve one specific problem, such as , very efficiently. On the other hand, general-purpose solvers, such as Cplex~\cite{cplex200711} and ABACUS~\cite{junger2000abacus}, aim to solve any integer programming instances with reasonable efficiency. Furthermore, parallel implementations of the general-purpose branch-and-bound algorithm have been studied for grid computing~\cite{mezmaz2007grid} and connection machines~\cite{eckstein1994parallel}. Atamt{\"u}rk and Savelsbergh have surveyed general-purpose systems for integer programming~\cite{atamturk2005integer}, while Gendron and Crainic~\cite{} have focused on a survey of parallel solvers~\cite{gendron1994parallel}. Mostly, parallel solvers are specialized for specific problems such as vehicle routing~\cite{ralphs2003parallel}, multicommodity location~\cite{gendron1997parallel}, and depot location and container fleet managemen~\cite{bourbeau2000branch}. 
+
+Integer programming is NP-hard, so a common method that has been used to solve generalization problems, is to use a heuristic, such as simulated annealing. While integer programming is a powerful paradigm, it is hard to express custom constraints in this model, programming requires a priori knowledge of $n$ (the size of the dataset) and most current systems do not scale out.
+
+\section{Systems for Spatial Analytics}
+Spatial analysis includes formal technique for analyzing spatial information objects using their topological, geometric, or geographic properties. While spatial analytics does by itself generalize a spatial dataset, it can provide essential information to be used in the generalization process. For example, spatial analysis can yield information about which records that are in conflict with each other and which spaces have high density. This information can be used downstream by an algorithm, which can consequently be dramatically simplified. Spatial analysis is often a heavy-duty task, and therefore many spatial analytics approaches will emphasize scalability. 
+
+At a broad level, spatial analytics can be categorized into programmable approaches and non-programmable approaches. The following sections will focus mainly on programmable approaches, while non-programmable approaches are briefly surveyed in the last section. Each section will describe some of the systems in the given category, as well as how they are programmed (if at all) plus their primary advantages and limitations.
+
+
+\subsection{Key-Value Stores}
+Geocouch, MongoDB, Cassandra, Riak.
+
+Programmed in a variety of native languages.
+
+Hmmm, what to say.
+
+\subsection{Databases}
+Databases with spatial datatypes and functions include single-instance databases~\cite{postgres,mssql,oracle} and distributed databases~\cite{greenplum, vertica}.
+
+Programmed in SQL.
+
+Very flexible, very scalable, algebra does not require knowledge of $n$
+
+\subsection{Cluster Computing}
+Scalable spatial analytics systems can be built on top of a scalable and general purpose cluster computing system, such as Apache Hadoop~\cite{apachehadoop} or Apache Spark~\cite{zaharia2010spark}. The advantage is that these systems offer unlimited scalability in storage and compute capacity through a scale-out architecture.
+
+Example of spatial analytics systems on clusters include Hive~\cite{witayangkurn2012spatialhive}, SpatialHadoop~\cite{aji2012hadoopspatial} and HadoopGIS~\cite{aji2013hadoopgis}.
+
+
+such as Hive with spatial UDFs~\cite{witayangkurn2012spatialhive}, SpatialHadoop~\cite{aji2012hadoopspatial} and HadoopGIS~\cite{},  Mature cluster computing systems are freely available, such as the disk-based Apache Hadoop~\cite{apachehadoop} as well as the in-memory Apache Spark~\cite{zaharia2010spark} systems. A spatial analytics systems is typically implemented on top of cluster systems by developing a set of spatial UDFs in the extension language of the cluster, for example any JVM language for Hadoop. Once the UDFs are in place, a high-level query language, such as HiveQL~\cite{thusoo2010hive}, MapReduce jobs~\cite{}, and Pig Latin~\cite{eldawy2014pigeon}, can be used to execute highly scalable spatial analytics queries over large amounts of data that is stored in the distributed filesystem of the cluster.
+
+Typically, a spatial analytics systems on top of a consiste, such as   have been implementes on top of these systems. 
+
+Programmed as MapReduce jobs~\cite{}, or queries in HiveQL~\cite{witayangkurn2012spatialhive} or other declarative languages, such as Pig Latin with spatial extensions~\cite{eldawy2014pigeon}.
+
+Very flexible, very scalable, query languages does not require knowledge of $n$. However, spatial data is usually not managed in the filesystem of the cluster, so before it can be processed the data needs to be moved from its primary location, which is typically an SDBMS.
+
+\subsection{Conclusion}
+
 Glossy and CVL compilers target a spatial analytics system and its query language with spatial UDFs. The system of choice was PostgreSQL with SQL and PostGIS UDFs. Other spatial analytics systems or query languages could have been targeted instead.
-
-\subsection{Systems}
-
-Other scalable options include Parallel Databases, such as Greenplum, Oracle Spatial, Vertica?
-
-Other scalable options include Cluster Computing Systems, such as SpatialHadoop and HadoopGIS.
-
-\subsection{Query Languages}
-
-MapReduce with UDFs
-SQL or related, such as Pig Latin/Pigeon with UDFs
-
-
-
-
-
-\subsection{Analytics Programming Languages}
-
-
-Compiler targets scalable spatial analytics systems, which include 
-
-Their prograp
-
-
 
 
 \chapter{Unified Model for Selection of Geographic Information}
