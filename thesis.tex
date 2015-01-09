@@ -180,7 +180,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
 \end{emphpar}
 
-For thousands of years, humans have used their visual senses to comprehend geographic information on maps. Humans have learned over time that a legible map enables instant comprehension of relevant geographic information, while a cluttered map inhibits such comprehension. Over time, the reasons that maps are created and the context they are created in have constantly evolved. Accordingly, novel methods for drawing maps have been invented, studied, and sometimes discarded. However, there exists no evidence to suggest that the human capacity for visual perception and comprehension has evolved significantly since the stone age. Consequently, modern map makers must accomodate the same cognitive limitations in humans as ancient map makers.
+For thousands of years, humans have used their visual senses to comprehend geographic information on maps. Humans have learned early on that legible maps enables instant comprehension of relevant geographic information, while cluttered maps inhibits such comprehension. Over time, the reasons that maps are created and the context they are created in have constantly evolved. Accordingly, novel methods for drawing maps have been invented, studied, and sometimes discarded. However, there exists no evidence to suggest that the human capacity for visual perception and comprehension has evolved significantly since the stone age. Consequently, modern map makers must accomodate the same cognitive limitations in humans as ancient map makers.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -190,8 +190,10 @@ For thousands of years, humans have used their visual senses to comprehend geogr
 \end{center}
 \end{figure}
 
+\minisec{Map Visualization}
+Map visualization studies the process by which geographic information is displayed on a three-dimensional medium (x, y, color), most recently on computer screens and historically on pieces of paper or even clay tablets~\cite{friendly2008milestones,robinson1982early}. Since ancient times, the requirements for this process have been to \emph{accurately} and \emph{legibly} represent as much as possible of the \emph{relevant} information on a highly restricted medium~\cite{jones2005webage}. It is a challenging process, since opposing goals must balanced in order to achieve an optimal map. Frequently, there will be too much information to be visualized compared to the representational budget of the highly restricted map medium. 
 
-Map visualization studies the process by which geographic information is displayed on a three-dimensional medium (x, y, color), most recently on computer screens and historically on pieces of paper or even clay tablets~\cite{friendly2008milestones,robinson1982early}. Since ancient times, the requirements for this process have been to \emph{accurately} and \emph{legibly} represent as much as possible of the \emph{relevant} information on a highly restricted medium~\cite{jones2005webage}. It is a challenging process, since opposing goals must balanced in order to achieve an optimal map. Frequently, there will be too much information to be visualized compared to the representational budget of the highly restricted map medium. If you need convincing, try to pick up a pencil and draw a full world map on a sheet of A4 paper. Almost immidiately, you will need to select which cities, islands, lakes, etc. to include, and which to leave out. Having made the hard choices of what to include, next you will need to decide how to graphically render the information you have chosen to include. A daunting task to be sure.
+If you need convincing that map visualization is a difficult task, try to pick up a pencil and draw a detailed map of the World on a sheet of A4 paper. Almost immidiately, you will need to select which cities, islands, lakes, etc. to include, and which to leave out. Now imagine that you have to draw a map of a different world than the physical Earth; a world you have no prior knowledge of; a world where you do not start with a mental model of what is important and what is irrelevant. A daunting task to be sure. This is the kind of world that data journalists mapped over the Wikileaks data, which came about as a pile of unordered messages full of hard-to-obtain geographic information (see the left map in Figure~\ref{fig:introduction:background:mashups}).
 
 \minisec{Geographic Information}
 Geographic information is typically represented by discrete and multi-dimensional \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with a \emph{set of attributes} of qualitative, ordered and/or quantitative types~\cite{bertin1967semiologie}: \emph{qualitative attributes}, such as the cousine of a restaurant, have no inherent order. For example, Italian is neither more nor less than Japanese; \emph{ordered attributes}, such as price category, allows a ranking. For example, mid-range restaurants are more expensive than budget restaurants but cheaper than gourmet restaurants; \emph{quantitative attributes}, such as average rating (on a 0-5 scale), allow aritmetic to be performed on their values.
@@ -287,7 +289,7 @@ Research must study the requirements of the mapping pipeline, since this allows 
 
 The above view of a mapping pipeline is agnostic of the existence of the Web or the Internet. In contrast, a \emph{web mapping pipeline} requires the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web and over the Internet. These requirements are discussed in Section~\ref{sec:introduction:requirements:distribution}.
 
-\subsection{Requirements of Logical Abstraction} 
+\subsection{Selection} 
 \label{sec:introduction:requirements:logical:abstraction}
 
 \begin{figure}[htbp]
@@ -331,7 +333,7 @@ While Example~\ref{ex:ios6:design:goals} is illustrative of the design goals tha
 Given an initial map state, typically corresponding to the primary data model, different logical models can be derived by the application of map generalization operators, i.e. selection, projection and aggregation. Each derived state may be evaluated against the constraints and objectives, in order to decide its feasibility and utility. According to combinatorial optimization view of map generalization, the derived logical model for a map must satisfy the active constraints and be optimal with regard to the objective. These are the core requirements of logical abstraction that are considered by this thesis.
 
 
-\subsection{Requirements of Content Distribution} 
+\subsection{Distribution} 
 \label{sec:introduction:requirements:distribution}
 In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
 
@@ -346,16 +348,12 @@ In stage four of the web mapping pipeline, map content is distributed over the I
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
-\section{Overview of State-of-the-Art}
+\section{When to Process Selection}
 \label{sec:introduction:architectures}
 
-State-of-the-Art mapping pipelines are distinquished, among other things, by \emph{when} selection of data is performed relative to when a request for map data is recieved, either \emph{real-time} or \emph{in advance}. Moreover, mapping pipelines are distinguished by the type of data that they send to mapping clients, which is either \emph{graphics} or \emph{information}, which can be turned into graphics by the client.
+A key distinction between state-of-the-art mapping pipeline is the timing of the map generalization process. Two extreme approaches are \emph{real-time}~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented}~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards} approaches. In the following sections, the advantages and drawbacks of both approaches are analyzed.
 
-\subsection{When to Perform Selection}
-
-Two important high-level approaches have been proposed for generalization of geographic information, namely \emph{real-time} (or on-the-fly) generalization~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented} generalization~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards}. While the requirements for \emph{what} should be the produced are the same for the two approaches, vis-a-vis map constraints and objectives, these two approaches differ in \emph{when} the results are produced. The distinctions as well as the pros and cons of each approach in a Web context are discussed below.
-
-\minisec{Real-time approach}
+\subsection{Real-time Approach}
 Real-time generalization adapts geographical information at the time when a user requests geographic information for a map. Typically, an indexing structure, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}, is the factor that facilitates fast real-time generalization algorithms. At first, real-time selection seems like an ideal approach for two reasons. 
 
 First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update mechanism, such as transactions~\cite{gray1981transaction}, a selection algorithm always computes solutions based on the most recent and consistent state of the data. However, this is only true if the atomic update propagates to the index as well, which is a significant consideration given that data is typically managed outside the map generalization framework.
@@ -366,7 +364,7 @@ However, there are several issues with real-time generalization in a Web context
 
 In conclusion, real-time generalization is currently an infeasible approach for web mapping pipelines that target large Web audiences.
 
-\minisec{Batch-oriented approach}
+\subsection{Batch-oriented Approach}
 Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to a batch-oriented approach.
 
 First, since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Distributed data analytical systems, such as spatial parallel databases and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}, can be wielded to make the process highly scalable with regard to data volume. For example, while highly scalable batch-oriented systems, such as Apache Hadoop or Apache Spark, cannot be used for real-time generalization, they are intrinsically appropriate for batch-oriented generalization of geographic information.
@@ -375,9 +373,9 @@ Second, materialized multi-scale views can be easily partioned and replicated on
 
 There are three drawbacks of a batch-oriented approach that are quite obvious. However, they are also pratically negligle in a Web context compared to the drawbacks of real-time generalization. The first issue has to do with storage cost. While materialized views incur an increased storage cost, disk space have become perhaps the cheapest resource to scale in cloud infrastructures. Moreover, in-memory storage systems, such as RAMCloud~\cite{ousterhout2011ramcloud}, show the way to cheap, highly performant and highly fault tolerant memory-backed storage, which is a trend that is bound to strengthen over time. The second issue has to do with staleness, which is also arguably neglible. While materialized views are potentially stale the very instant they have been produced, they can also be refreshed quite fast as demand dictates, since highly scalable data processing systems can be used in batch-oriented generalization. The third issue is more critical, namely that batch-oriented generalization cannot take individual user preferences into account, since they are geneally not know at processing time. A suboptimal work around is to materialize views for several different user profiles and choose between them at query time.
 
-In conclusion, batch-oriented generalization is the only viable option for scalable web mapping pipelines. While batch-oriented generalization suffers from one significant drawback,  namely the difficulty of adapting content to individual users, this drawback must be tolerated since there is (currently) no alternative.
+In conclusion, batch-oriented generalization is the only viable option for scalable web mapping pipelines. While batch-oriented generalization suffers from one significant drawback,  namely the difficulty of adapting content to individual users, this drawback must be tolerated since it seems that there is currently no better alternative.
 
-\subsection{How to Distribute Maps Using Tiles}
+\subsection{Example: How to Distribute Maps Using Tiles}
 A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile. Once the tiles have been created, a content delivery network (CDN) can store and distribute the tiles to mapping clients with high scalability, availability and performance~\cite{dilley2002cdn}. An advantage of tiles is that they can be addressed using discrete and three-dimensional cell coordinates. For this reason, tiles can be accessed in a key-value query model. There are two types of geographic data, and therefore two types of tiles: \emph{raster tiles} that contain graphics and \emph{vector tiles} that contain information or data. Below, the pros and cons of each type of tile is discussed.
 
 \minisec{Raster Tiles}
@@ -599,6 +597,10 @@ Performing spatial analytics on a Hadoop or Spark clusters has both advantages a
 \subsection{Conclusion}
 
 Glossy and CVL compilers target a spatial analytics system and its query language with spatial UDFs. The system of choice was PostgreSQL with SQL and PostGIS UDFs. Other spatial analytics systems or query languages could have been targeted instead.
+
+\section{Data Wrangling}
+
+TODO
 
 
 \chapter{Unified Model for Selection of Geographic Information}
