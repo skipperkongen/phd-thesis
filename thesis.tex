@@ -113,9 +113,13 @@
 
 \sloppy
 
+%\title{Declarative Cartography for Scalable Geographic Data Visualizations}
+%\title{Declarative Cartography for Scalable Map Visualizations}
+%\title{Scalable Selection for Geographic Data Visualizations}
+\title{Declarative and Scalable Selection for Map Visualizations}
 %\title{Declarative Selection for Online Geographic Data Visualizations}
 %\title{Declarative and Scalable Web Mapping Systems}
-\title{Declarative Web Mapping}
+%\title{Declarative Web Mapping}
 %\title{Declarative Cartography for Scalable Web Mapping Pipelines}
 %\title{Geodata Visualization Management Systems}
 %\title{Building Scalable Data Visualization Management Systems}
@@ -169,14 +173,35 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \label{chapter:introduction}
 
 \vspace{-4ex}
-\section{Background and Motivation}
-\label{sec:introduction:background:and:motivation}
+\section{Background}
+\label{sec:introduction:background}
 
 \begin{emphpar}
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible}. 
-
-\emph{Legible} maps enable humans to \emph{comprehend} geographic information. One way to ensure a legible map is to \emph{select} data holistically according to constraints and objectives that ensure the feasibility and utility of a map. Thus, maps breed spatial intelligence.
 \end{emphpar}
+
+Map visualization studies how the vast geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a highly restricted medium~\cite{jones2005webage}.  
+
+\minisec{Visual Cognition} 
+The visual cognitive ability of Homo Sapiens, the principal consumer and designer of maps, has probably remained unchanged for thousands of years, the map visualization discipline itself has undergone revolution after revolution. For thousands of years, humans have use their accute visual senses to comprehend spatial information on geographic maps. While legible maps enable humans to comprehend relevant geographic information in an instant, cluttered maps in constrast inhibit any comprehension. A basic challenge in map visualization is how graphics are affected by a reduction in scale. While the three dimensions of the image make the visual sense our most powerful channel of perceptions, images have only three dimensions and the consequences of this limitation are important~\cite{bertin1967semiologie}. 
+
+\minisec{Consequences of scale reduction}
+Maps, which are a type of graphic, have been produced at many different scales. Scale is the ratio between distance measured on the visualization medium and distance measured in reality. For example, for a 1:500.000 map, 1 cm on the map corresponds to 5 km on the ground. While one map may show just a single city (a large scale map), another map may depict the entire world (a small scale map). As a graphic is scaled down the visual perceptibility of the graphic is reduced, which is caused by a number of important effects.
+
+One important effect that occurs when a graphic is scaled down is that objects in the graphic will appear to be smaller and closer together. Consequently, objects may approach the limit of perceptibility and distinguishability. For example, if an object becomes too small it may become impercievable to the human eye and appear to vanish. Correspondingly, if the proximity of objects becomes too close they may become indistinguishable from each other. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography. For example, it has been found that the sides of a black square, which may represent a building, should be no shorter than 0.35 mm. while two parallel curves, which may represent a road, should be separated by at least 0.25 mm. 
+
+An other important effect that occurs when a graphic is scaled down is that the information density of a graphic will appear to rise. Several metrics for information density have been studied, such as Tufte's density metric~\cite{tufte1983visual} along the other density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The \emph{principle of constant information density} states that information density should remain constant across changes in scale, which was formally established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that maps in published atlasses contain a roughly fixed average number of settlements per a unit area independently of the map scale. The rationalized their observation by observing that a linear reduction in scale implies a reduction in area according to geometrical progression, which must also lead to a reduction in information per unit area according to geometrical progression, if the information is to remain legible.
+
+Thus, map visualization is fundamentally a ``big data'' challenge, since the amount of geographic information typically exceed the representational budget of the medium (see Figure~\ref{fig:introduction:background:raw:poi})..
+
+\minisec{Map Generalization}
+A basic challenge in map design, known as map generalization~\cite{shea1989cartographic,weibel1997generalization}, is how to alter the representation of geographic information in response to a reduction in scale, such that the graphic representation of geographic information remains legible and useful. 
+
+
+
+
+
+One way to ensure a legible and relevant maps is to select data holistically according to constraints and objectives that ensure that humans will find relevant information on the map. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -187,7 +212,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \end{figure}
 
 % Background
-Map visualization studies how the vast geography of the Earth can be displayed, most recently on computer screens and historically on pieces of paper. Since ancient times, the requirements for this process have been to purposefully and legibly represent as much as possible of the relevant information on a highly restricted medium~\cite{jones2005webage}. Map visualization is fundamentally a ``big data'' challenge, since the amount of geographic information typically exceed the representational budget of the medium (see Figure~\ref{fig:introduction:background:raw:poi}). Therefore, the geographic information must be adapted to fit the budget, which is a fundamentally hard part of the mapping process that is known as \emph{generalization}~\cite{shea1989cartographic,weibel1997generalization}.
+
 
 \begin{figure}[htbp]
 \begin{center}
@@ -198,7 +223,10 @@ Map visualization studies how the vast geography of the Earth can be displayed, 
 \vspace*{-4ex}
 \end{figure}
 
-This thesis has studied the mapping operations of a national mapping agency~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. While little has been written about this, the effect is evident to anyone working with maps and geographic information on the web. The outset of this thesis was to understand the techniques that have enabled the success of commercial mapping providers, see if the techniques can be improved, and finally transfer the knowledge into the public domain. While this promethean goal implicitly motivates this thesis, its contributions are necessarily more focused on fewer, yet important challenges within this larger picture.
+
+\section{Motivation}
+\label{sec:introduction:motivation}
+Geographic maps are provided online by private companies and national mapping agencies~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. While little has been written about this, the effect is evident to anyone working with maps and geographic information on the web. The outset of this thesis was to understand the techniques that have enabled the success of commercial mapping providers, see if the techniques can be improved, and finally transfer the knowledge into the public domain. While this promethean goal implicitly motivates this thesis, its contributions are necessarily more focused on fewer, yet important challenges within this larger picture.
 
 % The changes and challenges caused by the web.
 The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} digital maps are produced and consumed, which has also shifted the use cases for map generalization. In the wake, a dual challenge of map creation and distribution has emerged, which cannot be adequately addressed by traditional geographic information systems (GIS). In a nutshell, GIS was arguably developed during and for another time and need~\cite{ucgis2014tomlinson}.
