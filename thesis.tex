@@ -180,7 +180,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
 \end{emphpar}
 
-For thousands of years, humans have used their visual senses to comprehend geographic information on maps. Humans have learned early on that legible maps enables instant comprehension of relevant geographic information, while cluttered maps inhibits such comprehension. Over time, the reasons that maps are created and the context they are created in have constantly evolved. Accordingly, novel methods for drawing maps have been invented, studied, and sometimes discarded. However, there exists no evidence to suggest that the human capacity for visual perception and comprehension has evolved significantly since the stone age. Consequently, modern map makers must accomodate the same cognitive limitations in humans as ancient map makers.
+For thousands of years, humans have used their visual senses to comprehend geographic information on maps. Humans learned early on that legible maps enable instant comprehension of relevant geographic information, while cluttered maps inhibit comprehension. Over time, the reasons that maps are created and the context they are created in have constantly evolved. Accordingly, novel methods for drawing maps have been invented, studied, and sometimes discarded. However, there exists no evidence to suggest that the human capacity for visual perception and comprehension has evolved significantly since the stone age. Consequently, modern map makers who wield modern map making tools must accomodate the same human cognitive limitations as ancient map makers.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -190,36 +190,81 @@ For thousands of years, humans have used their visual senses to comprehend geogr
 \end{center}
 \end{figure}
 
-\minisec{Map Visualization}
-Map visualization studies the process by which geographic information is displayed on a three-dimensional medium (x, y, color), most recently on computer screens and historically on pieces of paper or even clay tablets~\cite{friendly2008milestones,robinson1982early}. Since ancient times, the requirements for this process have been to \emph{accurately} and \emph{legibly} represent as much as possible of the \emph{relevant} information on a highly restricted medium~\cite{jones2005webage}. It is a challenging process, since opposing goals must balanced in order to achieve an optimal map. Frequently, there will be too much information to be visualized compared to the representational budget of the highly restricted map medium. 
+\minisec{Difficulty of Map Visualization}
+Map visualization studies the process by which geographic information is displayed on a three-dimensional medium (x, y, color), most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. Since ancient times, the requirements for this process have been to \emph{accurately} and \emph{legibly} represent as much as possible of the \emph{relevant} information on a highly restricted medium~\cite{jones2005webage}. It is a challenging process, since opposing goals must balanced in order to achieve an optimal map. Frequently, there will be too much information to be visualized compared to the representational budget of the map medium. 
 
-If you need convincing that map visualization is a difficult task, try to pick up a pencil and draw a detailed map of the World on a sheet of A4 paper. Almost immidiately, you will need to select which cities, islands, lakes, etc. to include, and which to leave out. Now imagine that you have to draw a map of a different world than the physical Earth; a world you have no prior knowledge of; a world where you do not start with a mental model of what is important and what is irrelevant. A daunting task to be sure. This is the kind of world that data journalists mapped over the Wikileaks data, which came about as a pile of unordered messages full of hard-to-obtain geographic information (see the left map in Figure~\ref{fig:introduction:background:mashups}).
+If you need convincing that map visualization is a difficult task, try to pick up a pencil and draw a detailed map of the World on a sheet of A4 paper. Almost immidiately, you will need to select which cities, islands, lakes, etc. to include, and which to leave out. Now imagine that you have to draw a map of a different world than the physical Earth; a world you have no prior knowledge of; a world where you do not start with a mental model of what is important and what is irrelevant. A daunting task to be sure. This is the kind of world that data journalists mapped using Wikileaks data, which came about as a pile of unranked messages  that detailed a set of spatial events during the 2003-2011 Iraq War (see the left map in Figure~\ref{fig:introduction:background:mashups}).
 
 \minisec{Geographic Information}
-Geographic information is typically represented by discrete and multi-dimensional \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with a \emph{set of attributes} of qualitative, ordered and/or quantitative types~\cite{bertin1967semiologie}: \emph{qualitative attributes}, such as the cousine of a restaurant, have no inherent order. For example, Italian is neither more nor less than Japanese; \emph{ordered attributes}, such as price category, allows a ranking. For example, mid-range restaurants are more expensive than budget restaurants but cheaper than gourmet restaurants; \emph{quantitative attributes}, such as average rating (on a 0-5 scale), allow aritmetic to be performed on their values.
+Geographic information is typically represented by discrete and multi-dimensional \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with a \emph{set of attributes} of qualitative, ordered and/or quantitative types~\cite{bertin1967semiologie}: \emph{qualitative attributes}, such as the cousine of a restaurant, allow basic distinction between its possible values. For example, Italian is different from Japanese; \emph{ordered attributes}, such as price category, allows a ranking of its possible values. For example, gourmet restaurants are more expensive than fast-food restaurants; \emph{quantitative attributes}, such as average rating (on a 0-5 scale), allow aritmetic to be performed on their values.
 
 For example, \texttt{Restarant(point, name, cousine, price\_category, average\_rating)} is a six-dimensional geographic object type. Note that the point attribute accounts for two dimensions (longitude and latitude).
 
-\minisec{Graphical Representation}
-Geographic objects are graphically represented on a map by choosing appropriate \emph{visual variables} for some or all of their dimensions. The visual variables of \emph{position},  \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} were formalized in the seminal work by Bertin~\cite{bertin1967semiologie}. The position, which is a two-dimensional variable, is usually reserved for the coordinates of the geometry, which are first projected onto the plane using a standard map projection~\cite{snyder1997flattening}. It should be noted that the position could perfectly well represent another pair of attributes, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
+\subsection{Effect of Scale Reduction}
+A basic challenge in map visualization is how the perceptability of graphics is affected by a reduction in scale. Maps have been produced at many different scales, where the term scale signifies the ratio between distance as it is measured on the map medium and distance as it is measured on the ground. For example, on a 1:500.000 map, one centimeter on the map surface, say the diameter of a city on the map, corresponds to five kilometers on the ground. At the extremes, a map that shows just a single city may be called a large scale map, while a map that depicts the entire world may be called a small scale map. As a graphic is scaled down a number of fundamental effects have a dramatic impact on the visual perceptibility of the graphic.
 
-Normally, at most one or two additional attributes are graphically represented by one or two visual variables, as otherwise the result will most likely be confusing. Furthermore, visual variables have an affinity towards certain types of attributes. For example, colors do not have an intrinsic order or quantitative value, and therefore intuitively express qualitative attributes better than it does ordered or quantitative attributes. In contrast, size is quantitative and therefore inituitively expresses quantitative and ordered attributes better than it does qualitative attributes.
-
-\minisec{Consequences of Scale Reduction}
-A basic challenge in map visualization is how the perceptability of graphics are affected by a reduction in scale. Maps have been produced at many different scales, where the term scale signifies the ratio between distance as it is measured on the map medium and distance as it is measured on the ground. For example, on a 1:500.000 map, one centimeter on the map surface, say the diameter of a city on the map, corresponds to five kilometers on the ground. At the extremes, a map that shows just a single city may be called a large scale map, while a map that depicts the entire world may be called a small scale map. As a graphic is scaled down a number of fundamental effects have a dramatic impact on the visual perceptibility of the graphic.
-
+\minisec{Decreasing Size and Separation}
 One important effect that occurs when a graphic is scaled down is that the \emph{size} and \emph{separation} of objects in the graphic decreases. Consequently, objects may approach the limit of perceptibility and distinguishability. For example, if an object becomes too small it may become impercievable to the human eye and appear to vanish. Similarly, if the proximity of objects becomes too close they may appear indistinguishable from each other. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be no shorter than 0.35 mm. while two parallel curves, which may represent a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
 
+\minisec{Increasing Density}
 An other important effect that occurs when a graphic is scaled down is that the \emph{information density} of a graphic increases. Several metrics for information density have been studied, such as Tufte's density metric~\cite{tufte1983visual} along the other density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The \emph{principle of constant information density} states that information density should remain constant across changes in scale, which was formally established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that maps in published atlasses contain a roughly fixed average number of settlements per a unit area independently of the map scale. The rationalized their observation by observing that a linear reduction in scale implies a reduction in area according to geometrical progression, which must also lead to a reduction in information per unit area according to geometrical progression, if the information is to remain legible.
 
 Thus, map visualization is fundamentally a ``big data'' challenge, since the amount of geographic information typically exceed the representational budget of the medium (see Figure~\ref{fig:introduction:background:raw:poi}).
 
-\minisec{Map Generalization}
-A basic challenge in map design, known as map generalization~\cite{shea1989cartographic,weibel1997generalization}, is how to alter the representation of geographic information in response to a reduction in scale, such that the graphic representation of geographic information remains legible and useful. 
+\subsection{Map Generalization}
+A basic challenge in map design, known as map generalization~\cite{shea1989cartographic,weibel1997generalization}, is how to \emph{logically} and \emph{graphically} abstract a set of geographic objects that appear on a map in response to the effects of scale reduction, such that the map remains legible and relevant. In the present description of map generalization, we have aimed at the highest sensible level of description. This is a delibarate attempt to avoid getting involved in the well-known disagreement that exist among cartographers~\cite{rieger1993consensus}. A collection of map generalization work has been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation}, which may function as an entry into this complex field.
+
+\minisec{Constraints}
+The generalization process has be modelled in different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, quantifiable \emph{map constraints} act as the descriminator between feasible and infeasible maps. In other words, constraints define the limits of for instance perceptibility, density, and consistency~\cite{weibel1999generalising}. As an example, a proximity constraint defines the limit for how close geographic objects (or rather their symbols) may appear on a map in order to be considered \emph{distinct}~\cite{nutanong2012multiresolution}. As another example, a topological constraint may state that geometric objects must retain their topological relationship~\cite{egenhofer1991categorizing,randell1992spatial}, such as \emph{containment}. A concrete example of map constraints are the six design goals that were used to evaluate the iOS 6 Apple Maps API~\cite{samet2012duking}.
+
+Constraints can be classified according to many different typologies~\cite{burghardt2007investigations}. A very high-level typology, which focuses on the arity rather than semantics of constraints, is to distinguish between \emph{unary}~\cite{de2004simplifying,welch1982spatial}, \emph{binary}~\cite{nutanong2012multiresolution}, \emph{locus}~\cite{topfer1966principles, woodruff1998constant} (authors term), \emph{global}~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap}, and \emph{cross-scale}~\cite{sarma2012fusiontables,foerster2010challenges} constraints (see Table~\ref{tab:introduction:map:constraints}). While this simple functional classification can be nuanced greatly, which has been done among other by McMaster and Shea~\cite{mcmaster1992generalization}, choosing a functional rather than semantic classification of constraints distances the analysis from issues that are still debated in the cartographic community.
+
+\begin{table}[htdp]
+\caption{A typology of constraints based on their arity (with examples)}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Type} & \textbf{Evaluated for} & \textbf{Examples} \\
+\hline
+Unary & Single objects & Minimum dimensions, sinuosity \\
+\hline
+Binary & Pairs of objects & Proximity, containment \\
+\hline
+Locus & Subsets & Density \\
+\hline
+Global & All objects  & Network connectivity, distribution \\
+\hline
+Cross-scale & Sets of objects at distinct scales  &  Zoom-consistency \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:introduction:map:constraints}
+\end{table}%
 
 
 
-Logical abstraction is the process that maps a set of information objects along with their individual components to another set of information objects. For example, information objects can be selected or aggregated, and component values can be modified. In constrast, graphical abstractions maps information objects to graphic symbols, primarily by using visual variables, such as \emph{color}, \emph{size}, or \emph{value}, to visually express the qualitative, ordered or quantitative components of an information object~\cite{bertin1967semiologie}. For example, symbol color can be used to distinguish between restaurants with different cousines, such as italian, japanese and hungarian restaurants, which expresses a qualitative component. Similarly, symbol size can be used to distinguish between cities of different size, such as villages, towns, and metropoles, which expresses a quantitative component.
+
+\minisec{Objectives}
+Quantifiable \emph{map objectives} measure the utility of a map, and therefore allow two (feasible) maps to be compared to each other. For example, an objective may be to maximize the sum of weighted importance (using some weight function) of objects that appear on the map~\cite{sarma2012fusiontables}. 
+
+\minisec{Logical Abstraction}
+Logical abstraction is the process that derives, from a set of base geographic objects, a set of geographic objects that should appear on a map. At a high level, geographic objects in the base set can be \emph{selected}, \emph{aggregated}, and have their attributes \emph{projected} (in the general sense, not only cartographic sense) in order to accomodate the legibility and relevance goals of the map. Therefore, logical abstraction it is the process that decides \emph{what} information should be appear on a map.
+
+TODO: discuss operators
+
+
+\minisec{Graphical Abstraction}
+Geographic objects are graphically represented on a map by choosing appropriate \emph{visual variables} for some or all of their dimensions (see Figure~\ref{fig:introduction:visual:variables}). The visual variables of \emph{position},  \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} were formalized in the seminal work by Bertin~\cite{bertin1967semiologie}. The position, which is a two-dimensional variable, is usually reserved for the coordinates of the geometry, which are first projected onto the plane using a standard map projection~\cite{snyder1997flattening}. It should be noted that the position could perfectly well represent another pair of attributes, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
+
+Visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best. In contrast, size can be measured and therefore express quantitative and ordered attributes best.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
+\caption{\textbf{Maps on the Web}: Two examples of maps that show thematic foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
+\label{fig:introduction:visual:variables}
+\end{center}
+\end{figure}
 
 
 
