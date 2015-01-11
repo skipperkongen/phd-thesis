@@ -21,7 +21,8 @@
 
 % for copyright symbol
 \usepackage{textcomp}
-
+% for degree symbol
+\usepackage{siunitx}
 % for tighter itemize environments
 \usepackage{enumitem}
 \setlist{nosep}
@@ -196,9 +197,30 @@ Map visualization studies the process by which geographic information is display
 If you need convincing that map visualization is a difficult task, try to pick up a pencil and draw a detailed map of the World on a sheet of A4 paper. Soon, you will need to make hard choices about what to include and what to leave out, such as cities, waterways and roads. Now imagine that you have to draw a map of a different world than the physical Earth; a world you have no prior knowledge of; a world where you do not start with a mental model of what is important and what is irrelevant. A daunting task to be sure. This is the kind of world that is encountered when new spatial datasets emerge on the Web, such as the Wikileaks dataset which details spatial events that occured during the 2003-2011 Iraq War (see the left map in Figure~\ref{fig:introduction:background:mashups}).
 
 \minisec{Geographic Objects}
-Geographic information is typically represented by discrete and multi-dimensional \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with an additional \emph{set of attributes} of qualitative, ordered and/or quantitative types~\cite{bertin1967semiologie}: \emph{qualitative attributes}, such as the cousine of a restaurant, allow basic distinction between its possible values. For example, Italian is different from Japanese; \emph{ordered attributes}, such as price category, allows a ranking of its possible values. For example, gourmet restaurants are more expensive than fast-food restaurants; \emph{quantitative attributes}, such as restaurant rating on a 0-5 scale, allow aritmetic to be performed on their values.
+Geographic information is typically represented by discrete and multi-dimensional \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with an additional \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example:
 
-Geographic objects are graphically represented by symbols, that give a visible body to often area-less geometries, such as points, lines and the boundaries of polygons. For example, a geometric point may be visually represented by a disk, while a geometric line may be visually represented by a band.
+\begin{itemize}
+\item Geometric attributes specify spatial \emph{location} and \emph{extent}. For example, \ang{55.6778}, \ang{12.5962} may be the location of a restaurant
+\item Qualitative attributes allow \emph{distinction} between their possible values. For example, Nordic cousine is different from Japanese cousine
+\item Ordered attributes allows a \emph{ranking} of their possible values. For example, gourmet restaurants are more expensive than fast-food restaurants
+\item Quantitative attributes allow \emph{aritmetic} to be performed on their values. For example, DKK 1.600 plus DKK 1.000 is DKK 2.600.
+\end{itemize}
+
+\minisec{Visual Variables}
+Geographic objects are visually represented on a map by choosing appropriate \emph{visual variables} for some or all of their attributes (see Figure~\ref{fig:introduction:visual:variables}). The visual variables of \emph{position},  \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} were formalized in the seminal work by Bertin~\cite{bertin1967semiologie}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.7]{figs-thesis/visual-variables.pdf}
+\caption{\textbf{Bertin's seven visual variables}: The variables express qualitative, ordered and quantitative attributes (reproduced from \texttt{infovis-wiki.net}).}
+\label{fig:introduction:visual:variables}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+The position, which is a two-dimensional variable, is usually reserved for the coordinates of the geometry, which are first projected onto the plane using a standard map projection~\cite{snyder1997flattening}. It should be noted that the position could perfectly well represent another pair of attributes, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
+
+Visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best. In contrast, size can be measured and therefore express quantitative and ordered attributes best.
 
 \minisec{Map State}
 Intuitively, the map state is consists of geographic objects and symbols that appear on a map. More formally, the map state can be divided into the \emph{logical state}, which is the set of geographic objects that appear on a map, and the \emph{graphical state}, which is the set of symbols that visually represent the objects on the map. 
@@ -309,16 +331,12 @@ TODO: discuss operators
 
 One way to ensure a legible and relevant maps is to select data holistically according to constraints and objectives that ensure that humans will find relevant information on the map. 
 
-\minisec{Graphical Abstraction}
-Geographic objects are graphically represented on a map by choosing appropriate \emph{visual variables} for some or all of their dimensions (see Figure~\ref{fig:introduction:visual:variables}). The visual variables of \emph{position},  \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} were formalized in the seminal work by Bertin~\cite{bertin1967semiologie}. The position, which is a two-dimensional variable, is usually reserved for the coordinates of the geometry, which are first projected onto the plane using a standard map projection~\cite{snyder1997flattening}. It should be noted that the position could perfectly well represent another pair of attributes, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
-
-Visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best. In contrast, size can be measured and therefore express quantitative and ordered attributes best.
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
 \caption{\textbf{Maps on the Web}: Two examples of maps that show thematic foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
-\label{fig:introduction:visual:variables}
+\label{fig:introduction:geographic:mashups}
 \end{center}
 \end{figure}
 
