@@ -181,26 +181,58 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
 \end{emphpar}
 
-For thousands of years, humans have used their visual senses to comprehend geographic information on maps. Humans learned early on that legible maps enable instant comprehension of relevant geographic information, while cluttered maps inhibit comprehension~\cite{phillips1982investigation,springer1987retrieval}. Over time, the reasons that maps are created and the context they are created in have constantly evolved. Accordingly, novel methods for drawing maps have been invented, studied, and sometimes discarded. However, there exists no evidence to suggest that the human capacity for visual perception and comprehension has evolved significantly since the stone age. Consequently, modern map makers who wield modern map making tools must accomodate the same human cognitive limitations as ancient map makers.
+For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have been created for a multitude of reasons. They have helped seafarers to navigate the oceans and governments to track who owned the land. For example, a more than four thousand year old clay tablet that was found in 1930 inside contemporary Iraq, depicts the boundaries of a land parcel together with the owners name, Azala. This probably constitutes one of the earliest data visualizations in human history. 
+
+Over time, human knowledge of map making and capacity for geographic information gathering have evolved hand in hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably remained biologically unchanged since since the stone age. Consequently, modern map makers must accomodate the same limitations of human visual perception as ancient map makers.
+
+\subsection{Map Generalization}
+One of the key challenges of map making is how to represent planet-sized information at a scale that fits on a computer screen or piece of paper. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps will become cluttered and illegible. The process by which map makers abstract geographic information for display on maps is called \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
+
+\minisec{Effects of Scale Reduction}
+Different visual effects occur as a map is scaled down  (see Figure~\ref{fig:introduction:background:raw:poi}). One effect is that the size of symbols -- if they are shown to scale -- decreases. For example, if a building symbol is 2 mm wide on a 1:500.000 map it will be 1 mm wide on a 1:1.000.000 map. Consequently, map symbols may approach the limit of perceptibility. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}. A generalization technique that deals with diminutive symbols sizes is \emph{exaggeration}.
+
+Another effect is that the separation between symbols -- if they are shown at accurate positions -- decreases. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.4 mm apart on a 1:500.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other. Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Maps on the Web}: Two examples of maps that show thematic foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
+\includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
+\caption{\textbf{Effects of Scale Reduction}: Point-of-interest (POI) symbols on a large scale map of Copenhagen, Denmark (left) are clearly separated from each other and can be shown close to the actual scale of the physical entities they represent. Furthermore, the information density is relatively low. In constrast, POI symbols on a small scale map of Europe (right) become fused as the separation between them decreases and their size must be exaggerated. Moreover, the information density is so high that the symbols entirely cover the areas of most national territories.}
+\label{fig:introduction:background:raw:poi}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+A third is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalized their observation by observing that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate, if the information is to remain legible. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.48]{figs-thesis/geographic-mashups.pdf}
+\caption{\textbf{Aggregation and selection of geographic information}: On the left map, the share of UK residents who speak a non-english language as their first language is aggregated per administrative region; darker values imply more foreign language speakers. On the right map, points that represent casualties during the 2003-2011 Iraq War are representatively selected from a much larger set of points. Both maps are reproduced from The Guardian's Data Blog with background maps \textcopyright 2014 Google.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \end{figure}
 
-\minisec{Map Visualization}
-Map visualization studies the process by which geographic information is displayed on a three-dimensional medium (x, y, color), most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. Since ancient times, the requirements for this process have been to \emph{accurately} and \emph{legibly} represent as much as possible of the \emph{relevant} information on a finite map medium~\cite{jones2005webage}. This implies a holistic reduction in information, which is frequently an NP-hard problem~\cite{sarma2012fusiontables,haunert2010area}.
 
-If you need convincing that map visualization is a difficult task, try to pick up a pencil and draw a detailed map of the World on a sheet of A4 paper. Soon, you will need to make hard choices about what to include and what to leave out, such as cities, waterways and roads. Now imagine that you have to draw a map of a different world than the physical Earth; a world you have no prior knowledge of; a world where you do not start with a mental model of what is important and what is irrelevant. A daunting task to be sure. This is the kind of world that is encountered when new spatial datasets emerge on the Web, such as the Wikileaks dataset which details spatial events that occured during the 2003-2011 Iraq War (see the left map in Figure~\ref{fig:introduction:background:mashups}).
+
+Methods
+
+A map that shows just a single city may be called a large-scale map, while a map that depicts the entire world may be called a small-scale map. A number of fundamental effects occur as a graphic, such as a map, is scaled down.
+
+
+% Since ancient times, the requirements for this process have been to accurately and legibly} represent as much of the relevant information as possible on restricted map mediums~\cite{jones2005webage}. 
+
+
+\minisec{Map Visualization}
+ This implies a holistic reduction in information, which is frequently an NP-hard problem~\cite{sarma2012fusiontables,haunert2010area}.
+
+
+
 
 \subsection{Multi-scale Maps}
-Multi-scale maps allow users to zoom the view in and out (change scale), as well as to pan it (change focal point). Each scale of the map shows geographic information at a different level of detail. The state of a map is divided between two models, the \emph{logical model} and the \emph{graphical model}. While the logical map model defines \emph{what} geographic information appears on a map at each scale, the graphical map model defines \emph{how} information appears on a map at each scale. The differences and specifics of these two models are covered below.
+Multi-scale maps allow users to zoom the view in and out (change scale), as well as to pan the focal point of the map. Each scale of the map shows geographic information at a different level of detail. The state of a map is divided between two models, the \emph{logical model} and the \emph{graphical model}. While the logical map model defines \emph{what} geographic information appears on a map at each scale, the graphical map model defines \emph{how} information appears on a map at each scale. The differences and specifics of these two models are covered below.
 
 \minisec{Logical Model}
-Geographic information on a map is logically represented by a set of \emph{geographic objects}. For example, geographic objects can represent roads, buildings, lakes, locations, restaurants and much more. Each object associates a \emph{geometry} (point, line or area), with additional \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example:
+Geographic information on a map is logically represented by a set of \emph{geographic objects}. Each object associates a \emph{geometry} (point, line or area), with additional \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example:
 
 \begin{itemize}
 \item \ang{55.6778}, \ang{12.5962} is and example of a geometric attribute value, which allows geographic information to be \emph{positioned} on Earth. For example, \ang{55.6778}, \ang{12.5962} is located on the harbor front in Copenhagen, Denmark.
@@ -209,26 +241,35 @@ Geographic information on a map is logically represented by a set of \emph{geogr
 \item DKK 1.600 and DKK 1.000 are examples of quantitative attributes, which can be \emph{added}, \emph{subtracted}, etc. together. For example, the sum of the values is DKK 2.600.
 \end{itemize}
 
-Thus, the logical state of a map is the set of geographic objects that appear on each scale of the map. Consequently, the logical state can be altered by performing abstract operations on the set of geographic objects: 
+The geographic objects constitute the logical state of a map. Consequently, the logical state can be altered by performing operations on the geographic objects. At an abstract level the operations are:
 
 \begin{itemize}
-\item Subsets of geographic objects can be \emph{selected}
-\item Geographic objects can be \emph{projected}, i.e. their attributes and/or their values changed
-\item Several geographic objects can be \emph{aggregated} into one geographic object
+\item \textbf{Selection}: Subsets of geographic objects can be omitted or kept according to criteria
+\item \textbf{Projection}: The attributes of geographic objects are modifed
+\item \textbf{Aggregation}: Several geographic objects are merged into one geographic object
 \end{itemize}
 
-Each abstract operation on the logical model can be implemented by concrete operators that serve a specific purpose. For example, \emph{displacement}~\cite{bader2001energy}, \emph{simplification}~\cite{douglas1973algorithms}, \emph{exaggeration}, \emph{collapse} are all types of projections, but each modifes an object in a unique way.
+Each of the abstract operations -- selection, projection, and aggregation -- can be implemented by several concrete operators. For example, \emph{select-distinct}~\cite{nutanong2012multiresolution} is a selection that filters objects according to their proximity; \emph{simplification}~\cite{douglas1973algorithms} is a projection that reduces the complexity of geometries; \emph{landcover-merging}~\cite{haunert2006landcover} is an aggregation that merges objects based on the area of their geometries.
 
 \minisec{Graphical Model}
-Geographic information on a map is graphically represented by a set of \emph{symbols}, with a one-to-one correspondence with geographic objects in the logical model. Seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie}, visually express the attributes of geographic objects (see Figure~\ref{fig:introduction:visual:variables}). Certain visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best. In contrast, size can be compared and measured, and therefore express quantitative and ordered attributes best. 
+Geographic information on a map is graphically represented by a set of \emph{symbols}, with a one-to-one correspondence with geographic objects in the logical model. Seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie}, visually express the attributes of geographic objects (see Figure~\ref{fig:introduction:visual:variables}). Certain visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best (see Figure~\cite{fig:introduction:restaurant:colors}). In contrast, size can be compared and measured, and therefore express quantitative and ordered attributes best. 
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.72]{figs-thesis/visual-variables.pdf}
+\caption{\textbf{Bertin's Visual Variables}: The visual variables, of which Bertin identified seven, can express qualitative, ordered and quantitative attributes of geographic objects. For example, color can express different categories of restaurnants. The figure is reproduced from \texttt{infovis-wiki.net}.}
+\label{fig:introduction:visual:variables}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
 
 The symbol position usually represents the object's geometry, which has been projected onto the plane using a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used on Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.7]{figs-thesis/visual-variables.pdf}
-\caption{\textbf{Bertin's visual variables}: The seven variables express qualitative, ordered and quantitative attributes (reproduced from \texttt{infovis-wiki.net}).}
-\label{fig:introduction:visual:variables}
+\includegraphics[scale=.7]{figs-thesis/restaurant-colors.pdf}
+\caption{\textbf{Using Color to Represent Qualitative Attributes}: Restaurant cousines can be visually distinguished by color, one of Bertin's seven visual variables.}
+\label{fig:introduction:restaurant:colors}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
@@ -236,31 +277,13 @@ The symbol position usually represents the object's geometry, which has been pro
 Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the book ``the Grammar of Graphics'' by Wilkinson, Wills, Rope, Norton, and Dubbs~\cite{wilkinson2006grammar}. Between them, these works cover the fundamental aspects of representing information as graphics.
 
 
-\subsection{Effects of Scale Reduction}
-A basic challenge in map visualization is how the perceptability of graphics is affected by a reduction in scale. Maps have been produced at many different scales, where the term scale signifies the ratio between distance as it is measured on the map medium and distance as it is measured on the ground. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. A map that shows just a single city may be called a large-scale map, while a map that depicts the entire world may be called a small-scale map. A number of fundamental effects occur as a graphic, such as a map, is scaled down.
+\subsection{Constraint-based Generalization}
+A basic challenge in map design is how to derive a \emph{logical} and \emph{graphical} map state after a scale reduction, such that the map remains legible and relevant. This process is known as \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}. A collection of studies in generalization has been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation}, which may function as possible entry point into this complex field.
 
-\minisec{Size and Separation}
-An effect that occurs when a graphic is scaled down is that the \emph{size} of object symbols -- if they are shown to scale -- decreases. Consequently, object symbols may approach the limit of perceptibility. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be no shorter than 0.35 mm. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
-
-Furthermore, scale reduction causes the \emph{separation} between objects to decrease. Consequently, pairs of objects may come so close as to appear indistinguishable from each other. For example, two symbols that are 0.4 mm apart on a 1:500.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is probably below the limit at which symbols can be distinguished from each other (see Figure~\ref{fig:introduction:background:raw:poi}).
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
-\caption{\textbf{Effects of scale reduction}: Symbols for POI objects on a large scale map are clearly separated from each other (left). In constrast, unfiltered symbols for POI objects on a small scale map are indistinguishable from each other (right). The density of symbols is so high that they entirely cover the physical territories of most national territories.}
-\label{fig:introduction:background:raw:poi}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
-\minisec{Information Density}
-Another way to view the effects of scale reduction is to say that the \emph{information density} of a graphic increases, that is the amount of information per unit area. Several metrics for information density have been studied, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalized their observation by observing that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate, if the information is to remain legible.
-
-\subsection{Map Generalization}
-A basic challenge in map design, known as generalization~\cite{shea1989cartographic,weibel1997generalization}, is how to derive a \emph{logical} and \emph{graphical} map state after a scale reduction, such that the map remains legible and relevant. A collection of map generalization work has been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation}, which may function as possible entry point into this complex field. Other entry points into the generalization field are the works by Weibel~\cite{weibel1997generalization}, Weibel and Dutton~\cite{weibel1999generalising}, as well as McMaster and Shea~\cite{mcmaster1992generalization}.
+The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}.
 
 \minisec{Constraints}
-The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states.
+
 
 Constraints can be classified according to many different typologies~\cite{burghardt2007investigations,mcmaster1992generalization}. However, constraints generally accept a (partial) map state and either reject it or accept it. For example:
 
@@ -288,8 +311,8 @@ Regardless of the many constraint typologies
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[scale=.32]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Pair and set constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Set constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying sets of objects in the map. Objects that violate a constraint are in conflict (circled by red lines); this situation must be remedied, for example by selection (kept objects are shown as black disks; deleted objects are shown as white disks.}
+\includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
+\caption{\textbf{Pair and Space Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Set constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying sets of objects in the map. Objects that violate a constraint are in conflict (circled by red lines); this situation must be remedied, for example by selection (kept objects are shown as black disks; deleted objects are shown as white disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
@@ -446,12 +469,12 @@ In stage four of the web mapping pipeline, map content is distributed over the I
 
 Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
 
-\section{When to Process Selection}
+\section{State-of-the-Art Selection Systems}
 \label{sec:introduction:architectures}
 
 A key distinction between state-of-the-art mapping pipeline is the timing of the map generalization process. Two extreme approaches are \emph{real-time}~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented}~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards} approaches. In the following sections, the advantages and drawbacks of both approaches are analyzed.
 
-\subsection{Real-time Approach}
+\subsection{Real-time Systems}
 Real-time generalization adapts geographical information at the time when a user requests geographic information for a map. Typically, an indexing structure, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}, is the factor that facilitates fast real-time generalization algorithms. At first, real-time selection seems like an ideal approach for two reasons. 
 
 First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update mechanism, such as transactions~\cite{gray1981transaction}, a selection algorithm always computes solutions based on the most recent and consistent state of the data. However, this is only true if the atomic update propagates to the index as well, which is a significant consideration given that data is typically managed outside the map generalization framework.
@@ -462,7 +485,7 @@ However, there are several issues with real-time generalization in a Web context
 
 In conclusion, real-time generalization is currently an infeasible approach for web mapping pipelines that target large Web audiences.
 
-\subsection{Batch-oriented Approach}
+\subsection{Batch-oriented Systems}
 Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to a batch-oriented approach.
 
 First, since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Distributed data analytical systems, such as spatial parallel databases and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}, can be wielded to make the process highly scalable with regard to data volume. For example, while highly scalable batch-oriented systems, such as Apache Hadoop or Apache Spark, cannot be used for real-time generalization, they are intrinsically appropriate for batch-oriented generalization of geographic information.
@@ -473,27 +496,27 @@ There are three drawbacks of a batch-oriented approach that are quite obvious. H
 
 In conclusion, batch-oriented generalization is the only viable option for scalable web mapping pipelines. While batch-oriented generalization suffers from one significant drawback,  namely the difficulty of adapting content to individual users, this drawback must be tolerated since it seems that there is currently no better alternative.
 
-\subsection{Example: How to Distribute Maps Using Tiles}
-A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile. Once the tiles have been created, a content delivery network (CDN) can store and distribute the tiles to mapping clients with high scalability, availability and performance~\cite{dilley2002cdn}. An advantage of tiles is that they can be addressed using discrete and three-dimensional cell coordinates. For this reason, tiles can be accessed in a key-value query model. There are two types of geographic data, and therefore two types of tiles: \emph{raster tiles} that contain graphics and \emph{vector tiles} that contain information or data. Below, the pros and cons of each type of tile is discussed.
+%\subsection{Example: How to Distribute Maps Using Tiles}
+%A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile. Once the tiles have been created, a content delivery network (CDN) can store and distribute the tiles to mapping clients with high scalability, availability and performance~\cite{dilley2002cdn}. An advantage of tiles is that they can be addressed using discrete and three-dimensional cell coordinates. For this reason, tiles can be accessed in a key-value query model. There are two types of geographic data, and therefore two types of tiles: \emph{raster tiles} that contain graphics and \emph{vector tiles} that contain information or data. Below, the pros and cons of each type of tile is discussed.
 
-\minisec{Raster Tiles}
+%\minisec{Raster Tiles}
 
-\minisec{Vector Tiles}
-A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile: either a list of identifiers or the data objects themselves. Tiled vector data can be distributed to mapping clients, and only then will it be graphically expressed. As such, distribution of tiled vector data corresponds to distribution of a \emph{logical map}, i.e. \emph{what} information the map contains, not \emph{how} the information is graphically expressed.
+%\minisec{Vector Tiles}
+%A method to achieve scalable maps is to partition the geographic data over a fixed multi-resolution geographic grid. Each cell, or \emph{tile}, in the grid contains a representation of data that is intersected by the tile: either a list of identifiers or the data objects themselves. Tiled vector data can be distributed to mapping clients, and only then will it be graphically expressed. As such, distribution of tiled vector data corresponds to distribution of a \emph{logical map}, i.e. \emph{what} information the map contains, not \emph{how} the information is graphically expressed.
 
-~\cite{gaffuri12vectortiles}
+%~\cite{gaffuri12vectortiles}
 
-There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, clients may choose the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of information symbols such that the efficiency of graphic communication is maximized~\cite{bertin1967semiologie}. Second, content delivery network (CDN) can store  tiled vector data for highly scalabe, available and performant distribution~\cite{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, essentially contributes a CPU to the mapping pipeline, which is utilized to render information as graphics.
+%There are several advantages to tiled vector data and logical maps. First, distribution of logical maps allows many degrees of freedom with regard to the graphic expression of the map. For example, clients may choose the \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} of information symbols such that the efficiency of graphic communication is maximized~\cite{bertin1967semiologie}. Second, content delivery network (CDN) can store  tiled vector data for highly scalabe, available and performant distribution~\cite{dilley2002cdn}. Third, each mapping client that retrieves data from the CDN, essentially contributes a CPU to the mapping pipeline, which is utilized to render information as graphics.
 
-Since small scale maps generally intersect larger quantities of geographic objects than large scale maps, there is a need to bound the amount of data in each tiles. Otherwise, small scale tiles would be very larger and take much longer to transmit over the Internet than large scale tiles. To keep the amount of information in each tile constant independently of the scale, the vector data must be generalized. A batch-oriented approach to generalization of content for vector tiles, is particularly useful for scalable web maps. This content generalization and the distribution steps for vector tiles is schematized in Figure~\ref{fig:introduction:approaches:vector:tiles}.
+%Since small scale maps generally intersect larger quantities of geographic objects than large scale maps, there is a need to bound the amount of data in each tiles. Otherwise, small scale tiles would be very larger and take much longer to transmit over the Internet than large scale tiles. To keep the amount of information in each tile constant independently of the scale, the vector data must be generalized. A batch-oriented approach to generalization of content for vector tiles, is particularly useful for scalable web maps. This content generalization and the distribution steps for vector tiles is schematized in Figure~\ref{fig:introduction:approaches:vector:tiles}.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.45]{figs-thesis/batch-oriented-poi.pdf}
-\caption{\textbf{Creation and distribution of tiled vector data}: a generalization algorithm selects geographic information for each scale (1); a multi-scale tiling scheme partitions information over variable resolution grids (2); multi-scale tiles are stored on a CDN (3); mapping clients pull data from CDN (4). Tiles contain vector data (A), or identifiers of intersected data (B).}
-\label{fig:introduction:approaches:vector:tiles}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=.45]{figs-thesis/batch-oriented-poi.pdf}
+%\caption{\textbf{Creation and distribution of tiled vector data}: a generalization algorithm selects geographic information for each scale (1); a multi-scale tiling scheme partitions information over variable resolution grids (2); multi-scale tiles are stored on a CDN (3); mapping clients pull data from CDN (4). Tiles contain vector data (A), or identifiers of intersected data (B).}
+%\label{fig:introduction:approaches:vector:tiles}
+%\end{center}
+%\end{figure}
 
 
 
@@ -522,7 +545,7 @@ Selection of geographic information for maps today is mostly polarized into two 
 \label{sec:introduction:problem:statement:three}
 The Web today offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap,twitter2014twitter,zooniverse2014oldweather} datasets that can be visualized on maps, which are typically managed in a spatial relational database management systems (SDBMS)~\cite{wu2014case}. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online~\cite{endomondo2014endomondo,tinder2014tinder,twitter2014twitter} geographic information can be produced by anybody, anytime, and anywhere. Therefore, mapping systems must be able to scalably process multi-scale selection over large relational datasets (millions of records).
 
-One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language for spatial data analysis such as SQL~\cite{postgis} or Pig~\cite{eldawy2014pigeon}, which can be executed on highly optimized engines for large-scale data processing, such as parallel SDBMS~\cite{waas2009beyond} and spatial cluster computing systems~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}. A similar approach has been successfully tested for processing of XQuery~\cite{boncz2006monetdb} and Machine Learning~\cite{hellerstein12madlib}. Since data for maps is typically stored in a SDBMS, it makes sense to process the data where it is stored~\cite{grust2009ferry}. Despite the obvious opportunity, state-of-the-art mapping systems do not significantly leverage SDBMS or cluster computing to process holistic selection of geographic information for maps.
+One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language for spatial data analysis such as SQL~\cite{postgis} or Pig~\cite{eldawy2014pigeon}, which can be executed on highly optimized engines for large-scale data processing, such as parallel SDBMS~\cite{waas2009beyond} and spatial cluster computing systems~\cite{aji2013hadoopgis,eldawy2014spatialhadoop}. A similar approach has been successfully tested for processing of XQuery~\cite{boncz2006monetdb} and Machine Learning~\cite{hellerstein12madlib}. Since data for maps is typically stored in a SDBMS, it makes sense to process the data where it is stored~\cite{grust2009ferry}. Despite the obvious opportunity, state-of-the-art mapping systems do not significantly leverage SDBMS or cluster computing to process holistic selection of geographic information for maps.
 
 % PREDICTIVE TILE MATERIALIZATION
 \subsection{Low-cost Tile Materialization}
@@ -669,14 +692,7 @@ At a broad level, spatial analytics can be categorized into programmable approac
 
 \subsection{Geographic Information Systems}
 
-TODO
-
-\subsection{Key-Value Stores}
-Geocouch, MongoDB, Cassandra, Riak.
-
-Programmed in a variety of native languages.
-
-Hmmm, what to say.
+Geographic Information Systems are specialized towards 
 
 \subsection{Databases}
 Databases with spatial datatypes and functions include single-instance databases~\cite{postgresql,mssql,oracle} and distributed databases~\cite{greenplum, vertica}.
