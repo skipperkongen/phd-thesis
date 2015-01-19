@@ -202,7 +202,7 @@ Another effect is that the separation between symbols -- if they are shown at ac
 \vspace*{-4ex}
 \end{figure}
 
-A third is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalized their observation by observing that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate, if the information is to remain legible. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
+A third effect is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -212,47 +212,32 @@ A third is that information density --  the amount of information per unit area 
 \end{center}
 \end{figure}
 
-
-
-Methods
-
-A map that shows just a single city may be called a large-scale map, while a map that depicts the entire world may be called a small-scale map. A number of fundamental effects occur as a graphic, such as a map, is scaled down.
-
-
-% Since ancient times, the requirements for this process have been to accurately and legibly} represent as much of the relevant information as possible on restricted map mediums~\cite{jones2005webage}. 
-
-
-\minisec{Map Visualization}
- This implies a holistic reduction in information, which is frequently an NP-hard problem~\cite{sarma2012fusiontables,haunert2010area}.
-
-
-
-
-\subsection{Multi-scale Maps}
-Multi-scale maps allow users to zoom the view in and out (change scale), as well as to pan the focal point of the map. Each scale of the map shows geographic information at a different level of detail. The state of a map is divided between two models, the \emph{logical model} and the \emph{graphical model}. While the logical map model defines \emph{what} geographic information appears on a map at each scale, the graphical map model defines \emph{how} information appears on a map at each scale. The differences and specifics of these two models are covered below.
+\subsection{Modeling Geographic Information}
+The information on a map can be modelled in two ways, either logically or graphically. While the logical map model defines \emph{what} geographic information should appear on a map, the graphical map model defines \emph{how} the information should appear. The differences and specifics of these two models are covered below.
 
 \minisec{Logical Model}
-Geographic information on a map is logically represented by a set of \emph{geographic objects}. Each object associates a \emph{geometry} (point, line or area), with additional \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example:
+Geographic information on a map is logically described by a set of \emph{geographic objects}, which represent discrete concepts in the real world, such as roads, lakes, buildings, and subdivisions. Each object associates a \emph{geometry} (point, line or area), with additional \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. Different attribute types permit different distinctions and types of operations to be performed. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with the following attributes:
 
 \begin{itemize}
-\item \ang{55.6778}, \ang{12.5962} is and example of a geometric attribute value, which allows geographic information to be \emph{positioned} on Earth. For example, \ang{55.6778}, \ang{12.5962} is located on the harbor front in Copenhagen, Denmark.
-\item ``Nordic'' and ``Japanese'' are examples of qualitative attribute values, which can be \emph{distinguished} from each other. For example, Nordic cousine is different from Japanese cousine, but neither better nor worse.
-\item ``Gourmet'' and ``Fast-food'' are examples of ordered attributes, which can be \emph{compared} to each other. For example, gourmet restaurants are more expensive than fast-food restaurants.
-\item DKK 1.600 and DKK 1.000 are examples of quantitative attributes, which can be \emph{added}, \emph{subtracted}, etc. together. For example, the sum of the values is DKK 2.600.
+\item \ang{55.6778}, \ang{12.5962} is a geometric attribute value of the Noma object, which corresponds to a geographic position on the harbor front in Copenhagen, Denmark.
+\item ``Nordic Cousine'' is a qualitative attribute value of the Noma object, which can be distinguished from other qualitative attribute values, such as ``Japanese Cousine''.
+\item ``Best Restaurant'' is an ordered attribute value of the Noma object, which has the property that it can be \emph{ranked} against other ordered attribute values. For example, the best restaurant is (obviously) better than the second-best restaurant.
+\item DKK 1.600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that \emph{arithmetic} can be performed on it. For example, the sum of the DKK 1.600 and DKK 1.000 (the current price of the wine pairing at Noma) is DKK 2.600.
 \end{itemize}
 
-The geographic objects constitute the logical state of a map. Consequently, the logical state can be altered by performing operations on the geographic objects. At an abstract level the operations are:
+The logical state of a map can be altered by performing abstract operations -- i.e. selection, projection and aggregation -- on the geographic objects. Each of the three abstract operations can be implemented by several concrete algorithms:
 
 \begin{itemize}
-\item \textbf{Selection}: Subsets of geographic objects can be omitted or kept according to criteria
-\item \textbf{Projection}: The attributes of geographic objects are modifed
-\item \textbf{Aggregation}: Several geographic objects are merged into one geographic object
+\item Selection means that a subset of geographic objects are retained in the map. For example, a type of selection is the select-distinct algorithm that selects objects based on their proximity and salience~\cite{nutanong2012multiresolution}, while another is the DFS thinning algorithm that selects objects based on information density and salience~\cite{sarma2012fusiontables}.
+
+\item Projection means that the attributes of geographic objects in the map are modifed. For example, a type of projection is the Douglas-Peucker simplification algorithm that reduces their geometric complexity of objects~\cite{douglas1973algorithms}, while another is the displacement algorithm by Bader that shifts object positions according to a holistic energy minimization criterium~\cite{bader2001energy}.
+
+\item Aggregation means that several geographic objects in the map are merged into one geographic object. For example, the landcover-merge algorithm by Haunert and Wolff aggregates objects by on a holistic optimization process that considers both object areas and object classes~\cite{haunert2006landcover}.
 \end{itemize}
 
-Each of the abstract operations -- selection, projection, and aggregation -- can be implemented by several concrete operators. For example, \emph{select-distinct}~\cite{nutanong2012multiresolution} is a selection that filters objects according to their proximity; \emph{simplification}~\cite{douglas1973algorithms} is a projection that reduces the complexity of geometries; \emph{landcover-merging}~\cite{haunert2006landcover} is an aggregation that merges objects based on the area of their geometries.
 
 \minisec{Graphical Model}
-Geographic information on a map is graphically represented by a set of \emph{symbols}, with a one-to-one correspondence with geographic objects in the logical model. Seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie}, visually express the attributes of geographic objects (see Figure~\ref{fig:introduction:visual:variables}). Certain visual variables have an affinity towards certain types of attributes. For example, as colors have no inherent order they express qualitative attributes best (see Figure~\cite{fig:introduction:restaurant:colors}). In contrast, size can be compared and measured, and therefore express quantitative and ordered attributes best. 
+Geographic information on a map is graphically modelled by a set of \emph{symbols} that correspond one-to-one to the geographic objects in the logical model. For example, a building object can be represented by a black square symbol. Object attributes are graphically expressed by seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order so they express qualitative attributes particularly well (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured and therefore express quantitative and ordered attributes particularly well. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -263,7 +248,7 @@ Geographic information on a map is graphically represented by a set of \emph{sym
 \vspace*{-4ex}
 \end{figure}
 
-The symbol position usually represents the object's geometry, which has been projected onto the plane using a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used on Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as the average life expectancy and economic wealth of a country~\cite{rosling2007poverty}. 
+A two-dimensional visual variable is the symbol position, which usually represents the object's geometry after a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used on Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as the average life expectancy together with economic wealth~\cite{rosling2007poverty}. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -274,7 +259,7 @@ The symbol position usually represents the object's geometry, which has been pro
 \vspace*{-4ex}
 \end{figure}
 
-Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the book ``the Grammar of Graphics'' by Wilkinson, Wills, Rope, Norton, and Dubbs~\cite{wilkinson2006grammar}. Between them, these works cover the fundamental aspects of representing information as graphics.
+Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the ``the Grammar of Graphics'' work by Wilkinson, Wills, Rope, Norton, and Dubbs~\cite{wilkinson2006grammar}. Between them, these works cover the fundamental aspects of representing information as graphics, which includes the representation of geographic information on maps.
 
 
 \subsection{Constraint-based Generalization}
