@@ -181,7 +181,7 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
 \end{emphpar}
 
-For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have been created for a multitude of reasons. They have helped seafarers to navigate the oceans and governments to track who owned the land. For example, a more than four thousand year old clay tablet that was found in 1930 inside contemporary Iraq, depicts the boundaries of a land parcel together with the owners name, Azala. This probably constitutes one of the earliest data visualizations in human history. 
+For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have helped humans to comprehend a multitude of spatial phenomena. For millennia, maps have helped seafarers to comprehend the dangers that lie beneath the surface of oceans and rulers to comprehend the advances of foreign armies on their territories. For example, a four thousand year old clay tablet, which was discovered near present-day Kirkuk, Iraq in 1930, illustrates the boundaries of a land parcel together with the owners name, Azala. As such, cadastral maps probably constitute one of the earliest forms of data visualization in human history. 
 
 Over time, human knowledge of map making and capacity for geographic information gathering have evolved hand in hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably remained biologically unchanged since since the stone age. Consequently, modern map makers must accomodate the same limitations of human visual perception as ancient map makers.
 
@@ -254,8 +254,8 @@ A third effect is that information density --  the amount of information per uni
 \end{center}
 \end{figure}
 
-\minisec{Operators}
-The logical state of a map can be altered by performing abstract operations -- i.e. selection, projection and aggregation -- on the geographic objects and symbols. Each of the three abstract operations can be implemented by several concrete algorithms:
+\minisec{Generalization Operators}
+As scale change may render a map illegible or irrellevant, the state of the map most be appropriately transformed. The state of a map can be transformed by performing abstract operations -- i.e. selection, projection and aggregation -- on the geographic objects and symbols. Each of the three abstract operations can be implemented by several concrete algorithms. The definition of operators 
 
 \begin{itemize}
 \item Selection means that a subset of geographic objects/symbols are retained in the map. For example, a type of selection is the select-distinct algorithm that selects objects based on their proximity and salience~\cite{nutanong2012multiresolution}, while another is the DFS thinning algorithm that selects objects based on information density and salience~\cite{sarma2012fusiontables}.
@@ -264,6 +264,10 @@ The logical state of a map can be altered by performing abstract operations -- i
 
 \item Aggregation means that several geographic objects/symbols in the map are merged into one geographic object/symbols. For example, the landcover-merge algorithm by Haunert and Wolff aggregates objects by on a holistic optimization process that considers both object areas and object classes~\cite{haunert2006landcover}.
 \end{itemize}
+
+A note about the term projection as it is used here. Projection in maps usually refers to the transformation of geographic coordinates into planar coordinates. However, the term projection is used here in the more general sense of modication of information objects and symbols, which corresponds to how the term projection is used in relational algebra.
+
+The classification of generalization operators into three high-level categories (selection, projection, and aggregation), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, operator typologies have been attempted by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While all these typologies provide insight into the generalization process, it is hard to argue that either one of them is final. In constrast, all proposed operators are subsumed by either selection, projection, or aggregation.
 
 
 \subsection{Constraint-based Generalization}
