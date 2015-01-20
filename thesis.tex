@@ -230,10 +230,11 @@ Bertin's work on the theory of graphics is immense, and this short section does 
 \subsection{Map Generalization}
 One of the key challenges of map making is how to represent planet-sized information at a scale that fits on a computer screen or piece of paper. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps will become cluttered and illegible. The process by which map makers abstract geographic information for display on maps is called \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
 
-\minisec{Effects of Scale Reduction}
-Different visual effects occur as a map is scaled down  (see Figure~\ref{fig:introduction:background:raw:poi}). One effect is that the size of symbols -- if they are shown to scale -- decreases. For example, if a building symbol is 2 mm wide on a 1:500.000 map it will be 1 mm wide on a 1:1.000.000 map. Consequently, map symbols may approach the limit of perceptibility. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}. A generalization technique that deals with diminutive symbols sizes is \emph{exaggeration}.
+This section will briefly cover the reasons why information on maps must be generalized, as well as a quick overview of some methods. For the reader who is interested in additional knowledge of the generalization process, the studies that have been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation} may function as a starting point for further coverage.
 
-Another effect is that the separation between symbols -- if they are shown at accurate positions -- decreases. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.4 mm apart on a 1:500.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other. Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
+
+\minisec{Effects of Scale Reduction}
+Different visual effects occur as a map is scaled down, which trigger the need for generalization (see Figure~\ref{fig:introduction:background:raw:poi}). One effect is that the size of symbols -- if they are shown to scale -- decreases. For example, if a lake is 2 mm wide on a 1:250.000 map it will be 0.5 mm wide on a 1:1.000.000 map. Consequently, map symbols may transcend the limits of perceptibility. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}. A generalization technique that deals with diminutive symbols sizes is \emph{exaggeration}.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -243,6 +244,9 @@ Another effect is that the separation between symbols -- if they are shown at ac
 \end{center}
 \vspace*{-4ex}
 \end{figure}
+
+Another effect is that the separation between symbols -- if they are shown at accurate positions -- decreases. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other. Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
+
 
 A third effect is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
 
@@ -269,22 +273,17 @@ A note about the term projection as it is used here. Projection in maps usually 
 
 The classification of generalization operators into three high-level categories (selection, projection, and aggregation), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, operator typologies have been attempted by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While all these typologies provide insight into the generalization process, it is hard to argue that either one of them is final. In constrast, all proposed operators are subsumed by either selection, projection, or aggregation.
 
-
 \subsection{Constraint-based Generalization}
-A basic challenge in map design is how to derive a \emph{logical} and \emph{graphical} map state after a scale reduction, such that the map remains legible and relevant. This process is known as \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}. A collection of studies in generalization has been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation}, which may function as possible entry point into this complex field.
+The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives cast the generalization problem as an optimization problem over a search space of maps.
 
-The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}.
-
-\minisec{Constraints}
-
-
-Constraints can be classified according to many different typologies~\cite{burghardt2007investigations,mcmaster1992generalization}. However, constraints generally accept a (partial) map state and either reject it or accept it. For example:
+\minisec{Constraints in Maps}
+The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps. Constraints can may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
 
 \begin{itemize}
-\item A partial map state can be a single building object, which must satisfy a minimum dimensions constraints. If the building is too small, the map state is rejected
-\item A partial map state can be a pair of buildings, which must satisfy a minimum proximity constraint. If the buildings are too close to each other, the map state is rejected
-\item A partial map state can be the set of all points of interest in the map, which must satisfy a density constraint. If the density of the points is too high for any unit area of the map, the map state is rejected.
-\item A partial map state can be a set of segments in a river system, which must satisfy a flow constraint. If the river system is disconnected from itself or its outlet, the map state is rejected.
+\item Individual objects may be required to satisfy unary constraints, such as minimum dimensions.
+\item Pairs of objects may be required to satisfy pair constraints, such as minimum proximity.
+\item Unit areas may be required to satisfy locus constraints, such as maximum density.
+\item Networks may be required to satisfy topological constraints, such as logical flow. For example, a river system that is displayed on a map should not be is disconnected from itself or its outlet.
 \end{itemize}
 
 In the examples above, the flow constraint requires knowledge of a previous state if a river segment is to be meaningfully categorized as ``missing''. In constrast, the minimum dimensions constraint can be evaluated in isolation, since a building is either too small or it is ok.
@@ -300,7 +299,7 @@ Constraints that is formulated over map states can be sclassied as either
 
 Constraints may define the limits of many different properties of the map, such as symbol size, complexity and density~\cite{weibel1999generalising}. For example, \emph{proximity constraints} define the limit for how close geographic objects symbols may appear on a map in order to be considered \emph{distinct}~\cite{nutanong2012multiresolution}; \emph{topological constraints} restrict which segments of a river network can be pruned to ensure that the river remains connecting to itself and its outlet~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative}.
 
-Regardless of the many constraint typologies 
+Constraints can be classified according to many different typologies~\cite{burghardt2007investigations,mcmaster1992generalization}. 
 
 \begin{figure}[htbp]
 \begin{center}
