@@ -228,6 +228,7 @@ A two-dimensional visual variable is the symbol position, which usually represen
 Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the ``the Grammar of Graphics'' work by Wilkinson, Wills, Rope, Norton, and Dubbs~\cite{wilkinson2006grammar}. Between them, these works cover the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps.
 
 \subsection{Map Generalization}
+\label{sec:introduction:map:generalization}
 One of the key challenges of map making is how to represent planet-sized information at a scale that fits on a computer screen or piece of paper. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps will become cluttered and illegible. The process by which map makers abstract geographic information for display on maps is called \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
 
 This section will briefly cover the reasons why information on maps must be generalized, as well as a quick overview of some methods. For the reader who is interested in additional knowledge of the generalization process, the studies that have been compiled by Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation} may function as a starting point for further coverage.
@@ -248,7 +249,7 @@ Different visual effects occur as a map is scaled down, which trigger the need f
 Another effect is that the separation between symbols -- if they are shown at accurate positions -- decreases. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other. Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
 
 
-A third effect is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual} and the density metrics surveyed by Nickerson~\cite{nickerson1994visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
+A third effect is that information density --  the amount of information per unit area --  increases. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual}. The central \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes. The principle which was empirically established by the cartographers T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate. Two generalization techniques that deal with excessive information density are \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -259,7 +260,7 @@ A third effect is that information density --  the amount of information per uni
 \end{figure}
 
 \minisec{Generalization Operators}
-As scale change may render a map illegible or irrellevant, the state of the map most be appropriately transformed. The state of a map can be transformed by performing abstract operations -- i.e. selection, projection and aggregation -- on the geographic objects and symbols. Each of the three abstract operations can be implemented by several concrete algorithms. The definition of operators 
+As scale change may render a map illegible or irrellevant, the state of the map most be appropriately transformed. The state of a map can be transformed by performing abstract operations -- i.e. selection, projection and aggregation -- on the geographic objects and symbols. Each of the three abstract operations can be implemented by several concrete algorithms:
 
 \begin{itemize}
 \item Selection means that a subset of geographic objects/symbols are retained in the map. For example, a type of selection is the select-distinct algorithm that selects objects based on their proximity and salience~\cite{nutanong2012multiresolution}, while another is the DFS thinning algorithm that selects objects based on information density and salience~\cite{sarma2012fusiontables}.
@@ -274,10 +275,10 @@ A note about the term projection as it is used here. Projection in maps usually 
 The classification of generalization operators into three high-level categories (selection, projection, and aggregation), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, operator typologies have been attempted by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While all these typologies provide insight into the generalization process, it is hard to argue that either one of them is final. In constrast, all proposed operators are subsumed by either selection, projection, or aggregation.
 
 \subsection{Constraint-based Generalization}
-The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives cast the generalization problem as an optimization problem over a search space of maps.
+The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives define an optimization problem where an optimal map must be found in a search space of maps. The search space contains the set of maps that can be derived from a source map. Maps can be derived by application of generalization operators to the objects and symbols on the map (see Section~\ref{sec:introduction:map:generalization}).
 
 \minisec{Constraints in Maps}
-The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps. Constraints can may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
+The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or altanatively, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
 
 \begin{itemize}
 \item Individual objects may be required to satisfy unary constraints, such as minimum dimensions.
@@ -286,88 +287,43 @@ The overall purpose of map constraints is to distinguish between acceptable maps
 \item Networks may be required to satisfy topological constraints, such as logical flow. For example, a river system that is displayed on a map should not be is disconnected from itself or its outlet.
 \end{itemize}
 
-In the examples above, the flow constraint requires knowledge of a previous state if a river segment is to be meaningfully categorized as ``missing''. In constrast, the minimum dimensions constraint can be evaluated in isolation, since a building is either too small or it is ok.
+Constraints have been classified according to many different typologies. For more information on constraint typologies, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
 
-first constraint is \emph{context-independent} while the second constraint is \emph{context-dependent}. The minimum dimensions constraint is context-independent because a building object is either too small or it is ok, regardless of the context. The flow constraint is context-dependent, because a river system is only disconnected if another map state exists in which it is connected.
+\minisec{Measures for Constraints}
+To express map constraint it helps to have a quantifiable measure which can be compared to a threshold value. For example, it is difficult to express a maximum information density constraint if there is no way to measure information density. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps.
 
-a constraint could be evaluated for all individual building objects in a map, and reject the partial  of inputs that involve geographic objects, a partial states could be a single ``building'' object, a pair of ``point of interest'' objects, or all objects of the ``river'' class that are part of the same river system.
+Unary measures quantify geometric and non-geometric properties of individual geographic objects and symbols in a map. They form the basis for unary constraints.  Geometric properties include complexity~\cite{douglas1973algorithms}, sinuosity~\cite{mueller1968introduction} and size, while non-geometric properties include all forms of logical predicates, such as equality, comparisons, and set membership.
 
+Spatial measures quantify properties of space, such as the density of information and the distribution of information. They form the basis of locus constraints, i.e. constraints on space. Information density is measured by a density metric, such as one of the metrics surveyed by Nickerson~\cite{nickerson1994visual}. Spatial distribution is measured as a distance to some ``original'' distribution, for example by using the Bhattacharyya distance~\cite{bhattacharyya1946measure} or the earth mover's distance~\cite{rubner2000earth}.
 
-In a functional view, constraints are \emph{functions} that accept a (partial) map state and output a boolean value of \emph{true} if and only if the input satisfies the constraint.
-Constraints that is formulated over map states can be sclassied as either 
+Topological measures characterize the topological relationship between geometric objects in the plane and in networks. They form the basis of topological constraints. Binary measures include the nine-intersection model~\cite{egenhofer1991categorizing} and the region connection calculus (RCC)~\cite{randell1992spatial}. Network models include stream-orderings~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative}, which express the order in which branches in a hydrological network can be pruned without disconnecting (say) a river from itself or its outlet. Shortest paths are a specific kind of connections between hubs in a network, such as a street network, which are usually interesting to preserve on a map~\cite{schmid2013opensciencemap}.
 
+For a concrete example of real-world constraints and objectives that were used to evaluate a map, see the Apple iOS 6 design objectives~\cite{samet2012duking}.
 
-Constraints may define the limits of many different properties of the map, such as symbol size, complexity and density~\cite{weibel1999generalising}. For example, \emph{proximity constraints} define the limit for how close geographic objects symbols may appear on a map in order to be considered \emph{distinct}~\cite{nutanong2012multiresolution}; \emph{topological constraints} restrict which segments of a river network can be pruned to ensure that the river remains connecting to itself and its outlet~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative}.
-
-Constraints can be classified according to many different typologies~\cite{burghardt2007investigations,mcmaster1992generalization}. 
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Pair and Space Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Set constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying sets of objects in the map. Objects that violate a constraint are in conflict (circled by red lines); this situation must be remedied, for example by selection (kept objects are shown as black disks; deleted objects are shown as white disks.}
+\caption{\textbf{Pair and Locus Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Locus constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying loci (e.g. unit areas) in the map. Entities (such as objects or loci) that violate a constraint are in conflict. In the figure, entities that are in conflict are circled by red lines; this situation must be remedied, for example by selection (in the figure, kept objects are shown as black disks; deleted objects are shown as white disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-While constraints can be classified according to many different typologies~\cite{burghardt2007investigations,mcmaster1992generalization}, one approach is to view constraints as \emph{functions} that map input to a boolean value that is \emph{true} if and only if the input satisfies the constraint. In this \emph{functional typology} constraints are classified by their input signature: \emph{object}, \emph{pair of objects}, \emph{space} (see Table~\ref{tab:introduction:map:constraints}). 
-
- This pattern is well-known from object-oriented design theory.
-
-
-
-\begin{table}[htdp]
-\caption{An arity-based typology of map constraints}
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline
-\textbf{Input} & \textbf{Examples} \\
-\hline
-Object & Minimum dimensions~\cite{ssc1977minimumdimensions}, complexity~\cite{de2004simplifying} \\
-\hline
-Pair of objects & Minimum proximity~\cite{nutanong2012multiresolution}, topological relationship~\cite{egenhofer1991categorizing,randell1992spatial} \\
-\hline
-Space & Density~\cite{topfer1966principles} \\
-\hline
-Pair of sets & Topology~\cite{schmid2013opensciencemap,shreve1966statistical}, zoom-consistency~\cite{sarma2012fusiontables,foerster2010challenges}, distribution~\cite{sarma2012fusiontables}, coverage~\cite{van1995gap} \\
-\hline
-\end{tabular}
-\end{center}
-\label{tab:introduction:map:constraints}
-\end{table}%
-
-\minisec{Map objectives}
-Objectives seek to optimize the utility of a map, which is quantified by an objective function. Therefore objectives allow two (feasible) maps to be compared to each other. For example, an objective may be to maximize the sum of weighted importance (using some weight function) over all objects that appear on the map~\cite{sarma2012fusiontables}. Given this objective, one map is ``better'' than another map if the sum of weighted importance of visible geographic objecst is greater on the former map.
-
-A real-world set of constraints and objectives were used to evaluate the map for Apple iOS 6~\cite{samet2012duking}.
-
-\minisec{Logical Abstraction}
-Logical abstraction is the process that derives, from a set of base geographic objects, a set of geographic objects that should appear on a map. At a high level, geographic objects in the base set can be \emph{selected}, \emph{aggregated}, and have their attributes \emph{projected} (in the general sense, not only cartographic sense) in order to accomodate the legibility and relevance goals of the map. Therefore, logical abstraction it is the process that decides \emph{what} information should be appear on a map.
-
-TODO: discuss operators
-
-One way to ensure a legible and relevant maps is to select data holistically according to constraints and objectives that ensure that humans will find relevant information on the map. 
-
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.47]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Maps on the Web}: Two examples of maps that show thematic foreground data on top of general-purpose background maps: (left) a choropleth map of  \% people who speak a non-english language as their first language in the UK; (right) a point map of Wikileaks data for casualties during the 2003-2011 Iraq War. The maps are reproduced from The Guardian's Data Blog including background maps \textcopyright 2014 Google.}
-\label{fig:introduction:geographic:mashups}
-\end{center}
-\end{figure}
+\minisec{Map Objectives}
+Objective functions quantify the utility of maps. An objective is to either maximize or minimize the objective function. For example, one objective is maximize the the weight of objects that appear on the map~\cite{sarma2012fusiontables}, where weight can for example be assigned according to importance.
 
 % Background
 
 \section{Motivation}
 \label{sec:introduction:motivation}
-Geographic maps have become a commodity on the Web, as they are made available by private companies~\cite{google2014maps,stamen2014tiles} and national mapping agencies~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. It is important to study the techniques that have enabled the great success of these computer science-heavy enterprises. Further research may show whether the techniques can be fundamentally improved. From a societal point of view, it is crucial that the discovered knowledge is transfered into the public domain, such that institutions like national mapping agencies can benefit from it. It is this promethean task which initially motivated the present thesis.
+Geographic maps have become a commodity on the Web that is made freely available for public use by private companies~\cite{google2014maps,stamen2014tiles} and national mapping agencies~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. It is important to study the techniques that have enabled the great success of these computer science-heavy enterprises. Further research may show whether the techniques can be fundamentally improved. From a societal point of view, it is crucial that the discovered knowledge is transfered into the public domain, such that institutions like national mapping agencies can benefit from it. It is this promethean task which initially motivated the present thesis.
 
 \subsection{Impact of the Web}
 % The changes and challenges caused by the web.
 The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} digital maps are produced and consumed, which has also shifted the use cases for map generalization. In the wake, a dual challenge of map creation and distribution has emerged, which cannot be adequately addressed by traditional geographic information systems (GIS). In a nutshell, GIS was arguably developed during and for another time and need~\cite{ucgis2014tomlinson}.
 
-\minisec{Emerging Datasets}
+\minisec{Huge Emerging Datasets}
 First, the Web has shifted the reasons why maps are created, which is caused by two root factors. On one hand, private companies~\cite{google2014maps,stamen2014tiles,vizzuality2012cartodb} and national mapping agencies~\cite{gst2014digitalmapsupply} supply an abundance of online background maps, which means that there is less need to create these types of maps. On the other hand, there is a steady rise in the supply of thematic geographic datasets online -- both curated~\cite{mst2014miljo}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} -- which grow by millions of information objects each day~\cite{openstreetmap2014stats}. The combination of these two factors means that demand has shifted from background maps to thematic maps~\cite{bereuter2013real}. Visualizing emerging dataset on thematic maps is potentially of great relevance and importance. For example, journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} have created thematic maps that increased the transparency and knowledge in the World and have probably saved human lives. 
 
 In general, the increase in data volume calls for scalable data processing methods for production of thematic maps. However, not all thematic maps are challenging to create. On one hand, statistical maps, such as the choropleth map in Figure~\ref{fig:introduction:background:mashups} (left map), can be efficiently produced by using aggregation techniques from spatial statistics~\cite{ripley2005spatial}. On the other hand, entity maps, such as the spatial event map that is shown in Figure~\ref{fig:introduction:background:mashups} (right map), require holistic selection of information~\cite{sarma2012fusiontables,nutanong2012multiresolution}.
