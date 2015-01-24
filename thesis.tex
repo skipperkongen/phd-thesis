@@ -114,10 +114,12 @@
 
 \sloppy
 
+\title{Declarative Multi-scale Selection for Scalable Map Visualizations}
+
 %\title{Declarative Cartography for Scalable Geographic Data Visualizations}
 %\title{Declarative Cartography for Scalable Map Visualizations}
 %\title{Scalable Selection for Geographic Data Visualizations}
-\title{Declarative and Scalable Selection for Map Visualizations}
+%\title{Declarative and Scalable Selection for Map Visualizations}
 %\title{Declarative Selection for Online Geographic Data Visualizations}
 %\title{Declarative and Scalable Web Mapping Systems}
 %\title{Declarative Web Mapping}
@@ -181,29 +183,33 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
 \end{emphpar}
 
-For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have helped humans to comprehend a multitude of spatial phenomena. For millennia, maps have helped seafarers to comprehend the dangers that lie beneath the surface of oceans and rulers to comprehend the advances of foreign armies on their territories. For example, a four thousand year old clay tablet, which was discovered near present-day Kirkuk, Iraq in 1930, illustrates the boundaries of a land parcel together with the owners name, Azala. As such, cadastral maps probably constitute one of the earliest forms of data visualization in human history. 
+For thousands of years, maps have provided humans with a visual way to gain spatial intelligence about the Earth. Maps visualize relevant geographic information in a legible and comprehensive way on a practical medium -- most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. Maps exploit that the visual sense is keen in humans. While other forms of information, such as data tables, demand that information be held in memory and steadily processed by the brain, maps are graphics that allow information to be understood in a single glance~\cite{bertin1967semiologie}. 
 
-Over time, human knowledge of map making and capacity for geographic information gathering have evolved hand in hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably remained biologically unchanged since since the stone age. Consequently, modern map makers must accomodate the same limitations of human visual perception as ancient map makers.
+Over time, maps have been created for a multitude of reasons. For example, maps have helped seafarers to master the challenge of navigation and helped rulers gain an overview of their territories. Indeed, one of the oldest use cases for maps is the registration of land ownership, which is recorded in a cadastre. For example, information about land ownership is etched into a clay tablet that was discovered near present-day Kirkuk, Iraq in 1930. The clay tablet, which is more than four thousand years old, illustrates a plot of land between two rivers together with the owner's name, Azala.
 
+Over time, the capacity of humans to collect and record geographic information has grown explosively. Today, trillions of spatial facts have been recorded about the Earth and the rest of the Universe~\cite{openstreetmap,york2000sloan}. However, while human knowledge has grown unbounded, the capacity for visual perceptive in humans has probably remained stable since the stone age. Consequently, modern map makers must accomodate the same limitations of human visual perception as ancient map makers -- albeit while potentially communicating much larger quantities of information.
 
+\subsection{Maps}
+Maps display geographic information that has been projected onto the plane~\cite{snyder1997flattening} and rendered at a certain scale. The concept of map scale has important implications for the amount of detail that a map can convey. For example, large scale maps (e.g. city maps) can display individual buildings, streets, parks and ponds. In contrast, a small scale map, (e.g. a country map), must necessarily omit detail. For example, an entire city and all that it contains may be represented by a single dot on a large scale map or even omitted entirely on an even larger scale map (e.g. a world map). 
 
-\subsection{Modeling Geographic Information}
-The information on a map can be modelled in two ways, either logically or graphically. While the logical map model defines \emph{what} geographic information should appear on a map, the graphical map model defines \emph{how} the information should appear. The differences and specifics of these two models are covered below.
+The information that appears on maps may correspond to both physical and abstract concepts in the real world, such as trees and administrative borders respectively. Furthermore, each concept in the real world can be viewed both logically (e.g. as a data object) and visually (e.g. as a symbol) in connection with a map. The distinctive characteristics of logical and visual abstractions are covered below.
 
-\minisec{Logical Model}
-Geographic information on a map is logically modelled by a set of \emph{geographic objects}. Each object represents a discrete concept in the real world, such as a road, lake, building, or subdivision. Each object associates a \emph{geometry} (point, line or area) with a set of additional attributes, which may include \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with the following attributes:
+\minisec{Logical Abstraction}
+A typical way to logically represent geographic information is to use discrete data objects (conventionally called \emph{vector} data in geography). Alternatively, geographic information can be represented by a geographic data grid (usually called \emph{raster} data in geography). However, data grids can be represented by data objects that are regularly distributed in space. For this reason, the following assumes that geographic information is logically abstracted by data objects.
+
+Each object logically represents a discrete concept with a spatial dimensions in the real world, such as a road, lake, whale, train line, or municipality. It associates a \emph{geometric} attributes -- such as a point, line, or area -- with a set of additional attributes, which may include \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example, geographic information for the restaurant ``Noma'' in Copenhagen can be represented by an object with the following attributes:
 
 \begin{itemize}
-\item \ang{55.6778}, \ang{12.5962} is a geometric attribute value of the Noma object, which corresponds to a geographic position on the harbor front in Copenhagen, Denmark.
-\item ``Nordic Cousine'' is a qualitative attribute value of the Noma object, which can be distinguished from other qualitative attribute values, such as ``Japanese Cousine''.
-\item ``Best Restaurant 2014'' is an ordered attribute value of the Noma object, which has the property that it can be \emph{ranked} against other ordered attribute values. For example, the best restaurant is (obviously) better than the second-best restaurant.
-\item DKK 1.600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that \emph{arithmetic} can be performed on it. For example, the sum of the DKK 1.600 and DKK 1.000 (the current price of the wine pairing at Noma) is DKK 2.600.
+\item The geometric attribute $point(\ang{55.6778}, \ang{12.5962})$ corresponds to the geographic location of the restaurant Noma on the harbor front in Copenhagen, Denmark.
+\item The qualitative attribute ``Nordic'' correponds to the cousine of the restaurant Noma. Qualitative attributes allow objects to be distinguished from other objects. For example, ``Nordic'' is different from ``Japanese''.
+\item The ordered attribute ``Best Restaurant 2014'' corresponds to the ranking in 2014 of restaurant Noma. Ordered attributes allow objects to be ranked against each other.
+\item The quantitative attribute ``DKK 1.600'' corresponds to the current price of twenty servings at Noma. Quantitative attributes allow arithmitic to be performed on objects. For example, ``DKK 1.600'' plus ``DKK 1.000''' (the current price of the wine pairing at Noma) is ''DKK 2.600''.
 \end{itemize}
 
-When geographic objects are expressed visually, the distinction between these attribute types become important, which will be described in the next section.
+When geographic objects are expressed visually, the distinction between these attribute types becomes important, which will be described in the next section.
 
-\minisec{Graphical Model}
-Geographic objects are graphically represented by \emph{symbols}. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Depending on their type, object attributes are graphically expressed by one of seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order so they express qualitative attributes particularly well (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured and therefore express ordered and quantitative attributes particularly well. 
+\minisec{Visual Abstraction}
+Visually, geographic information on a map is typically represented by a set of \emph{symbols}. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Depending on their type, object attributes are graphically expressed by one of seven \emph{visual variables}, which were first described by Bertin~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order so they express qualitative attributes particularly well (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured and therefore express ordered and quantitative attributes particularly well. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -227,7 +233,7 @@ A two-dimensional visual variable is the symbol position, which usually represen
 
 Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the ``the Grammar of Graphics'' work by Wilkinson, Wills, Rope, Norton, and Dubbs~\cite{wilkinson2006grammar}. Between them, these works cover the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps.
 
-\subsection{Map Generalization}
+\subsection{Cartographic Generalization}
 \label{sec:introduction:map:generalization}
 One of the key challenges of map making is how to represent planet-sized information at a scale that fits on a computer screen or piece of paper. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps will become cluttered and illegible. The process by which map makers abstract geographic information for display on maps is called \emph{generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
 
@@ -274,7 +280,7 @@ A note about the term projection as it is used here. Projection in maps usually 
 
 The classification of generalization operators into three high-level categories (selection, projection, and aggregation), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, operator typologies have been attempted by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While all these typologies provide insight into the generalization process, it is hard to argue that either one of them is final. In constrast, all proposed operators are subsumed by either selection, projection, or aggregation.
 
-\subsection{Constraint-based Generalization}
+\minisec{Constraint-based Generalization}
 The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives define an optimization problem where an optimal map must be found in a search space of maps. The search space contains the set of maps that can be derived from a source map. Maps can be derived by application of generalization operators to the objects and symbols on the map (see Section~\ref{sec:introduction:map:generalization}).
 
 \minisec{Constraints in Maps}
