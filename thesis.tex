@@ -114,10 +114,12 @@
 
 \sloppy
 
+\title{Declarative Multi-scale Selection for Scalable Map Visualizations}
+
+%\title{Declarative and Scalable Selection for Map Visualizations}
 %\title{Declarative Cartography for Scalable Geographic Data Visualizations}
 %\title{Declarative Cartography for Scalable Map Visualizations}
 %\title{Scalable Selection for Geographic Data Visualizations}
-\title{Declarative and Scalable Selection for Map Visualizations}
 %\title{Declarative Selection for Online Geographic Data Visualizations}
 %\title{Declarative and Scalable Web Mapping Systems}
 %\title{Declarative Web Mapping}
@@ -179,16 +181,15 @@ The contributions of the thesis are organized into two orthogonal dimensions. Fi
 
 \begin{emphpar}
 \textbf{Intelligence}: from Latin \emph{intellect-}, formed from \emph{intellegere},, ``to understand, to comprehend''; from \emph{inter-}, ``between'' plus \emph{legere}, ``to choose, to read''; \emph{Legere} is the etymological root of the English words \emph{select} and \emph{legible} -- \texttt{wordinfo.info}. 
+%``To affect thro' the eyes what we fail to convey to the public through their word-proof ears'' -- Florence Nightingale, mid-19th century
 \end{emphpar}
 
-For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have helped humans to comprehend a multitude of spatial phenomena. For millennia, maps have helped seafarers to comprehend the dangers that lie beneath the surface of oceans and rulers to comprehend the advances of foreign armies on their territories. For example, a four thousand year old clay tablet, which was discovered near present-day Kirkuk, Iraq in 1930, illustrates the boundaries of a land parcel together with the owners name, Azala. As such, cadastral maps probably constitute one of the earliest forms of data visualization in human history. 
+For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have helped humans comprehend a multitude of spatial phenomena. For millennia, maps have helped seafarers comprehend the dangers that lie beneath the surface of the oceans and rulers understand land ownership and the basis of taxation on their territories. For example, a four-thousand-year-old clay tablet, which was discovered near present-day Kirkuk, Iraq in 1930, illustrates the boundaries of a land parcel together with the owner's name, Azala. As such, cadastral maps probably constitute one of the earliest forms of data visualization in human history. 
 
-Over time, human knowledge of map making and capacity for geographic information gathering have evolved hand in hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably remained biologically unchanged since since the stone age. Consequently, modern map makers must accomodate the same limitations of human visual perception as ancient map makers.
-
-
+Over time, human knowledge of map making and the technological capacity of humans to gather geographic information has evolved hand-in-hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably -- to a large extent -- remained biologically unchanged since the Neolithic period. Consequently, modern map makers must accommodate the same limitations of visual perception in Homo Sapiens as ancient map makers. Moreover, geographic data is now accumulated at volumes so large as to be unfathomable during the Neolithic period. All the while, the map medium itself has shrunk to fit onto mobile devices that can be carried in a pocket. Hence, larger volumes of geographic data must now (potentially) be accommodated by smaller map mediums.
 
 \subsection{Modeling Geographic Information}
-The information on a map can be modelled in two ways, either logically or graphically. While the logical map model defines \emph{what} geographic information should appear on a map, the graphical map model defines \emph{how} the information should appear. The differences and specifics of these two models are covered below.
+Geographic information is information that is associated with locations in physical space. In the context of this thesis, we will talk about information that appears on a map. This information can be modelled in two ways, either logically or graphically. While the logical information level defines \emph{what} geographic information should appear on a map, the graphical information level defines \emph{how} the information should appear on a map. The differences and specifics of these two models are covered below.
 
 \minisec{Logical Model}
 Geographic information on a map is logically modelled by a set of \emph{geographic objects}. Each object represents a discrete concept in the real world, such as a road, lake, building, or subdivision. Each object associates a \emph{geometry} (point, line or area) with a set of additional attributes, which may include \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with the following attributes:
