@@ -114,7 +114,7 @@
 
 \sloppy
 
-\title{Declarative Multi-scale Selection for Scalable Map Visualizations}
+\title{Declarative and Scalable Selection for Map Visualizations}
 
 %\title{Declarative and Scalable Selection for Map Visualizations}
 %\title{Declarative Cartography for Scalable Geographic Data Visualizations}
@@ -193,6 +193,7 @@ For thousands of years, humans have visualized geographic information on maps, m
 Over time, human knowledge of map making and the technological capacity of humans to gather geographic information has evolved hand-in-hand. All the while, Homo Sapiens, the principal maker and consumer of maps has probably -- to a large extent -- remained biologically unchanged since the Neolithic period. Consequently, modern map makers must accommodate the same limitations of visual perception in Homo Sapiens as ancient map makers. Moreover, geographic data is now accumulated at volumes so large as to be unfathomable during the Neolithic period. All the while, the map medium itself has shrunk to fit onto mobile devices that can be carried in a pocket. Hence, larger volumes of geographic data must now (potentially) be accommodated by smaller map mediums.
 
 \subsection{Modeling Geographic Information}
+\label{sec:modeling:geographic:information}
 Geographic information is information that is associated with locations in physical space. In the context of this thesis, we will talk about information that appears on a map. This information can be modelled in two ways, either logically or graphically. While the logical information level defines \emph{what} geographic information should appear on a map, the graphical information level defines \emph{how} the information should appear on a map. The differences and specifics of these two models are covered below.
 
 \minisec{Logical Model}
@@ -269,47 +270,75 @@ Different visual effects occur as a map is scaled down. These effects can be see
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.48]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Aggregation and selection of geographic information}: On the left map, the share of UK residents who speak a non-english language as their first language is aggregated per administrative region; darker values imply more foreign language speakers. On the right map, points that represent casualties during the 2003-2011 Iraq War are representatively selected from a much larger set of points. Both maps are reproduced from The Guardian's Data Blog with background maps from Google Maps \textcopyright 2014.}
+\caption{\textbf{Aggregation and selection of geographic information}: On the left map, residents of London, United Kingdom are aggregated by region and the regions are shaded according to the share of people who speak a non-english language as their first language; darker values imply more foreign-language speakers. On the right map, points that represent casualties during the 2003-2011 Iraq War are selected from a much larger set of points. Both maps are reproduced from The Guardian's Data Blog with background maps from Google Maps \textcopyright 2014.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \end{figure}
 
 \minisec{Generalization Operators}
-Scale change may render information on a map illegible or irrellevant. Consequently, this situation must be remedied, which is the purpose of map genealization. Map generalization changes the information abstraction of the map, such that the relevance and legibility of the map is maximized. Information can be abstracted by one of three fundamental operators: \emph{selection} is an operator that derives a subset of the information objects that appear on a map; \emph{projection} is an operator that modifies the attributes of information objects that appear on a map; \emph{aggregation} is an operator that combines several information objects into a new information object that somehow represents them all. These three fundamental operators can each be implemented by a multitude of concrete algorithms and procedures. In a hierarchical view, map generalization can be mapped to three fundamental operators which in turn can be mapped to many concrete algorithms and procedures. 
+A generalization operator transforms the set of information objects that appear on a map in order to ensure that a map remains legible and relevant at a given scale  (see Figure~\ref{fig:introduction:background:mashups}). One way to classify operators is according to three categories: \emph{selection} (see Definition~\ref{def:selection}), \emph{projection}  (see Definition~\ref{def:projection}), and \emph{aggregation} (see Definition~\ref{def:aggregation}). 
 
-Operators can be classified as either \emph{independent} or \emph{holistic} operators. While an independent operator, such as selection in SQL or random sampling, transforms objects independently of each other, a holistic operator transform each object while considering the context other the objects. 
+It should be noted that, in geography, the term projection is often used interchangeably with the term \emph{map projection}, i.e. the projection of spherical coordiates onto the plane. However, in this thesis, the term projection has a broader meaning that is adopted from databases~\cite{ramakrishnan2000database}.
 
-For example:
+\begin{definition}[Selection]
+A procedure that accepts a set of objects and outputs a subset of these objects, but does not modify the objects in any way. \label{def:selection}.
+\end{definition}
 
-\begin{itemize}
-\item \textbf{Selection procedures}: examples of simple selection procedures are \emph{random sampling}~\cite{wang2014efficient} and \emph{predicate filtering}~\cite{sld}; examples of holistic selection procedures are \emph{select-distinct}~\cite{nutanong2012multiresolution} and \emph{density-based thinning}~\cite{sarma2012fusiontables}.
+\begin{definition}[Projection]
+A procedure that accepts a set of objects and outputs the same set of objects but in a modifed state. \label{def:projection}.
+\end{definition}
 
-\item \textbf{Projection procedures}: example of projection procedures are map projection~\cite{snyder1997flattening} and simplification~\cite{douglas1973algorithms}. an example of holistic projection is feature displacement~\cite{bader2001energy}. It should be noted that, in geography, projection is usually used interchangeably with map projection. However, this dissertation adopts the notion of projection as the term is used in databases~\cite{ramakrishnan2000database}.
+\begin{definition}[Aggregation]
+A procedure that accepts a set of objects and merges subsets of these objects into single objects in the output. Crucially, at least one object that appears in the output must not be a members of the input, as otherwise the procedure would be equivalent to selection. \label{def:aggregation}.
+\end{definition}
 
-\item \textbf{Aggregation procedures}: examples of simple aggregation procedures are online aggregation~\cite{hellerstein1997online} and sketching~\cite{cormode2012synopses}, which compute quantities such as averages, counts, minimum and maximum values; an example of holistic aggregation is feature aggregation by mixed-integer programming~\cite{haunert2006landcover}.
-
-\end{itemize}
+Each of the three high-level operators -- selection, projection, and aggregation -- can be implemented by several \emph{algorithms}. A key distinction is whether an algorithm processes objects \emph{independently} or \emph{holistically}. Thus each algorithm can be categorized in two dimensions, i.e. the category (selection, projection, aggregation) and subcategory (independent, holistic). For example, random sampling is a type of independent selection, since objects are selected or omitted independently of other objects (by flipping a coin, rolling a dice, etc.). In contrast, geometric displacement of objects such that no two object geometrically overlap is a type of holistic projection, since objects are modified in the context of other objects. Many different algorithms have been proposed in the literature (see Table~\ref{tab:operators}). 
 
 
-The classification of generalization operators into three high-level categories (selection, projection, and aggregation), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, operator typologies have been attempted by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While all these typologies provide insight into the concrete aspects of the generalization process, it is hard to argue that either one of them is conclusive. Therefore, this section has covered generalization operators using their most fundamental description, without endorsing any specific classification. However, the main contribution of this work is in a specific type of selection, namely holistic selection.
+\begin{table}[htdp]
+\caption{Examples of generalization algorithms by category}
+\begin{center}
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Category (subcategory)} & \textbf{Generalization procedure} \\
+\hline
+Selection (independent)  & Random sampling~\cite{wang2014efficient} \newline Predicate filtering~\cite{sld} \\
+\hline
+Selection (holistic)  & Route selection~\cite{agrawala2001rendering} \newline Street network selection~\cite{schmid2013opensciencemap} \newline Hydrological network selection~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative} \newline Proximity-based selection~\cite{nutanong2012multiresolution} \newline Density-based selection~\cite{sarma2012fusiontables} \\
+\hline
+Projection (independent)  & Coordinate projection~\cite{snyder1997flattening} \newline Exaggeration~\cite{weibel1999generalising} \newline Collapse~\cite{weibel1999generalising} \newline Simplification~\cite{douglas1973algorithms} \\
+\hline
+Projection (holistic) & Feature displacement~\cite{bader2001energy} \\
+\hline
+Aggregation (independent)  & Choropleth maps~\cite{choropleth}  \newline Heat maps~\cite{heatmap} \\
+\hline 
+Aggregation (holistic) & Landcover aggregation~\cite{haunert2006landcover} \\
+\hline
+\end{tabular}
+\end{center}
+\label{tab:operators}
+\end{table}%
+
+The categorization of generalization operators the dimensions (selection, projection, aggregation) and (independent, holistic), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, competing and derivative classifications have been proposed by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While these different classifications of operators provide insight into the concrete aspects of the generalization process, it is hard to argue that either one of them is conclusive. Therefore, this section has covered generalization operators by grouping them in terms of some fundamental differences rather than specific differences. The goal of this section has been to provide the reader with a clear framework in which generalization operators can be understood. Later sections of this thesis will focus more narrowly on holistic selection and simple projection.
 
 \subsection{Constraint-based Generalization}
-The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the descriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives define an optimization problem where an optimal map must be found in a search space of maps. The search space contains the set of maps that can be derived from a source map. Maps can be derived by application of generalization operators to the objects and symbols on the map (see Section~\ref{sec:introduction:map:generalization}).
+\label{sec:contraint:based:generalization}
+The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the discriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives define an optimization problem where an optimal map must be found in a search space of maps. The search space contains the set of maps that can be derived from a source geographic information. Maps can be derived by application of generalization operators to the objects and symbols on the map (see Section~\ref{sec:introduction:map:generalization}).
 
 \minisec{Constraints in Maps}
-The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or altanatively, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
+The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or alternatively, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
 
 \begin{itemize}
 \item Individual objects may be required to satisfy unary constraints, such as minimum dimensions.
 \item Pairs of objects may be required to satisfy pair constraints, such as minimum proximity.
-\item Unit areas may be required to satisfy locus constraints, such as maximum density.
-\item Networks may be required to satisfy topological constraints, such as logical flow. For example, a river system that is displayed on a map should not be is disconnected from itself or its outlet.
+\item Unit areas may be required to satisfy constraints on the sets of objects they contain, such as maximum density.
+\item Networks may be required to satisfy topological constraints, such as logical flow. For example, a river system that is displayed on a map should not be disconnected from itself or its outlet.
 \end{itemize}
 
 Constraints have been classified according to many different typologies. For more information on constraint typologies, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
 
 \minisec{Measures for Constraints}
-To express map constraint it helps to have a quantifiable measure which can be compared to a threshold value. For example, it is difficult to express a maximum information density constraint if there is no way to measure information density. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps.
+To express map constraints it is helpful to have a quantifiable measure which can be compared to a threshold value. For example, it is difficult to express a maximum information density constraint if there is no way to measure information density. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps.
 
 Unary measures quantify geometric and non-geometric properties of individual geographic objects and symbols in a map. They form the basis for unary constraints.  Geometric properties include complexity~\cite{douglas1973algorithms}, sinuosity~\cite{mueller1968introduction} and size, while non-geometric properties include all forms of logical predicates, such as equality, comparisons, and set membership.
 
@@ -336,123 +365,74 @@ Objective functions quantify the utility of maps. An objective is to either maxi
 
 \section{Motivation}
 \label{sec:introduction:motivation}
+% REVISIT
 Geographic maps have become a commodity on the Web that is made freely available for public use by private companies~\cite{google2014maps,stamen2014tiles} and national mapping agencies~\cite{gst2014digitalmapsupply}. Recently, national maping agencies have come under pressure, as commercial mapping alternatives, such as Google and Bing Maps, routinely dominate in terms of price, ease-of-use, availability, performance and scalability. It is important to study the techniques that have enabled the great success of these computer science-heavy enterprises. Further research may show whether the techniques can be fundamentally improved. From a societal point of view, it is crucial that the discovered knowledge is transfered into the public domain, such that institutions like national mapping agencies can benefit from it. It is this promethean task which initially motivated the present thesis.
 
 \subsection{Impact of the Web}
+\label{sec:impact:of:the:web}
 % The changes and challenges caused by the web.
-The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} digital maps are produced and consumed, which has also shifted the use cases for map generalization. In the wake, a dual challenge of map creation and distribution has emerged, which cannot be adequately addressed by traditional geographic information systems (GIS). In a nutshell, GIS was arguably developed during and for another time and need~\cite{ucgis2014tomlinson}.
+The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} digital maps are produced and consumed. 
+
+
+In its wake, a dual challenge of map creation and distribution has surfaced, which cannot be adequately addressed by traditional geographic information systems (GIS). GIS was developed before the World Wide Web and primarily as a single-user system~\cite{ucgis2014tomlinson}. Later on, GIS has been retrofitted with web service capabilities, such as the Web Map Service (WMS) and Web Feature Service (WFS), which are protocols designed for executing live queries on the data over the Web. However, these protocols do not scale because they rely on heavy processing of the data at query time. While this may work well for a few concurrent users, it becomes prohibitively expensive at scale. As a consequence, almost all succesful online maps rely on pre-materialized map tiles, which can additionally be complemented by client-side rendering.
+
+% END REVISIT
 
 \minisec{Huge Emerging Datasets}
-First, the Web has shifted the reasons why maps are created, which is caused by two root factors. On one hand, private companies~\cite{google2014maps,stamen2014tiles,vizzuality2012cartodb} and national mapping agencies~\cite{gst2014digitalmapsupply} supply an abundance of online background maps, which means that there is less need to create these types of maps. On the other hand, there is a steady rise in the supply of thematic geographic datasets online -- both curated~\cite{mst2014miljo}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} -- which grow by millions of information objects each day~\cite{openstreetmap2014stats}. The combination of these two factors means that demand has shifted from background maps to thematic maps~\cite{bereuter2013real}. Visualizing emerging dataset on thematic maps is potentially of great relevance and importance. For example, journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} have created thematic maps that increased the transparency and knowledge in the World and have probably saved human lives. 
+First, the Web has shifted the reasons why maps are created, which is caused by two root factors. On one hand, private companies~\cite{google2014maps,stamen2014tiles,vizzuality2012cartodb} and national mapping agencies~\cite{gst2014digitalmapsupply} supply an abundance of online background maps, which means that there is less need to create these types of maps. On the other hand, there is a steady rise in the supply of thematic geographic datasets online -- both curated~\cite{mst2014miljo}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} -- which grow by millions of information objects each day~\cite{openstreetmap2014stats}. The combination of these two factors means that demand has shifted from background maps to thematic maps~\cite{bereuter2013real}. Visualizing emerging datasets on thematic maps is potentially of great relevance and importance. For example, journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} have created thematic maps that increased the transparency and knowledge in the World and have potentially even saved human lives. 
 
-In general, the increase in data volume calls for scalable data processing methods for production of thematic maps. However, not all thematic maps are challenging to create. On one hand, statistical maps, such as the choropleth map in Figure~\ref{fig:introduction:background:mashups} (left map), can be efficiently produced by using aggregation techniques from spatial statistics~\cite{ripley2005spatial}. On the other hand, entity maps, such as the spatial event map that is shown in Figure~\ref{fig:introduction:background:mashups} (right map), require holistic selection of information~\cite{sarma2012fusiontables,nutanong2012multiresolution}.
+In general, the increase in data volume calls for scalable data processing methods for production of thematic maps. However, not all thematic maps are challenging to create. On one hand, statistical maps, such as the choropleth map in Figure~\ref{fig:introduction:background:mashups} (left map), can be efficiently produced by using aggregation techniques from spatial statistics~\cite{ripley2005spatial}. On the other hand, entity maps, such as the spatial event map that is shown in Figure~\ref{fig:introduction:background:mashups} (right map), require holistic selection of information~\cite{sarma2012fusiontables,nutanong2012multiresolution}, a much greater challenge.
 
 \minisec{Novice Map Makers}
-Second, the Web has caused a change in how and by whom maps are created. While map creation was traditionally the domain of cartographic experts, this is no longer the case. Today, the data enthusiast has replaced the expert as the person most likely to create a map~\cite{hanrahan2012enthusiast}. This is partly because demand for thematic maps on the web has grown faster than the number of cartographic experts who can create them. This has created a human resources challenge, which is being addressed by the development of more intuitive and expressive design interfaces. These interfaces promise to enable anyone to create maps. The need for rapid thematic mapping has driven the development of fully-automatic mapping systems~\cite{sarma2012fusiontables,nutanong2012multiresolution}. However, these systems have completely sacrificed designer control in order to gain productivity. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by novice map makers, such as journalists, aid workers and scientists.
+Second, the Web has caused a change in how and by whom maps are created. While map creation was traditionally the domain of cartographic experts, this is no longer the case. Today, the data enthusiast has replaced the expert as the person most likely to create a map~\cite{hanrahan2012enthusiast}. This is partly because demand for thematic maps on the web has grown faster than the number of cartographic experts who can create them. This has created a human resources challenge, which is being addressed by the development of more intuitive and expressive design interfaces. These interfaces promise to enable anyone to create maps. The need for rapid thematic mapping has driven the development of fully-automatic mapping systems~\cite{sarma2012fusiontables,nutanong2012multiresolution}. However, these systems have completely sacrificed designer control in order to gain productivity. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly and inadequate for data enthusiasts. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by non-specialist map makers, such as software developers, journalists, aid workers and scientists.
 
 \minisec{Mobile Map Users}
-Third, the Web has caused a change in when and where maps are consumed by their audience. Today, an online map can be consumed by anyone, anywhere, at any time -- thanks to mobile devices in our pockets that are connected to an ubiquitous Internet. Many online map are consequently consumed by thousands of concurrent users. Web users today expect 24 x 7 availability and acceptable latency for online applications, which included maps. In distributed systems, data partitioning and data replication are important techniques that can increase the availability and performance of data services~\cite{barroso2009datacenter,dilley2002cdn}. In mapping, a typical data partitioning scheme is to split the data into raster~\cite{mbtile12} or vector tiles~\cite{gaffuri12vectortiles}, which can be distributed on content delivery networks (CDN). However, the number of tiles in a tile pyramid grow exponentially in the number of zoom levels that a map supports. While a large tile sets can be rapidly materialized in parallel, for example on a map-reduce cluster~\cite{dean04mapreduce,dean2009designs}, the computation and I/O involved is fundamentally costly. Therefore, there is a need for methods that reap the benefits of data partitioning and data replication, while avoiding the cost of full materialization.
+Third, the Web has caused a change in when and where maps are consumed by their audience. Today, an online map can be consumed by anyone, anywhere, at any time -- thanks to mobile devices in our pockets that are connected to an ubiquitous Internet. Many online map are consequently consumed by thousands of concurrent users. Web users today expect 24 x 7 availability and acceptable latency for online applications, which includes maps. 
+
+In distributed systems, data partitioning and data replication are important techniques that can increase the availability and performance of data services~\cite{barroso2009datacenter,dilley2002cdn}. In mapping, a typical data partitioning scheme is to split the data into raster~\cite{mbtile12} or vector tiles~\cite{gaffuri12vectortiles}, which split the data among cells in a fixed multi-level grid called a tile pyramid~\cite{decola1993pyramid}. The advantage of tile pyramids, which have logical grid for each ``zoom level'' in a map, are that subsets of the data can be addressed in a fixed key-value scheme. Consequently, tiles can easily be distributed via a content delivery networks (CDN). However, the number of tiles in a tile pyramid grow exponentially in the number of zoom levels that a map supports. While a large set of tiles can be rapidly materialized in parallel, for example on a map-reduce cluster~\cite{dean04mapreduce,dean2009designs}, the computation and I/O cost is fundamentally high since it is exponential in the number of tile pyramid levels. For example, on a zoomable world map with twenty zoom levels (which is the norm), there are more than 300 billion distinct tiles. Therefore, there is a need for methods that reap the benefits of data partitioning and data replication, while avoiding the cost of full materialization.
 
 
 % National mapping agencies
 %\minisec{National Mapping Agencies in the Future}
 %National mapping agencies create and distribute curated map content of on the Web~\cite{gst2014digitalmapsupply}. The maps are of high quality and potential valuable to society~\cite{gst2012friedata}. However, similar maps are also being distributed by private corporations, such as Google and Microsoft, which creates a competive situation. In fact, multi-national corporations, such as Google and Microsoft -- rutinely operate at one or two orders of magnitude higher availability (99.999\% versus 99.5\%) and performance (40 msec versus 400 msec per map requrest) compared to national mapping agencies. Evidently, computer science heavy organizations like Google and Microsoft have adapted better to the reality of Web mapping than national mapping agencies -- while simultaneously serving maps to orders of magnitude larger audiences. This puts pressure on national mapping agencies, who must catch up or become irrelevant. To support the adoption of best practice Web maps in national mapping agencies, this thesis aims to disclose a set of low-cost techniques for serving map content online with high availability and high scalability.
 
-\section{Requirements of a Web Mapping Pipeline}
+\section{State-of-the-Art Mapping Pipelines}
 \label{sec:introduction:web:mapping:pipelines}
 
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/mapping-states.pdf}
-\caption{\textbf{States and transitions of a digital mapping pipeline}: data modelling (1); logical abstraction (2); graphical abstraction (3); rendering (4).}
+\caption{\textbf{Stages in a digital mapping pipeline}: data modeling (1) captures reality as a set of information objects (primary data model); data abstraction (2) refines the set of information objects into a logical model of content on a map (logical model); visual abstraction (3) specifies how information objects should be translated into symbols on a map (graphical model); finally, rendering (4) applies the graphical model to the logical model and produces output that is displayed on a map medium.}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
 \vspace*{-4ex}
 \end{figure}
 
-The digital mapping process can be modelled as a pipeline that translates between ``reality'' and a configuration of pixels on a computer screen, i.e. the digital map. This mapping pipeline has three intermediate states that correspond to increasingly abstract representations of reality. These intermediate states are: the \emph{data model}, the \emph{logical model} and the \emph{graphical model} of the digital map~\cite{gruenreich1992atkis} (see Figure~\ref{fig:introduction:requirements:pipeline}).
+The digital mapping process can be modeled as a pipeline that translates between ``reality'' and a graphical output on a digital map medium (see Figure~\ref{fig:introduction:requirements:pipeline}). Instead of leaping directly from reality to graphical output, it is useful to model information using some intermediate stages. A common approach is to model information at three intermediate stages: the \emph{primary data model}, the \emph{logical model} and the \emph{graphical model} of the digital map~\cite{gruenreich1992atkis}. To produce a high-quality map, it is often necessary to iterate back and forth between intermediate stages in the pipeline. For example, choosing symbols of larger size in the graphical model means that symbols are more likely to overlap. This in turn may trigger a renewal of the logical model, e.g. by selecting fewer objects to avoid symbol overlap.
 
-While the final state is reached by a straight-forward rendering of the graphical model, the three intermediate states and their connecting transitions require further explanation:
+The data modeling process is outside the scope of this thesis. It has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. Also, the rendering process is outside the scope of this thesis. Moreover, the rendering process depends to great extent on the map medium of choice. The intermediate stages, i.e. the logical and graphical model, were described in Section~\ref{sec:introduction:map:generalization}.
 
-\begin{enumerate}
-\item \textbf{Data model}: the data model behind a map captures reality as a set of discrete geographic information objects. Geographic information objects associate a \emph{geometry}, such as a point, line or area, with a set of \emph{qualitative}, \emph{ordered} and/or \emph{quantitative components}~\cite{bertin1967semiologie}.
-\item \textbf{Logical model}: the logical model of a map logically abstracts the data model by \emph{selection}, \emph{projection} and \emph{aggregration} of the geographic information objects, in order to emphasize the important and suppress the irrelevant. The logical model captures what information the digital map \emph{contains}, but not how it is \emph{displayed}. It should be noted that here the term projection is used as it is used in databases, i.e. the denote modification of an information object.
-\item \textbf{Graphical model}: the graphical model of a map graphically abstracts the logical model into a set of symbols, such that the conditions for efficient \emph{visual perception} and \emph{comprehension} in the digital map are maximized. Symbols use \emph{size}, \emph{value}, \emph{texture}, \emph{color}, \emph{orientation}, and \emph{shape} to express the \emph{qualitative}, \emph{ordered} and \emph{quantitative} components of the geographic information~\cite{bertin1967semiologie}. The symbols are arranged according to the geometries of the geographic information objects, either by a strict geometric projection into the plane or in a topologically equivalent arrangement. The graphic model captures \emph{how} the information should be visually represented on a digital map.
-\end{enumerate}
+It is crucial that we understand the requirements of a digital mapping pipeline, especially since the Web has dramatically impacted what these requirements are (as mentioned in Section~\ref{sec:impact:of:the:web}). In a web scenario, the importance of map creation is only as important as map distribution: there is little point in creating a beautiful map if it does not reach the intended audience! Therefore, the evaluation of a mapping pipeline should take into account how map content is distributed to audiences.
 
-There is an important interplay between the logical and graphical model. Different graphical abstractions may trigger the need for new logical abstractions, even through the graphical abstraction step is downstream from the logical abstraction step in Figure~\ref{fig:introduction:requirements:pipeline}. For example, choosing symbols of larger size in the graphical model means that information objects are more likely to overlap. This in turn may requires a renewal of the logical model, such that objects are selected that are futher apart. In conclusion, the ordering of these two states is somewhat arbitrary, and can be sensibly modeled either way.
+A key distinction between state-of-the-art mapping pipeline is whether the map creation process is synchronous or asynchronous in relation to the map distribution process. This distinction is represented by two extreme approaches: real-time systems and batch-oriented systems. In the following sections, the advantages and drawbacks of both approaches are analyzed and discussed.
 
-Research must study the requirements of the mapping pipeline, since this allows researchers to compare state-of-the-art pipelines against hypothetical pipelines that meets all of the requirements. Naturally, mapping pipelines have been studied extensively in the literature. Transition one (data modeling) has been studied in previous work by Friis-Christensen~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}; Transition three (graphical abstraction) has been studied in the seminal work by Bertin~\cite{bertin1967semiologie}. Transition four (rendering of symbols) is fairly straight-forward and will not be discussed further. This thesis will focus on transition two (logical abstraction), since the biggest challenges in web mapping are currently found here. The requirements for this step are discussed in Section~\ref{sec:introduction:requirements:logical:abstraction}.
+\subsection{Real-time Map Systems}
+In real-time systems, the map creation process is synchronous with the map distribution process: the map is created on-the-fly when a map request is received by the system. For example, in systems that implement the Web Mapping Service (WMS) protocol, a map request typically invokes the entire mapping pipeline from the primary data model, through data abstraction, visual abstraction, and rendering.
 
-The above view of a mapping pipeline is agnostic of the existence of the Web or the Internet. In contrast, a \emph{web mapping pipeline} requires the transfer of state over the Internet, from one state container to another state container. Typically, one state container (the server) transfers state to many state containers (the clients). It is important to understand the requirements of state transfer on the Web and over the Internet. These requirements are discussed in Section~\ref{sec:introduction:requirements:distribution}.
-
-\subsection{Selection} 
-\label{sec:introduction:requirements:logical:abstraction}
-
-A smaller scale map implies that less graphical real-estate is available to represent more geographical information. Consequently, information must be omitted by selection, adjusted by projection, or combined by aggregation, which is the process of logical abstraction. This section discusses the constraints and objectives that drive logical abstraction. In doing so, this thesis implicitely adopts a \emph{combinatorial optimization} view of the map generalisation process~\cite{harrie2007modelling}. Furthermore, this thesis focuses on selection as the means for logical abstraction of information. In contrast to selection in relational algebra, selection of geographic information is a holistic process, which cannot be satisfied by filtering the information objects by unary predicates alone~\cite{harrie2007modelling}. 
-
-Even as the Web has impacted when, why and how maps are created and consumed, information that is displayed on maps must (still) be legible, consistent with reality, and relevant for the purpose of the map. This can be ensured by constraints and objectives. 
-
-\begin{ex}[iOS6 Apple Maps Design Goals]
-\label{ex:ios6:design:goals}
-The iOS6 Apple Maps API fullfils six design goals, which concretize the high-level goals of maps. They express conditions that can be reached by selection, projection and aggregation of geographic information, and therefore are goals for the logical map model: 
-
-\begin{enumerate}
-\item minimize overlaps
-\item respect relative importance of entries
-\item maximize spatial fullness
-\item provide panning/zooming consistency
-\item enable efficient sampling
-\item support filtering conditions
-\end{enumerate}
-\end{ex}
-
-
-While Example~\ref{ex:ios6:design:goals} is illustrative of the design goals that drive logical abstraction, a goal of this thesis is to derive a more formal classification of constraints and objectives for logical abstraction of geographic information: 
+In the academic literature, real-time systems have been studied because they have some important advantages:  
 
 \begin{itemize}
-
-\item \textbf{Constraints}, namely unary~\cite{de2004simplifying,welch1982spatial}, binary~\cite{nutanong2012multiresolution}, space~\cite{topfer1966principles, woodruff1998constant}, cross-scale~\cite{sarma2012fusiontables,foerster2010challenges} and topological~\cite{egenhofer1991categorizing,randell1992spatial,schmid2013opensciencemap,shreve1966statistical,van1995gap} constraints, define the feasible states of a map. As such, constraints define a search space of feasible maps that are candidates for a logical model. Objects or spaces that violate the constraints are said to be \emph{in conflict}, which is a situation that must be remedied by the application of an appropriate map generalization operator, such as selection~\cite{shea1989cartographic,weibel1997generalization}. These constraint classes, except unary constraints, are holistic since they generally take the entire information set into account when evaluating whether any given object or space is in conflict.
-
-\item \textbf{Objectives}, such as minimization of conflict~\cite{bader2001energy,haunert2006landcover,sester2000generalization} or maximization of relevance~\cite{sarma2012fusiontables,nutanong2012multiresolution}, quantify the utility of a map. Numeric objective functions facilitate combinatorial optimization over the search space of feasible maps. 
-
+\item Data is only stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that information that appears on a map is never stale. Given an atomic update mechanism for the data model, such as transactions~\cite{gray1981transaction}, a map always displays the most recent and consistent state of the data. However, this is only true if the atomic update propagates to the index as well, which is a significant consideration given that data is typically managed outside the map generalization framework.
+\item User preferences and the context of map usage can be taken into consideration when creating the map. Thus, maps can be tailored to individual users needs, for example by letting a recommendation algorithm play a role in assigment of object importance.
 \end{itemize}
 
-Given an initial map state, typically corresponding to the primary data model, different logical models can be derived by the application of map generalization operators, i.e. selection, projection and aggregation. Each derived state may be evaluated against the constraints and objectives, in order to decide its feasibility and utility. According to combinatorial optimization view of map generalization, the derived logical model for a map must satisfy the active constraints and be optimal with regard to the objective. These are the core requirements of logical abstraction that are considered by this thesis.
+Real-time mapping relies on low-latency data abstraction, since the map creation process is synchronous with the map distribution process. Low latency is typically ensured by using an efficient data structure to index the geographic information. Typically, the proposed data structure will be some kind of tree, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}.
 
+While tree-based real-time mapping seemingly ensure low-latency data abstraction, there are two key disadvantages when compared to serving pre-computed content from a key-value stores or content delivery network (CDN). First, the complexity of any tree-based access method is high compared to the $O(1)$ of looking pre-computed content up in a hash-based key-value store~\cite{pilchin2007dynamo}. Second, the proposed tree data structures are typically not designed for concurrent access. This is critical, because there is typically a high and variable level of concurrency in a web context, which implies that the data abstraction process must be scalable in the number of concurrent queries as well as data volume. The na{\"i}ve approach, which is to replicate the entire index multiple times and dispatch requests round-robin is costly, especially when data grows in size.
 
-\subsection{Distribution} 
-\label{sec:introduction:requirements:distribution}
-In stage four of the web mapping pipeline, map content is distributed over the Internet to web and mobile mapping clients. The success criteria are established in a service level aggrements (SLA), which states the acceptable thresholds of quantifiable service metrics. While SLAs differ in their formulation, usually, acceptable thresholds for the following three metrics are defined:
+In conclusion, current real-time map systems are inappropriate for maps that target large web audiences, since their base performance is significantly lower than key-value store and they do not scale with concurrent users.
 
-\begin{itemize}
-\item \textbf{Availability} is the property that geographic information can be reached and downloaded by mapping client. It can be quantified in terms of so-called ``nines''. For example, ``two nines'' equals 99\% availability or 1.68 hours of downtime per week, while ``five nines'' equals 99.999\% availability or 6.05 seconds of downtime per week. In the EU, national mapping agencies are typically obligated to met at most ``three nines'' of availability~\cite{gst2014digitalmapsupply}. In contrast, private corporations -- such as Google and Microsoft -- rutinely operate at ``four nines'' or ``five nines''. As online map users have come to expect the relative high availability of commecial map distributions, national mapping agencies are presented with a challenge.
-
-\item \textbf{Performance} is the property that requests for geographic information can be evaluated with low latency, which is quantified as the number of milliseconds that a request may take to complete. Studies have shown that user satisfaction is highly sensitive to high -- as well as variation in -- latency~\cite{hamilton2009costoflatency}.
-
-\item \textbf{Scalability} is the property that operational levels, such as acceptable latency, can be sustained for increasing values of some fundamental quantity, typically data volume or concurrency level. To be truely scalable, an architecture must be able to scale with a sub-proportional increase in cost~\cite{vogels2006podcast}.
-
-\end{itemize}
-
-Keeping down the cost is one of the most critical challenges for map content distribution with sustained high availability and acceptable latency. Partitioning of data into\emph{Vector tiles} is an important technique for reaching these goals~\cite{gaffuri12vectortiles}. In this type of distribution, stage three of the pipeline executes on mapping clients. Essentialy, mapping clients contribute processing power to the pipeline rather than only consume it, which consequently makes the pipeline more scalable. In addition, the data partitioning itself facilitates high availability, scalability and performance.
-
-\section{State-of-the-Art Selection Systems}
-\label{sec:introduction:architectures}
-
-A key distinction between state-of-the-art mapping pipeline is the timing of the map generalization process. Two extreme approaches are \emph{real-time}~\cite{bereuter2013real,van1995gap} and \emph{batch-oriented}~\cite{sarma2012fusiontables,frank1994multiscaletree,van2011towards} approaches. In the following sections, the advantages and drawbacks of both approaches are analyzed.
-
-\subsection{Real-time Systems}
-Real-time generalization adapts geographical information at the time when a user requests geographic information for a map. Typically, an indexing structure, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}, is the factor that facilitates fast real-time generalization algorithms. At first, real-time selection seems like an ideal approach for two reasons. 
-
-First, the data is stored only once, namely in its original state. While this obviously saves storage, a more important benefit is that selected information is never stale. Given an atomic update mechanism, such as transactions~\cite{gray1981transaction}, a selection algorithm always computes solutions based on the most recent and consistent state of the data. However, this is only true if the atomic update propagates to the index as well, which is a significant consideration given that data is typically managed outside the map generalization framework.
-
-Second, user preferences and context of usage can be considered as part of the input to selection. Therefore, selection of geographic information can be tailored to individual users needs, for example by letting a recommendation algorithm play a role in assigment of object importance.
-
-However, there are several issues with real-time generalization in a Web context. While indexing structures enable fast generalization, the complexity of any selection algorithm is high compared to $O(1)$, which is the complexity of retrieving pre-selected data from a key-value store~\cite{pilchin2007dynamo}. Furthermore, the scalability of real-time generalization algorithms is usually only considered for increases in data volume, while it is ignore for increases in concurrency level. This is critical, because in a Web context there is typically a high and variable level of concurrency, which implies that the generalization method must be scalable in the number of concurrent queries. Unfortunately, there is a lack of studies into real-time generalization that efficiently scale in the number of concurrent requests. The na{\"i}ve approach, which is to replicate the entire index, is costly.
-
-In conclusion, real-time generalization is currently an infeasible approach for web mapping pipelines that target large Web audiences.
-
-\subsection{Batch-oriented Systems}
+\subsection{Batch-oriented Map Systems}
 Batch-oriented selection of geographic information compute materialized multi-scale views over the original state of the data. For example, multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and solutions to integer programming instances~\cite{sarma2012fusiontables} can be used to represent data at multiple scales. There are two obvious advantages to a batch-oriented approach.
 
 First, since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Distributed data analytical systems, such as spatial parallel databases and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis}, can be wielded to make the process highly scalable with regard to data volume. For example, while highly scalable batch-oriented systems, such as Apache Hadoop or Apache Spark, cannot be used for real-time generalization, they are intrinsically appropriate for batch-oriented generalization of geographic information.
@@ -2586,12 +2566,25 @@ While our results improve on existing methods, for future work we plan to do a m
 Finally, deploying TileHeat in a production environment and measuring the effect on latency remains as an important direction of future work.
 
 
-\chapter{Conclusion}
+\chapter{Discussion and Conclusion}
 \label{chapter:conclusion}
+
+\section{Discussion}
 
 \pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.
 
-\emph{Discuss:} unsupported data types, e.g. text, trees, and graphs; unsupported operators, e.g. multi-scale aggregation and multi-scale displacement; limitations in data size, e.g. explain that while results are shown for Postgres, other and more scalable databases could be used.}
+
+\subsection{Glossy and CVL}
+% Glossy + CVL discussion
+Unsupported data types, e.g. text, trees, and graphs; unsupported operators, e.g. aggregation and holistic projection; limitations in data size, e.g. explain that while results are shown for Postgres, other and more scalable databases or clustersystems could be used. User-studies could be conducted.}
+
+\subsection{Tileheat}
+% Tileheat discussion
+Try for more unpredictable work-loads.
+
+\section{Conclusion}
+
+
 
 
 \bibliographystyle{plain}
