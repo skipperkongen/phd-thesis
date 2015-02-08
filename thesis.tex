@@ -416,7 +416,7 @@ Given a model of the digital mapping pipeline, it is crucial that we understand 
 
 A key distinction between state-of-the-art mapping pipeline is whether the map creation process is synchronous or asynchronous in relation to the map distribution process. While the synchronous paradigm is championed by real-time systems, the asynchronous paradigm is championed by batch-oriented systems. In the following sections, the advantages and drawbacks of both paradigms are analyzed and discussed.
 
-\subsection{Analysis of Real-time Mapping Systems}
+\subsection{Real-time Mapping Systems}
 In real-time systems, the map creation process is synchronous with the map distribution process: pieces of the map are created on-the-fly as map requests are received by the system. For example, in systems that implement the Web Mapping Service (WMS) protocol, a map request will typically invoke the entire mapping pipeline from the primary data model, through data abstraction, visual abstraction, and rendering.
 
 In the academic literature, real-time systems have been studied because they have some important advantages:  
@@ -428,25 +428,25 @@ In the academic literature, real-time systems have been studied because they hav
 
 Real-time mapping requires low-latency data abstraction, since the map creation process is synchronous with the map distribution process. Low latency is typically ensured by using an efficient data structure to index the geographic information. The index structure is usually some kind of tree, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}.
 
-While tree-based real-time mapping seemingly ensures low-latency data abstraction, there are two key disadvantages when compared to precomputed content that is served from a key-value stores or content delivery network (CDN)~\cite{dilley2002cdn}: 
+The drawbacks of real-time systems are primarily concerned with their relative lack of scalability: 
 
 \begin{itemize}
 \item The complexity of any tree-based access method (let alone generalization method) is high compared to the $O(1)$, which is the complexity of looking up precomputed content in a hash-based key-value store~\cite{pilchin2007dynamo} or CDN.
 \item The tree structures that have been proposed are typically not designed for concurrent access. This is critical, because there is typically a high and variable level of concurrency in a web context, which implies that the data abstraction process must be scalable in the number of concurrent queries as well as data volume. The na{\"i}ve approach, which is to replicate the entire index multiple times and dispatch requests round-robin is costly, especially when data grows in size.
 \end{itemize}
 
-\subsection{Analysis of Batch-oriented Mapping Systems}
-In batch-oriented systems, the map creation process is asynchronous with the map distribution process: the logical and/or graphical models are materialized separate from the primary data model. At this point, the precomputed map can be partioned, e.g. using a tile pyramid, and replicated onto a content delivery network (CDN). For example, systems that implement the XYZ web mapping protocol, such as OpenStreetMap, typically function in this way.
+\subsection{Batch-oriented Mapping Systems}
+In batch-oriented systems, the map creation process is asynchronous with the map distribution process: the logical and/or graphical models are materialized separate from the primary data model. At this point, the precomputed map can be partioned, e.g. using a tile pyramid, and replicated onto a content delivery network (CDN). For example, systems that implement the XYZ web mapping protocol~\cite{osm2014xyz}, such as OpenStreetMap, typically function in this way.
 
 In the literature, batch-oriented systems have been studied for the distinct advantages that they offer over real-time systems:
 
 \begin{itemize} 
-\item Since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Furthermore, distributed data analytical systems, such as spatial parallel databases~\cite{waas2009beyond} and spatial cluster computing~\cite{eldawy2014spatialhadoop,aji2013hadoopgis} can process practically unlimited amounts of spatial data.
-\item Precomputed maps can be partioned and replicated onto CDNs, which scale extremely well with concurrent queries.
-\item Maps that are distributed via a CDN additionally offer high availability and low latency because content is georeplicated to locations near the users.  
+\item Since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Furthermore, batch-oriented systems can exploit the machinery of distributed data analytical systems, such as spatial parallel databases~\cite{waas2009beyond} and spatial cluster computing~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop}, which can process practically unlimited amounts of spatial data.
+\item Map data produced by a batch-oriented system can be partioned as tiles and replicated onto key-value stores, such as CDNs, which scale extremely well in the number of concurrent queries.
+\item Maps that are distributed via a CDN additionally gain high availability and low latency because content can be georeplicated to edge locations of the network, which are closer to the users.  
 \end{itemize}
 
-Some important studies in batch-oriented mapping systems are multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and the Fusion Tables system~\cite{sarma2012fusiontables}. Supporting work are studies in scalable batch-oriented spatial analytics, such as SpatialHadoop~\cite{eldawy2014spatialhadoop} and HadoopGIS~\cite{aji2013hadoopgis}. Related work for map distribution is in-memory and fault-tolerant stores, such as RAMCloud~\cite{ousterhout2011ramcloud}. These stores offer extremely low latency, without sacrificing availability.
+Some important studies in batch-oriented mapping systems are multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and the Fusion Tables system~\cite{sarma2012fusiontables}. However, these systems only partially realize the full potential advantages of the batch-oriented paradigm! For example, distributed spatial processesing systems are not significantly leveraged by any of the systems, except for rendering of map tiles~\cite{dean2009designs}. Thus, there is a gap between what is theoretically possible and what has been tried.
 
 There are three drawbacks of a batch-oriented approach that are quite obvious:
 
@@ -456,18 +456,27 @@ There are three drawbacks of a batch-oriented approach that are quite obvious:
 \item Batch-oriented systems can not easily take individual user preferences into account, nor can they easily adjust the map for the usage context.
 \end{itemize}
 
+\subsection{Key-value Stores for Geographic Data}
+Geographic data that has been converted to tiles can be uniquely addressed by key in several ways: addressing schemes include space-filling curves~\cite{hilbert1891ueber,morton1966computer} and by the more obvious indexing by x, y, and z (for zoom level). Thus, it is trivial to design an indexing scheme that allows subsets of geographic data to be addressed by key.
+
+Key-value stores -- such as Dynamo~\cite{pilchin2007dynamo} and Keyspace~\cite{trencseni2010keyspace} --  are general purpose and highly scalable distributed storage services that allow opaque data to be stored accessed by key. Thus, given a set of tiles together with a scheme to address them by key, it is straightforward to store geographic data in a key-value store. Recent years have seen an explosion in the number of key-value stores, that have been proposed in academia and commercialized in industry.
+
+Most key-value stores offer superior availability and low latency, since data is replicated and partitioned over a distributed network of storage nodes~\cite{barroso2009datacenter}. A special type of key-value store, the content delivery network (CDN)~\cite{dilley2002cdn}, offers even better availability and performance since data is georeplicated and stored at edge locations in the network -- close to the users.
+
+Recently, in-memory and fault-tolerant stores, such as RAMCloud~\cite{ousterhout2011ramcloud} have appeared. RAMCloud improves on the volatility of in-memory caches, such as memcached, by using fault-tolerance techniques that make them comparable to disk-based stores.
+
 \subsection{Best Fit for Large-scale Web Maps}
 
-While real-time systems present an ``ideal'' for mapping systems (see the advantages above), state-of-the-art real-time mapping systems are inappropriate for large-scale web maps. First, these systems have relatively low availability and high latency compared to precomputed content that is served from a CDN. Second, they do not cost-effectively scale with the number of concurrent users. These problems are critical in a web context.
+While real-time systems present an ``ideal'' for mapping systems (see the advantages above), state-of-the-art real-time mapping systems are inappropriate for large-scale web maps. First, these systems have relatively low availability and high latency compared to precomputed content that is served from a key-value store or CDN. Second, they do not cost-effectively scale with the number of concurrent users. These problems are critical in a web context.
 
-Dispite the drawbacks, state-of-the-art batch-oriented mapping systems are appropriate for large-scale web maps. On the hand, the ability to scale in concurrent requests is simply a make-or-break requirement for any large-scale web map today. Furthermore, the ability to process unlimited amounts of geographic information is often crucial. On the other hand, the disadvantages are not too severe. First, disk-based storage has become very cheap and pure in-memory storage is bound to become cheaper over time. Second, materialized view can be refreshed as demand dictates, either by leveraging batch-oriented parallel processing~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} or by employing techniques for materialized view maintenance~\cite{gupta1995maintenance}. Finally, user preferences can to some extent be accommodated by materializing views for different user profiles and choose between them at query time. However, this last problem is probably the most fundamental problem of batch-oriented systems.
+Dispite the drawbacks, state-of-the-art batch-oriented mapping systems are appropriate for large-scale web maps. The main reasons are that (1) batch-oriented systems can exploit highly scalable processing systems (e.g. mapreduce~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop}) that can handle any data volume, and highly available, low-latency key-value stores for data distribution. Today, scalability is a crucial requirement for large-scale web map systems. Additionally, the disadvantages are not too severe. First, disk-based storage has become very cheap and pure in-memory storage is bound to become cheaper over time. Second, materialized view can be refreshed as demand dictates, either by leveraging batch-oriented parallel processing~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} or by employing techniques for materialized view maintenance~\cite{gupta1995maintenance}. Finally, user preferences can to some extent be accommodated by materializing views for different user profiles and choose between them at query time. However, this last problem is probably the most fundamental problem of batch-oriented systems.
 
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
 
-Given the requirements for a scalable web mapping pipeline (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
+Given the analysis of state-of-the-art web mapping pipelines (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
 
-In the following sections describe four gaps that that will be addressed by this thesis.
+The following sections describe four gaps that that will be addressed by this thesis.
 
 \subsection{Unified Selection Model}
 \label{sec:introduction:problem:statement:one}
