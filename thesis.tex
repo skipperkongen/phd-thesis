@@ -605,73 +605,13 @@ The remainder of this thesis is organized as follows.
 % CHAPTER
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Related Work}
-\label{chapter:related:work}
-
-
-
-\section{Generalization of Geographic Information}
-
-\subsection{Overview of Studies}
-In conventional cartography, map generalization is responsible for reducing complexity in a map in a scale reduction process, emphasizing the essential while suppressing the unimportant, maintaining logical and unambiguous relations between map objects, and preserving aesthetic quality~\cite{weibel1999generalising}.
-
-The generalization process can be modelled in many ways~\cite{harrie2007modelling}. However, this section will review work in two specific categories: algorithmic approaches and programmable approaches.
-
-\subsection{Operators}
-
-\subsection{Algorithmic approach}
-In algorithmic approaches to spatial analysis, a programmer has pre-specified the entire logic for generalization. To let map designers influence the generalization process, some algorithms accept user-defined input parameters, while other do not.
-
-\subsection{Programmable approach}
-In a programmable approach, the logic of generalization is specified to a large extent by the map designer or tool designer.
-
-\subsection{Linear Programming}
-Many problems in generalization can be formulated as variants of linear programming, such as mixed integer programs, integer programs, and 0-1 integer programs. For example, selection can be formulated as 0-1 integer programming with binary decision variables, while displacement~\cite{ware2003generalization_sa} and aggregation~\cite{haunert2010area} can be modelled with integer decision variables.
-
-There are many solvers for available for integer programs. Integer programming solvers fall into two camps. On one hand, problem-specific solvers aim to solve one specific problem, such as , very efficiently. On the other hand, general-purpose solvers, such as Cplex~\cite{cplex200711} and ABACUS~\cite{junger2000abacus}, aim to solve any integer programming instances with reasonable efficiency. Furthermore, parallel implementations of the general-purpose branch-and-bound algorithm have been studied for grid computing~\cite{mezmaz2007grid} and connection machines~\cite{eckstein1994parallel}. Atamt{\"u}rk and Savelsbergh have surveyed general-purpose systems for integer programming~\cite{atamturk2005integer}, while Gendron and Crainic~\cite{} have focused on a survey of parallel solvers~\cite{gendron1994parallel}. Mostly, parallel solvers are specialized for specific problems such as vehicle routing~\cite{ralphs2003parallel}, multicommodity location~\cite{gendron1997parallel}, and depot location and container fleet managemen~\cite{bourbeau2000branch}. 
-
-Integer programming is NP-hard, so a common method that has been used to solve generalization problems, is to use a heuristic, such as simulated annealing. While integer programming is a powerful paradigm, it is hard to express custom constraints in this model, programming requires a priori knowledge of $n$ (the size of the dataset) and most current systems do not scale out.
-
-\section{Systems for Spatial Analytics}
-Spatial analysis includes formal technique for analyzing spatial information objects using their topological, geometric, or geographic properties. While spatial analytics does by itself generalize a spatial dataset, it can provide essential information to be used in the generalization process. For example, spatial analysis can yield information about which records that are in conflict with each other and which spaces have high density. This information can be used downstream by an algorithm, which can consequently be dramatically simplified. Spatial analysis is often a heavy-duty task, and therefore many spatial analytics approaches will emphasize scalability. 
-
-At a broad level, spatial analytics can be categorized into programmable approaches and non-programmable approaches. The following sections will focus mainly on programmable approaches, while non-programmable approaches are briefly surveyed in the last section. Each section will describe some of the systems in the given category, as well as how they are programmed (if at all) plus their primary advantages and limitations.
-
-
-\subsection{Geographic Information Systems}
-
-Geographic Information Systems are specialized towards 
-
-\subsection{Databases}
-Databases with spatial datatypes and functions include single-instance databases~\cite{postgresql,mssql,oracle} and distributed databases~\cite{greenplum, vertica}.
-
-Programmed in SQL.
-
-Very flexible, very scalable, algebra does not require knowledge of $n$
-
-\subsection{Cluster Computing}
-Recently, highly scalable cluster computing systems, such as Apache Hadoop~\cite{apachehadoop} or Apache Spark~\cite{zaharia2010spark}, have appeared. These systems, which can be programmed using functional~\cite{dean04mapreduce, epfl2014scala} and declarative~\cite{olston2008pig,thusoo2010hive} paradigms, offer almost unlimited scalability in storage and compute capacity through a scale-out architecture. 
-
-Spatial analytics systems can be scalably implemented on top of a general purpose clusters, which is typically implemented by developing a set of spatial UDFs in the extension language of the cluster, which for Hadoop and Spark is any JVM language. Once the UDFs are in place, a high-level declarative query language, such as HiveQL~\cite{witayangkurn2012spatialhive} and Pig Latin~\cite{eldawy2014pigeon}, can be used to execute highly scalable spatial analytics queries over large amounts of data that is stored in the distributed filesystem of the cluster. These queries are transformed into MapReduce jobs by the system implementation. MapReduce has been shown to scalable compute spatial analytics problems.~\cite{cary2009experiences}.
-
-Performing spatial analytics on a Hadoop or Spark clusters has both advantages and drawbacks. The two main advantages are that clusters can be programmed in highly productive query languages, such as languages in the SQL familiy, and that clusters provide highly scalable means to process huge quanties of geographic information. These drawbacks are countered by some significant drawbacks. First, spatial data is usually not managed in the distributed filesystem of a cluster. So, before data can be processed it must be moved from its primary location, which is typically an SDBMS. Naturally, this incurs a substantial amount of I/O. Second, any indexes that may have been present in the SDBMS are lost and have to be reimplemented on the cluster for processing of advanced queries, such as spatial joins~\cite{zhang2009sjmr} However, these are perhaps minor problems and not fundamental ones. For this reason spatial analytics on clusters it is an interesting approach, also in a support role for scalable generalization of large quanties of geographic information.
-
-\subsection{Conclusion}
-
-Glossy and CVL compilers target a spatial analytics system and its query language with spatial UDFs. The system of choice was PostgreSQL with SQL and PostGIS UDFs. Other spatial analytics systems or query languages could have been targeted instead.
-
-\section{Data Wrangling}
-
-TODO
-
-
-\chapter{Unified Model for Selection of Geographic Information}
+\chapter{Declarative Cartography: In-database Map Generalization of Spatial Datasets}
 \label{chapter:cvl}
 \lstset{
   language=cvl
 }
 
-\section{Introduction}
+\section{Motivation}
 \label{sec:cvl:introduction}
 The goal of map generalization is to produce a map at a given scale that achieves the right balance between rendering performance and information quality for end users. For example, in a tourist attraction rating system, one needs to efficiently visualize important attractions, and constrain object proximity to allow space for user interaction. In a journalistic piece that maps traffic incidents, however, maintaining the underlying distribution of data is the most important aspect, but at the same time object density must be constrained to ensure high-performance data transfer and rendering.
 
@@ -1385,14 +1325,13 @@ The proposed approach integrates seamlessly with existing database technology, a
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Glossy: Language and Compiler}
+\chapter{Glossy: Global Selections for Data Visualizations}
 \label{chapter:glossy}
 \lstset{
   language=sql
 }
 
-
-\section{Introduction}
+\section{Motivation}
 \label{sec:glossy:introduction}
 
 \begin{figure}[htbp]
@@ -1415,12 +1354,15 @@ We are faced with unprecedented data volumes in organizations across a wide vari
 \end{center}
 \end{figure}
 
-
+% INSERTED
+\minisec{Data reduction techniques}
 Two of the most intuitive data reduction operations are to aggregate or select data. Data aggregation provides insights into the characteristics of datasets as a whole; however, this overview comes at the price of potentially losing valuable detail. Data selection, on the other hand, allows users to examine particular examples to get a more nuanced understanding of the data; however, this detail comes at the price of potentially being overwhelming. Recent studies indicate that data scientists find it difficult to express information needs for visualizations in existing query and programming languages, creating a substantial gap to be closed in current technology~\cite{kandel2012interviewstudy}.
- 
-Despite the wealth of existing work on data visualization, most systems have either focused on abstracting data by aggregation~\cite{blais2014generating,lins2013nanocubes,stolte2003multiscale,vartak2014seedb}, or on devising techniques to squeeze a whole dataset into the available pixels~\cite{keim1995visdb,kruskal1978multidimensional}. The problem of creating visualizations that explicitly show representative items from a large underlying dataset has received far less attention. Nevertheless, the importance of this problem is significant. Figures~\ref{fig:example:rappers} to~\ref{fig:example:placenames} illustrate a few visualizations that crucially depend on data selection. These visualizations vary substantially in dimensionality, going from a single axis in the case of Figure~\ref{fig:example:rappers} to a parallel coordinates plot of multiple dimensions in Figure~\ref{fig:example:clusters} to two-dimensional geographic maps in Figures~\ref{fig:example:airports} and~\ref{fig:example:placenames}. Furthermore, these visualizations employ multiple scales to allow users to zoom into the data and see more records from the underlying dataset in an interactive fashion. Moreover, these visualizations are becoming ever more necessary for human understanding as we move towards an age of large datasets and data enthusiasts~\cite{hanrahan2012enthusiast,markl2014breaking}. Even though previous work has targeted particular examples of such visualizations, e.g., for spatiotemporal data~\cite{jugel2014m4,kefaloukos2014declarative,sarma2012fusiontables}, a generic solution to multi-scale data selection has remained elusive. Such a solution should ideally be able to globally sample records, while respecting user-defined constraints and notions of record importance, and at the same time elegantly reuse database technology to operate on large datasets.   
 
-\newpage
+% INSERTED
+\minisec{Non-global versus global processing}
+Data reduction techniques can be characterized by two extremes: \emph{global} (i.e. holistic) and \emph{non-global} (i.e. non-holistic) data reduction. While non-global data reduction treats items independently, global data reduction must process items in the global context of other items. In SQL, select-where and select-count statements are example of non-global data reduction operations. In contrast, map generalization operators typically processes items in a global context~\cite{weibel1997generalization} -- with some notable exceptions such as geometric simplification~\cite{douglas1973algorithms}. For example, global selection for maps may require items to be selected such that the distance between any two items is above a certain threshold~\cite{nutanong2012multiresolution}. Similarly, global aggregation for maps may merge together items in order to optimize the global legibility and aesthetic quality of a map~\cite{haunert2010area}. The difference in computational complexity between global and non-global data reduction is typically substantial. While the complexity of non-global data reduction, such as selection and aggregation in SQL, is linear in the number of items, the complexity of global data reduction is often NP-hard~\cite{sarma2012fusiontables,haunert2006landcover}.
+ 
+Despite the wealth of existing work on data visualization, most systems have either focused on abstracting data by aggregation~\cite{blais2014generating,lins2013nanocubes,stolte2003multiscale,vartak2014seedb}, or on devising techniques to squeeze a whole dataset into the available pixels~\cite{keim1995visdb,kruskal1978multidimensional}. The problem of creating visualizations that explicitly show representative items, which are selected from a large underlying dataset, has received far less attention. Nevertheless, the importance of this problem is significant. Figures~\ref{fig:example:rappers} to~\ref{fig:example:placenames} illustrate a few visualizations that crucially depend on data selection. These visualizations vary substantially in dimensionality, going from a single axis in the case of Figure~\ref{fig:example:rappers} to a parallel coordinates plot of multiple dimensions in Figure~\ref{fig:example:clusters} to two-dimensional geographic maps in Figures~\ref{fig:example:airports} and~\ref{fig:example:placenames}. Furthermore, these visualizations employ multiple scales to allow users to zoom into the data and see more records from the underlying dataset in an interactive fashion. Moreover, these visualizations are becoming ever more necessary for human understanding as we move towards an age of large datasets and data enthusiasts~\cite{hanrahan2012enthusiast,markl2014breaking}. Even though previous work has targeted particular examples of such visualizations, e.g., for spatiotemporal data~\cite{jugel2014m4,kefaloukos2014declarative,sarma2012fusiontables}, a generic solution to multi-scale data selection has remained elusive. Such a solution should ideally be able to globally sample records, while respecting user-defined constraints and notions of record importance, and at the same time elegantly reuse database technology to operate on large datasets.
 
 \begin{figure*}[!t]
   \begin{minipage}{0.49\linewidth}
@@ -1433,8 +1375,13 @@ Despite the wealth of existing work on data visualization, most systems have eit
   \end{minipage}
 \end{figure*}
 
+% INSERTED
+\minisec{On-the-fly versus batch-oriented processing}
+The information for a data visuazliation can either be processed \emph{on-the-fly} or in a \emph{batch-oriented} way. Ideally, information would only be processed on the fly, i.e. only when it is needed. However, data visualizations on the Web, such as Google Maps and Bing Maps, must have 24 x 7 availability and low latency while potentially being consumed by millions of concurrent users. Current on-the-fly methods are typically not designed to be accessed by millions of concurrent users with high demands for availability and performance. The problem is only made worse as the amount of data that backs a visualization grows. In order to met the demand for low-latency data visualizations over massive amounts of data, it is more realistic to precompute a data visualization before it is distributed to online audiences. For example, a pre-processed map can be partitioned using linearization~\cite{hilbert1891ueber,morton1966computer} and distributed using scalable data distribution systems~\cite{dilley2002cdn}.
 
+\newpage
 
+\minisec{Global, batch-oriented selection}
 In this paper, we introduce Glossy (GLObal Selection SYstem), a system that computes global selections over records stored in an RDBMS. In short, Glossy's novelty and utility rests on three pillars: (a) Glossy SQL, an extension of SQL that allows visualization developers to express global selection in a concise, yet familiar, query language, (b) an efficient translation of Glossy SQL into relational algebra, which allows Glossy to harness the power of mature query optimizers and indexed tables at runtime, (c) support for global selection over any type of tabular data, not just data within a certain domain (e.g., temporal or spatial data). With Glossy, multi-scale global selections of data for all the visualizations in Figures~\ref{fig:example:rappers}--\ref{fig:example:placenames} can be achieved concisely in a common declarative framework.  
 
 \subsection{Our Contributions}
@@ -2032,9 +1979,13 @@ To obtain $Q_R$, all that is left is to plug  this definition of \texttt{current
 \section{Experimental Evaluation}
 \label{sec:experimental:evaluation}
 
-In this section, we evaluate the performance of Glossy SQL queries when compiled to pure SQL by the  translation of Section~\ref{sec:sql:translation} and run over an existing RDBMS (PostgreSQL). The goals of our evaluation are to show that: 
+In this section, we evaluate three crucial aspects of our implementation of Glossy SQL. First, we evaluate the performance and scalability of Glossy SQL queries when compiled to pure SQL by the translation of Section~\ref{sec:sql:translation} and run over an existing RDBMS (PostgreSQL). The goals of our evaluation are to show that: 
 %In the experimental evaluation of Glossy, we will show that: 
 (1)~The Glossy SQL compiler produces efficient and scalable SQL target queries for a range of Glossy SQL constructs; (2)~Glossy SQL can be used to efficiently compute the main use cases presented in Sections~\ref{sec:use:cases} and detailed in Section~\ref{sec:use:cases:solved}; and (3)~The performance of Glossy is either competitive or superior to the performance of a recent SQL compilation approach specialized to the domain of geographic maps. 
+
+Second, we evaluate the character-count-efficiency and code-complexity of Glossy SQL compared to equivalent queries in pure SQL (the output of the compiler). The goal of this evaluation is to demonstrate that Glossy SQL is significantly less verbose and complex to write than the equivalent SQL in the PostgreSQL dialect.
+
+Third, we evaluate quality of the selections that are computed by Glossy System. In particular, we show that when items have the same weight, the selection corresponds to random sampling.
 
 %and related system called CVL.
 
@@ -2164,6 +2115,14 @@ From this evaluation, we observe that Glossy generally dominates CVL, not only i
 % - Global Selection: leaving minute data selection to system 
 % Goal of experiment: Show that Global Selection can be implemented efficiently
 
+\subsection{Code Complexity}
+
+TODO
+
+\subsection{Result Quality}
+
+TODO
+
 \section{Conclusions}
 
 In this paper, we argue for and propose an extension of SQL to express global selection operations, motivated by a wealth of use cases in data visualization. Global selections sample records from a dataset in a way that is at the same time constrained and weighted. The paper presents a concrete system, Glossy, that processes global selection queries by translating them to pure SQL and running the resulting queries over existing RDBMS. Glossy SQL allows for the declarative expression of both pair and locus constraints over the dataset, of a weighting function for records, and of both iterative and recursive global selections. The latter features let visualization developers express record importance as well as visual conflicts to be avoided in a manner sensitive to scale in a zoomable visualization. Experimental results with the Glossy SQL translation of several visualization use cases indicate that Glossy generates SQL code that an existing RDBMS can execute both efficiently and scalably with increasing input sizes. 
@@ -2179,9 +2138,9 @@ As future work, we plan to explore how to incorporate data aggregation features 
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-\chapter{Tileheat: Tile Request Prediction Algorithm}
+\chapter{Tileheat: Framework for Predictive Map Tile Materialization}
 \label{chapter:tileheat}
-\section{Introduction}
+\section{Motivation}
 
 % Situation
 Today geospatial web services are widely deployed on the web. A significant subset of these services can be queried using bounding box requests to retrieve geospatial data, either in raster or vector form, within a region. The classic example of such a service is Web Map Service (WMS). In WMS, results are typically computed on-the-fly by pulling data from a geospatial database. This strategy has the advantage that results are always up-to-date and it thus offers a great degree of flexibility and accuracy to clients of the service. At a high level, we can think of the service as applying a \emph{rendering function} to a set of matched base data to produce, e.g., a map image.
