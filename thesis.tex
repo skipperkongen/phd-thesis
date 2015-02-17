@@ -485,19 +485,39 @@ Additionally, the disadvantages are not too severe. First, disk-based storage ha
 \section{Problem statement}
 \label{sec:introduction:problem:statement}
 
-Given the analysis of state-of-the-art web mapping pipelines (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
-
+%Given the analysis of state-of-the-art web mapping pipelines (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
 The following sections describe four gaps that that will be addressed by this thesis.
 
 \subsection{Unified Selection Model}
 \label{sec:introduction:problem:statement:one}
 % MATHEMATICAL FOUNDATION
-While selection of geographic information can be intuitively understood as filtering objects subject to some criteria, many different selection models have been proposed. The selection models differ primarily in the criteria that they satisfied, such as unary~\cite{rocha2011efficient}, binary~\cite{nutanong2012multiresolution}, and space~\cite{sarma2012fusiontables} constraints. As such, each of the proposed models expresses an incomplete view of the selection process. Clearly, there is a need for a unified model that combines all of the incomplete models in a complete model for selection. Specifically, what is needed is a model for holistic selection of geographic information for maps that supports: \emph{user-defined constraints} (unary, binary, space, and cross-scale constraints), as well as \emph{user-defined objectives} (custom importance measures). Ideally, a well-studied and efficient algorithm solves all instances of the unified model, in the same fashion that sorting solves all instances of the top-k selection model.
+While selection of geographic information can be intuitively understood as filtering objects subject to some criteria, many different selection models have been proposed. The selection models differ primarily in the criteria that they satisfied, such as unary~\cite{rocha2011efficient}, binary~\cite{nutanong2012multiresolution}, and space~\cite{sarma2012fusiontables} constraints. As such, each of the proposed models expresses an incomplete view of the selection process. Clearly, there is a need for a unified model that combines all of the incomplete models in a complete model for selection. 
+
+There is a need for a selection model that supports: \emph{user-defined constraints} (unary, binary, space, and cross-scale constraints), as well as \emph{user-defined objectives} (custom importance measures). Ideally, a well-studied and efficient algorithm solves all instances of the unified model, in the same fashion that sorting solves all instances of the top-k selection model.
+
+For this problem, this thesis makes the following contributions:
+
+\begin{itemize}
+\item \textbf{Selection Model}: A unified model for selection of geographic information has been developed. The model is based on an equivalence relation between the selection problem in geographic maps and the more abstract set multi-cover problem. Due to the identification of this relation, selection of geographic information can be abstractly expressed as an edge-selection problem in bi-partite graphs. There is a downside and upside to this mathematical equivalence. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information. The model is presented in Chapter~\ref{chapter:cvl}.
+
+\item \textbf{Heuristic}: It is shown that a restricted and frequently occuring case of global selection can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. The description of the sorting-based algorithm and its evaluation can be found in Chapter~\ref{chapter:cvl}.
+
+\end{itemize}
 
 \subsection{Declarative Programming}
 \label{sec:introduction:problem:statement:two}
 % DECLARATIVE SPECIFICATION
-Selection of geographic information for maps today is mostly polarized into two extremes: non-programmable selection~\cite{sarma2012fusiontables} and complex programmable selection~\cite{lamy1999application}. Neither extreme is optimal. While the former approach is probably suboptimal for most real cases since map designers are entirely excluded from the selection process, the latter approach is  very time-consuming and thus expensive to use even for experts. There is currently a lack of a simple, yet programmable approach for selection, which is at the same time expressive and productive for non-technical map designers. As a programming approach, it makes sense that map designers can focus on high-level constraints and objectives for a map in a declarative language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Unfortunately, there currently does not exist such a declarative language for holistic specification of selection for maps.
+Selection of geographic information for maps today is mostly polarized into two extremes: non-programmable selection~\cite{sarma2012fusiontables} and complex programmable selection~\cite{lamy1999application}. Neither extreme is optimal. While the former approach is probably suboptimal for most real cases since map designers are entirely excluded from the selection process, the latter approach is  very time-consuming and thus expensive to use even for experts. There is currently a lack of a simple, yet programmable approach for selection, which is at the same time expressive and productive for non-technical map designers. As a programming approach, it makes sense that map designers can focus on high-level constraints and objectives for a map in a declarative language, while leaving the minute selection of data to the system~\cite{meliou2011reverse}. Unfortunately, there currently does not exist such a declarative language for global selection of data for maps.
+
+For this problem, this thesis contributes two declarative languages for global selection of data for visualization:
+
+\begin{itemize}
+
+\item \textbf{CVL}: The Cartographic Visualization Language (CVL) is a declarative programming language for global selection of spatial data for multi-scale maps. It supports user-defined constraints, user-defined object weights and ladder-based map generalization (i.e. zoom-consistency). The syntax and informal semantics of CVL are described in detail in Chapter~\ref{chapter:cvl}.
+
+\item \textbf{Glossy SQL}: The global-selection extension to SQL (Glossy SQL) is a declarative language for global selection of n-dimensional data for multi-scale data visualizations.  It expands on the CVL language in the following ways: it generalizes global selection for both spatial and non-spatial data; it formalizes the classes of user-defined constraints into unary, binary, set and cross-scale constraints; it supports both ladder-based and star-based approaches to perform multi-scale data visualization; it allows users to define the notion of scale as a set of user-defined scale tuples; it allows scale-dependent, context-independent projection of selected objects. The semantics of Glossy SQL are given by a mapping to pure SQL. Glossy SQL is covered in in Chapter~\ref{chapter:glossy}. 
+
+\end{itemize}
 
 % Scalable Processing
 \subsection{Scalable Processing}
@@ -506,64 +526,55 @@ The Web today offers a huge diversity of curated~\cite{gst2014digitalmapsupply} 
 
 One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language for spatial data analysis such as SQL~\cite{postgis} or Pig~\cite{eldawy2014pigeon}, which can be executed on highly optimized engines for large-scale data processing, such as parallel SDBMS~\cite{waas2009beyond} and spatial cluster computing systems~\cite{aji2013hadoopgis,eldawy2014spatialhadoop}. A similar approach has been successfully tested for processing of XQuery~\cite{boncz2006monetdb} and Machine Learning~\cite{hellerstein12madlib}. Since data for maps is typically stored in a SDBMS, it makes sense to process the data where it is stored~\cite{grust2009ferry}. Despite the obvious opportunity, state-of-the-art mapping systems do not significantly leverage SDBMS or cluster computing to process holistic selection of geographic information for maps.
 
+For this problem, this thesis contributes compilers for the CVL and Glossy SQL languages as well as an evaluation of their performance and scalability:
+
+\begin{itemize}
+\item \textbf{CVL implementation}: The compiler translates CVL into SQL with stored procedures implemented in the Python programming language. The compiler targets the PostgreSQL RDBMS, which is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}. The compiler implementation is described in Chapter~\ref{chapter:cvl}.
+\item \textbf{CVL evaluation}: The performance and scalability of the CVL compiler is evaluated for several real-world and synthetic datasets, which inlude both point, line and area datasets. The evaluation of CVL is described in Chapter~\ref{chapter:cvl}.
+\item \textbf{Glossy SQL implementation}: The compiler translates Glossy SQL into pure SQL in the PostgreSQL dialect~\cite{postgresql,postgis}.  The compiler output can easily be adjusted to target a different spatial database engine or cluster computing system. The compiler is described in Chapter~\ref{chapter:glossy}.
+\item \textbf{Glossy SQL evaluation}: This thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The evaluation measures the scalability and performance of queries produced by the Glossy SQL compiler. Furthermore, the evaluation compares the performance and scalability of output generated by the Glossy SQL compiler to output generated by the CVL compiler. This evaluation is included in Chapter~\ref{chapter:glossy}.
+
+\end{itemize}
+
+
+
 % PREDICTIVE TILE MATERIALIZATION
 \subsection{Low-cost Tile Materialization}
 \label{sec:introduction:problem:statement:four}
 Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{mbtile12}. There are two extreme approaches to rendering tiles. At one extreme, the entire tile set is preemptively materialized, for example on a MapReduce cluster~\cite{dean2009designs,dean04mapreduce}. However, this is wasteful since most tiles are never or rarely requested~\cite{fisher07hotmap}. At the other extreme, individual map tiles are lazily materialized or prefetched real-time~\cite{kang2001prefetching,kim2001prefetching,lee2001prefetching}. However, this results in high average latency since workloads are temporally skewed, which causes high concurrency levels during peak load~\cite{kefaloukos2012tileheat}. A better approach is to predict popular tiles well in advance, and materialize a hot set during a low-load period and serve it with low latency during high-load periods. This assumes that slightly stale geographic information is acceptable, which is typically the case~\cite{sarma2012fusiontables}. A hypothesis is that a request log can be used to predict future tile requests.
 
-\section{Contributions of this Thesis}
-\label{sec:introduction:contributions}
+
+
+%\section{Contributions of this Thesis}
+%\label{sec:introduction:contributions}
 % NOTFINISHED
 
-Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}. These contributions address challenges in stage two (logical abstraction) and stage four (content distribution) of the pipeline that was described in Section~\ref{sec:introduction:web:mapping:pipelines}. The focus areas are schematically highlighted in Figure~\ref{fig:introduction:contributions:highlights}.
+%Instead of presenting a complete batch-oriented web mapping pipeline, the following contributions address the important gaps that were identified in Section~\ref{sec:introduction:problem:statement}. These contributions address challenges in stage two (logical abstraction) and stage four (content distribution) of the pipeline that was described in Section~\ref{sec:introduction:web:mapping:pipelines}. The focus areas are schematically highlighted in Figure~\ref{fig:introduction:contributions:highlights}.
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.6]{figs-thesis/map-visualization-pipeline-4.pdf}
-\caption{\textbf{Contribution focus}: this thesis concentrates on stage two (logical abstraction) and stage four (content distribution) of the web mapping pipeline that was schematized in Section~\ref{sec:introduction:web:mapping:pipelines}.}
-\label{fig:introduction:contributions:highlights}
-\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[scale=.6]{figs-thesis/map-visualization-pipeline-4.pdf}
+%\caption{\textbf{Contribution focus}: this thesis concentrates on stage two (logical abstraction) and stage four (content distribution) of the web mapping pipeline that was schematized in Section~\ref{sec:introduction:web:mapping:pipelines}.}
+%\label{fig:introduction:contributions:highlights}
+%\end{center}
+%\end{figure}
 
  
-\subsection{Set Multi-cover Equivalence}
-\label{sec:introduction:contributions:set:multicover:problem}
+%\subsection{Set Multi-cover Equivalence}
+%\label{sec:introduction:contributions:set:multicover:problem}
+%Section~\ref{sec:introduction:problem:statement:one} made the case for a unified model for selection of geographic information. This section describes the progress that was made in this regard.
 
-Section~\ref{sec:introduction:problem:statement:one} made the case for a unified model for selection of geographic information. This section describes the progress that was made in this regard.
-
-First, this thesis contributes a unified model for selection of geographic information that is based on an equivalence relation between the selection problem in geographic maps and the more abstract set multi-cover problem. Due to the identification of this relation, selection of geographic information can be abstractly expressed as an edge-selection problem in bi-partite graphs. There is a downside and upside to this mathematical equivalence. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information.
-
-Second, it is shown that a restricted and frequently occuring case of holistic selection can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint.
-
-Third, it is shown the unified models subsumes a variety of geographic as well as non-geographic use cases for holistic selection. For example, selection for time lines and clustering outputs is subsumed by the model.
-
-The first and second contributions are described in Chapter~\ref{chapter:cvl}. The third contribution is described in Chapter~\ref{chapter:glossy}.
-
-\subsection{Glossy Language}
-\label{sec:introduction:contributions:glossy}
+%\subsection{Glossy Language}
+%\label{sec:introduction:contributions:glossy}
 % : Syntax and Semantics
-Section~\ref{sec:introduction:problem:statement:two} argued the need for a declarative language in which map designers can specify selection of geographic information for maps. This section introduces the declarative language contributions of this thesis: Glossy SQL
+%Section~\ref{sec:introduction:problem:statement:two} argued the need for a declarative language in which map designers can specify selection of geographic information for maps. This section introduces the %declarative language contributions of this thesis: Glossy SQL
 
-First, this thesis contributes the \emph{syntax} of Glossy SQL. The syntactic constructs of Glossy SQL let programmers declaratively express constraints (unary, binary, set and cross-scale constraints), object-weighting functions and scale definitions for multi-scale selection.
 
-Second, this thesis contributes the \emph{semantics} of Glossy SQL, which are expressed in terms of relational algebra.
-
-Third, it is shown how to express both geographic and non-geographic use cases for holistic selection in Glossy SQL using highly concise statements. The longest Glossy SQL query in this thesis, which solves a real-world use case, is just 14 lines of code!
-
-The details of this part are described in Chapter~\ref{chapter:glossy}.
-
-\subsection{Glossy Compiler}
-\label{sec:introduction:contributions:glossy}
+%\subsection{Glossy Compiler}
+%\label{sec:introduction:contributions:glossy}
 % : : Implementation and Evaluation
 
-Section~\ref{sec:introduction:problem:statement:three} made the case for scalable in-database processing of multi-scale selection. This section introduces the data processing contributions of this thesis: The Glossy compiler. The compiler translates statements in Glossy SQL into relational algebra queries, which can be scalably processed on top of a spatial relational databases management system (SDBMS).
-
-First, this thesis contributes an implementation of the Glossy compiler, which targets the commercial PostgreSQL SDBMS~\cite{postgresql,postgis}. This database is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}.
-
-Second, this thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The results show that the Glossy selection system is scalable and performant.
-
-The details about this part are described in Chapter~\ref{chapter:glossy}, while a prototype of the Glossy language and compiler is presented and experimentally evaluated in Chapter~\ref{chapter:cvl} (CVL language and compiler).
-
+%Section~\ref{sec:introduction:problem:statement:three} made the case for scalable in-database processing of multi-scale selection. This section introduces the data processing contributions of this thesis: The Glossy compiler. The compiler translates statements in Glossy SQL into relational algebra queries, which can be scalably processed on top of a spatial relational databases management system (SDBMS).
 
 \subsection{Tile Request Prediction Algorithm}
 \label{sec:introduction:contributions:tileheat}
