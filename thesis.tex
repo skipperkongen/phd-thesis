@@ -2112,18 +2112,36 @@ Of course, conciseness by itself is not sufficient to classify a language as ``e
 \end{figure}
 
 \subsection{Selection Quality}
-The quality of selections produced by Glossy SQL can be measured in several ways. By definition, the density and proximity of items global selection conforms with the requirements, since these are stated by constraints in the query. In contrast, preservation of spatial distribution is a quality metric that is not explicitely ensured by Glossy SQL. 
-
-There are two way to preserve spatial distribution in Glossy SQL: random sampling and spatial scaling. First, both Glossy SQL and pure SQL can easily compute random samples of the input by using a randomized predicate in a where clause. Second, a Glossy-specific feature, spatial scaling, allows spatial distribution to be approximately preserved for queries that use a locus constraint. The spatial scaling keywords, SCALE LINEAR and SCALE LOG, ensure that the density of items that are selected per locus has a linear or logarithm relationship to the density items in the input that fall within the locus. For example, say that a locus constraint limits the number of items per locus to $k$. If spatial scaling is used, then fewer than $k$ items may be selected for a locus even if it contains $k$ items. This happens when a locus is relatively sparsely populated compared to the most populated locus.
-
-In Figure~\ref{fig:glossy:spatial:distribution:evaluation}, spatial scaling has been used to preserve the spatial distribution for a global selection of airports. The figure shows that the normalized spatial distribution of the input and the global selection is the same. The spatial distribution is normalized because the global selection contains orders of magnitude fewer items than the input, namely X and Y airports respectively.
 
 \begin{figure}[!t]
 \centering
-\scalebox{0.45}{\includegraphics{figs-glossy/spatial-distribution.pdf}}
-\caption{}
+\scalebox{0.5}{\includegraphics{figs-glossy/density-glossy.pdf}}
+\caption{Spatial distribution for three types of selection (approximately 2000 airports each): (A) random sampling. (B) global selection w. locus constraint and linear scaling. (C) global selection w. locus constraint but w/o spatial scaling.}
 \label{fig:glossy:spatial:distribution:evaluation}
 \end{figure}
+
+
+The quality of a global selection can be measured in several ways, which only make sense when the selected information is visualized. Four important criteria of high-quality selection of information for data visualizations are mentioned in the literature:
+\begin{enumerate}
+\item How legible is the selected information?~\cite{weibel1998perspectives}. For example, do the information symbols appear ``cluttered'' or do they overlap? \label{point:legible}
+\item How well does the selected information emphasize the relevant information and suppress the unimportant?~\cite{weibel1998perspectives}. For example, are the largest airports and most famous restaurants selected? \label{point:relevant}
+\item How well does the selected information represent the input?~\cite{weibel1998perspectives}. For example, is the spatial distribution of the input preserved? \label{point:retain}
+\item How well does the selected information fill the available drawing space?~\cite{samet2012duking}. For example, are there empty areas in visualization where data is available? \label{point:fill} 
+\end{enumerate}
+
+Since a global selection is by definition both legible (Criterium~\ref{point:legible}) and relevant (Criterium~\ref{point:relevant}) given the user-defined constraints and relevance functions, this section will focus on evaluating the quality of global selection vis-a-vis Criterium~\ref{point:retain} and Criterium~\ref{point:fill}. In a sense, these criteria represent two extreme cases of spatial distribution. At one extreme, the spatial distribution of the selected data equals exactly the spatial distribution of the input (Criterium~\ref{point:retain}). For example, random sampling has this property. At the other extreme, the selected information includes all available information, up to a limit, which essentially ignores the spatial distribution of the input (Criterium~\ref{point:fill}). For example, selecting one item per grid cell, regardless of the number of items that fall within each cell, has this property.
+
+Figure~\ref{fig:glossy:spatial:distribution:evaluation} show that Glossy supports three modes of selection, which represent the extremes of Criterium~\ref{point:retain} and Criterium~\ref{point:fill}, as well as a balanced option in between. In the figure, three different selections have been computed from the same set of airports and each selection contains approximately 2000 of those airports (but not necessarily the same ones): 
+\begin{itemize}
+\item Image A shows a random sampling of the airports, which (obviously) preserves the spatial distribution of the input data, but does not fill the drawing space as much as possible.
+\item Image B shows a global selection with linear scaling, which represents a balanced selection between random sampling and uniform distribution. The selection is achieved by a locus constraint together with the \texttt{SCALE LINEAR} keywords. In this selection, between 1 and 10 airports are selected, with fewer airports selected for sparse areas (e.g. Northern Canada, Northern Siberia, the Sahara Desert, and the Pacific Ocean).
+\item Image C shows a global selection without spatial scaling, which results in uniform distribution. For each map tile, the ten most relevant airports are selected, regardless of how many airports exist at the given location in the input. Consequently, more airports are selected for sparsely populated areas (e.g. Greenland, the Andes, and the Pacific Ocean) compared to A and B.
+\end{itemize}
+%The quality of selections produced by Glossy SQL can be measured in several ways. By definition, the density and proximity of items global selection conforms with the requirements, since these are stated by constraints in the query. In contrast, preservation of spatial distribution is a quality metric that is not explicitely ensured by Glossy SQL. 
+
+%There are two way to preserve spatial distribution in Glossy SQL: random sampling and spatial scaling. First, both Glossy SQL and pure SQL can easily compute random samples of the input by using a randomized predicate in a where clause. Second, a Glossy-specific feature, spatial scaling, allows spatial distribution to be approximately preserved for queries that use a locus constraint. The spatial scaling keywords, SCALE LINEAR and SCALE LOG, ensure that the density of items that are selected per locus has a linear or logarithm relationship to the density items in the input that fall within the locus. For example, say that a locus constraint limits the number of items per locus to $k$. If spatial scaling is used, then fewer than $k$ items may be selected for a locus even if it contains $k$ items. This happens when a locus is relatively sparsely populated compared to the most populated locus.
+
+%In Figure~\ref{fig:glossy:spatial:distribution:evaluation}, spatial scaling has been used to preserve the spatial distribution for a global selection of airports. The figure shows that the normalized spatial distribution of the input and the global selection is the same. The spatial distribution is normalized because the global selection contains orders of magnitude fewer items than the input, namely X and Y airports respectively.
 
 \section{Conclusions}
 
