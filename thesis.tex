@@ -2112,17 +2112,17 @@ Of course, conciseness by itself is not sufficient to classify a language as ``e
 \end{figure}
 
 \subsection{Selection Quality}
-The quality of selections produced by Glossy SQL can be measured by several object metrics, which include density, proximity and distribution. By definition, the density and proximity of a global selection fulfills the requirements, since the these acceptable limits of these are ensured by constraints in the query. 
+The quality of selections produced by Glossy SQL can be measured in several ways. By definition, the density and proximity of items global selection conforms with the requirements, since these are stated by constraints in the query. In contrast, preservation of spatial distribution is a quality metric that is not explicitely ensured by Glossy SQL. 
 
-In contrast to density and proximity, the preservation of spatial distribution is not explicitely handled by Glossy SQL. However, there are two way to ensure this property in Glossy SQL: random sampling and spatial scaling. First, both Glossy SQL and pure SQL can easily compute random samples of the input by using a randomized predicate in the where clause. Second, a Glossy-specific feature is provided by optional keywords that can be used with a locus constraint. The spatial scaling keywords SCALE LINEAR and SCALE LOG ensure that the number of items that are selected per locus is proportional or in logarithm relationship to the average density for all loci. For example, if relatively many objects fall within a locus, then a global selection will choose more objects for this locus. 
+There are two way to preserve spatial distribution in Glossy SQL: random sampling and spatial scaling. First, both Glossy SQL and pure SQL can easily compute random samples of the input by using a randomized predicate in a where clause. Second, a Glossy-specific feature, spatial scaling, allows spatial distribution to be approximately preserved for queries that use a locus constraint. The spatial scaling keywords, SCALE LINEAR and SCALE LOG, ensure that the density of items that are selected per locus has a linear or logarithm relationship to the density items in the input that fall within the locus. For example, say that a locus constraint limits the number of items per locus to $k$. If spatial scaling is used, then fewer than $k$ items may be selected for a locus even if it contains $k$ items. This happens when a locus is relatively sparsely populated compared to the most populated locus.
 
-In Figure~\ref{}, the spatial distribution of an input (airports) is compared to the spatial distribution of a global selection that uses a locus constraint and the linear spatial scaling keyword. While the global selection contains seveal orders of magnitude fewer items than the input, it can be seen that the spatial distribution is the same.
+In Figure~\ref{fig:glossy:spatial:distribution:evaluation}, spatial scaling has been used to preserve the spatial distribution for a global selection of airports. The figure shows that the normalized spatial distribution of the input and the global selection is the same. The spatial distribution is normalized because the global selection contains orders of magnitude fewer items than the input, namely X and Y airports respectively.
 
 \begin{figure}[!t]
 \centering
-\scalebox{0.45}{\includegraphics{figs-glossy/words-per-query.pdf}}
-\caption{Word counts for the queries (Glossy and SQL). The queries correspond to the examples shown in Figures~\ref{fig:glossy:sql:rappers}, ~\ref{fig:glossy:sql:poi}, and \ref{fig:glossy:sql:placenames}.}
-\label{fig:glossy:words:per:query}
+\scalebox{0.45}{\includegraphics{figs-glossy/spatial-distribution.pdf}}
+\caption{}
+\label{fig:glossy:spatial:distribution:evaluation}
 \end{figure}
 
 \section{Conclusions}
