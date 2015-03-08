@@ -192,26 +192,39 @@ For thousands of years, humans have visualized geographic information on maps, m
 
 As the human capacity to gather data has increased, the creation of maps has become more challenging; finite map mediums can only accommodate a finite number of legible symbols. This challenge has lead to a plethora of cartographic information abstraction techniques that are collectively known as \emph{map generalisation}~\cite{brassel1988generalization,mcmaster1992generalization,weibel1999generalising}. Map generalisation essentially solves the problem of creating a legible, useful and accurate maps for any map scale and for any amount of geographic information. Naturally, this process involves a compromise between readability and precision for most real-world cases. For example, maps of the physical world must carefully select the subset of the available information that is visualized, or else the map would soon become cluttered and illegible. Similarly, demographic maps must often aggregate information about individuals by area in order to clarify the important trends in local populations. Finally, small scale maps must usually distort the information in order to make it more legible, for example by enlarging symbols that would otherwise be imperceivable or displacing symbols that would otherwise overlap.
 
-Over time, technology and map making has evolved hand-in-hand. For example, cloud computing is one of the latest technologies that has impacted map making and made possible a host of new use cases for maps. However, the visual perception of Homo Sapiens -- the principal user of maps -- has probably remained unchanged since the Neolithic period. Thus, despite the tremendous advances in technology, modern map makers must accommodate the same limitations of visual perception as ancient map makers.  In a sense, the map making challenge is greater today than ever. While the volume of geographic data keeps growing exponentially, the map medium itself is shrinking. While previously a map maker could use a table-sized map to communicate geographic information, today's map makers must often make due with a pocket-sized mobile device to communicate even more geographic information.
+Over time, technology and map making has evolved hand-in-hand. For example, cloud computing is one of the latest technologies that has impacted map making and made possible a host of new use cases for maps. However, the visual perception of Homo Sapiens -- the principal user of maps -- has probably remained unchanged since the Neolithic period. Thus, despite the tremendous advances in technology, modern map makers must accommodate the same limitations of visual perception in humans as ancient map makers.  
+
+In a sense, the map making challenge is greater today than ever. While the volume of geographic data keeps growing exponentially, the map medium itself is shrinking. Furthermore, the demand for globally distrubuted, highly available and low latency information is a characteristic of a web-focused world where digital information has become a commodity.
 
 \subsection{Modeling Geographic Information}
 \label{sec:modeling:geographic:information}
-Geographic information is information that is associated with locations in physical space. In the context of this thesis, we will talk about information that appears on a map. This information can be modelled in two ways, either logically or graphically. While the logical information level defines \emph{what} geographic information should appear on a map, the graphical information level defines \emph{how} the information should appear on a map. The differences and specifics of these two models are covered below.
+Maps visually communicate geographic information using a set of symbols, which are graphical representations of logical information objects. These two information models are discussed below.
 
 \minisec{Logical Model}
-Geographic information on a map is logically modelled by a set of \emph{geographic objects}. Each object represents a discrete concept in the real world, such as a road, lake, building, or subdivision. Each object associates a \emph{geometry} (point, line or area) with a set of additional attributes, which may include \emph{qualitative}, \emph{ordered} and/or \emph{quantitative} attributes~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with the following attributes:
+Logically, the information on a map can be modeled as a set of \emph{geographic objects}, which associate data with a certain location. Each object models a distinct geographic concept in the real world, such as a road, lake, mountain peak, or country, by a finite set of \emph{attributes}. Each attribute of an object can be categorized as either \emph{geometric}, \emph{qualitative}, \emph{ordered} or \emph{quantitative}~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with four attributes $\langle$ (\ang{55.6778}, \ang{12.5962}), ``Nordic Cousine'', ``Best Restaurant 2014'',  DKK 1.600  $\rangle$:
 
 \begin{itemize}
-\item \ang{55.6778}, \ang{12.5962} is a geometric attribute value of the Noma object, which corresponds to a geographic position on the harbor front in Copenhagen, Denmark.
-\item ``Nordic Cousine'' is a qualitative attribute value of the Noma object, which can be distinguished from other qualitative attribute values, such as ``Japanese Cousine''.
-\item ``Best Restaurant 2014'' is an ordered attribute value of the Noma object, which enables it to be ranked against other objects having the same attribute, such as an object with a ``Second-best Restaurant 2014'' attribute value.
-\item DKK 1.600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that \emph{arithmetic} can be performed on it. For example, the sum of the values DKK 1.600 and DKK 1.000 (the current price of the wine pairing at Noma) is DKK 2.600.
+\item $(\ang{55.6778}, \ang{12.5962})$ is a geometric attribute of the Noma object, which corresponds to a geographic position on the harbor front in Copenhagen, Denmark.
+\item ``Nordic Cousine'' is a qualitative attribute of the Noma object, which Noma to be distinguished from objects with a ``Japanese Cousine'' attribute.
+\item ``Best Restaurant 2014'' is an ordered attribute of the Noma object, which enables it to be ranked against other ordered attribute of the same hierarchy (restaurant ranks).
+\item DKK 1.600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that arithmetic can be performed on it. For example, the sum of the values DKK 1.600 and DKK 1.000 (the current price of the wine pairing at Noma) is DKK 2.600.
 \end{itemize}
 
 The distinction between these attribute types become especially important when objects are represented visually, which will be discussed in the next section.
 
+Of these attribute types, the geometric attribute type is perhaps the one most intrinsic to geographic information. Formally, a geometric attribute corresponds to a set of points; in geography, these points are typically geographic coordinates. There are three frequently used types of point sets: 
+
+\begin{itemize}
+\item \textbf{Point}: a single point, for example $(x,y)$
+\item \textbf{Curve}: a one-dimensional set of points, for example the polygonal chain described by the points $((x_1, y_1), (x_2, y_2), \dots)$.
+\item \textbf{Surface}: a set of points with an area, for example a polygon described by the closed polygonal chain $((x_1, y_1), (x_2, y_2), \dots, (x_1, y_1))$.
+\end{itemize}
+
+For simplicity, geometries with a volume as well as hierarchical attribute types such as lists are ignored in the following.
+
+
 \minisec{Graphical Model}
-Geographic objects are graphically represented by \emph{symbols}. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Depending on their type, object attributes are graphically expressed by one of seven \emph{visual variables}, which were first described by Bertin in his book ``Semiology of Graphics: Diagrams, Networks, Maps''~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order but are clearly distinguishable from each other (some more than others). Therefore, symbol color can be used to distinguish between different qualitative attribute values (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured. Therefore, symbol size can express the relative ordering as well as quantity of attribute values that permit quantification and/or ranking. 
+Symbols graphically represent geographic objects. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Typically, the attributes of an object are mapped to one (or more) of seven \emph{visual variables}, which were first described by Bertin in his book ``Semiology of Graphics: Diagrams, Networks, Maps''~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order but are clearly distinguishable from each other (some more than others). This makes them useful for representing qualitative attribute values (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured. This makes them useful for representing both relative order as well as absolute quantity. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -222,7 +235,7 @@ Geographic objects are graphically represented by \emph{symbols}. For example, a
 \vspace*{-4ex}
 \end{figure}
 
-A two-dimensional visual variable is the symbol position, which usually represents the object's geometry after a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used on Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as the average life expectancy together with economic wealth~\cite{rosling2007poverty}. 
+A two-dimensional visual variable is position, which usually represents the object's geometry after a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used for example in Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as average life expectancy or economic wealth~\cite{rosling2007poverty}. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -233,19 +246,23 @@ A two-dimensional visual variable is the symbol position, which usually represen
 \vspace*{-4ex}
 \end{figure}
 
-Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. A work that is related to Bertin's, is the ``the Grammar of Graphics'' by Wilkinson et al.~\cite{wilkinson2006grammar}. This collection of previous work covers the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps.
+Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. Also, a related work is the ``the Grammar of Graphics'' by Wilkinson et al.~\cite{wilkinson2006grammar}. This collection of previous work covers many of the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps. This work will focus mostly on abstraction of geographic object sets and less on graphical representation.
 
 \subsection{Map Generalization}
 \label{sec:introduction:map:generalization}
-The Earth is huge compared to the size of a normal map, say a paper map that you might pick up at a tourist information desk. One of the key challenges of map making is how to represent planet-sized information on a roughly human-sized map medium, be it a computer screen, mobile device or piece of paper. The difficulties arise from the large difference in \emph{scale} between the two material bodies, the Earth and the map medium (see Definition~\ref{def:scale}); you can fit roughly 500 trillion non-overlapping paper maps of the Earth onto the surface of the Earth. Consequently, each centimeter on a map has to convey a lot of information. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps will become cluttered and illegible. In geographic information science, the complex process of information abstraction for maps is called \emph{map generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
+As mentioned in Section~\ref{sec:introduction:background}, map generalization is a collective term that covers various information abstraction techniques used to create geographic maps. In this section, we will have a closer look at the motivation for map generalization, as well as some of the well-known techniques.
 
-\begin{definition}[Map Scale] The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground.\label{def:scale}\end{definition}
+The Earth is huge compared to the size of a normal map, say a paper map that you might pick up at a tourist information desk. One of the key challenges of map making is how to represent planet-sized information on a roughly human-sized map medium, be it a computer screen, mobile device or piece of paper. The difficulties arise from the large difference in \emph{scale} between the two material bodies, the Earth and the map medium (see Definition~\ref{def:scale}). For comparison, you can fit roughly 500 trillion non-overlapping paper maps onto the surface of the Earth. Consequently, each centimeter on a map has to convey a lot of information. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! 
+
+Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps would become cluttered and illegible. In geographic information science, the complex process of information abstraction for maps is called \emph{map generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
+
+\begin{definition}[Map Scale] The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. For example, on a 1:500.000 map, one centimeter on the map corresponds to five kilometers on the ground.\label{def:scale}\end{definition}
 
 This section briefly covers the implications of reducing the scale of a map and how map generalization can help address the problems that arise. Furthermore, this section provides a quick overview of the key approaches to map generalization. For the reader who is interested in additional knowledge about the generalization process, Mackaness, Ruas, Sarjakoski have compiled material that provides a useful introduction into the field.~\cite{mackaness2011generalisation}. Furthermore, the seminal works by McMaster and Shea~\cite{mcmaster1992generalization} and Weibel~\cite{weibel1997generalization} are important entry points into the field of map generalization.
 
 
 \minisec{Effects of Scale Reduction}
-Different visual effects occur as a map is scaled down. These effects can be seen in Figure~\ref{fig:introduction:background:raw:poi}, which illustrates a point dataset that has been rendered at different scales. There are three important effects that can be observed:
+Different visual effects occur as a map is scaled down. These effects can be seen in Figure~\ref{fig:introduction:background:raw:poi}, which illustrates a point dataset that has been rendered at different scales. There are three important effects that can be observed as a map is rendered at lower scale (without applying map generalization):
 
 \begin{figure}[htbp]
 \begin{center}
@@ -258,13 +275,13 @@ Different visual effects occur as a map is scaled down. These effects can be see
 
 \begin{itemize}
 
-\item The size of symbols -- if they are shown ``to scale'' -- decreases when the map scale is reduced. For example, if a lake is 2 mm wide on a 1:250.000 map would be 0.5 mm wide on a 1:1.000.000 map. Consequently, map symbols may become too small to be visible to the human eye. Similarly, map mediums may even be unable to reproduce symbols when they become too small. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
+\item \textbf{Symbol size:} The size of symbols -- if shown at relative size -- decreases when the map scale is reduced. For example, if a lake is 2 mm wide on a 1:250.000 map it would be 0.5 mm wide on a 1:1.000.000 map, i.e. barely visible to the human eye. Similarly, map mediums may even be unable to reproduce symbols when they become too small. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
 %A generalization technique that deals with diminutive symbols sizes is \emph{exaggeration}.
 
-\item The separation between symbols -- if they are shown at accurate positions -- decreases when the map scale is reduced. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other.
+\item \textbf{Symbol separation:} The separation between symbols -- if shown at accurate positions -- decreases when the map scale is reduced. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other.
 %Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
 
-\item The information density --  the amount of information per unit area --  increases when the map scale is reduced. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual}. The important \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes, which was first formally recognized by T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements per unit area in published map series is independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in area according to geometrical progression, which in turn must lead to a reduction in information at the same rate.
+\item \textbf{Information density:} The information density --  the amount of information per unit area --  increases when the map scale is reduced. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual}. The \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes, which was first formally recognized by T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements shown per unit area in published map series seems to be roughly independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in drawing area according to geometrical progression, which intuitively must lead to a reduction in information at the same rate.
 %  Information density can be kept constant by either \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
 
 \end{itemize}
@@ -278,23 +295,23 @@ Different visual effects occur as a map is scaled down. These effects can be see
 \end{figure}
 
 \minisec{Generalization Operators}
-A generalization operator transforms the set of information objects that appear on a map in order to ensure that a map remains legible and relevant at a given scale  (see Figure~\ref{fig:introduction:background:mashups}). One way to classify operators is according to three categories: \emph{selection} (see Definition~\ref{def:selection}), \emph{projection}  (see Definition~\ref{def:projection}), and \emph{aggregation} (see Definition~\ref{def:aggregation}). 
+The effects mentioned above generally require information to be abstracted as scale of a map is changed. Otherwise, maps may become illegible and cluttered or symbols may become imperceivable. Generalization operators are functions that transform geographic object sets and map symbols such that a useful and readable map is ensured. For example, information can be selected or aggregated (see Figure~\ref{fig:introduction:background:mashups}). One way to classify operators is according to three categories: \emph{selection} (see Definition~\ref{def:selection}), \emph{projection}  (see Definition~\ref{def:projection}), and \emph{aggregation} (see Definition~\ref{def:aggregation}). 
 
-It should be noted that, in geography, the term projection is often used interchangeably with the term \emph{map projection}, i.e. the projection of spherical coordiates onto the plane. However, in this thesis, the term projection has a broader meaning that is adopted from databases~\cite{ramakrishnan2000database}.
+In geography, the term projection is often used synonymously with the term \emph{map projection}, i.e. the projection of spherical coordinates onto the plane. However, in this thesis, the term projection is used in a broader mathematical sense that is adopted from databases~\cite{ramakrishnan2000database}, i.e. a mapping from objects to objects.
 
 \begin{definition}[Selection]
-A procedure that accepts a set of objects and outputs a subset of these objects, but does not modify the objects in any way. \label{def:selection}.
+A procedure that accepts a set of objects and outputs a subset of these objects, but does not modify the objects in any way. \label{def:selection}
 \end{definition}
 
 \begin{definition}[Projection]
-A procedure that accepts a set of objects and outputs the same set of objects but in a modifed state. \label{def:projection}.
+A procedure that accepts a set of objects and maps each object to another object. \label{def:projection}
 \end{definition}
 
 \begin{definition}[Aggregation]
-A procedure that accepts a set of objects and merges subsets of these objects into single objects in the output. Crucially, at least one object that appears in the output must not be a members of the input, as otherwise the procedure would be equivalent to selection. \label{def:aggregation}.
+A procedure that accepts a set of objects and merges subsets of these objects into single objects. Crucially, at least one object that appears in the output must not be a members of the input, as otherwise the procedure would be equivalent to selection. \label{def:aggregation}
 \end{definition}
 
-Each of the three high-level operators -- selection, projection, and aggregation -- can be implemented by several \emph{algorithms}. A key distinction is whether an algorithm processes objects \emph{independently} or \emph{holistically}. Thus each algorithm can be categorized in two dimensions, i.e. the category (selection, projection, aggregation) and subcategory (independent, holistic). For example, random sampling is a type of independent selection, since objects are selected or omitted independently of other objects (by flipping a coin, rolling a dice, etc.). In contrast, geometric displacement of objects such that no two object geometrically overlap is a type of holistic projection, since objects are modified in the context of other objects. Many different algorithms have been proposed in the literature (see Table~\ref{tab:operators}). 
+Each of the three high-level operators -- selection, projection, and aggregation -- can be implemented by several \emph{algorithms}. A key distinction is whether an algorithm processes objects \emph{independently} or \emph{holistically}. Thus each algorithm can be categorized in two dimensions, i.e. the category (selection, projection, aggregation) and subcategory (independent, holistic). For example, random sampling is a type of independent selection, since objects are selected or omitted independently of other objects (by flipping a coin, rolling a dice, etc.). In contrast, geometric displacement of objects that eliminates geometric object overlap is a type of holistic projection, since objects are modified in the context of other objects. Many different algorithms in all categories have been proposed in the literature (see Table~\ref{tab:operators}). 
 
 
 \begin{table}[htdp]
@@ -321,11 +338,15 @@ Aggregation (holistic) & Landcover aggregation~\cite{haunert2006landcover} \\
 \label{tab:operators}
 \end{table}%
 
-The categorization of generalization operators the dimensions (selection, projection, aggregation) and (independent, holistic), which is presented here, is much more abstract than the typologies usually proposed in the generalization literature. Various authors have attempted to come up with a final and fundamental classification, hitherto without any consensus being reached among cartographers~\cite{rieger1993consensus}. For example, competing and derivative classifications have been proposed by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While these different classifications of operators provide insight into the concrete aspects of the generalization process, it is hard to argue that either one of them is conclusive. Therefore, this section has covered generalization operators by grouping them in terms of some fundamental differences rather than specific differences. The goal of this section has been to provide the reader with a clear framework in which generalization operators can be understood. Later sections of this thesis will focus more narrowly on holistic selection and simple projection.
+This mathematically-oriented operator categorization (selection, aggregation, projection) is more abstract than the typologies usually proposed in the map generalization literature. In the literature, more domain-specific and fine-grained categories tend to be proposed. Various authors have attempted to come up with a final and fundamental classification, however without a consensus being reached~\cite{rieger1993consensus}. Various competing and derivative classifications have been proposed by Foerster, Morales, and Stoter~\cite{foerster2008classification}, McMaster and Shea~\cite{mcmaster1992generalization}, and Weibel and Dutton~\cite{weibel1999generalising}. While these different classifications of operators provide insight into the concrete aspects of the generalization process, it is hard to argue that either one of them is conclusive. Therefore, this section has covered generalization operators by grouping them by their fundamental mathematical properties rather than more specific properties.
+
+Conceptually, the process is that derives an appropriate symbol from an information object is also a type of map generalization, which is a projection from objects to symbols.
 
 \subsection{Constraint-based Generalization}
 \label{sec:contraint:based:generalization}
-The generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, \emph{constraints} act as the discriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while \emph{objectives} act a measure of optimality of a map. Together, constraints and objectives define an optimization problem where an optimal map must be found in a search space of maps. The search space contains the set of maps that can be derived from a source geographic information. Maps can be derived by application of generalization operators to the objects and symbols on the map (see Section~\ref{sec:introduction:map:generalization}).
+Overall, the generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, constraints act as the discriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while objectives act a measure of map utility and optimality. Together, constraints, objectives and a set of geographic information objects  implies an optimization problem over a search space of maps. The search space consists of maps that can be derived from a source map by applying generalization operators (see Section~\ref{sec:introduction:map:generalization}) to the objects and symbols.
+
+There are many ways to measure the optimality of a map. Typically, an objective is to either maximize or minimize some objective function over the map content, for example to maximize the sum of ``relevance'' of objects that appear on a map~\cite{sarma2012fusiontables}.
 
 \minisec{Constraints in Maps}
 The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or alternatively, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
@@ -333,22 +354,24 @@ The overall purpose of map constraints is to distinguish between acceptable maps
 \begin{itemize}
 \item Individual objects may be required to satisfy unary constraints, such as minimum dimensions.
 \item Pairs of objects may be required to satisfy pair constraints, such as minimum proximity.
-\item Unit areas may be required to satisfy constraints on the sets of objects they contain, such as maximum density.
-\item Networks may be required to satisfy topological constraints, such as logical flow. For example, a river system that is displayed on a map should not be disconnected from itself or its outlet.
+\item Subareas of the map may be required to satisfy locus constraints, such as maximum density.
+\item Networks may be required to satisfy topological constraints, such as not disconnecting a river system from itself or its outlet.
 \end{itemize}
 
-Constraints have been classified according to many different typologies. For more information on constraint typologies, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
+Like generalization operators, constraints have also been classified according to many different typologies. For more information on constraint typologies in the literature, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
 
 \minisec{Measures for Constraints}
-To express map constraints it is helpful to have a quantifiable measure which can be compared to a threshold value. For example, it is difficult to express a maximum information density constraint if there is no way to measure information density. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps.
+To evaluate the satisfaction of map constraints, they must be based on quantifiable measures. For example, a measure can be compared to a threshold value in order to determine satisfaction. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps:
 
-Unary measures quantify geometric and non-geometric properties of individual geographic objects and symbols in a map. They form the basis for unary constraints.  Geometric properties include complexity~\cite{douglas1973algorithms}, sinuosity~\cite{mueller1968introduction} and size, while non-geometric properties include all forms of logical predicates, such as equality, comparisons, and set membership.
+\begin{itemize}
+\item Unary measures quantify geometric and non-geometric properties of individual geographic objects and symbols in a map. They form the basis for unary constraints.  Geometric unary measures include complexity~\cite{douglas1973algorithms}, sinuosity~\cite{mueller1968introduction} and size. Non-geometric unary measures include all forms of logical predicates, such as equality, comparison, and set membership.
 
-Spatial measures quantify properties of space, such as the density of information and the distribution of information. They form the basis of locus constraints, i.e. constraints on space. Information density is measured by a density metric, such as one of the metrics surveyed by Nickerson~\cite{nickerson1994visual}. Spatial distribution is measured as a distance to some ``original'' distribution, for example by using the Bhattacharyya distance~\cite{bhattacharyya1946measure} or the earth mover's distance~\cite{rubner2000earth}.
+\item Spatial measures quantify properties of space, such as the density of information and the distribution of information. They form the basis of locus constraints, i.e. constraints on space. Information density is measured by a density metric, such as one of the metrics surveyed by Nickerson~\cite{nickerson1994visual}. Spatial distribution is measured as a distance to some ``original'' distribution, for example by using the Bhattacharyya distance~\cite{bhattacharyya1946measure} or the earth mover's distance~\cite{rubner2000earth}.
 
-Topological measures characterize the topological relationship between geometric objects in the plane and in networks. They form the basis of topological constraints. Binary measures include the nine-intersection model~\cite{egenhofer1991categorizing} and the region connection calculus (RCC)~\cite{randell1992spatial}. Network models include stream-orderings~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative}, which express the order in which branches in a hydrological network can be pruned without disconnecting (say) a river from itself or its outlet. Shortest paths are a specific kind of connections between hubs in a network, such as a street network, which are usually interesting to preserve on a map~\cite{schmid2013opensciencemap}.
+\item Topological measures characterize the topological relationship between geometric objects in the plane and elements in a network. They form the basis of topological constraints. Binary topological measures on geometric objects include the nine-intersection model~\cite{egenhofer1991categorizing} and the region connection calculus (RCC)~\cite{randell1992spatial}. Measures for network elements include stream-orderings~\cite{horton1945erosional,shreve1966statistical,strahler1957quantitative} and shortest paths~\cite{schmid2013opensciencemap}.
+\end{itemize}
 
-For a concrete example of real-world constraints and objectives that were used to evaluate a map, see the Apple iOS 6 design objectives~\cite{samet2012duking}.
+For a concrete example of real-world constraints and objectives that have been used to evaluate a map in industry, see the Apple iOS 6 design objectives~\cite{samet2012duking}.
 
 
 \begin{figure}[htbp]
@@ -359,9 +382,6 @@ For a concrete example of real-world constraints and objectives that were used t
 \end{center}
 \vspace*{-4ex}
 \end{figure}
-
-\minisec{Map Objectives}
-Objective functions quantify the utility of maps. An objective is to either maximize or minimize the objective function. For example, one objective is maximize the the weight of objects that appear on the map~\cite{sarma2012fusiontables}, where weight can for example be assigned according to importance.
 
 % Background
 
