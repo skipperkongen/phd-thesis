@@ -2630,10 +2630,10 @@ Usability testing can measure the effectiveness with which real humans utilize a
 
 \section{Limitations of Tileheat}
 % Tileheat discussion
+Tileheat is a system for predicting the sections of a map that will be most requested by the users in an uncoming time period. It works by processing the access log for the $k$ past time periods and applying a smoothing and trend-detecting algorithm. The assumptions are that hot sets change only gradually over time and that most users will request the same content. There are some limitations that follow from this approach, which will be discussed briefly below.
 
-\minisec{Personalized prediction}
-
-\minisec{Highly dynamic workloads}
+\minisec{Real-time prediction}
+Real-time prediction of content that will requested next by a user can help improve perceived latency. Ahead of time, the predicted content can be materialized and brought into a fast-access storage layer just before it is needed. The assumptions are that the actions of each user are sufficiently predictable and that the content requested by different users is sufficiently different. Tileheat was not designed for personalized prediction and therefore does not support it. While the actions of users have been shown to be sufficiently predictable, it has also been shown that the map content requested by different users follows common patterns. For this and other reasons, tileheat was designed to process access logs and prepare a common hot set many hours ahead of peak load. If a shift in user behaviour should occur during peak load or a user exhibits rare behaviour, Tileheat will be unable to react until the next scheduled access log processing.
 
 \section{Conclusion}
 
