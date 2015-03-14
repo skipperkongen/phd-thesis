@@ -2592,15 +2592,15 @@ Finally, deploying TileHeat in a production environment and measuring the effect
 \chapter{Discussion and Conclusion}
 \label{chapter:conclusion}
 
-\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.}
+%\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.}
 
 
 \section{Discussion}
 
-The previous chapters have described the systems -- Glossy, CVL, and Tileheat -- that has been developed during this PhD project. However, many potentials of these systems have not been fully explored or developed during the project due to time and resource limitations. Consequently, the Glossy, CVL lines of work, as well as the Tileheat line of work are limited in various ways. The sections below discuss these limitations and also indicate some interesting future directions for work.
+The previous chapters have described the systems that has been developed during this PhD project: Glossy, CVL, and Tileheat. While the evaluation of systems show that crucial progress has been made, they are also limited in some important ways. The sections below discuss some of these limitations and will sometimes indicate directions for future work that can potentially overcome them.
 
 \section{Limitations of Glossy and CVL}
-The Glossy and CVL systems have implemented holistic selection of tabular data for multi-scale data visualizations. The systems harness the PostgreSQL database engine to process queries by compiling queries into SQL in the PostgreSQL dialect. While we have argued that Glossy and CVL are novel and highly useful systems, the choices that were made during the developement of these systems mean that they are limited in some important ways. Some of these limitations are covered below.
+Glossy and CVL are systems for declarative and holistic selection of tabular data for multi-scale map and data visualizations. The systems have been built on-top-of the PostgreSQL database engine, which is a mature transactional database system. The approach has been to compile queries in Glossy SQL and CVL into SQL in the PostgreSQL dialect. The compiler output is an SQL program that solves an optimization problem (set multicover problem), which corresponds to the holistic selection problem.
 
 \minisec{Aggregation and Projection}
 The Glossy and CVL systems supports holistic selection of data for multiple scales, which is an important map generalization operator. However, other important operators are not supported by Glossy and CVL, such as holistic aggregation and holistic projection. There are several reasons for this, which can be thought of algorithmically as well as syntactically.
@@ -2638,16 +2638,23 @@ Tileheat is a system for predicting the sections of a map that will be most requ
 Real-time prediction of content that will requested next by a user can help improve perceived latency. Ahead of time, the predicted content can be materialized and brought into a fast-access storage layer just before it is needed. The assumptions are that the actions of each user are sufficiently predictable and that the content requested by different users is sufficiently different. Tileheat was not designed for personalized prediction and therefore does not support it. While the actions of users have been shown to be sufficiently predictable, it has also been shown that the map content requested by different users follows common patterns. For this and other reasons, tileheat was designed to process access logs and prepare a common hot set many hours ahead of peak load. If a rapid shift in user behaviour should occur during peak load or a user suddenly behaves in an anomalous manner, Tileheat will be unable to react until the next scheduled access log processing.
 
 \section{Conclusion}
-The thesis has studied on two subjects within multi-scale map and data visualization, with an emphasis on batch-oriented systems for map creation and map serving. The overall aim was strengthen the state of the art of in map visualization technology for a massively online, connected and data sharing population of users world-wide. Specifically, the design goals have been to contribute a systems for map visualization that can:
+This thesis contributes new knowledge within on two areas of online multi-scale map and data visualization: i.e. (a) declarative and holistic selection for map and data visualization and (b) prediction of map requests. The general approach has been to investigate batch-oriented systems. Specifically, the design goals were to contribute systems that can:
 
 \begin{itemize}
-\item Process large amounts of data (millions of objects) for map and data visualizations
-\item Allow relatively novice designers or programmers to time-efficiently specify and compute information selection of complex, multi-scale data visualizations (minutes or hours end-to-end)
-\item Support high availability and low latency serving of 
-\item Scale to large numbers of concurrent consumers (millions).
+\item Process large amounts of data (millions of objects) for map and data visualizations.
+\item Allow relatively novice designers or programmers to time-efficiently specify and compute data selection for complex, multi-scale data visualizations (minutes or hours end-to-end).
+\item Support high availability and low latency serving of map visualizations.
+\item Scale map visualizations to large numbers of concurrent consumers (millions).
 \end{itemize}
 
-Bla bla.
+\minisec{Strategies}
+The main strategy used in the selection study was to move programs to the data instead of vice versa. Today, data for visualizations is often stored in relational database management systems (RDBMS). Therefore, a natural idea is to generate SQL statements that compute holistic selection entirely inside the database. Furthermore, SQL seems to be the lingua franca quey language for the new class of emerging and highly scalable data processing systems, spearheaded by as Apache Hadoop projects such as Hive, Drill, and Spark.
+
+The main strategy used for the map serving study was to allow map serving systems to learn from their own access log. While an entire map can be materialized and place in fast-access storage, it is costly to do so. By learning the hot data from an access log, caches can be seeded with just the hot set potentially hours ahead of peak load. 
+
+\minisec{Results}
+
+
 
 \minisec{Future Work}
 
