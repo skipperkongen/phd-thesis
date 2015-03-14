@@ -360,6 +360,16 @@ The overall purpose of map constraints is to distinguish between acceptable maps
 
 Like generalization operators, constraints have also been classified according to many different typologies. For more information on constraint typologies in the literature, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
+\caption{\textbf{Pair and Locus Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Locus constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying loci (e.g. unit areas) in the map. Entities (such as objects or loci) that violate a constraint are in conflict. In the figure, entities that are in conflict are circled by red lines; this situation must be remedied, for example by selection (in the figure, kept objects are shown as black disks; deleted objects are shown as white disks.}
+\label{fig:introduction:selection:constraints}
+\end{center}
+\vspace*{-4ex}
+\end{figure}
+
+
 \minisec{Measures for Constraints}
 To evaluate the satisfaction of map constraints, they must be based on quantifiable measures. For example, a measure can be compared to a threshold value in order to determine satisfaction. Luckily, many different measures have been studied, which can form the basis of constraint formulations for maps:
 
@@ -373,35 +383,25 @@ To evaluate the satisfaction of map constraints, they must be based on quantifia
 
 For a concrete example of real-world constraints and objectives that have been used to evaluate a map in industry, see the Apple iOS 6 design objectives~\cite{samet2012duking}.
 
-
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Pair and Locus Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Locus constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying loci (e.g. unit areas) in the map. Entities (such as objects or loci) that violate a constraint are in conflict. In the figure, entities that are in conflict are circled by red lines; this situation must be remedied, for example by selection (in the figure, kept objects are shown as black disks; deleted objects are shown as white disks.}
-\label{fig:introduction:selection:constraints}
-\end{center}
-\vspace*{-4ex}
-\end{figure}
-
 % Background
 
 %\section{Motivation}
 %\label{sec:introduction:motivation}
-\section{Challenges and Opportunities}
+\section{How the World of Maps has Changed}
 \label{sec:impact:of:the:web}
 %\label{sec:introduction:motivation}
 
-TODO: Start softer...
-
-The rise of the Web, and subordinately cloud computing, has created a new situation for map visualization. In the following sections, both the challenges and opportunities that have been created by these phenomena are covered in more detail.
+Map have been crafted for thousands of years. So, why is there a sudden need to rethink the way maps are created? A crucial change in conditions has been caused by the recent rise of the Web as well as of cloud computing. In the following sections, the challenges and opportunities that have followed in the wake of these disrupting technologies are analyzed in more detail.
 
 \subsection{The Impact of the Web}
 % The changes and challenges caused by the web.
-The Web has structurally impacted \emph{why}, \emph{how}, by \emph{whom}, \emph{when}, and \emph{where} digital maps are produced and consumed. In combination, the Web and mobile devices have resulted in an online eco-system where information is created, accessed, and shared ubiquitously. Today, online maps are used by millions of people every day and maps have become a commodity. As with any online commodity, users expect 24 x 7 availability and acceptable latency for map services.
+The Web has structurally impacted \emph{why}, \emph{how}, \emph{when}, and \emph{where} geographic maps are produced and consumed. In combination, the Web and mobile devices have resulted in an online eco-system where maps are created, accessed, and shared online by millions of people every day; people who carry out a multitude of everyday tasks that involve maps. These users expect 24 x 7 availability and acceptable latency for map services, as for any online service, which puts pressure on the existing geographic information system (GIS) infrastructure.
 
-In its wake, the rise of the Web poses a dual challenge of map creation and distribution, which cannot be adequately addressed by traditional geographic information systems (GIS). GIS was developed before the World Wide Web and primarily as a single-user system~\cite{ucgis2014tomlinson}. Later on, GIS has been retrofitted with web service capabilities, such as the Web Map Service (WMS) and Web Feature Service (WFS). However, these protocols do not fundamentally alter the architecture of GIS, they simply expose the GIS interface over the Web. While this may work well for a few concurrent users, it becomes prohibitively expensive when the number of concurrent users rise. As a consequence, almost all succesful online maps today rely on a new architecture, which uses pre-materialized maps that are distributed to end users.
+GIS was developed prior to the World Wide Web and primarily as a single-user system~\cite{ucgis2014tomlinson}. By contrast, the Web is a massively concurrent environment where millions of users access the same services. Therefore, GIS has been retrofitted with web capabilities, such as the Web Map Service (WMS) and Web Feature Service (WFS). However, these protocols do not fundamentally alter the architecture of traditional GIS. They simply expose a GIS interface over the Web while mostly maintaining the same computational architecture as before. Specifically, the focus has traditionally been on on-the-fly analysis and map rendering, since this represents an ideal.
 
-Below, the challenges posed by the Web to map visualization are investigated in more detail.
+While on-the-fly maps represent an ideal in user experience, they are fundamentally expensive to compute in a highly concurrent access scenario, such as is the norm on the Web. Consequently, all major successful map providers on the Web have switched to a new map architecture, which primarily relies on precomputed map data that is distributed to end users over a content delivery network (CDN)~\cite{mbtile12}. 
+
+The section below investigates some of the key aspects of maps on the Web today, and why they cause challenges for map creators.
 
 %Selection of data subsets is one of the most common tasks when creating a map. For example, a map that displays restaurants in a city must usually select a subset for display on the map, since the density of food shops in urban environments is typically too high to accomodate all of them on a map (depending on scale). A comprehensive literature on map generalization (including selection) already exists, so why is there a need to augment the literature with new studies and new methods? To answer this question, this section covers three recent trends in online computing that have dramatically impacted the map visualization process -- and which in turn requires new selection methods for maps to be developed. The trends present both hard challenges and powerful opportunities for new ways to create maps in an online environment.
 
@@ -418,25 +418,42 @@ Below, the challenges posed by the Web to map visualization are investigated in 
 
 % The changes and challenges caused by the web.
 
-\minisec{Huge and Constantly Evolving Shared Datasets}
-The Web has shifted the reasons why maps are created, which is caused by two root factors. On one hand, private companies~\cite{google2014maps,stamen2014tiles,vizzuality2012cartodb} and national mapping agencies~\cite{gst2014digitalmapsupply} supply an abundance of online background maps, which means that there is less need to create these types of maps. On the other hand, there is a steady rise in the supply of thematic geographic datasets online -- both curated~\cite{mst2014miljo}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} -- which grow by millions of information objects each day~\cite{openstreetmap2014stats}. The combination of these two factors means that demand has shifted from background maps to thematic maps~\cite{bereuter2013real}. Visualizing emerging datasets on thematic maps is potentially of great relevance and importance. For example, journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} have created thematic maps that increased the transparency and knowledge in the World and have potentially even saved human lives. 
+\minisec{Focus on Thematic Maps}
+The Web has shifted the the focal point of map creation, such that new thematic maps and overlays are more frequently created than new background maps. Part of the reason is that private companies and national mapping agencies already offer a great quantity of background maps for the Web~\cite{google2014maps,gst2014digitalmapsupply, stamen2014tiles,vizzuality2012cartodb}. In addition, the information that appears on background maps has a tendency to remain relatively stable over time, such as the location of mountains, lakes, coast lines, cities, and roads. In contrast, thematic data typically reflects phenomena that are intrinsically more dynamic and multi-faceted, such as human behaviour.  This makes thematic maps fundamentally more news-worthy and trendy than background maps, which is why journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} frequently create thematic maps.
 
-In general, the increase in data volume calls for scalable data processing methods for production of thematic maps. However, not all thematic maps are challenging to create. On one hand, statistical maps, such as the choropleth map in Figure~\ref{fig:introduction:background:mashups} (left map), can be efficiently produced by using aggregation techniques from spatial statistics~\cite{ripley2005spatial}. On the other hand, entity maps, such as the spatial event map that is shown in Figure~\ref{fig:introduction:background:mashups} (right map), require holistic selection of information~\cite{sarma2012fusiontables,nutanong2012multiresolution}, a much greater challenge.
+While all geographic data is growing~\cite{openstreetmap2014stats}, thematic data has a clear tendency to grow faster than background data. Since the relevance of thematic data is intrinsically short-lived, it is crucial that we can process it and visualize it on maps expediently. However, given how the volume of data can accumulate really fast, it is crucial that data can be processed in a scalable way.
+
+
+\minisec{Large Thematic Datasets}
+The Web has shifted the the focal point of map creation, such that new thematic maps and overlays are much more likely to be created than new background maps.  This shift can be attributed to multiple sources. On the one hand, private companies and national mapping agencies already supply a great quantity of high-quality background maps for the Web~\cite{google2014maps,gst2014digitalmapsupply, stamen2014tiles,vizzuality2012cartodb}. Additionally, the information that appears on background maps is typically quite stable over time, such as the location of mountains, lakes, coast lines, cities, and roads. On the other hand, the supply of thematic data is constantly evolving as it reflects phenomona that are intrinsically more dynamic and multi-faceted, such as human behaviour. The sources of thematic data include curated~\cite{datagov}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} repositories. 
+
+
+Journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} are frequent creators of thematic maps, which aim to increase transparency and knowledge in the World and potentially save human lives, as was the case in Haïti after the earthquake in 2010~\cite{openstreetmap2010haiti}.
+
+
 
 \minisec{Novice Map Makers}
-The Web has caused a change in how and by whom maps are created. While map creation was traditionally the domain of cartographic experts, this is no longer the case. Today, the data enthusiast has replaced the expert as the person most likely to create a map~\cite{hanrahan2012enthusiast}. This is partly because demand for thematic maps on the web has grown faster than the number of cartographic experts who can create them. This has created a human resources challenge, which is being addressed by the development of more intuitive and expressive design interfaces. These interfaces promise to enable anyone to create maps. The need for rapid thematic mapping has driven the development of fully-automatic mapping systems~\cite{sarma2012fusiontables,nutanong2012multiresolution}. However, these systems have completely sacrificed designer control in order to gain productivity. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly and inadequate for data enthusiasts. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by non-specialist map makers, such as software developers, journalists, aid workers and scientists.
+The Web has caused a change in how and by whom maps are created. While map creation was traditionally the domain of cartographic experts, this is no longer the case. Today, the data enthusiast has replaced the expert as the person most likely to create a map~\cite{hanrahan2012enthusiast}. This is partly because demand for thematic maps on the web has grown faster than the number of cartographic experts who can create them. This has created a human resources challenge, which is being addressed by the development of more intuitive and expressive design interfaces. These interfaces promise to enable anyone to create maps. The need for rapid thematic mapping has driven the development of fully-automatic mapping systems~\cite{sarma2012fusiontables,nutanong2012multiresolution}. 
 
-\minisec{Mobile Map Users}
+While fully-automatic mapping systems promise map designer productivity, it is still difficult to create a non-default map. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly and inadequate for data enthusiasts. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by non-specialist map makers, such as software developers, journalists, aid workers and scientists.
+
+\minisec{Massively Concurrent Consumption}
 The Web has caused a change in when and where maps are consumed by their audience. Today, an online map can be consumed by anyone, anywhere, at any time -- thanks to mobile devices in our pockets that are connected to an ubiquitous Internet. Many online map are consequently consumed by thousands of concurrent users. Web users today expect 24 x 7 availability and acceptable latency for online applications, which includes maps. 
 
 In distributed systems, data partitioning and data replication are important techniques that can increase the availability and performance of data services~\cite{barroso2009datacenter,dilley2002cdn}. In mapping, a typical data partitioning scheme is to split the data into raster~\cite{mbtile12} or vector tiles~\cite{gaffuri12vectortiles}, which split the data among cells in a fixed multi-level grid called a tile pyramid~\cite{decola1993pyramid}. The advantage of tile pyramids, which have logical grid for each ``zoom level'' in a map, are that subsets of the data can be addressed in a fixed key-value scheme. Consequently, tiles can easily be distributed via a content delivery networks (CDN). However, the number of tiles in a tile pyramid grow exponentially in the number of zoom levels that a map supports. While a large set of tiles can be rapidly materialized in parallel, for example on a map-reduce cluster~\cite{dean04mapreduce,dean2009designs}, the computation and I/O cost is fundamentally high since it is exponential in the number of tile pyramid levels. For example, on a zoomable world map with twenty zoom levels (which is the norm), there are more than 300 billion distinct tiles. Therefore, there is a need for methods that reap the benefits of data partitioning and data replication, while avoiding the cost of full materialization.
 
-\subsection{Opportunities of Cloud Computing}
-Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources~\cite{mell2009nist}. Today, powerful data analytics systems, such as mapreduce~\cite{apache2015hadoop} and column-stores~\cite{bauer2013redshift}, can be provisioned and rented by the hour from cloud providers~\cite{amazon2010aws}. Furthermore, cloud services such as Amazon Web Services, offer practically unlimited and cheap storage of data. In combination, on-demand and scalable processing of spatial data~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} and unlimited storage of data creates an unprecedented and powerful opportunity to compute large-scale geographic maps.
+\subsection{The Impact of Cloud Computing}
+Cloud computing offers a powerful model of ubiquitous, convenient, and on-demand access to a shared pool of vast computing resources~\cite{mell2009nist}. The advent of cloud computing has surely created new opportunities both for map creation and map distribution.
 
-Today, most information distributers, such as video and social networking sites, use cloud-based content delivery networks (CDN) to distribute their product to a global audience~\cite{dilley2002cdn}. Some of the key advantages of CDN are their superiour availability, scalability and performance~\cite{barroso2009datacenter,pilchin2007dynamo}. Any type of data that can be organized as a set of key-value pairs can be distributed in this way via a content delivery network. For example, photos have a filename or identifer (the key) and some bytes that make up the image content (the value)~\cite{beaver2010haystack}. Similarly, spatial data can be partitioned into key-value pairs by using a spatial grid~\cite{decola1993pyramid} or linearization~\cite{hilbert1891ueber,morton1966computer} decomposition. Once partitioned, the spatial data for a map can be distributed to millions of people online as a set of map tiles~\cite{gaffuri12vectortiles}.
+\minisec{Impact on Map Creation}
+To create maps, programmers, scientists and cartographers can rent highly-scalable data analytics~\cite{apache2015hadoop}, storage~\cite{palankar2008amazon} and database systems~\cite{bauer2013redshift} by the hour from a cloud provider, such as Amazon Web Services (AWS)~\cite{amazon2010aws}. Such systems provide the components needed to compute and store geographic maps over massive amounts of data. For example, map generalization (see Section~\ref{sec:introduction:map:generalization}) can essentially be broken down into a set of data analysis and transformation tasks that can be performed by a system like Spatial Hadoop~\cite{eldawy2014spatialhadoop}. This type of system allows spatial analytics to run on a scalable cluster of computers.
 
-Recently, in-memory and fault-tolerant stores, such as RAMCloud~\cite{ousterhout2011ramcloud} have appeared. RAMCloud improves on the volatility of in-memory caches and the latency of disk-based systems, by using fault-tolerance techniques that make them comparable to disk-based stores.
+The availability of potent computing resources is matched by unprecedented access to curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} geographic data online. Together, the availability of cloud computing, cloud storage and open data creates a neat opportunity to create previously unrealizable maps.
+
+\minisec{Impact on Map Distribution}
+To distribute maps, content delivery networks (CDN) offer a scalable and affordable way to distribute data to a global audience~\cite{dilley2002cdn}. Some of the key advantages of CDN are their superior availability, scalability and performance~\cite{barroso2009datacenter,pilchin2007dynamo}, which is why they are used by anyone seriously engaged in data distribution~\cite{beaver2010haystack}. To harness a CDN for map distribution, the map data must first be organized into key-value pairs. For example, the key may be the ID of a geographic grid cell, while the value may correspond to the data intersected by that grid cell~\cite{gaffuri12vectortiles}. Spatial data can be partitioned into key-value pairs by several techniques which includes spatial grids~\cite{decola1993pyramid} and linearization~\cite{hilbert1891ueber,morton1966computer} techniques. Once partitioned, the spatial data for a map can be distributed to millions of people online as a set of map tiles, either as images or data.
+
+Recently, in-memory and fault-tolerant stores, such as RAMCloud~\cite{ousterhout2011ramcloud} have appeared. Systems like RAMCloud combine the speed of in-memory caches with the persistence of disk-based stores. The appearance of such systems will make the distribution of maps, which can be decomposed into key-value pairs, even more effective and affordable in the future. Already now, in-memory key-value stores are being offered as a service in the cloud.
 
 \section{State-of-the-Art Digital Mapping Pipelines}
 \label{sec:introduction:web:mapping:pipelines}
@@ -498,11 +515,11 @@ There are three drawbacks of a batch-oriented approach that are quite obvious:
 \item Batch-oriented systems can not easily take individual user preferences into account, nor can they easily adjust the map for the usage context.
 \end{itemize}
 
-\subsection{Best Fit for Large-scale Web Maps}
+\subsection{Best Fit for Massively Concurrent Web Maps}
 
-Real-time systems present an ``ideal'' for mapping systems. However, current real-time mapping systems are not appropriate for creating and serving large-scale web maps. First, these systems have low scalability availability and high latency compared to precomputed content that is served from a key-value store or CDN. Second, they do not cost-effectively scale with the number of concurrent users. These problems are critical in a web context.
+Real-time systems present an ``ideal'' for mapping systems. However, current real-time mapping systems are not ideal for creating and serving massively concurrent web maps. First, these systems have low scalability availability and high latency compared to precomputed content that is served from a key-value store or CDN. Second, they do not cost-effectively scale with the number of concurrent users. These problems are critical in a web context.
 
-In contrast, batch-oriented mapping systems are appropriate for creating and serving large-scale web maps. First, batch-oriented systems can process maps by exploiting highly-scalable data processing systems, such as spatial mapreduce~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop} and spatial parallel databases~\cite{waas2009beyond}. Second, batch-oriented systems can serve maps online with high availability, high scalability, and low latency by using key-value stores or CDN to distribute pre-processed data. Today, scalability in data volume and concurrent users is a crucial requirement for large-scale web map systems. 
+In contrast, batch-oriented mapping systems are appropriate for creating and serving web maps. First, batch-oriented systems can process maps by exploiting highly-scalable data processing systems, such as spatial mapreduce~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop} and spatial parallel databases~\cite{waas2009beyond}. Second, batch-oriented systems can serve maps online with high availability, high scalability, and low latency by using key-value stores or CDN to distribute pre-processed data. Today, scalability in data volume and concurrent users is a crucial requirement for large-scale web map systems. 
 
 Additionally, the disadvantages are not too severe. First, disk-based storage has become very cheap and pure in-memory storage is bound to become cheaper over time. Second, materialized view can be refreshed as demand dictates, either by leveraging batch-oriented parallel processing~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} or by employing techniques for materialized view maintenance~\cite{gupta1995maintenance}. Finally, user preferences can to some extent be accommodated by materializing views for different user profiles and choose between them at query time. However, this last problem is probably the most fundamental problem of batch-oriented systems.
 
@@ -605,6 +622,8 @@ Previous versions of some of the chapters in this thesis have been published or 
 \section{Structure}
 \label{sec:introduction:structure}
 % Not good enough. Tim uses bullets that reference the contributions, Marcos used a single sparagraphs to similar effect
+
+TODO: Elaborate...
 
 
 The remainder of this thesis is organized as follows. 
@@ -2573,20 +2592,49 @@ Finally, deploying TileHeat in a production environment and measuring the effect
 \chapter{Discussion and Conclusion}
 \label{chapter:conclusion}
 
+\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.}
+
+
 \section{Discussion}
 
-\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.
-
-
-\subsection{Glossy and CVL}
+\section{Limitations of Glossy and CVL}
 % Glossy + CVL discussion
-Unsupported data types, e.g. text, trees, and graphs; unsupported operators, e.g. aggregation and holistic projection; limitations in data size, e.g. explain that while results are shown for Postgres, other and more scalable databases or clustersystems could be used. User-studies could be conducted.}
 
-\subsection{Tileheat}
+\minisec{Aggregation and Projection}
+The Glossy and CVL systems supports holistic selection of data for multiple scales, which is an important map generalization operator. However, other important operators are not supported by Glossy and CVL, such as holistic aggregation and holistic projection. There are several reasons for this, which can be thought of algorithmically as well as syntactically.
+
+Algorithmically, selection in Glossy and CVL depends on a solver for the set multi-cover problem (SMCP), since the holistic selection problem corresponds to this problem. However, the project has not been able to establish that the same relationship exists between holistic aggregation, holistic projection and SMCP. One approach could be to bridge models for holistic aggregation and holistic projection with SMCP by means of a problem mapping. For example, Wollf and Launert have developed a modeling for land-cover aggregation, which is based on a coloring problem of an adjencency graph~\cite{haunert2006landcover}. If an efficient mapping from the coloring problem to SMCP was developed, any algorithm for SMCP could be used to solve holistic aggregation. A similar strategy could be used for mapping models for holistic projection to SMCP. However, it is not clear how well such an approach would work in practice. 
+
+Syntactically, the Glossy SQL and CVL languages were developed for selection. While the project has attempted several times to develop a good syntax for specification of holistic aggregation and projection, these efforts were not successful. Perhaps the problem is structurally rooted. In selection there are only two outcomes for an object: it is either included or it is excluded. In contrast, for holistic aggregation and holistic projection there are sevaral possible outcomes for an object. For example, in land-cover aggregation an object can be merged with several of its neighbors, while in displacement an object can be displaced to several or even infinitely many positions. The syntax of Glossy SQL and CVL allow a user-defined object weight to be given, which is enough to prioritized selection. However, for land-cover aggregation a distance function must also be given. Thus, the syntax of Glossy SQL and CVL would likely have to be extended with more clauses.
+
+\minisec{Graphs and Semi-structured Data}
+The Glossy and CVL systems process tabular data for visualizations. However, tabular data is not the only type of data that can be visualized at multiple scales. Interesting data types include graphs, semi-structured, and unstructured data. There are many similarities between geographic maps and other types of visualization. For example, the effects of scale-reduction -- such as density, proximity and size change -- also apply to graph visualization.
+
+Graphs model many important phenomena, such as social networks. For example, a vast social networks $G$ could meaningfully be visualized at multiple scales by showing an appropriately layed-out graph minor of $G$ at each scale. The operations that produce a valid graph minor from an input graph include selection (nodes and edges) as well as aggregation (edge collapse). In this model, small scale visualization levels could focus on community patterns and gradually transition to individual people toward larger scale visualization levels. Similar to recursive selection in Glossy SQL, the graph minor property could be recursive, such that the graph shown at scale $i$ was required be a graph minor of any graph shown at scale $j < i$. Similar to Glossy SQL, nodes in the social could be weighted, e.g. based on pagerank~\cite{brin1998anatomy}, which could be used to prioritize node selection and edge collapse.
+
+Semi-structured data, such as XML and JSON, is used in many contexts on the Web. For example, web services typically return data as either XML or JSON. These data formats do not generally conform to the regular schemas of relational data. However, semistructured can be transformed sinto tabular form, e.g. by using a view~\cite{}, which is a data integration approach~\cite{halevy2006data}. This approach would allow the Glossy and CVL systems to compute multi-scale subsets of semi-structured data. Another approach would be to rewrite the multi-scale abstraction semantics for semi-structured data, e.g. by including some form of aggregation. However, this project has not attempted such a direction.
+
+\minisec{Scale-out Processing}
+Limitations in data size. Results are shown for Postgres, because emphasis on correctness and reasonable scalability. However, other and more scalable databases or cluster systems could be utilized with many advantages, such as x, y, z would certainly result in increased scalability of the system. What would it take?
+
+\minisec{User-studies}
+No user-studies conducted.
+
+
+
+
+
+\section{Limitations of Tileheat}
 % Tileheat discussion
+
+\minisec{Aggregate-only input}
+
+\minisec{Semi-dynamic workloads only}
 Try for more unpredictable work-loads.
 
 \section{Conclusion}
+
+The work presented in this thesis evolves the state-of-the-art from multiple points of departure. First, the Glossy selection system, as well as its prototype CVL, is an evolution of batch-oriented, selection-based map generalization systems. Batch-oriented generalization is appropriate for serving maps to large web audiences because the computationally-intensive map generalization process is decoupled from the highly-concurrent map serving process. Second, TileHeat is an evolution of map request prediction systems. While state-of-the-art map request prediction for maps focuses mostly on real-time prediction and a single user, TileHeat moves prediction back in time by many hours and holistically predicts requests for all users. As a result, the computationally intensive tile materialization process can be scheduled for low-load time windows. The techniques for long-term prediction of map requests are partially inspired by prediction techniques that are used in financial systems.
 
 
 
