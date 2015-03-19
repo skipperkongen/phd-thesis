@@ -1,4 +1,5 @@
 \documentclass[11pt, oneside]{report}  
+\usepackage[english,danish]{babel}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 % Theorem environments
@@ -113,10 +114,9 @@
 
 
 \sloppy
+\title{Declarative and Scalable Selection for Map Visualizations}
 
-\title{Declarative Object Selection for Scalable Map Visualizations}
-
-%\title{Declarative and Scalable Selection for Map Visualizations}
+%\title{Declarative Object Selection for Scalable Map Visualizations}
 %\title{Declarative Cartography for Scalable Geographic Data Visualizations}
 %\title{Declarative Cartography for Scalable Map Visualizations}
 %\title{Scalable Selection for Geographic Data Visualizations}
@@ -140,6 +140,8 @@
 \begin{document}
 \maketitle
 
+\selectlanguage{english}
+
 \section*{Acknowledgements}
 First and foremost, I thank my primary supervisor Marcos Vaz Salles for his tireless dedication and great insight into the work of spatial data management and visualization; I have enjoyed great discussions and good friendship alike. Likewise, I thank my principal supervisor Martin Zachariasen, for believing in my ideas and for giving me the right push at the right times. 
 
@@ -161,13 +163,21 @@ This thesis is dedicated to my son Morgan and my daughter Athena.
 
 \tableofcontents
 
-\abstract{Geographic maps are among the oldest and most important data visualizations known to mankind. Moreover, their design and use has been studied for several millennia, and their subordinate processes -- such as map generalization -- are well understood. However, the web has impacted the field of mapping in a number of ways: (1) Ready-to-use background maps have become a commodity that is easily integrated into digital mapping applications. In contrast, thematic foreground layers offer great variability and cannot been commoditized to the same extent. Therefore, research that studies the creation of thematic foreground layers is merited. (2) The typical map making professional has changed from a GIS specialist to a busy person with map making as a secondary skill. Today, thematic maps are produced by journalists, aid workers, amateur data enthusiasts, and scientists alike. Therefore it is crucial that this diverse group of map makers is provided with easy-to-use and expressible thematic map design tools. Such tools should support customized selection of data for maps in scenarios where developer time is a scarce resource. (3) The web provides access to massive data repositories for thematic maps and is itself a cause of prolific data creation. This calls for scalable map processing techniques that can handle the data volume and which play well with the predominant data models on the web. (4) Maps are now consumed around the clock by a global audience. While historical maps were single-user or few-user interfaces, today's map interfaces must be designed for millions of people who concurrently consume maps anywhere and anytime.
+\selectlanguage{danish}
+
+\abstract{Geografiske kort er en af de ældste og vigtigste former for data visualisering. Kartografi, som er læren om kortet som informationsbærer og medium, er blevet studeret i årtusinder. Efterhånden har vi opnået en nærmest komplet forståelse af alle delprocesser der indgår under skabelsen og brugen af et kort -- herunder generalisering af geografiske data. Dog har fremkomsten af internettet og WWW skabt et behov for at opdatere vores viden på dette vigtige område, da grundlaget for at skabe kort i denne nye virkelighed er blevet udfordret. Nogle vigtige tendenser og udfordringer er: (1) Offentligt tilgængelige baggrundskort er blevet en forbrugsgode, der udbydes af mange og som let kan integreres i en hvilken som helst kort-applikation. Derfor er der ikke længere det samme behov for at oprette og dele baggrundskort på Internetet. I modsætning til baggrundskort, er tematiske data noget der dagligt volder kort-designerere problemer. Derfor er der et behov for særligt at studere brugen af sådanne data, herunder deres generalisering. (2) Internettet har demokratiseret hele data visualiseringsprocessen, hvilket betyder at det ikke længere er forbeholdt eksperter at designe et landkort. Hvor det før var kartografer og GIS-specialister som var de primære designere af kort, ser vi nu at alle dele af samfundet bidrager med kort, såsom journalister, nødhjælpsarbejdere, web-designere, videnskabsfolk, og såkaldte data-entusiaster. Derfor er der et øget behov for at tilbyde disse brugergrupper nogle gode værktøjer til kort-design, som ikke er forbeholdt eksperter. (3) Internettet er en kilde til meget store mængder tematiske data, som med fordel kan fremvises på et kort, men traditionelle kort-værktøjer er ikke designet til at håndtere meget store data mængder. F.eks. kan traditionel GIS ikke udnytte den kapacitet, der forefindes i klyngecomputersystemer, såsom Hadoop og parallelle databaser. Derfor er der et behov for at integere nye værktøjer til kort-design med moderne klyngearkitekturer og systemer. (4) Kort bliver i dag tilgået døgnet rundt af mange brugere samtidigt. Derfor er det nødvendigt med kort-tjenester, som skalerer i antallet af samtidige brugere. Dette er blevet erfaret flere gange i Danmark under offentligegørelse af kort, som af den ene eller anden grund tiltrak sig offentlighedens interesse. Diverse tiltag til kort-tjenester, såsom WMS og WFS, kan ikke i tilstrækkelig grad håndtere mange samtidige brugere. Derfor er der fremkommet mere skalérbare tjenestetyper, såsom WMTS, som dog ikke er tilstrækkelige til at publicere et kort. For eksempel afhænger disse kort-tjenester af eksterne services til at generalisere og rendere geografiske data til brug på et kort. Selvom sådanne services eksisterer, er omkostningen ganske betydelig til at rendere et fler-skala kort i alle skalaer og udsnit. Da det samtidigt er langt fra alle dele af et fler-skala kort som bliver læst i praksis, er der derfor et potentiale for selektivt at processere de dele af et kort som vil blive læst i fremtiden. Dette skaber et behov for at forudsige hvordan et kort vil blive brugt, f.eks. baseret på hvordan lignende kort er blevet brugt før. \\
+
+Denne afhandling bidrager med ny teknologi, som kan bruges til at imødegå nogle af de udfordringer som internettet har skabt design og brug af geografiske kort, i særdeleshed på nettet: (a) To nye deklarative sprog til kartografisk udvælgelse af data til et kort -- Glossy SQL og dens prototype CVL -- er blevet udviklet og evalueret. Disse sprog tillader designeren af et kort at specificere holistiske mål for udvælgelse af data til et fler-skala geografisk kort. Metoden understøtter to typer af vigtige og meget dækkende bruger-definerede begrænsninger i.f.m. udvælgelsen. Disse begrænsnigner bliver automatisk tilfredsstillet af systemet under kørsel. Derudover understøttes en bruger-defineret målfunktion for den kartografiske udvælgelse i form af brugerdefinerede objekt-vægte, som vil blive forsøgt maksimeret i.f.t. de udvalgte elementer på kortet. F.eks. kan restauranter udvælges til et kort både som funktion af deres egen vigtighed og som funktion af andre tætvedliggende restauranters vigtighed. (b) En oversætter fra Glossy SQL og CVL er blevet udviklet og evalueret. Oversætterens målsprog er SQL i PostgreSQL dialekten. Dette betyder at Glossy SQL og CVL -- og derved hele udvælgesesprocessen -- kan afvikles i PostgreSQL. Dette er en moderne relationel database, som ofte benyttes til opbevaring og analyse af geografiske data. Dermed undgås behovet for at eksportere data i forbindelse med udvælgelsesbaseret generalisering. (c) TileHeat er et rammesystem for forudsigelse af de dele af et kort, som vil blive forespurgt i fremtiden. Systemet er baseret på eksponentiel udglatning og en ny dissipationsteknik, således at forudsigelser af trafisk kan baseres på en relativt lille tilfældig udvælgelse af kort-forespørgsler.\\
+
+Resultaterne viser at Glossy SQL og CVL kan beregne en kartografisk udvælgelse af data ved at afvikle en kompleks forespørgsel i en relationel database. Det er blevet påvist at denne metode er skalerbare optil en halv million objekter i databasen. Desuden tyder resultaterne på at metoden er skalerbar for databaser med flere millioner af objekter, i særdeleshed hvis målsproget for oversætteren udskiftes med en variant af SQL, som understøttes af et klyngeberegningssystem (f.eks. såsom Hadoop). Mens CVL er blevet afprøvet i.f.t. flere use cases for geografiske kort, vises det at Glossy SQL derudover kan benyttes til udvælgelse af data til ikke-geografiske datavisualiseringer, såsom tidslinjer. Endeligt viser resultaterne for Glossy SQL og CVL at kartografisk udvælgelse kan udtrykkes meget præcist og kortfattet i disse deklarative sprog. Resultaterne for Tileheat viser en væsentlig forbedring af forudsigelsespræcisionen for korttrafik, i sammenligning med den metode, der p.t. benyttes af Geodatastyrelsen i Danmark. Dette betyder at en væsentlig mængde beregninger ville kunne spares i denne offentlige styrelse, som er ansvarlig for distribution af kortdata til den danske offentlighed.}
+
+\selectlanguage{english}
+
+\abstract{Geographic maps are among the oldest and most important data visualizations known to mankind. Moreover, their design and use has been studied for several millennia, and their subordinate processes -- such as map generalization -- are well understood. However, the web has impacted the field of mapping in a number of ways: (1) Ready-to-use background maps have become a commodity that is easily integrated into digital mapping applications. In contrast, thematic foreground layers offer great variability and cannot been commoditized to the same extent. Therefore, research that studies the creation of thematic foreground layers is merited. (2) The typical map making professional has changed from a GIS specialist to a busy person with map making as a secondary skill. Today, thematic maps are produced by journalists, aid workers, amateur data enthusiasts, and scientists alike. Therefore it is crucial that this diverse group of map makers is provided with easy-to-use and expressible thematic map design tools. Such tools should support customized selection of data for maps in scenarios where developer time is a scarce resource. (3) The Web provides access to massive data repositories for thematic maps and is itself a source and cause of prolific data creation. This calls for scalable map processing techniques that can handle the data volume and which play well with the predominant data models on the Web. (4) Maps are now consumed around the clock by a global audience. While historical maps were single-user or few-user interfaces, today's map interfaces must be designed for millions of people who concurrently consume maps anywhere and anytime.
 
 To address the challenges of efficient point map design, scalable map processing, and scalable map distribution, this thesis proposes novel techniques in the area of database-supported maps: (a) Glossy SQL, and its prototype CVL, belong to a new class of concise declarative languages that allows map designers to specify holistic multi-scale selection of geographic information for maps. Glossy SQL supports biased random sampling of data subject to two types of user-defined constraints as well as custom objectives. The purpose of the language is to derive a target multi-scale database from a source database according to holistic specifications. (b) The Glossy SQL compiler allows Glossy SQL to be scalably executed in a spatial analytics system, such as a spatial relational database system. This technique allows unprecedented data volumes to be processed for maps. Scalable execution is achieved by translating Glossy SQL queries into pure relational algebra queries that can run natively in SQL-based spatial analytics systems. The implementation developed during this thesis supports the PostgreSQL dialect of SQL. The prototype implementation is a compiler that translates CVL into SQL and stored procedures. (c) TileHeat is a framework and basic algorithm for partial materialization of hot tile sets for scalable map distribution. The framework predicts future map workloads based on an access log of recent requests. \\
 
-The work presented in this thesis evolves the state-of-the-art from multiple points of departure. First, the Glossy selection system, as well as its prototype CVL, is an evolution of batch-oriented, selection-based map generalization systems. Batch-oriented generalization is appropriate for serving maps to large web audiences because the computationally-intensive map generalization process is decoupled from the highly-concurrent map serving process. Second, TileHeat is an evolution of map request prediction systems. While state-of-the-art map request prediction for maps focuses mostly on real-time prediction and a single user, TileHeat moves prediction back in time by many hours and holistically predicts requests for all users. As a result, the computationally intensive tile materialization process can be scheduled for low-load time windows. The techniques for long-term prediction of map requests are partially inspired by prediction techniques that are used in financial systems.
-
-}
+The results show that Glossy SQL og CVL can be used to compute cartographic selection by processing one or more complex queries in a relational database. The scalability of the approach has been verified up to half a million objects in the database. Furthermore, there are indications that the method is scalable for databases that contain millions of records, especially if the target language of the compiler is substituted by a cluster-ready variant of SQL. While several realistic use cases for maps have been implemented in CVL, additional non-geographic data visualization uses cases have been implemented for Glossy SQL. For example, it is shown that Glossy can express selection for multi-scale one-dimensional data visualizations such as timelines. Finally, it is shown that multi-scale selection can be concisely expressed in Glossy SQL and CVL, which was an important design goal. The results for Tileheat show that the prediction method offers a substantial improvement over the current method used by the Danish Geodata Agency. Thus, a large amount of computations can potentially be saved by this public institution, who is responsible for the distribution of government-curated geographic data in Denmark.}
 
 
 %-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -179,7 +189,6 @@ The work presented in this thesis evolves the state-of-the-art from multiple poi
 \chapter{Introduction}
 \label{chapter:introduction}
 
-\vspace{-4ex}
 \section{Background}
 \label{sec:introduction:background}
 
@@ -190,29 +199,31 @@ The work presented in this thesis evolves the state-of-the-art from multiple poi
 
 For thousands of years, humans have visualized geographic information on maps, most recently on computer screens and historically on pieces of paper and clay tablets~\cite{friendly2008milestones,robinson1982early}. During those years, maps have helped humans comprehend a multitude of spatial phenomena, from natural bodies such as oceans, glaciers, and mountains to political artefacts such as borders, demographics and land ownership. An example of the latter is a four-thousand-year-old clay tablet that was discovered near present-day Kirkuk, Iraq in 1930. It shows the boundaries of a land parcel between two rivers together with the owner's name, ``Azala''. Given its age, this cadastral map is probably among the earliest data visualizations in human history. 
 
-As the human capacity to gather data has increased, the creation of maps has become more challenging; finite map mediums can only accommodate a finite number of legible symbols. This challenge has lead to a plethora of cartographic information abstraction techniques that are collectively known as \emph{map generalization}~\cite{brassel1988generalization,mcmaster1992generalization,weibel1999generalising}. Map generalisation essentially solves the problem of creating a legible, useful and accurate maps for any map scale and for any amount of geographic information. Naturally, this process involves a compromise between readability and precision for most real-world cases. For example, maps of the physical world must carefully select the subset of the available information that is visualized, or else the map would soon become cluttered and illegible. Similarly, demographic maps must often aggregate information about individuals by area in order to clarify the important trends in local populations. Finally, small scale maps must usually distort the information in order to make it more legible, for example by enlarging symbols that would otherwise be imperceivable or displacing symbols that would otherwise overlap.
+As the human capacity to gather data has increased, the creation of maps has become more challenging; finite map mediums can only accommodate a finite number of legible symbols. This challenge has lead to a plethora of cartographic information abstraction techniques that are collectively known as \emph{map generalization}~\cite{brassel1988generalization,mcmaster1992generalization,weibel1999generalising}. The purpose of map generalization is to create legible, accurate, and ultimately useful maps for any map scale and for any amount of underlying geographic data. Naturally, this process involves a compromise between readability and precision for most real-world cases. For example, maps of the physical world must carefully select the subset of the available information that is visualized, or else the map would soon become cluttered and illegible. Similarly, demographic maps must often aggregate information about individuals by area in order to clarify the important trends in local populations. Finally, small scale maps must usually distort the information in order to make it more legible, for example by enlarging symbols that would otherwise be imperceivable or displacing symbols that would otherwise overlap.
 
 Over time, technology and map making has evolved hand-in-hand. For example, cloud computing is one of the latest technologies that has impacted map making and made possible a host of new use cases for maps. However, the visual perception of Homo Sapiens -- the principal user of maps -- has probably remained unchanged since the Neolithic period. Thus, despite the tremendous advances in technology, modern map makers must accommodate the same limitations of visual perception in humans as ancient map makers.  
 
-In a sense, the map making challenge is greater today than ever. While the volume of geographic data keeps growing exponentially, the map medium itself is shrinking. Furthermore, the demand for globally distrubuted, highly available and low latency information is a characteristic of a web-focused world where digital information has become a commodity.
+In a sense, the map making challenge is greater today than ever. While the volume of geographic data keeps growing exponentially, the map medium itself is shrinking. Furthermore, the demand for globally-distrubuted, highly-available information with low-latency access is a characteristic of a web-focused world where digital information is considered an online commodity.
 
 \subsection{Modeling Geographic Information}
 \label{sec:modeling:geographic:information}
 Maps visually communicate geographic information using a set of symbols, which are graphical representations of logical information objects. These two information models are discussed below.
 
 \minisec{Logical Model}
-Logically, the information on a map can be modeled as a set of \emph{geographic objects}, which associate data with a certain location. Each object models a distinct geographic concept in the real world, such as a road, lake, mountain peak, or country, by a finite set of \emph{attributes}. Each attribute of an object can be categorized as either \emph{geometric}, \emph{qualitative}, \emph{ordered} or \emph{quantitative}~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with four attributes $\langle$ (\ang{55.6778}, \ang{12.5962}), ``Nordic Cousine'', ``Best Restaurant 2014'',  DKK 1.600  $\rangle$:
+Logically, the information on a map can be modeled as a set of \emph{geographic objects}, which associate data with a certain location. Each object models a distinct geographic concept in the real world, such as a road, lake, mountain peak, or country, by a finite set of \emph{attributes}. Each attribute of an object can be categorized as either \emph{geometric}, \emph{qualitative}, \emph{ordered} or \emph{quantitative}~\cite{bertin1967semiologie}. For example, the restaurant ``Noma'' in Copenhagen can be represented by an object with four attributes $\langle$ (\ang{55.6778}, \ang{12.5962}), ``Nordic Cuisine'', ``Best Restaurant 2014'',  DKK 1,600  $\rangle$:
 
 \begin{itemize}
-\item $(\ang{55.6778}, \ang{12.5962})$ is a geometric attribute of the Noma object, which corresponds to a geographic position on the harbor front in Copenhagen, Denmark.
-\item ``Nordic Cousine'' is a qualitative attribute of the Noma object, which Noma to be distinguished from objects with a ``Japanese Cousine'' attribute.
-\item ``Best Restaurant 2014'' is an ordered attribute of the Noma object, which enables it to be ranked against other ordered attribute of the same hierarchy (restaurant ranks).
-\item DKK 1.600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that arithmetic can be performed on it. For example, the sum of the values DKK 1.600 and DKK 1.000 (the current price of the wine pairing at Noma) is DKK 2.600.
+\item $(\ang{55.6778}, \ang{12.5962})$ is a geometric attribute of the Noma object, which corresponds to the geographic position of Noma on the harbor front in Copenhagen, Denmark.
+\item ``Nordic Cuisine'' is a qualitative attribute of the Noma object, which distinguishes Noma from restaurants with a ``Japanese Cuisine''.
+\item ``Best Restaurant 2014'' is an ordered attribute of the Noma object, which enables it to be ranked against other ordered attributes of the same hierarchy (restaurant ranks).
+\item DKK 1,600 (the current price of twenty servings at Noma) is a quantitative attribute value of the Noma object, which has the property that arithmetic can be performed on it. For example, the sum of the values DKK 1,600 and DKK 1,000 (the current price of the wine pairing at Noma) is DKK 2,600.
 \end{itemize}
 
 The distinction between these attribute types become especially important when objects are represented visually, which will be discussed in the next section.
 
-Of these attribute types, the geometric attribute type is perhaps the one most intrinsic to geographic information. Formally, a geometric attribute corresponds to a set of points; in geography, these points are typically geographic coordinates. There are three frequently used types of point sets: 
+Of these attribute types, the geometric attribute type is perhaps the one most intrinsic to geographic information. Formally, a geometric attribute corresponds to a set of points; in geography, these points are typically geographic coordinates.
+
+There are three frequently used types geometric attributes that correspond to the following point sets: 
 
 \begin{itemize}
 \item \textbf{Point}: a single point, for example $(x,y)$
@@ -224,80 +235,80 @@ For simplicity, geometries with a volume as well as hierarchical attribute types
 
 
 \minisec{Graphical Model}
-Symbols graphically represent geographic objects. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Typically, the attributes of an object are mapped to one (or more) of seven \emph{visual variables}, which were first described by Bertin in his book ``Semiology of Graphics: Diagrams, Networks, Maps''~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order but are clearly distinguishable from each other (some more than others). This makes them useful for representing qualitative attribute values (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured. This makes them useful for representing both relative order as well as absolute quantity. 
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.72]{figs-thesis/visual-variables.pdf}
-\caption{\textbf{Bertin's Visual Variables}: The visual variables, of which Bertin identified seven, can express qualitative, ordered and quantitative attributes of geographic objects. For example, color can express different restaurants cousines. The figure is reproduced from \texttt{infovis-wiki.net}.}
+\caption{\textbf{Bertin's Visual Variables}: The visual variables, of which Bertin identified seven, can express qualitative, ordered and quantitative attributes of geographic objects. For example, different colors can represent different cuisines. The figure is reproduced from \texttt{infovis-wiki.net}.}
 \label{fig:introduction:visual:variables}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
+
+
+Symbols graphically represent geographic objects. For example, a building object can be represented by a black square symbol, while a road object can be represented by two parallel curve symbols. Typically, the attributes of an object are mapped to one (or more) of seven \emph{visual variables}, which were first described by Bertin in his book ``Semiology of Graphics: Diagrams, Networks, Maps''~\cite{bertin1967semiologie} (see Figure~\ref{fig:introduction:visual:variables}). Different visual variables have an affinity towards certain types of attributes. For example, colors have no inherent order but are clearly distinguishable from each other (some more than others). This makes them useful for representing qualitative attribute values (see Figure~\ref{fig:introduction:restaurant:colors}). In contrast, sizes can be compared and measured. This makes them useful for representing both relative order as well as absolute quantity. 
 
 A two-dimensional visual variable is position, which usually represents the object's geometry after a standard map projection~\cite{snyder1997flattening}. Alternatively, symbols can be positioned in a topologically equivalent layout, which is a technique that is frequently used for example in Metro maps. Moreover, the symbol position can perfectly well represent something other than the geometry, such as average life expectancy or economic wealth~\cite{rosling2007poverty}. 
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.7]{figs-thesis/restaurant-colors.pdf}
 \caption{\textbf{Using Color to Represent Qualitative Attributes}: Restaurant cousines can be visually distinguished by color, one of Bertin's seven visual variables.}
 \label{fig:introduction:restaurant:colors}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
-Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. Also, a related work is the ``the Grammar of Graphics'' by Wilkinson et al.~\cite{wilkinson2006grammar}. This collection of previous work covers many of the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps. This work will focus mostly on abstraction of geographic object sets and less on graphical representation.
+Bertin's work on the theory of graphics is immense, and this short section does not aim to fully cover it. Also, a related work is the ``the Grammar of Graphics'' by Wilkinson et al.~\cite{wilkinson2006grammar}. This collection of previous work covers many of the fundamental aspects of representing information as graphics, which subsumes the representation of geographic information on maps. This thesis will focus mostly on abstraction of geographic object sets and less on graphical representation.
 
 \subsection{Map Generalization}
 \label{sec:introduction:map:generalization}
 As mentioned in Section~\ref{sec:introduction:background}, map generalization is a collective term that covers various information abstraction techniques used to create geographic maps. In this section, we will have a closer look at the motivation for map generalization, as well as some of the well-known techniques.
 
-The Earth is huge compared to the size of a normal map, say a paper map that you might pick up at a tourist information desk. One of the key challenges of map making is how to represent planet-sized information on a roughly human-sized map medium, be it a computer screen, mobile device or piece of paper. The difficulties arise from the large difference in \emph{scale} between the two material bodies, the Earth and the map medium (see Definition~\ref{def:scale}). For comparison, you can fit roughly 500 trillion non-overlapping paper maps onto the surface of the Earth. Consequently, each centimeter on a map has to convey a lot of information. For example, on a 1:500.000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! 
+The Earth is huge compared to the size of a normal map, say a paper map that you might pick up at a tourist information desk. One of the key challenges of map making is how to represent planet-sized information on a roughly human-sized map medium, be it a computer screen, mobile device or piece of paper. The difficulties arise from the large difference in \emph{scale} between the two material bodies, the Earth and the map medium (see Definition~\ref{def:scale}). 
+
+\begin{definition}[Map Scale] The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. For example, on a 1:500,000 map, one centimeter on the map corresponds to five kilometers on the ground.\label{def:scale}\end{definition}
+
+For comparison, one can fit roughly 500 trillion non-overlapping paper maps onto the surface of the Earth. Consequently, each centimeter on a map has to convey a lot of information. For example, on a 1:500,000 map, one centimeter on the map surface corresponds to five kilometers on the ground. In the real world, a lot of information is contained within those five kilometers! 
 
 Necessarily, information must be abstracted in order to emphasize the important and suppress the irrelevant, as otherwise maps would become cluttered and illegible. In geographic information science, the complex process of information abstraction for maps is called \emph{map generalization}~\cite{mcmaster1992generalization,weibel1997generalization}.
 
-\begin{definition}[Map Scale] The scale of a map is the ratio of a distance on the map to the corresponding distance on the ground. For example, on a 1:500.000 map, one centimeter on the map corresponds to five kilometers on the ground.\label{def:scale}\end{definition}
 
-This section briefly covers the implications of reducing the scale of a map and how map generalization can help address the problems that arise. Furthermore, this section provides a quick overview of the key approaches to map generalization. For the reader who is interested in additional knowledge about the generalization process, Mackaness, Ruas, Sarjakoski have compiled material that provides a useful introduction into the field.~\cite{mackaness2011generalisation}. Furthermore, the seminal works by McMaster and Shea~\cite{mcmaster1992generalization} and Weibel~\cite{weibel1997generalization} are important entry points into the field of map generalization.
+This section briefly covers the implications of reducing the scale of a map and how map generalization can help address the problems that arise. Furthermore, this section provides a quick overview of the key approaches to map generalization. For the reader who is interested in additional knowledge about the generalization process, Mackaness, Ruas, Sarjakoski~\cite{mackaness2011generalisation} have compiled material that provides a useful introduction into the field. Furthermore, the seminal works by McMaster and Shea~\cite{mcmaster1992generalization} and Weibel~\cite{weibel1997generalization} are important entry points into the field of map generalization.
 
 
 \minisec{Effects of Scale Reduction}
 Different visual effects occur as a map is scaled down. These effects can be seen in Figure~\ref{fig:introduction:background:raw:poi}, which illustrates a point dataset that has been rendered at different scales. There are three important effects that can be observed as a map is rendered at lower scale (without applying map generalization):
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.495]{figs-thesis/data-draws-the-world.pdf}
 \caption{\textbf{Effects of Scale Reduction}: Point-of-interest (POI) symbols on a large scale map of Copenhagen, Denmark (left) are clearly separated from each other and can be shown close to the actual scale of the physical entities they represent. Furthermore, the information density is relatively low. In constrast, POI symbols on a small scale map of Europe (right) become fused as the separation between them decreases and their size must be exaggerated. Moreover, the information density is so high that the symbols entirely cover the areas of most national territories.}
 \label{fig:introduction:background:raw:poi}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 \begin{itemize}
 
-\item \textbf{Decrease in symbol sizes:} The sizes of symbols -- if shown at correct relative size according to the real-world things they represent -- decrease when the map scale is reduced. For example, if a lake is 2 mm wide on a 1:250.000 map it would be 0.5 mm wide on a 1:1.000.000 map, i.e. barely visible to the human eye. Similarly, map mediums may even be unable to reproduce symbols when they become too small. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length. while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
+\item \textbf{Decreasing symbol sizes:} The sizes of symbols -- if shown at correct relative size according to the real-world things they represent -- decrease when the map scale is reduced. For example, if a lake is 2 mm wide on a 1:250,000 map it would be 0.5 mm wide on a 1:1,000,000 map, i.e. barely visible to the human eye. Similarly, map mediums may even be unable to reproduce symbols when they become too small. The limits of perceptibility, which can and have been empirically established, are termed \emph{minimum dimensions} in cartography~\cite{weibel1997generalization}. For example, it has been found that the sides of a black square, which may represent a building, should be at least 0.35 mm in length, while two parallel curves, which may represent the curbs of a road, should be separated by at least 0.25 mm~\cite{ssc1977minimumdimensions}.
 %A generalization technique that deals with diminutive symbols sizes is \emph{exaggeration}.
 
-\item \textbf{Decrease in symbol separation:} The separation between symbols -- if shown at accurate positions -- decreases when the map scale is reduced. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250.000 map will be 0.2 mm apart on a 1:1.000.000 map, which is below the limit at which symbols can be distinguished from each other.
+\item \textbf{Decreasing symbol separation:} The separation between symbols -- if shown at accurate positions -- decreases when the map scale is reduced. Consequently, symbols may come so close to each other as to become fused. For example, two symbols that are 0.8 mm apart on a 1:250,000 map will be 0.2 mm apart on a 1:1,000,000 map, which is below the limit at which symbols can be distinguished from each other.
 %Two generalization techniques that deal with symbols in close proximity are \emph{displacement} and \emph{selection}.
 
-\item \textbf{Increase in information density:} The information density --  the amount of information per unit area --  increases when the map scale is reduced. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual}. The \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes, which was first formally recognized by T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements shown per unit area in published map series seems to be roughly independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in drawing area according to geometrical progression, which intuitively must lead to a reduction in information at the same rate.
+\item \textbf{Increasing information density:} The information density --  the amount of information per unit area --  increases when the map scale is reduced. Information density can be measured according to different metrics, such as Tufte's density metric~\cite{tufte1983visual}. The \emph{principle of constant information density} states that information density on a map should remain constant as the scale changes, which was first formally recognized by T{\"o}pfer and Pillewiser in 1966~\cite{topfer1966principles}. They observed that the number of settlements shown per unit area in published map series seems to be roughly independent of the map scale. The rationalization of this observation is that a linear reduction in scale implies a reduction in drawing area according to geometrical progression, which intuitively must lead to a reduction in information at the same rate.
 %  Information density can be kept constant by either \emph{aggregation} and \emph{selection} (see Figure~\ref{fig:introduction:background:mashups}).
 
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.48]{figs-thesis/geographic-mashups.pdf}
-\caption{\textbf{Aggregation and selection of geographic information}: On the left map, residents of London, United Kingdom are aggregated by region and the regions are shaded according to the share of people who speak a non-english language as their first language; darker values imply more foreign-language speakers. On the right map, points that represent casualties during the 2003-2011 Iraq War are selected from a much larger set of points. Both maps are reproduced from The Guardian's Data Blog with background maps from Google Maps \textcopyright 2014.}
+\caption{\textbf{Aggregation and selection of geographic information}: On the left map, residents of London, United Kingdom are aggregated by region and the regions are shaded according to the share of people who speak a non-English language as their first language; darker values imply more foreign-language speakers. On the right map, points that represent casualties during the 2003-2011 Iraq War are selected from a much larger set of points. Both maps are reproduced from The Guardian's Data Blog with background maps from Google Maps \textcopyright 2014.}
 \label{fig:introduction:background:mashups}
 \end{center}
 \end{figure}
 
 \minisec{Generalization Operators}
 The effects mentioned above generally require information to be abstracted as scale of a map is changed. Otherwise, maps may become illegible and cluttered or symbols may become imperceivable. Generalization operators are functions that transform geographic object sets and map symbols such that a useful and readable map is ensured. For example, information can be selected or aggregated (see Figure~\ref{fig:introduction:background:mashups}). One way to classify operators is according to three categories: \emph{selection} (see Definition~\ref{def:selection}), \emph{projection}  (see Definition~\ref{def:projection}), and \emph{aggregation} (see Definition~\ref{def:aggregation}). 
-
-In geography, the term projection is often used synonymously with the term \emph{map projection}, i.e. the projection of spherical coordinates onto the plane. However, in this thesis, the term projection is used in a broader mathematical sense that is adopted from databases~\cite{ramakrishnan2000database}, i.e. a mapping from objects to objects.
 
 \begin{definition}[Selection]
 A procedure that accepts a set of objects and outputs a subset of these objects, but does not modify the objects in any way. \label{def:selection}
@@ -308,8 +319,10 @@ A procedure that accepts a set of objects and maps each object to another object
 \end{definition}
 
 \begin{definition}[Aggregation]
-A procedure that accepts a set of objects and merges subsets of these objects into single objects. Crucially, at least one object that appears in the output must not be a members of the input, as otherwise the procedure would be equivalent to selection. \label{def:aggregation}
+A procedure that accepts a set of objects and merges subsets of these objects into single objects. Critically, at least one object that appears in the output cannot be a member of the input, as otherwise the procedure would be equivalent to selection. \label{def:aggregation}
 \end{definition}
+
+In geography, the term projection is often used synonymously with the term \emph{map projection}, i.e. the projection of spherical coordinates onto the plane. However, in this thesis, the term projection is used in a broader mathematical sense that is adopted from databases~\cite{ramakrishnan2000database}, i.e. a mapping from objects to objects.
 
 \minisec{Independent vs. Holistic Operation}
 The three operators -- selection, projection, and aggregation -- can be subcategorized into \emph{independent} or \emph{holistic} variants. An independent operator can process objects separately (e.g. in parallel), because the decision that are made for one object does not impact any other object. For example, \emph{random sampling} and \emph{filtering by predicate} are independent selection operators, since an isolated inclusion/exclusion decision must be made for each object, which does not affect the decision made for other objects. By contrast, a holistic operator must process objects together.  For example, \emph{displacement} is a holistic operator that moves objects apart if they are indistinguishable from each other due to close proximity. In this example, moving an object away from one object may bring it into close proximity of another. Therefore, a holistic solution for the movement of objects must be found. Table~\ref{tab:operators} shows how selection, projection, and aggregation can be implemented by both independent and holistic algorithms.
@@ -343,29 +356,31 @@ This section has adopted a three-way categorization of operators into selection,
 
 \subsection{Constraint-based Generalization}
 \label{sec:contraint:based:generalization}
-Overall, the generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, constraints act as the discriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while objectives act a measure of map utility and optimality. Together, constraints, objectives and a set of geographic information objects  implies an optimization problem over a search space of maps. The search space consists of maps that can be derived from a source map by applying generalization operators (see Section~\ref{sec:introduction:map:generalization}) to the objects and symbols.
+Overall, the generalization process can be modelled in many different ways~\cite{harrie2007modelling}. In \emph{constraint-based} modelling, constraints act as the discriminator between feasible and infeasible map states~\cite{harrie1999constraint,ware2003generalization_sa}, while objectives quantify map utility and thus define optimality. Together, constraints, objectives and a set of geographic information objects  implies an optimization problem over a search space of maps. The search space consists of maps that can be derived from a source map by applying generalization operators (see Section~\ref{sec:introduction:map:generalization}) to the objects and symbols.
 
 There are many ways to measure the optimality of a map. Typically, an objective is to either maximize or minimize some objective function over the map content, for example to maximize the sum of ``relevance'' of objects that appear on a map~\cite{sarma2012fusiontables}.
 
 \minisec{Constraints in Maps}
-The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or alternatively, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, on subsets of information on the map or by individual pieces of information on the map. For example:
+The overall purpose of map constraints is to distinguish between acceptable maps and unacceptable maps, or equivalently, to define the search space of feasible maps. Constraints may state conditions that should be met by the map as a whole, by subsets of information on the map or by individual pieces of information on the map. 
+
+\newpage
+Some examples of constraints in different categories are listed below:
 
 \begin{itemize}
-\item Individual objects may be required to satisfy unary constraints, such as minimum dimensions.
-\item Pairs of objects may be required to satisfy pair constraints, such as minimum proximity.
-\item Subareas of the map may be required to satisfy locus constraints, such as maximum density.
-\item Networks may be required to satisfy topological constraints, such as not disconnecting a river system from itself or its outlet.
+\item \textbf{Unary constraints}: individual objects must satisfy a condition. For example, the size of an object geometry must respect minimum dimensions.
+\item \textbf{Pair constraints}: pairs of objects must satisfy a condidtion. For example, proximity of objects must be above a certain threshold.
+\item \textbf{Locus constraints}: subareas of the map must satisfy a condidtion. For example, the information density within each subarea must be below a certain threshold.
+\item \textbf{Topological constraints}: networks and geometries must satisfy a topological condition. For example, a river system must not be disconnected from itself or its outlet; topological properties such as containment, intersection, etc. must not change.
 \end{itemize}
 
 Like generalization operators, constraints have also been classified according to many different typologies. For more information on constraint typologies in the literature, refer to the work of Burghardt, Schmid, and Stoter~\cite{burghardt2007investigations} or  McMaster and Shea~\cite{mcmaster1992generalization}.
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.4]{figs-thesis/holistic-selection.pdf}
-\caption{\textbf{Pair and Locus Constraints}: pair constraints, such as minimum proximity (left image), set up conditions that must be met by all qualifying pairs of objects on a map. Locus constraints, such as a maximum density (right image), set up conditions that must be met by all qualifying loci (e.g. unit areas) in the map. Entities (such as objects or loci) that violate a constraint are in conflict. In the figure, entities that are in conflict are circled by red lines; this situation must be remedied, for example by selection (in the figure, kept objects are shown as black disks; deleted objects are shown as white disks.}
+\caption{\textbf{Pair and Locus Constraints}: pair constraints, such as minimum proximity (left), set up conditions that must be met by all qualifying pairs of objects on a map. Locus constraints, such as a maximum density (right), set up conditions that must be met by all qualifying loci (e.g. unit areas) in the map. Entities (such as objects or loci) that violate a constraint are in conflict. In the figure, entities that are in conflict are circled by red lines; this situation must be remedied, for example by selection. In the figure, kept objects are shown as black disks; deleted objects are shown as white disks.}
 \label{fig:introduction:selection:constraints}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 
@@ -417,29 +432,29 @@ The section below investigates some of the key aspects of maps on the Web today,
 
 % The changes and challenges caused by the web.
 
-\minisec{Focus on Thematic Maps}
-The Web has shifted the the focal point of map creation, such that new thematic maps and overlays are more frequently created than new background maps. Part of the reason is that private companies and national mapping agencies already offer a great quantity of background maps for the Web~\cite{google2014maps,gst2014digitalmapsupply, stamen2014tiles,vizzuality2012cartodb}. In addition, the information that appears on background maps has a tendency to remain relatively stable over time, such as the location of mountains, lakes, coast lines, cities, and roads. In contrast, thematic data typically reflects phenomena that are intrinsically more dynamic and multi-faceted, such as human behaviour.  This makes thematic maps fundamentally more news-worthy and trendy than background maps, which is why journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} frequently create thematic maps.
-
-While all geographic data is growing~\cite{openstreetmap2014stats}, thematic data has a clear tendency to grow faster than background data. Since the relevance of thematic data is intrinsically short-lived, it is crucial that we can process it and visualize it on maps expediently. However, given how the volume of data can accumulate really fast, it is crucial that data can be processed in a scalable way.
+\minisec{Thematic Maps}
+While thematic maps have always been prolifically created, the Web has further shifted the attention, away from creation of background maps towards creation of thematic maps and overlays. Part of the reason is that private companies and national mapping agencies already offer a great quantity of high-quality background maps for the Web, often free of charge~\cite{gst2014digitalmapsupply,google2014maps, stamen2014tiles,vizzuality2012cartodb}. In contrast, thematic data typically reflects phenomena that are intrinsically more dynamic and multi-faceted, such as human behaviour.  This makes thematic maps fundamentally more news-worthy and trendy than background maps, which is why journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} frequently create new thematic maps as part of their work. Finally, thematic data ranges over multitude of different domains, which multiplies the number of different thematic maps that can be created. By contrast, background maps tend to depict relatively static information from a limited number of domains, such as road networks, hydrology, urban structures, and administrative borders. Therefore, the number of different background maps that can sensibly be created is small in comparison to thematic maps.
 
 
-\minisec{Large Thematic Datasets}
-The Web has shifted the the focal point of map creation, such that new thematic maps and overlays are much more likely to be created than new background maps.  This shift can be attributed to multiple sources. On the one hand, private companies and national mapping agencies already supply a great quantity of high-quality background maps for the Web~\cite{google2014maps,gst2014digitalmapsupply, stamen2014tiles,vizzuality2012cartodb}. Additionally, the information that appears on background maps is typically quite stable over time, such as the location of mountains, lakes, coast lines, cities, and roads. On the other hand, the supply of thematic data is constantly evolving as it reflects phenomona that are intrinsically more dynamic and multi-faceted, such as human behaviour. The sources of thematic data include curated~\cite{datagov}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} repositories. 
+\minisec{Large Datasets}
+TODO
+%The Web has shifted the the focal point of map creation, such that new thematic maps and overlays are much more likely to be created than new background maps.  This shift can be attributed to multiple sources. On the one hand, private companies and national mapping agencies already supply a great quantity of high-quality background maps for the Web~\cite{google2014maps,gst2014digitalmapsupply, stamen2014tiles,vizzuality2012cartodb}. Additionally, the information that appears on background maps is typically quite stable over time, such as the location of mountains, lakes, coast lines, cities, and roads. On the other hand, the supply of thematic data is constantly evolving as it reflects phenomona that are intrinsically more dynamic and multi-faceted, such as human behaviour. The sources of thematic data include curated~\cite{datagov}, user-contributed~\cite{twitter2014twitter,zooniverse2014oldweather}, and machine generated~\cite{planetlabs2014flock1} repositories. 
 
+%While all geographic data is growing~\cite{openstreetmap2014stats}, thematic data has a clear tendency to grow faster than background data. Since the relevance of thematic data is intrinsically short-lived, it is crucial that we can process it and visualize it expediently. However, given how the volume of data can accumulate really fast, it is crucial that data can be processed in a scalable way.
 
-Journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} are frequent creators of thematic maps, which aim to increase transparency and knowledge in the World and potentially save human lives, as was the case in Haïti after the earthquake in 2010~\cite{openstreetmap2010haiti}.
+%Journalists~\cite{lomet2012warstories}, aid workers~\cite{openstreetmap2010haiti}, and scientists~\cite{zooniverse2014oldweather} are frequent creators of thematic maps, which aim to increase transparency and knowledge in the World and potentially save human lives, as was the case in Haïti after the earthquake in 2010~\cite{openstreetmap2010haiti}.
 
 
 
 \minisec{Novice Map Makers}
 The Web has caused a change in how and by whom maps are created. While map creation was traditionally the domain of cartographic experts, this is no longer the case. Today, the data enthusiast has replaced the expert as the person most likely to create a map~\cite{hanrahan2012enthusiast}. This is partly because demand for thematic maps on the web has grown faster than the number of cartographic experts who can create them. This has created a human resources challenge, which is being addressed by the development of more intuitive and expressive design interfaces. These interfaces promise to enable anyone to create maps. The need for rapid thematic mapping has driven the development of fully-automatic mapping systems~\cite{sarma2012fusiontables,nutanong2012multiresolution}. 
 
-While fully-automatic mapping systems promise map designer productivity, it is still difficult to create a non-default map. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly and inadequate for data enthusiasts. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by non-specialist map makers, such as software developers, journalists, aid workers and scientists.
+While fully-automatic mapping systems promise map designer productivity, it is still difficult to create a non-default map. Arguably, a fully-automatic mapping system is likely to be suboptimal for most cases. The alternative is to use traditional mapping systems, which were chiefly created for the production of complex maps of the Earth~\cite{lamy1999application,ware2003generalization_sa}. They are certainly powerful enough. However, these systems are hard and time-consuming to use, which in turn makes them costly and inappropriate for novice to medium-skilled map designers. Clearly, there is a need for expressible map design interfaces that can be time-efficiently operated by non-specialist map makers, such as software developers, journalists, aid workers and scientists.
 
 \minisec{Massively Concurrent Consumption}
-The Web has caused a change in when and where maps are consumed by their audience. Today, an online map can be consumed by anyone, anywhere, at any time -- thanks to mobile devices in our pockets that are connected to an ubiquitous Internet. Many online map are consequently consumed by thousands of concurrent users. Web users today expect 24 x 7 availability and acceptable latency for online applications, which includes maps. 
+The Web has caused a change in when and where maps are consumed by their audience. Today, an online map can be consumed by anyone, anywhere, at any time. Thanks partially to mobile devices in our pockets that are always connected to the Internet, users can access information on-demand. Consequently, many online map are concurrently consumed by thousands or even millions of users, who expect 24 x 7 availability and acceptable for online services including maps. 
 
-In distributed systems, data partitioning and data replication are important techniques that can increase the availability and performance of data services~\cite{barroso2009datacenter,dilley2002cdn}. In mapping, a typical data partitioning scheme is to split the data into raster~\cite{mbtile12} or vector tiles~\cite{gaffuri12vectortiles}, which split the data among cells in a fixed multi-level grid called a tile pyramid~\cite{decola1993pyramid}. The advantage of tile pyramids, which have logical grid for each ``zoom level'' in a map, are that subsets of the data can be addressed in a fixed key-value scheme. Consequently, tiles can easily be distributed via a content delivery networks (CDN). However, the number of tiles in a tile pyramid grow exponentially in the number of zoom levels that a map supports. While a large set of tiles can be rapidly materialized in parallel, for example on a map-reduce cluster~\cite{dean04mapreduce,dean2009designs}, the computation and I/O cost is fundamentally high since it is exponential in the number of tile pyramid levels. For example, on a zoomable world map with twenty zoom levels (which is the norm), there are more than 300 billion distinct tiles. Therefore, there is a need for methods that reap the benefits of data partitioning and data replication, while avoiding the cost of full materialization.
+In distributed systems, data partitioning and data replication are important techniques that can increase the availability and performance of data services~\cite{barroso2009datacenter,dilley2002cdn}. In mapping, a typical data partitioning scheme is to split the data into raster~\cite{mbtile12} or vector tiles~\cite{gaffuri12vectortiles}, which split the data among cells in a fixed multi-level grid called a tile pyramid~\cite{decola1993pyramid}. The advantage of tile pyramids, which have logical grid for each ``zoom level'' in a map, are that subsets of the data can be addressed in a fixed key-value scheme. Consequently, tiles can easily be distributed via a content delivery networks (CDN)~\cite{dilley2002cdn}. A CDN is a geo-distributed high-performance key-value store that serves data from edge-locations on the Internet, which are close to the users. While CDN can effectively serve data, the number of tiles in a tile pyramid grow exponentially in the number of zoom levels that a map supports. While a large set of tiles can be rapidly materialized in parallel, for example on a map-reduce cluster~\cite{dean04mapreduce,dean2009designs}, the computation and I/O cost is fundamentally high since it is exponential in the number of tile pyramid levels. For example, on a zoomable world map with twenty zoom levels (which is the norm), there are more than 300 billion distinct tiles. Therefore, there is a need for methods that reap the benefits of data partitioning and data replication, while avoiding the cost of full materialization.
 
 \subsection{The Impact of Cloud Computing}
 Cloud computing offers a powerful model of ubiquitous, convenient, and on-demand access to a shared pool of vast computing resources~\cite{mell2009nist}. The advent of cloud computing has surely created new opportunities both for map creation and map distribution.
@@ -450,23 +465,22 @@ To create maps, programmers, scientists and cartographers can rent highly-scalab
 The availability of potent computing resources is matched by unprecedented access to curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap} geographic data online. Together, the availability of cloud computing, cloud storage and open data creates a neat opportunity to create previously unrealizable maps.
 
 \minisec{Impact on Map Distribution}
-To distribute maps, content delivery networks (CDN) offer a scalable and affordable way to distribute data to a global audience~\cite{dilley2002cdn}. Some of the key advantages of CDN are their superior availability, scalability and performance~\cite{barroso2009datacenter,pilchin2007dynamo}, which is why they are used by anyone seriously engaged in data distribution~\cite{beaver2010haystack}. To harness a CDN for map distribution, the map data must first be organized into key-value pairs. For example, the key may be the ID of a geographic grid cell, while the value may correspond to the data intersected by that grid cell~\cite{gaffuri12vectortiles}. Spatial data can be partitioned into key-value pairs by several techniques which includes spatial grids~\cite{decola1993pyramid} and linearization~\cite{hilbert1891ueber,morton1966computer} techniques. Once partitioned, the spatial data for a map can be distributed to millions of people online as a set of map tiles, either as images or data.
+To distribute maps, content delivery networks (CDN) offer a scalable and affordable way to distribute data to a global audience. Some of the key advantages of CDN are their superior availability, scalability and performance~\cite{barroso2009datacenter,pilchin2007dynamo}, which is why they are used by anyone seriously engaged in data distribution~\cite{beaver2010haystack}. To harness a CDN for map distribution, the map data must first be organized into key-value pairs. For example, the key may be the ID of a geographic grid cell, while the value may correspond to the data intersected by that grid cell~\cite{gaffuri12vectortiles}. Spatial data can be partitioned into key-value pairs by several techniques which includes spatial grids~\cite{decola1993pyramid} and linearization~\cite{hilbert1891ueber,morton1966computer} techniques. Once partitioned, the spatial data for a map can be distributed to millions of people online as a set of map tiles, either as images or data.
 
 Recently, in-memory and fault-tolerant stores, such as RAMCloud~\cite{ousterhout2011ramcloud} have appeared. Systems like RAMCloud combine the speed of in-memory caches with the persistence of disk-based stores. The appearance of such systems will make the distribution of maps, which can be decomposed into key-value pairs, even more effective and affordable in the future. Already now, in-memory key-value stores are being offered as a service in the cloud.
 
 \section{State-of-the-Art Digital Mapping Pipelines}
 \label{sec:introduction:web:mapping:pipelines}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.5]{figs-thesis/mapping-states.pdf}
 \caption{\textbf{Digital mapping pipeline}: the pipeline consists of several stages and transformations. Data modeling (1) captures reality as a set of information objects (primary data model); data abstraction (2) refines the set of information objects that appear on a map (logical model); visual abstraction (3) specifies how information objects are symbolized on a map (graphical model); finally, rendering (4) produces output that is displayed on a map medium.}
 \label{fig:introduction:requirements:pipeline}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
-The digital mapping process can be modeled as a pipeline that translates ``reality'' into graphical output on a digital map medium (see Figure~\ref{fig:introduction:requirements:pipeline}). Instead of leaping directly from reality to graphical output, it is useful to model some intermediate stages. A common approach is to model geographic information at three intermediate stages: the \emph{primary data model}, the \emph{logical model} and the \emph{graphical model} of the digital map~\cite{gruenreich1992atkis}. To produce a high-quality map, it is often necessary to iterate back-and-forth between the logical model and the graphical model. For example, choosing larger symbols in the graphical model may result in overlapping symbols. In response, the logical model can be renewed by selecting fewer objects such that symbol overlap is avoided. The back-edge (2) in Figure~\ref{fig:introduction:requirements:pipeline} models this iterative process.
+The digital mapping process can be modeled as a pipeline that translates ``reality'' into graphical output on a digital map medium (see Figure~\ref{fig:introduction:requirements:pipeline}). Instead of leaping directly from reality to graphical output, it is useful to model some intermediate stages. A common approach is to model geographic information at three intermediate stages: the \emph{primary data model}, the \emph{logical model} and the \emph{graphical model} of the digital map~\cite{gruenreich1992atkis}. To produce a high-quality map, it is often necessary to iterate back-and-forth between the logical model and the graphical model. For example, choosing larger symbols in the graphical model may result in overlapping symbols. In response, the logical model can be renewed by selecting fewer objects such that symbol overlap is avoided. The edge from the graphical model to the logical model in Figure~\ref{fig:introduction:requirements:pipeline} models this iterative process.
 
 The data modeling process is outside the scope of this thesis. It has been studied in previous work, for example by Friis-Christensen et al.~\cite{friis2001requirements} and Goodchild~\cite{goodchild1992geographical}. The rendering process is also outside the scope of this thesis. Moreover, the rendering process is highly dependent on the map medium of choice. The intermediate stages, i.e. the logical and graphical model, were described in Section~\ref{sec:introduction:map:generalization}.
 
@@ -480,8 +494,8 @@ In real-time systems, the map creation process is synchronous with the map distr
 In the academic literature, real-time systems have been studied because they have some important advantages:  
 
 \begin{itemize}
-\item Data is only stored only once, namely in the primary data model. While this obviously saves storage, a more important benefit is that information that appears on a map is never stale. Given an atomic update mechanism for the data model, such as transactions~\cite{gray1981transaction}, a map always displays the most recent and consistent state of the data.
-\item User preferences and the context of map usage can be taken into consideration when creating the map. Thus, maps can be tailored to individual users needs, for example by letting a recommendation algorithm play a role in assigment of object importance.
+\item In real-time mapping systems, data is only stored once, namely in the primary data model. While this obviously saves storage, a more important benefit is that information that appears on a map is never stale. Given an atomic update mechanism for the data model, such as transactions~\cite{gray1981transaction}, a map always displays the most recent and consistent state of the data.
+\item In real-time mapping systems, user preferences and the context of map usage can be taken into consideration when creating the map. Thus, maps can be tailored to individual users needs, for example by letting a recommendation algorithm play a role in assigment of object importance.
 \end{itemize}
 
 Real-time mapping requires low-latency data abstraction, since the map creation process is synchronous with the map distribution process. Low latency is typically ensured by using an efficient data structure to index the geographic information. The index structure is usually some kind of tree, such as a quadtree~\cite{bereuter2013real} or GAP-tree~\cite{van1995gap}.
@@ -489,8 +503,8 @@ Real-time mapping requires low-latency data abstraction, since the map creation 
 The drawbacks of real-time systems are primarily concerned with their relative lack of scalability: 
 
 \begin{itemize}
-\item The complexity of any tree-based access method (let alone generalization method) is high compared to the $O(1)$, which is the complexity of looking up precomputed content in a hash-based key-value store~\cite{pilchin2007dynamo} or CDN.
-\item The tree structures that have been proposed are typically not designed for concurrent access. This is critical, because there is typically a high and variable level of concurrency in a web context, which implies that the data abstraction process must be scalable in the number of concurrent queries as well as data volume. The na{\"i}ve approach, which is to replicate the entire index multiple times and dispatch requests round-robin is costly, especially when data grows in size.
+\item In real-time mapping systems, the complexity of any tree-based access method (let alone generalization method) is high compared to the essentially contant-time complexity of looking up precomputed content in a key-value store~\cite{pilchin2007dynamo}, such as a CDN.
+\item In real-time mapping systems, the tree structures that have been proposed are typically not designed for massively concurrent access. This is critical, because there is typically a high and variable level of concurrency in a web context, which implies that the data abstraction process must be scalable in the number of concurrent queries as well as data volume. The na{\"i}ve approach, which is to replicate the entire index multiple times and dispatch requests round-robin is costly, especially when data grows in size.
 \end{itemize}
 
 \subsection{Batch-oriented Mapping Systems}
@@ -499,18 +513,17 @@ In batch-oriented systems, the map creation process is asynchronous with the map
 In the literature, batch-oriented systems have been studied for the distinct advantages that they offer over real-time systems:
 
 \begin{itemize} 
-\item Since there is no real-time requirement, more computational effort can be spent on producing a high-quality result. Furthermore, batch-oriented systems can exploit the machinery of distributed data analytical systems, such as spatial parallel databases~\cite{waas2009beyond} and spatial cluster computing~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop}, which can process practically unlimited amounts of spatial data.
-\item Map data produced by a batch-oriented system can be partioned as tiles and replicated onto key-value stores, such as CDNs, which scale extremely well in the number of concurrent queries.
-\item Maps that are distributed via a CDN additionally gain high availability and low latency because content can be georeplicated to edge locations of the network, which are closer to the users.  
+\item In batch-oriented systems, more computational effort can be spent on producing a high-quality result. Furthermore, batch-oriented systems can exploit the machinery of distributed data analytical systems, such as spatial parallel databases~\cite{waas2009beyond} and spatial cluster computing~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop}, which can process practically unlimited amounts of spatial data.
+\item In batch-oriented systems, the output can be partioned as tiles and replicated onto key-value stores, such as CDNs, which offer high-availability and scale extremely well in the number of concurrent requests.
 \end{itemize}
 
-Some important studies in batch-oriented mapping systems are multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and the Fusion Tables system~\cite{sarma2012fusiontables}. However, these systems only partially realize the full potential advantages of the batch-oriented paradigm! For example, distributed spatial processesing systems are not significantly leveraged by any of the systems, except for rendering of map tiles~\cite{dean2009designs}. Thus, there is a gap between what is theoretically possible and what has been tried.
+Some important studies in batch-oriented mapping systems are multi-scale trees~\cite{frank1994multiscaletree,van2011towards} and the Fusion Tables system~\cite{sarma2012fusiontables}. However, these systems only partially realize the full potential advantages of batch-oriented systems. For example, distributed spatial processesing systems are not significantly leveraged by any of the systems, except for rendering of map tiles~\cite{dean2009designs}. Thus, there is a gap between what is theoretically possible and what has been tried.
 
 There are three drawbacks of a batch-oriented approach that are quite obvious:
 
 \begin{itemize}
 \item Materialization of the logical and graphical model obviously incurs an additional storage cost compared to only storing the primary data model (plus an index). 
-\item Materialized views of the primary data model may become stale
+\item Materialized views of the primary data model may become stale.
 \item Batch-oriented systems can not easily take individual user preferences into account, nor can they easily adjust the map for the usage context.
 \end{itemize}
 
@@ -520,27 +533,27 @@ Real-time systems present an ``ideal'' for mapping systems. However, current rea
 
 In contrast, batch-oriented mapping systems are appropriate for creating and serving web maps. First, batch-oriented systems can process maps by exploiting highly-scalable data processing systems, such as spatial mapreduce~\cite{aji2012largespatial,aji2013hadoopgis,eldawy2014spatialhadoop} and spatial parallel databases~\cite{waas2009beyond}. Second, batch-oriented systems can serve maps online with high availability, high scalability, and low latency by using key-value stores or CDN to distribute pre-processed data. Today, scalability in data volume and concurrent users is a crucial requirement for large-scale web map systems. 
 
-Additionally, the disadvantages are not too severe. First, disk-based storage has become very cheap and pure in-memory storage is bound to become cheaper over time. Second, materialized view can be refreshed as demand dictates, either by leveraging batch-oriented parallel processing~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} or by employing techniques for materialized view maintenance~\cite{gupta1995maintenance}. Finally, user preferences can to some extent be accommodated by materializing views for different user profiles and choose between them at query time. However, this last problem is probably the most fundamental problem of batch-oriented systems.
+Additionally, the disadvantages of batch-oritented systems are not too severe in practice. First, map data typically does not change often enough for real-time systems be worthwhile. Second, disk-based storage has become very cheap and pure in-memory storage is bound to become cheaper over time. Third, materialized views can be refreshed as demand dictates, either by leveraging batch-oriented parallel processing~\cite{aji2013hadoopgis,eldawy2014spatialhadoop} or by employing techniques for materialized view maintenance~\cite{gupta1995maintenance}. Finally, user preferences can to some extent be accommodated by materializing views for different user profiles and choose between them at query time. However, this last problem is probably the most fundamental problem of batch-oriented systems, since user preferences are somewhat heterogenous.
 
-\section{Problem statement}
+\section{Problem Statement and Contributions}
 \label{sec:introduction:problem:statement}
-
+TODO
 %Given the analysis of state-of-the-art web mapping pipelines (Section~\ref{sec:introduction:web:mapping:pipelines}) and the realization that batch-oriented pipelines best match these requirements (Section~\ref{sec:introduction:architectures}), this section lists four important gaps between state-of-the-art batch-oriented pipelines and a hypothetical batch-oriented pipeline that satisfies all the requirements.
 The following sections describe four gaps that that will be addressed by this thesis.
 
 \subsection{Unified Selection Model}
 \label{sec:introduction:problem:statement:one}
 % MATHEMATICAL FOUNDATION
-While selection of geographic information can be intuitively understood as filtering objects subject to some criteria, many different selection models have been proposed. The selection models differ primarily in the criteria that they satisfied, such as unary~\cite{rocha2011efficient}, binary~\cite{nutanong2012multiresolution}, and space~\cite{sarma2012fusiontables} constraints. As such, each of the proposed models expresses an incomplete view of the selection process. Clearly, there is a need for a unified model that combines all of the incomplete models in a complete model for selection. 
+Selection for maps can be intuitively understood as filtering geographic objects, possibly at multiple scales, subject to some constraints. However, the formulations of selection in the literature differ widely in their choice of constraints. For example, different authors have formulated selection for either unary~\cite{rocha2011efficient}, binary~\cite{nutanong2012multiresolution}, or locus~\cite{sarma2012fusiontables} constraints. Thus, there does not exist a complete formulation of selection of geographic data for maps, which allows users to mix and match constraints for a selection. Clearly, there is a need for a unified formulation that subsumes these incomplete formulations.
 
-There is a need for a selection model that supports: \emph{user-defined constraints} (unary, binary, space, and cross-scale constraints), as well as \emph{user-defined objectives} (custom importance measures). Ideally, a well-studied and efficient algorithm solves all instances of the unified model, in the same fashion that sorting solves all instances of the top-k selection model.
+Specifically, this unified selection model must supports user-defined constraints of various types, such as unary, binary, locus, and/or cross-scale constraints. Furthermore, the model must support user-defined objectives, such as maximization of user-defined object weights. Ideally, all instances of the unified selection problem can be partially or completely solved by well-known, efficient algorithms, such as quicksort or Dijkstra's algorithm.
 
 For this problem, this thesis makes the following contributions:
 
 \begin{itemize}
-\item \textbf{Selection Model}: A unified model for selection of geographic information has been developed. The model is based on an equivalence relation between the selection problem in geographic maps and the more abstract set multi-cover problem. Due to the identification of this relation, selection of geographic information can be abstractly expressed as an edge-selection problem in bi-partite graphs. There is a downside and upside to this mathematical equivalence. The downside is that the set multi-cover problem, and therefore also the geographic selection problem, is NP-hard~\cite{vazirani2001approximation}, which has also been noted by others~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information. The model is presented in Chapter~\ref{chapter:cvl}.
+\item \textbf{Selection model}: We present a general formulation of selection for maps that supports most constraints that have been proposed for in the literatur. We refer to this problem as \emph{global selection}. The formulation is based on an equivalence relation between the selection problem in geographic maps and the more abstract set multi-cover problem. There is a downside and upside to this mathematical equivalence. The downside is that the set multi-cover problem, and therefore also the geographic selection problem as we have formulated it, is NP-hard~\cite{vazirani2001approximation}. However, others have proved that related selection problems for maps are also NP-hard~\cite{sarma2012fusiontables}. The upside is that several efficient approximation algorithms have been proposed for the set multi-cover problem~\cite{chekuri2012setmulticover,rajagopalan1998primal}, which can therefore be directly used for selection of geographic information. The model is presented in Chapter~\ref{chapter:cvl}.
 
-\item \textbf{Heuristic}: It is shown that a restricted and frequently occuring case of global selection can be solved to optimality by an efficient sorting based algorithm. Specifically, the restricted case is weighted selection of geographic points subject to a tile density constraint. The description of the sorting-based algorithm and its evaluation can be found in Chapter~\ref{chapter:cvl}.
+\item \textbf{Sorting-based heuristic}: We present a sorting-based heuristic for global selection, which produces good quality solutions for most real-world cases. Furthermore, we show that the heuristic solves a frequent, special case to optimality. Specifically, the special case is weighted selection of geographic points subject to a tile density constraint, which corresponds to the formulation by Das Sarma, Lee, Gonzalez, Madhavan, and Halevy~\cite{sarma2012fusiontables}. The description of the sorting-based heuristic and its evaluation can be found in Chapter~\ref{chapter:cvl}.
 
 \end{itemize}
 
@@ -553,29 +566,28 @@ For this problem, this thesis contributes two declarative languages for global s
 
 \begin{itemize}
 
-\item \textbf{CVL language}: The Cartographic Visualization Language (CVL) is a declarative, domain-specific language (DSL) for global selection of spatial data for multi-scale maps. It supports user-defined constraints, user-defined object weights and ladder-based map generalization (i.e. zoom-consistency). The syntax and informal semantics of CVL are described in detail in Chapter~\ref{chapter:cvl}.
+\item \textbf{CVL language}: We present the Cartographic Visualization Language (CVL), which is a declarative, domain-specific language (DSL) for global selection of spatial data for multi-scale maps. It supports user-defined constraints, user-defined object weights and ladder-based map generalization (i.e. zoom-consistency). The syntax and informal semantics of CVL are described in detail in Chapter~\ref{chapter:cvl}.
 
-\item \textbf{Glossy SQL language}: Building upon the CVL DSL and the SQL syntax and semantics, Glossy SQL is a declarative language for global selection of tuples for multi-scale data visualizations.  It expands on the key ideas of the CVL language in the following ways: it extends the domain of global selection to include all forms of tabular data (both spatial and non-spatial); it classifies user-defined constraints as either unary, binary, set or cross-scale constraints; multi-scale selection can be performed with a ladder-based and star-based approach~cite{foerster2010challenges} (CVL only supports ladder-based selection); it allows users to define a set of user-defined scale tuples that combine with the data at each level of the visualization; it allows scale-dependent, context-independent (i.e. non-global) projection and selection of objects in an SQL style. Finally, the semantics of Glossy SQL are given by a mapping to pure SQL. Glossy SQL is covered in in Chapter~\ref{chapter:glossy}. 
+\item \textbf{Glossy SQL language}: We present Glossy SQL, which extends the ideas of CVL and introduces an SQL-like syntax. Specifically, Glossy SQL is a declarative language for global selection of tabular data for multi-scale data visualizations, where CVL is only for spatial data and maps. Glossy SQL expands on the key ideas of the CVL language in the following ways: it extends the domain of global selection to include all forms of tabular data (both spatial and non-spatial); it classifies user-defined constraints as either unary, binary, set or cross-scale constraints; multi-scale selection can both recursively and iteratively~cite{foerster2010challenges} (CVL only supports recursive selection); it allows users to define a set of user-defined scale tuples that combine with the data at each level of the visualization; it allows scale-dependent, context-independent (i.e. non-global) projection and selection of objects in an SQL style. Finally, the semantics of Glossy SQL are given by a mapping to pure SQL. Glossy SQL is covered in in Chapter~\ref{chapter:glossy}. 
 
 \end{itemize}
 
 % Scalable Processing
 \subsection{Scalable Processing}
 \label{sec:introduction:problem:statement:three}
-The Web today offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap,twitter2014twitter,zooniverse2014oldweather} datasets that can be visualized on maps, which are typically managed in a spatial relational database management systems (SDBMS)~\cite{wu2014case}. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online~\cite{endomondo2014endomondo,tinder2014tinder,twitter2014twitter} geographic information can be produced by anybody, anytime, and anywhere. Therefore, mapping systems must be able to scalably process multi-scale selection over large relational datasets (millions of records).
+The Web today offers a huge diversity of curated~\cite{gst2014digitalmapsupply} and user-contributed~\cite{openstreetmap,twitter2014twitter,zooniverse2014oldweather} datasets that can be visualized on maps, which are typically managed in a spatial relational database management systems (SDBMS)~\cite{wu2014case}. Each day, millions of new objects are added to the OpenStreetMap database alone, which already contains billions of objects~\cite{openstreetmap2014stats}. Moreover, as mobile devices increasingly bond millions of people to location-based services online~\cite{endomondo2014endomondo,tinder2014tinder,twitter2014twitter}, geographic information can be produced by anybody, anytime, and anywhere. Therefore, mapping systems must be able to scalably process multi-scale selection over large relational datasets (millions of records).
 
 One approach is to translate a specification for selection into low-level code (e.g. LLVM, C++, OpenMP, or MPI), which can potentially result in very efficient execution. However, low-level code is harder to optimize across platforms. A better approach is to target a high-level language for spatial data analysis such as SQL~\cite{postgis} or Pig~\cite{eldawy2014pigeon}, which can be executed on highly optimized engines for large-scale data processing, such as parallel SDBMS~\cite{waas2009beyond} and spatial cluster computing systems~\cite{aji2013hadoopgis,eldawy2014spatialhadoop}. A similar approach has been successfully tested for processing of XQuery~\cite{boncz2006monetdb} and Machine Learning~\cite{hellerstein12madlib}. Since data for maps is typically stored in a SDBMS, it makes sense to process the data where it is stored~\cite{grust2009ferry}. Despite the obvious opportunity, state-of-the-art mapping systems do not significantly leverage SDBMS or cluster computing to process holistic selection of geographic information for maps.
 
-For this problem, this thesis contributes compilers for the CVL and Glossy SQL languages as well as an evaluation of their performance and scalability:
+For this problem, this thesis contributes with compilers for the CVL and Glossy SQL languages as well as an evaluation of their performance and scalability:
 
 \begin{itemize}
-\item \textbf{CVL compiler}: The compiler translates CVL into SQL with stored procedures implemented in the Python programming language. The compiler targets the PostgreSQL RDBMS, which is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}. The compiler implementation is described in Chapter~\ref{chapter:cvl}.
-\item \textbf{CVL experimental evaluation}: The performance and scalability of the CVL compiler is evaluated for several real-world and synthetic datasets, which inlude both point, line and area datasets. The evaluation of CVL is described in Chapter~\ref{chapter:cvl}.
-\item \textbf{Glossy SQL compiler}: The compiler translates Glossy SQL into pure SQL in the PostgreSQL dialect~\cite{postgresql,postgis}.  The compiler output can easily be adjusted to target a different spatial database engine or cluster computing system. The compiler is described in Chapter~\ref{chapter:glossy}.
-\item \textbf{Glossy SQL experimental evaluation}: This thesis contributes an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The evaluation measures the scalability and performance of queries produced by the Glossy SQL compiler. Furthermore, the evaluation compares the performance and scalability of output generated by the Glossy SQL compiler to output generated by the CVL compiler. This evaluation is included in Chapter~\ref{chapter:glossy}.
+\item \textbf{CVL compiler}: We present a compiler that translates CVL into SQL with stored procedures implemented in the Python programming language. The compiler targets the PostgreSQL RDBMS, which is popular in the geographic data community due to its high-quality spatial extension~\cite{postgis}. The compiler output can easily be adjusted to target a different spatial database engine~\cite{soliman2014orca} or cluster computing system~\cite{eldawy2014pigeon, thusoo2010hive}. The compiler implementation is described in Chapter~\ref{chapter:cvl}.
+\item \textbf{CVL experimental evaluation}: We evaluate the performance and scalability of the CVL compiler for several real-world and synthetic datasets, which inlude both point, line and area datasets. The evaluation of CVL is described in Chapter~\ref{chapter:cvl}.
+\item \textbf{Glossy SQL compiler}: We present a compiler that translates Glossy SQL into pure SQL in the PostgreSQL dialect~\cite{postgresql,postgis}.  The compiler output can easily be adjusted to target a different spatial database engine or cluster computing system. The compiler is described in Chapter~\ref{chapter:glossy}.
+\item \textbf{Glossy SQL experimental evaluation}: We present an experimental evaluation of the Glossy SQL compiler for a range geographic and non-geographic use cases over real-life datasets. The evaluation measures the scalability and performance of queries produced by the Glossy SQL compiler. Furthermore, the evaluation compares the performance and scalability of output generated by the Glossy SQL compiler to output generated by the CVL compiler. This evaluation is included in Chapter~\ref{chapter:glossy}.
 
 \end{itemize}
-
 
 
 % PREDICTIVE TILE MATERIALIZATION
@@ -583,11 +595,11 @@ For this problem, this thesis contributes compilers for the CVL and Glossy SQL l
 \label{sec:introduction:problem:statement:four}
 Rendering and serving of so-called map tiles is currently the typical way to implement high performance maps~\cite{mbtile12}. There are two extreme approaches to rendering tiles. At one extreme, the entire tile set is preemptively materialized, for example on a MapReduce cluster~\cite{dean2009designs,dean04mapreduce}. However, this is wasteful since most tiles are never or rarely requested~\cite{fisher07hotmap}. At the other extreme, individual map tiles are lazily materialized or prefetched real-time~\cite{kang2001prefetching,kim2001prefetching,lee2001prefetching}. However, this results in high average latency since workloads are temporally skewed, which causes high concurrency levels during peak load~\cite{kefaloukos2012tileheat}. A better approach is to predict popular tiles well in advance, and materialize a hot set during a low-load period and serve it with low latency during high-load periods. This assumes that slightly stale geographic information is acceptable, which is typically the case~\cite{sarma2012fusiontables}. A hypothesis is that a request log can be used to predict future tile requests.
 
-For this problem, this thesis contributes a prediction-based tile selection framework as well as an experimental evaluation of its predictive accuracy:
+For this problem, this thesis contributes with a prediction-based tile selection framework as well as an experimental evaluation of its predictive accuracy:
 
 \begin{itemize}
-\item \textbf{Tileheat prediction algorithm}: foo. The details about this part are described in Chapter~\ref{chapter:tileheat}
-\item \textbf{Tileheat experimental evaluation}: foo. The details about this part are described in Chapter~\ref{chapter:tileheat}
+\item \textbf{Tileheat prediction algorithm}: We present a prediction algorithm for near-future geographic map requests. The prediction is based on an analysis of recent requests for the map, which combines exponential smoothing with a novel heat dissipation technique.  The details about this part are described in Chapter~\ref{chapter:tileheat}
+\item \textbf{Tileheat experimental evaluation}: TODO. We evaluate the Tileheat algorithm using map request log files from the Danish Geodata Agency. The results show that Tileheat greatly improves on the method currently used by the agency. The details about this part are described in Chapter~\ref{chapter:tileheat}
 
 \end{itemize}
 
@@ -614,22 +626,8 @@ Previous versions of some of the chapters in this thesis have been published or 
 
 \begin{itemize}
 \item \textbf{Chapter 3}: \emph{Declarative Cartography: In-database Map Generalization of Spatial Datasets}. Kefaloukos, Pimin K. and Salles, Marcos V.  and Zachariasen, Martin. In ICDE '14.
-\item \textbf{Chapter 4}: In submission
+\item \textbf{Chapter 4}: \emph{Glossy: Global Selection for Data Visualizations}. Kefaloukos, Pimin K and Salles, Marcos V. and Zachariasen, Martin. In submission.
 \item \textbf{Chapter 5}: \emph{TileHeat: A Framework for Tile Selection}. Kefaloukos, Pimin K. and Salles, Marcos V.  and Zachariasen, Martin. In ACM SIGSPATIAL '12.
-\end{itemize}
-
-\section{Structure}
-\label{sec:introduction:structure}
-% Not good enough. Tim uses bullets that reference the contributions, Marcos used a single sparagraphs to similar effect
-
-TODO: Elaborate...
-
-
-The remainder of this thesis is organized as follows. 
-\begin{itemize}
-\item Chapter~\ref{chapter:related:work} covers the related work.
-\item Chapters~\ref{chapter:cvl} (unified selection model), \ref{chapter:glossy} (Glossy SQL and compiler), and \ref{chapter:tileheat} (TileHeat prediction algorithm) describe the contributions this thesis. 
-\item Chapter~\ref{chapter:conclusion} presents the conclusions of this thesis and discusses directions for future work.
 \end{itemize}
 
 %Chapter~\ref{chapter:case:study} presents a case study of the Danish Geodata Agency, which as part of the public sector in Denmark publishes high-quality currated geospatial data, e.g. for visualization purposes. This chapter also contains a light-weight manual for anyone wishing to implement the contributions of this thesis. 
@@ -707,13 +705,12 @@ Constraints such as visibility or proximity can be modeled using the notion of \
 
 For the visibility constraint, there is a conflict generated for every cell that contains more than $K$ records. For the proximity constraint, there is a conflict generated for each pair of records that is less than $d$ pixels apart (see Figure~\ref{fig:cvl:proximity:conflict}). A record can be in several conflicts, which is the case for point $p$ in the example shown in the figure. A solution to the selection problem is \emph{feasible} if there are no conflicts.
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[scale=.3]{figs-cvl/cvl_proximity_conflicts.pdf}
 \caption{Conflicts generated by the proximity constraint for distance $d$. Notice that point $p$ is a member of more than one conflict.}
 \label{fig:cvl:proximity:conflict}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 Consider a conflict involving $k_1$ records, where at most $k_2$ of these records can be selected (where $k_1 > k_2$). Then it is equivalent to state that at least $\lambda = k_1 - k_2$ of these records must be \emph{deleted}. In the mathematical formulation of the problem in Section~\ref{sec:optimizationmodel}, we will use this alternative way to formulate conflicts.
@@ -739,7 +736,7 @@ The CVL language has two statements, the \emph{generalize} statement (see Sectio
 
 The CVL language builds on top of SQL and reuses SQL as a language for formulating constraints and record weighting schemes.
 
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 GENERALIZE 
@@ -754,33 +751,29 @@ SUBJECT TO
    {constraint} {float parameters} [AND
    ...]]
 \end{lstlisting}
-\vspace*{-1ex}
 \caption{Syntax of generalize statement.}
 \label{fig:cvl:generalize:syntax}
 \end{center}
-\vspace*{-4ex}
 \end{figure}
 
 \subsection{Generalize statement}
 \label{sec:cvl:generalize:statement}
 
-\begin{figure*}[tb]
-  \begin{minipage}{0.329\linewidth}
+\begin{figure*}[tbp]
+  \begin{minipage}{0.49\linewidth}
     \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports.png}}
     \centerline{(a) Full Openflights Airport dataset}
   \end{minipage} \hfill
-  \begin{minipage}{0.329\linewidth}
-    \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports_z4.png}}
-    \centerline{(b) Airports on zoom-level 5}
-  \end{minipage} \hfill
-  \begin{minipage}{0.329\linewidth}
+%  \begin{minipage}{0.329\linewidth}
+%    \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports_z4.png}}
+%    \centerline{(b) Airports on zoom-level 5}
+%  \end{minipage} \hfill
+  \begin{minipage}{0.49\linewidth}
     \centerline{\includegraphics[width=0.95\linewidth]{./figs-cvl/airports_z0.png}}
-    \centerline{(c) Airports on the top-most zoom-level.}
+    \centerline{(b) Airports on the top-most zoom-level.}
   \end{minipage}
-  \vspace{-0ex}
-  \caption{Airport map (7K points) before (a) and after (b, c) running CVL. The output corresponds to the CVL statement in Figure~\ref{fig:cvl:example:airports}.}
+  \caption{Airport map before (a) and after (b) generalization by CVL (query in Figure~\ref{fig:cvl:example:airports}). While image (a) contains 7K airports, image (b) only contains the 16 busiest airports in the World.}
   \label{fig:cvl:visualization:airport}
-  \vspace{-2ex}
 \end{figure*}
 
 The generalize statement is the main statement in CVL. This statement creates a new multi-scale dataset from an input table of geospatial records, subject to user defined constraints. The syntax is shown in Figure~\ref{fig:cvl:generalize:syntax}. The statement has several clauses, beginning with the specification of input and output tables. Instead of giving the name of an input table, the user can optionally write a select statement in SQL of the form \texttt{(SELECT ...) t}. The next clause is the \emph{with-id} clause, which is used to uniquely identify records. If records have an id column, this clause could simply provide the name of that column. The \emph{with-geometry} clause is used to indicate the geometry property of records, e.g., the name of an available geometry column. The next clause is the \emph{zoom-levels} clause where the user writes a positive integer, which is the highest zoom level at which the selection process will begin. The \emph{weigh-by} clause is used to give an arbitrary floating point expression that is evaluated for each row in the input and used as weight for that record. The \emph{subject-to} clause lists the map constraints along with any parameters (as a comma-separated list). The \texttt{AND} keyword is used to separate constraints in the case more than one is used.
@@ -791,8 +784,7 @@ The generalize statement is the main statement in CVL. This statement creates a 
 An example of generalizing a dataset using the generalize statement is shown in Figures~\ref{fig:cvl:visualization:airport} and~\ref{fig:cvl:example:airports}. In this example a dataset containing point records representing the location of airports world-wide is generalized (Figure~\ref{fig:cvl:visualization:airport}(a)). The records are weighted by using the name of a column containing the number of routes departing from each airport (shown in Figure~\ref{fig:cvl:example:airports}; CVL automatically handles the cast from integer to floating point). The intuition is that airports with more departures are more important. The single constraint that is enforced is the visibility constraint, with a parameter of $K=16$. Recall that the visibility constraint says that each tile can contain at most $K$ records.
 
 
-\begin{figure}[ht]
-%\vspace*{-2ex}
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 GENERALIZE 
@@ -805,11 +797,9 @@ WEIGH BY
 SUBJECT TO 
    visibility 16 
 \end{lstlisting}
-\vspace*{-1ex}
 \caption{Generalization of an airports dataset. The airports are weighted by number of departures. See Figure~\ref{fig:cvl:visualization:airport} for a vizualization of the result.}
 \label{fig:cvl:example:airports}
 \end{center}
-\vspace*{-2ex}
 \end{figure}
 
 
@@ -822,7 +812,7 @@ The resulting map is shown in Figure~\ref{fig:cvl:visualization:airport}(b) and~
 % change text
 Map constraints are defined using the create-constraint statement.  The basic syntax of the statement is shown in Figure~\ref{fig:create:constraint:syntax}. The body of the statement is a SQL select statement that computes tuples that represent conflicts that are found at a given zoom level in the map. A tuple $\langle cid, rid\rangle$ denotes that record $rid$ is a member of conflict $cid$. See Section~\ref{sec:cvl:conflicts} for the exact semantics of conflicts.
 
-\begin{figure}[ht]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 CREATE CONSTRAINT C1
@@ -833,14 +823,12 @@ RESOLVE cid IF DELETE (
   {integer expression}
 )
 \end{lstlisting}
-%\vspace*{-1.5ex}
 \caption{Syntax of create constraint statement}
 \label{fig:create:constraint:syntax}
 \end{center}
-\vspace*{-1ex}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 CREATE CONSTRAINT Proximity
@@ -867,11 +855,9 @@ RESOLVE cid IF DELETE (
   1
 )
 \end{lstlisting}
-%\vspace*{-2ex}
 \caption{Definition of the proximity constraint.}
 \label{fig:proximity:definition}
 \end{center}
-\vspace*{-1ex}
 \end{figure}
 
 The \emph{resolve-if-delete} clause is used to compute the integer number of records that must be deleted in order to resolve the conflict with a given $cid$. 
@@ -880,7 +866,7 @@ Using this syntax, the definition of the proximity constraint is given in Figure
 
 In Figure~\ref{fig:proximity:definition}, some names are enclosed in curly braces, such as \texttt{\{rid\}}. These are variables which are bound at runtime by the CVL framework and are intended for making the definition of constraints simpler. The variables \texttt{\{rid\}} and \texttt{\{geom\}} are bound to the column names containing the ID and geometry of the records. The \texttt{\{level\_view\}} is bound to a view that contains all records that are visible at the current level, i.e., the records that have not been filtered out at a higher zoom-level. The function \texttt{CVL\_Resolution(\{z\}, 256)} is one of the utility functions defined by the CVL runtime, also with the purpose of making the definition of constraints simpler. This function returns the resolution (meter/pixel) at zoom-level \texttt{\{z\}}, where \texttt{\{z\}} is a variable bound to the currently evaluated zoom-level. The variable \texttt{\{parameter\_1\}} is the constraint parameter, e.g. $10$ pixels.
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 CREATE CONSTRAINT Visibility
@@ -921,11 +907,9 @@ WITH TEARDOWN (
   DROP TABLE busted_tiles;
 )
 \end{lstlisting}
-%\vspace*{-1.5ex}
 \caption{Definition of the visibility constraint.}
 \label{fig:visibility:definition}
 \end{center}
-%\vspace*{-3ex}
 \end{figure}
 
 
@@ -968,9 +952,9 @@ As mentioned in Section~\ref{sec:cvl:filtering}, we solve the multi-scale select
 %\marcos{The algorithmic framework is not for multi-scale filtering, but for iterated single-scale filtering? Seems to me that these two are not the same thing.}
 %\martin{Well, we do indeed solve (approximately) the multi-scale problem by iterated single-scale filtering, so I would say that this is okay. However, we don't have any good lower bound for the multi-scale problem, only for each of the single-scale problems.}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
-\includegraphics[scale=.6]{figs-cvl/cvl_stages.pdf}
+\includegraphics[scale=.68]{figs-cvl/cvl_stages.pdf}
 \caption{Algorithmic framework: At each zoom level $i \in \{ 1, \ldots, \mathcal{Z} \}$ we solve a selection optimization problem. In the ladder approach, the problem is solved for the ``highest'' zoom level first.}
 \label{fig:algorithmic-framework}
 \end{center}
@@ -996,7 +980,7 @@ This algorithm provides a feasible solution to the selection optimization proble
 
 In this section, we describe how our implementation makes use of in-database execution to provide scalability and engine reuse for CVL (Section~\ref{sec:implementation:indatabase}). In addition, we discuss a number of extensions to CVL that we found to be useful for practical applications (Section~\ref{sec:implementation:extensions}). 
 
-\subsection{In-Database Execution}
+\subsection{In-database Execution}
 \label{sec:implementation:indatabase}
 
 \minisec{Overview}
@@ -1012,13 +996,12 @@ Since CVL is declarative, and CVL constraints are already expressed in SQL, it i
 
 While the general strategy of compiling declarative languages to SQL has been pursued in other contexts, e.g., for XQuery~\cite{boncz2005pathfinder} and LINQ~\cite{grust2009ferry}, our context poses a particular challenge of integrating the language with algorithmic solvers inside the database. 
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
-\includegraphics[scale=.35,viewport=400 375 450 550]{figs-cvl/indatabase-execution.pdf}
+\includegraphics[scale=.45,viewport=400 375 450 550]{figs-cvl/indatabase-execution.pdf}
 \caption{CVL and in-database execution.}
 \label{fig:indatabase}
 \end{center}
-\vspace*{-1ex}
 \end{figure}
 
 \minisec{Solvers}
@@ -1120,9 +1103,7 @@ We have used a single polygon dataset, the area information dataset from The Dan
 We have tested the scalability of CVL using both point and line datasets. A east-west unrolling approach is employed for gradually increasing the size of a dataset. First, we order records by x-coordinate, and then select increasingly larger prefixes of this order to derive larger datasets. The advantage of this approach over random sampling is that the spatial density of records is better preserved.
 
 \begin{table}[htdp]
-%\vspace{-2ex}
 \caption{Datasets used in experiments}
-%\vspace{-2ex}
 \label{tab:cvl:datasets}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
@@ -1139,7 +1120,6 @@ Real & Proctection zones & Polygons & $30K$ & $9M$ \\
 \end{tabular}
 \end{center}
 \label{default}
-%\vspace{-2ex}
 \end{table}%
 
 
@@ -1156,7 +1136,7 @@ PostgreSQL always uses a single core to compute a transaction. Because the gener
 In our approach, we solve the multi-scale selection problem as a series of selection optimization problems. To get an indication of the solution quality, we compute for every selection optimization problem a lower bound using an LP-relaxation of the integer program. The numbers we present in Table~\ref{tab:points:overview} and Table~\ref{tab:complex:overview} include the average ratio between our solution value and the corresponding lower bound.
 
 
-\begin{figure*}[tb]
+\begin{figure*}[tbp]
   \begin{minipage}{0.329\linewidth}
     \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_7k_airports_heuristic_B.pdf}}
     \centerline{(a) SGA + Proximity}
@@ -1169,9 +1149,7 @@ In our approach, we solve the multi-scale selection problem as a series of selec
     \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_7k_airports_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
-%  \vspace{-1ex}
   \caption{Performance breakdown by zoom level, Airport dataset (7K points). The black line indicates number of conflicts} \label{fig:performance:airport}
-%  \vspace{-2ex}
 \end{figure*}
 
 \subsection{Point Data}
@@ -1181,7 +1159,7 @@ In this section, we present experimental results with point datasets, namely the
 
 
 
-\begin{figure*}[tb]
+\begin{figure*}[tbp]
   \begin{minipage}{0.329\linewidth}
     \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_500k_tourism_heuristic_A.pdf}}
     \centerline{(a) SGA + Visibility}
@@ -1194,9 +1172,7 @@ In this section, we present experimental results with point datasets, namely the
     \centerline{\includegraphics[width=0.9\linewidth]{./figs-cvl/prelim_pnt_500k_tourism_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
-%  \vspace{-1ex}
   \caption{Performance breakdown by zoom level, Tourism dataset (500K points). The black line indicates number of conflicts} \label{fig:performance:tourism}
-\vspace{-1ex}
 \end{figure*}
 
 \minisec{Overall performance and quality}
@@ -1205,9 +1181,7 @@ An overview of running times and solution qualities for the point datasets are s
 In terms of quality, the difference between SGA and LPGA is not stark for either constraint. The difference depends more on the constraint than on the solver, with visibility generally yielding the best solutions. However, the running time of SGA can be substantially shorter than that of LPGA. We analyze this effect in the following.
 
 \begin{table}[htdp]
-%\vspace{1ex}
 \caption{Results for CVL on point datasets grouped by constraint}
-%\vspace{-2ex}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1226,10 +1200,9 @@ Tourism (500K) & Proximity & LPGA & 2h 18m & 1.24 \\
 \end{tabular}
 \end{center}
 \label{tab:points:overview}
-%\vspace{-2ex}
 \end{table}%
 
-\begin{figure*}[tb]
+\begin{figure*}[tbp]
   \begin{minipage}{0.49\linewidth}
     \centerline{\includegraphics[width=1.0\linewidth]{./figs-cvl/scal_pnt_30m_synthetic.pdf}}
     \centerline{(a) Scalability for point data}
@@ -1238,9 +1211,7 @@ Tourism (500K) & Proximity & LPGA & 2h 18m & 1.24 \\
     \centerline{\includegraphics[width=1.0\linewidth]{./figs-cvl/scal_lin_30k_uswaterway.pdf}}
     \centerline{(b) Scalability for complex shape data}
   \end{minipage} \hfill
-%  \vspace{-0ex}
   \caption{Scalability of CVL for point datasets and complex shape datasets. Constraints are marked as \emph{Visibility}: A, \emph{Proximity}: B} \label{fig:cvl:scalability}
-%\vspace{-1ex}
 \end{figure*}
 
 \minisec{Performance breakdown}
@@ -1274,7 +1245,6 @@ In Table~\ref{tab:complex:overview} we summarize running times and average optim
 
 \begin{table}[htdp]
 \caption{Results for CVL on complex datasets grouped by constraint}
-%\vspace{-1ex}
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
@@ -1293,10 +1263,9 @@ Zones (30K) & Proximity & LPGA & --- & --- \\
 \end{tabular}
 \end{center}
 \label{tab:complex:overview}
-%\vspace{-2ex}
 \end{table}%
 
-\begin{figure*}[tb]
+\begin{figure*}[tbp]
   \begin{minipage}{0.329\linewidth}
     \centerline{\includegraphics[width=1\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_A.pdf}}
     \centerline{(a) LPGA + Visibility}
@@ -1309,9 +1278,7 @@ Zones (30K) & Proximity & LPGA & --- & --- \\
     \centerline{\includegraphics[width=1\linewidth]{./figs-cvl/prelim_lin_30k_uswaterway_lp_B.pdf}}
     \centerline{(c) LPGA + Proximity}
   \end{minipage}
-%  \vspace{-1ex}
   \caption{Performance breakdown by zoom level, Rivers dataset (4K records). The black line indicates number of conflicts} \label{fig:performance:complex}
-%\vspace{-2ex}
 \end{figure*}
 
 
@@ -1369,7 +1336,7 @@ The proposed approach integrates seamlessly with existing database technology, a
 \section{Motivation}
 \label{sec:glossy:introduction}
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=0.99\linewidth]{figs-glossy/airports.png}
 \caption{A visualization of airports in a geographic map requires the selection of the airports with the most traffic out of a larger set of airports. The visualization should display more airports as we zoom into geographic regions for more detail.}
@@ -1381,7 +1348,7 @@ We are faced with unprecedented data volumes in organizations across a wide vari
 
 \newpage
 
-\begin{figure}[htbp]
+\begin{figure}[tbp]
 \begin{center}
 \includegraphics[width=0.99\linewidth]{figs-glossy/rappers_viz.pdf}
 \caption{A visualization of rappers according to their vocabulary requires selecting the most popular rappers for each word bracket out of a much larger set of artists. The visualization should display more rappers as we zoom into word brackets for more detail. Note that even though the visualization organizes rappers in a word line (1-D), it uses the popularity dimension of the artist to both aid selection and to shade the surviving bubbles.}
@@ -1399,7 +1366,7 @@ Data reduction techniques can be characterized by two extremes: \emph{global} (i
  
 Despite the wealth of existing work on data visualization, most systems have either focused on abstracting data by aggregation~\cite{blais2014generating,lins2013nanocubes,stolte2003multiscale,vartak2014seedb}, or on devising techniques to squeeze a whole dataset into the available pixels~\cite{keim1995visdb,kruskal1978multidimensional}. The problem of creating visualizations that explicitly show representative items, which are selected from a large underlying dataset, has received far less attention. Nevertheless, the importance of this problem is significant. Figures~\ref{fig:example:rappers} to~\ref{fig:example:placenames} illustrate a few visualizations that crucially depend on data selection. These visualizations vary substantially in dimensionality, going from a single axis in the case of Figure~\ref{fig:example:rappers} to a parallel coordinates plot of multiple dimensions in Figure~\ref{fig:example:clusters} to two-dimensional geographic maps in Figures~\ref{fig:example:airports} and~\ref{fig:example:placenames}. Furthermore, these visualizations employ multiple scales to allow users to zoom into the data and see more records from the underlying dataset in an interactive fashion. Moreover, these visualizations are becoming ever more necessary for human understanding as we move towards an age of large datasets and data enthusiasts~\cite{hanrahan2012enthusiast,markl2014breaking}. Even though previous work has targeted particular examples of such visualizations, e.g., for spatiotemporal data~\cite{jugel2014m4,kefaloukos2014declarative,sarma2012fusiontables}, a generic solution to multi-scale data selection has remained elusive. Such a solution should ideally be able to globally sample records, while respecting user-defined constraints and notions of record importance, and at the same time elegantly reuse database technology to operate on large datasets.
 
-\begin{figure*}[!t]
+\begin{figure*}[tbp]
   \begin{minipage}{0.49\linewidth}
     \centerline{\includegraphics[width=0.973\linewidth]{figs-glossy/parallel_coordinates.pdf}}
     \caption{A visualization of k-means clusters with parallel coordinates requires us to limit the number of lines that can cut through each dimension line segment for any vertical unit of space, at a scale-dependent resolution. Line widths are set by distances to cluster centers.} \label{fig:example:clusters}
@@ -1535,7 +1502,7 @@ The final result is still a sample of the input, albeit not a random~one.
 
 We may think of the process described above as a weighted, constrained sampling process. In relational terms, this process operates in a manner similar to a selection operator, filtering out records from the input that do not qualify well-defined conditions. However, unlike in a relational selection, the conditions on the records are not evaluated for each record independently, but for the set of records as a whole. Therefore, we call the operation specified by Glossy SQL a \emph{global selection}.
 
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 glossy_sql_stmt ::=
@@ -1591,7 +1558,7 @@ An important input to global selection is the weighting function used on the rec
 \minisec{Control over visual conflicts}
 Another important input to global selection is the specification of constraints that limit which records from the input can appear together in the final output. Informally, we say that a set of records are in a visual conflict if a constraint binds them together. There are two types of constraints in Glossy SQL: \emph{pair} and \emph{locus} constraints. A pair constraint binds together pairs of records in conflicts, where each conflict determines that either one or both of the records must be dropped from the output. A proximity constraint is an example of a pair constraint. In Figure~\ref{fig:constraints:schematic}(a), we visualize schematically the conflict structure created by a pair constraint.~Pair constraints allow for complex dependency structures among records as specified by a binary conflict relation.  
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \scalebox{0.60}{\includegraphics{figs-glossy/constraints.pdf}}
 \caption{Schematic representation of how records (solid circles) are organized into conflicts (empty circles) by different types of constraints: (a) A pair constraint, (b) A simple locus constraint, and (c) A complex locus constraint.} 
@@ -1622,7 +1589,7 @@ In the query, we use the \textbf{\texttt{RECURSE OVER}} construct to create a mu
 While the outer \textbf{\texttt{WHERE}} clause specifies that we only select rappers with at least two songs, we further restrict the output by a locus constraint. In this constraint, we use the \textbf{\texttt{MAP BY}} clause to group rappers into buckets according to word count; rappers are mapped to buckets by arithmetic on the word count and bucketsize. For each bucket, we select at most 20 rappers and use \textbf{\texttt{SCALE LINEAR}} to maintain a linear density difference between dense and sparse buckets. As a final subtlety, we use a \textbf{\texttt{FILTER BY}} clause to ensure that our favorite band ``Digital Underground''  appears in the output, regardless of page views. Finally, we use the \textbf{\texttt{WEIGH BY}} clause to prioritize rappers based on their page views. 
 
 % Query
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 SELECT id, name, wordcount, pageviews, zoom
@@ -1655,7 +1622,7 @@ In the query, we use the \textbf{\texttt{RECURSE OVER}} syntax to create a multi
 This time, we specify two constraints that restrict the selection, namely a locus constraint and a pair constraint. For the locus constraint, the \textbf{\texttt{MAP BY}} clause groups POI by map tile. This is achieved by the \texttt{TileCenter} function, which takes as input a point and a zoom level, and returns a label identifying the tile of the map in which the point is located at that zoom level. So in this example a locus corresponds to a tile. For each tile, we select at most 10 POI, and use \textbf{\texttt{SCALE LOG}} to maintain a logarithmic density difference between dense and sparse tiles. For the pair constraint, the \textbf{\texttt{WHERE}} clause specifies that two POI should not both be selected if they are in close proximity, measured in pixels in a scale-sensitive manner. Finally, we prioritize POI by their star-rating in the \textbf{\texttt{WEIGH BY}} clause. 
 
 % Query
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 SELECT id, name, coord, stars, zoom
@@ -1690,7 +1657,7 @@ As stated above, we use the \textbf{\texttt{ITERATE OVER}} syntax in the query t
 Finallly, the \textbf{\texttt{WEIGH BY}} clause is used to rank labels according to their importance. 
 
 % Query
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \begin{center}
 \begin{lstlisting}
 SELECT id, label, polygon, importance, zoom
@@ -1727,7 +1694,7 @@ For brevity, we focus on the examples of Figures~\ref{fig:glossy:sql:rappers} to
 % We are presenting Glossy as an extension of SQL. Important that 
 % the semantics of e.g. SELECT, WHERE, FROM, etc remain the same as in SQL.
 
-\begin{figure}[t]
+\begin{figure}[tbp]
 \centering
 \scalebox{0.40}{\includegraphics{figs-glossy/tourism_viz.png}}
 \caption{Combined visualization of POI and placenames.} 
@@ -2059,28 +2026,30 @@ The data used to evaluate Glossy consists of real, publicly-available datasets f
 \minisec{Queries}
 The Glossy SQL queries used in our evaluation are variants of the queries presented in Section~\ref{sec:use:cases:solved} and Figures~\ref{fig:glossy:sql:rappers} to~\ref{fig:glossy:sql:placenames}. Throughout our measurements, we have observed only negligible differences in the running times of a given query under the same configuration. So we report below the median of three runs for each measurement. We provide further details on procedures for varying query formulations and scaling data in the relevant experiment descriptions below.  
 
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \centering
-\scalebox{0.45}{\includegraphics{figs-glossy/scalability.pdf}}
+\scalebox{0.6}{\includegraphics{figs-glossy/scalability.pdf}}
 \caption{Scalability of three Glossy query-types on POI data: (triangles) recursive query with locus constraint, (diamonds) recursive query with pair constraint, (circles) iterative query with locus constraint.}
 \label{fig:glossy:scalability}
 \end{figure}
 
+\begin{figure}[tbp]
+\centering
+\scalebox{.6}{\includegraphics{figs-glossy/scalability_vs_cvl.pdf}}
+\caption{Scalability of equivalent recursive queries in Glossy vs. CVL with locus and pair constraints on scaled point of interest data.}
+\label{fig:scalability:glossy:vs:cvl}
+\end{figure}
 
-\begin{figure*}[!t]
-     \begin{minipage}{0.32\linewidth}
+
+\begin{figure*}[tbp]
+     \begin{minipage}{0.49\linewidth}
         \centerline{\includegraphics[width=1\linewidth]{figs-glossy/comparison_glossy_vs_cvl_locus.pdf}}
         \caption{Response time of equivalent queries in Glossy vs. CVL with locus constraint: (a) Airports, (b) Placenames, (c) Points of Interest.}\label{fig:glossy:vs:cvl:locus}
     \end{minipage} \hfill
-    \begin{minipage}{0.32\linewidth}
+    \begin{minipage}{0.49\linewidth}
         \centerline{\includegraphics[width=1\linewidth]{figs-glossy/comparison_glossy_vs_cvl_pair.pdf}}
         \caption{Response time of equivalent queries in Glossy vs. CVL with pair constraint: (a) Airports, (b) Placenames, (c) Points of Interest.} \label{fig:glossy:vs:cvl:pair}
     \end{minipage} \hfill
-        \begin{minipage}{0.32\linewidth}
-        \centerline{\includegraphics[width=1\linewidth]{figs-glossy/scalability_vs_cvl.pdf}}
-        \caption{Scalability of equivalent recursive queries in Glossy vs. CVL with locus and pair constraints on scaled point of interest data.} \label{fig:scalability:glossy:vs:cvl}
-    \end{minipage} \hfill
-%\vspace{-1ex}
 \end{figure*}
 
 \subsection{Scalability}
@@ -2098,7 +2067,6 @@ Figure~\ref{fig:glossy:scalability} shows that the SQL queries generated by the 
 Having established the baseline scalability of SQL queries generated by Glossy, we turn our attention to the use cases discussed in Section~\ref{sec:use:cases} for which Glossy SQL queries have been presented in Section~\ref{sec:use:cases:solved}, Figures~\ref{fig:glossy:sql:rappers}-\ref{fig:glossy:sql:placenames}. We evaluate SQL queries generated by the Glossy SQL compiler over the real datasets of rap lyrics, points of interest, placenames, and the larger, synthetic placenames dataset. 
 
 \begin{table}[ht]
-%\vspace{-1ex}
 \begin{center}
 %\tabcolsep=0.11cm
 \begin{tabular}{|l|l|l|l|}
@@ -2146,7 +2114,7 @@ The chart in Figure~\ref{fig:glossy:words:per:query} show word counts for the th
 
 Of course, conciseness by itself is not sufficient to classify a language as ``easy''. Ultimately, a proper usability test would have to be conduced, in order to definitely conclude that Glossy SQL offers an improvement in usability over pure SQL. However, since the syntax of Glossy SQL is very similar to SQL, we believe that it is fair to use conciseness as a significant proxy for usability.
 
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \centering
 \scalebox{0.45}{\includegraphics{figs-glossy/words-per-query.pdf}}
 \caption{Word counts for the queries (Glossy and SQL). The queries correspond to the examples shown in Figures~\ref{fig:glossy:sql:rappers}, ~\ref{fig:glossy:sql:poi}, and \ref{fig:glossy:sql:placenames}.}
@@ -2155,10 +2123,10 @@ Of course, conciseness by itself is not sufficient to classify a language as ``e
 
 \subsection{Selection Quality}
 
-\begin{figure}[!t]
+\begin{figure}[tbp]
 \centering
-\scalebox{0.5}{\includegraphics{figs-glossy/density-glossy.pdf}}
-\caption{Spatial distribution for three types of selection (approximately 2000 airports each): (A) random sampling. (B) global selection w. locus constraint and linear scaling. (C) global selection w. locus constraint but w/o spatial scaling.}
+\scalebox{0.7}{\includegraphics{figs-glossy/density-glossy.pdf}}
+\caption{Spatial distribution for three types of selection (approximately 2000 airports each): (a) Random sampling. (b) Global selection w. locus constraint and linear scaling. (c) Global selection w. locus constraint but w/o spatial scaling. Note that more airports are selected in remote regions (e.g. Sahara, Siberia, Pacific Ocean) on (c) compared to (a) and (b).}
 \label{fig:glossy:spatial:distribution:evaluation}
 \end{figure}
 
@@ -2251,7 +2219,7 @@ A \emph{tile cache} is a widely used method for dealing with the bad performance
 
 Tile caches are based on a model called a \emph{tile pyramid}, which subdivides a geographic region into a finite number of subregions using a set of $l$ grids~\cite{decola1993pyramid}. In Figure~\ref{fig:tilepyramid}, a tile pyramid with three levels is shown. The cells of the grids are called \emph{tiles}, and tiles are indexed by a triple $(i,j,z)$. In this triple $z$ identifies a grid, while $i$ and $j$ represent the row and column in the grid where the tile is located. Each grid is associated with a data set at a particular resolution in meters per pixel. Tiles thus correspond to data at a given resolution, and within a bounding box.
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \includegraphics[scale=0.8]{figs-tileheat/tilepyramid}
 \caption{Tile pyramid with three levels $z=\{1, 2, 3\}$ shown. Level $z=1$ has dimensions $(1,1)$. Figure is reproduced from \cite{quinn2010prediction}}
@@ -2266,7 +2234,7 @@ One shortcoming of tile caches is that the number of tiles is exponential in $l$
 \label{sec:processing:user:requests}
 We abstract user requests to a geospatial web service by two functions: \texttt{GET} and \texttt{PUT}. \texttt{GET} retrieves a tile from a web service, while \texttt{PUT} updates the base data from which tiles are computed. Pseudocode for processing \texttt{GET} and \texttt{PUT} requests are given in Figure \ref{fig:pseudocode}.
 
-\begin{figure}[ht]
+\begin{figure}[tbp]
 \includegraphics[scale=0.9]{figs-tileheat/pseudocode}
 \caption{Processing a \texttt{GET} request: If the tile is materialized, it is returned. Otherwise it is rendered, stored and returned. Processing a \texttt{PUT} request: When base data is updated, the set of tiles that is affected by the change needs to be invalidated.}
 \label{fig:pseudocode}
@@ -2306,9 +2274,9 @@ The service we examine is the most popular web service of the The Digital Map Su
 \subsection{Temporal characteristics of workload}
 \label{sec:temporal:characteristics}
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
-\includegraphics[scale=0.5]{figs-tileheat/average_load_week.png}
+\includegraphics[scale=0.4]{figs-tileheat/average_load_week.png}
 \caption{Average load per hour for each day of the week in the Digital Map Supply.}
 \label{fig:weekload}
 \end{figure}
@@ -2324,7 +2292,7 @@ Using a random sample of 90,000 WMS requests from the log, we analyze the worklo
 
 These patterns are shown in Figure~\ref{fig:weekload}, where we display the average 24-hour load curve for each day of the week. The curve is generated as an average of all weeks in the log.
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \includegraphics[scale=0.5]{figs-tileheat/correlation.png}
 \caption{Correlation between average load (blue) and average latency (green) in the Digital Map Supply.}
@@ -2341,7 +2309,7 @@ We have also looked at the effect of load on latency. In Figure~\ref{fig:correla
 
 Our hypothesis is that the increase in latency is caused by increased concurrency and queueing in the system. We have also tested the stability of the load pattern over time by plotting the load for each day over a longer period within the last quarter of 2011. The load patterns can be seen in Figure~\ref{fig:anomaly}. We observe that in general the load curve is very consistent from one weekday to the next, and one week to the next, but anomalies do occur. During week 49 of the last quarter of 2011, the number of requests suddenly doubles. While it is not easy to know what caused such a load spike, it is interesting to ask whether the spike affects the spatial distribution of requests. We examine this question in Section~\ref{sec:spatial:characteristics}.
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \includegraphics[scale=0.5]{figs-tileheat/anomaly.png}
 \caption{In the Digital Map Supply, the loads for consecutive weeks generally resemble each other. However, week 49 exhibits an anomaly; the high load was caused by a big project in the public sector, which used data from the Digital Map Supply. The red line shows the average load.}
@@ -2352,13 +2320,7 @@ Our hypothesis is that the increase in latency is caused by increased concurrenc
 \label{sec:spatial:characteristics}
 Using heatmaps we have investigated the spatial distribution of requests. We have selected a large number of weekdays, and extracted a full log for these days. The number of log records is significant, with more than 800,000 requests received per day. In Figure \ref{fig:heatmaps}, we show heatmaps for four of these days. We observe that the spatial distribution of requests is quite similar across days. We observe a similar pattern on other days from the log that we have examined.
 
-Given the anomaly in requests per second that we noted in Figure~\ref{fig:anomaly}, we wanted to investigate if the spatial distribution of requests was different for days of increased load compared to normal days. The lower right part of Figure~\ref{fig:heatmaps} shows a heatmap for the day with unusually high load. The spatial distribution is slightly different compared to the other three heatmaps, but still very similar. The data indicates that the spatial distribution of requests is similar for weekdays, and largely independent of fluctuations in load. Using the notation we defined for heatmaps this means that
-
-\[
-h_{i,j,z}^t \approx h_{i,j,z}^{t+1}
-\]
-
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \begin{tabular}{cc}
 %\hline
@@ -2367,9 +2329,17 @@ h_{i,j,z}^t \approx h_{i,j,z}^{t+1}
 \includegraphics[scale=0.5]{figs-tileheat/heatmap-e_3.png} & \includegraphics[scale=0.5]{figs-tileheat/heatmap-e_4.png} \\
 %\hline
 \end{tabular}
-\caption{Four heatmaps showing the areas in Denmark most viewed on maps from the Digital Map Supply on four consecutive days (resolution $\mathbf{3.2}$ meter/pixel). The day in the lower right corner is the day with very high load identified in Figure \ref{fig:anomaly}.}
+\caption{Four heatmaps showing the areas in Denmark most viewed on maps from the Digital Map Supply on four consecutive days (resolution 3.2 meter/pixel). The day in the lower right corner is the day with very high load identified in Figure \ref{fig:anomaly}. Note that hot spots (dark red and black) coincide with urbanized areas in Denmark.}
 \label{fig:heatmaps}
 \end{figure}
+
+
+Given the anomaly in requests per second that we noted in Figure~\ref{fig:anomaly}, we wanted to investigate if the spatial distribution of requests was different for days of increased load compared to normal days. The lower right part of Figure~\ref{fig:heatmaps} shows a heatmap for the day with unusually high load. The spatial distribution is slightly different compared to the other three heatmaps, but still very similar. The data indicates that the spatial distribution of requests is similar for weekdays, and largely independent of fluctuations in load. Using the notation we defined for heatmaps this means that
+
+\[
+h_{i,j,z}^t \approx h_{i,j,z}^{t+1}
+\]
+
 
 %In Figure~\ref{fig:skew}, we show the cumulative distribution function of tile access frequencies, which has been computed from the heatmaps. 
 We observe that the frequency of tile access is highly skewed; other studies have concluded the same, namely that the spatial distribution of \texttt{GET} requests follows a power law \cite{fisher07hotmap,talagala2000webimage}. We also observe that the skew increases with resolution, i.e., with  levels of the tile pyramid that contain more tiles. 
@@ -2387,7 +2357,7 @@ Based on our observations of the workload in Section \ref{sec:analysis}, we have
 
 The life cycle of a system that uses TileHeat to manage tiles is as follows: We organize processing in TileHeat into a sequence of \emph{time periods}. Each time period is composed of two \emph{time windows}: the high-load window and the low-load window. Throughout both windows, the geospatial web service is available for clients and therefore must carry out normal processing of user requests, i.e., \texttt{GET} and \texttt{PUT}. During the low load window, however, we can additionally \emph{select and precompute tiles} that we expect to be accessed during the next time window, based on access patterns observed for previous time periods. In the following, we describe how we carry out the selection and precomputation of tiles.
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \includegraphics[scale=0.8]{figs-tileheat/figoverview}
 \caption{Time periods and time windows: Processing during high- and low-load windows.}
@@ -2452,7 +2422,7 @@ The following steps are performed by HEAT-D:
 
 %We apply $p$ rounds of the dissipation step to each heatmap in the training data. For each index $(i,j,z)$ in the heatmap, the dissipation step moves a fraction of the heat for that tile to its eight neighbors, based on a dissipation constant $\mu$. The process is illustrated in Figure~\ref{fig:dissipate}.
 
-\begin{figure}
+\begin{figure}[tbp]
 \centering
 \includegraphics[scale=1]{figs-tileheat/disspate2}
 \caption{Each dissipation step transfers heat from a center cell to each of it's eight neighbors. The center cell $(i,j,z)$ loses $(1 - \mu) h_{i,j,z}$ heat, and the neighbors gain $\mu \frac{1}{8} h_(i,j,z)$ heat. This is repeated for all center cells that are not on the border of the heatmap, using double buffering to avoid prematurely updating the heat of a cell.}
@@ -2461,12 +2431,12 @@ The following steps are performed by HEAT-D:
 
 The result of running dissipation on a sparse sample set can be seen in Figure~\ref{fig:dissipate_before_after}.
 
-\begin{figure*}
+\begin{figure*}[tbp]
 \centering
 \begin{tabular}{ll}
 \includegraphics[scale=0.5]{figs-tileheat/heat_d-before.png} & \includegraphics[scale=0.5]{figs-tileheat/heat_d-after.png} \\
 \end{tabular}
-\caption{Result of running the dissipation algorithm on a sparse heatmap (left) which contains $1.25\%$ of the samples used to create the heatmaps of Figure~\ref{fig:heatmaps}. The result (right) covers the hot regions of the heatmaps in Figure~\ref{fig:heatmaps} much better.}
+\caption{Result of running the dissipation algorithm on a $1.25\%$ random sample (left) of the requests plotted in Figure~\ref{fig:heatmaps}. The hot spots after dissipation (right) resemble the hot spots seen in Figure~\ref{fig:heatmaps}.}
 \label{fig:dissipate_before_after}
 \end{figure*}
 
@@ -2531,7 +2501,7 @@ Our results show averages of the hit ratios obtained by running the algorithms a
 \subsection{Results}
 \label{sec:results}
 
-\begin{figure*}
+\begin{figure*}[tbp]
 \centering
 \includegraphics[scale=0.4]{figs-tileheat/results_closeup2.png}
 \caption{The performance of tile selection algorithms for the first 3 million tiles selected, using three days of training data. The result is averaged over several runs using different data sets.}
@@ -2594,29 +2564,27 @@ Finally, deploying TileHeat in a production environment and measuring the effect
 %\pitfall{\emph{I Am Utterly Perfect:} No work is perfect. An explicit discussion of the limitations of your work strengthens, rahter than weakens, your paper. Papers without a discussion of limitations, weaknesses, and implications feel unfinished or preliminary. For instance, how large of a dataset can your system handle? Can you categorize the kinds of datasets for which your technique is suitable and those for which it is not -- Tamara Munzner.}
 
 
-\section{Discussion}
+The previous chapters have described the contributions of this PhD project: Glossy, CVL, and Tileheat. While the evaluation of these systems show that crucial progress has been made in important areas, the contributions are also limited in some important ways. The first two sections below will discuss some of these limitations as well as future work that could potentially overcome them. The third section presents the conclusions of this thesis.
 
-The previous chapters have described the contributions of this PhD project: Glossy, CVL, and Tileheat. While the evaluation of these systems show that crucial progress has been made in important areas, the contributions are also limited in some important ways. The sections below will discuss some of these limitations and will sometimes indicate directions for future work that could potentially overcome them.
-
-\section{Limitations of Glossy and CVL}
+\section{Glossy and CVL: Discussion and Future Work}
 Glossy and CVL are systems for multi-scale abstraction of data for map and data visualizations. For this project, the focus has been on holistic selection. Therefore, other important abstraction operators, such as aggregation, have been ignored. For this project, the systems have been implemented on-top-of the PostgreSQL database engine. While this is a mature transactional database system, especially for spatial data, it it lacks the scalability of newer parallel databases and cluster computing systems. Thus, the scalability results for Glossy and CVL can only hint at the potential scalability if these approaches. Finally, the work with the systems was focused on algorithmic contributions, language semantics, and performance evaluation. Therefore, the usability of the Glossy SQL and CVL languages has only been informally evaluated.
 
-\minisec{Aggregation and Projection}
+\subsection{Aggregation and Projection}
 The Glossy and CVL systems supports holistic selection of data for multiple scales, which is an important map generalization operator. However, other important operators are not supported by Glossy and CVL, such as holistic aggregation~\cite{haunert2006landcover} and holistic projection~\cite{bader2001energy} (see definitions in Section~\ref{sec:introduction:map:generalization}). There are several reasons for this, which can be reasoned about algorithmically as well as syntactically.
 
 Algorithmically, selection in Glossy and CVL depends on a solver for the set multi-cover problem (SMCP), since the holistic selection problem corresponds to this problem. However, the project has not been able to establish that the same relationship exists between holistic aggregation, holistic projection and SMCP. One approach could be to bridge models for holistic aggregation and holistic projection with SMCP by means of a problem mapping. For example, Wollf and Launert have developed a modeling for land-cover aggregation, which is based on a coloring problem of an adjencency graph~\cite{haunert2006landcover}. If an efficient mapping from the coloring problem to SMCP was developed, any algorithm for SMCP could be used to solve this holistic aggregation problem. A similar strategy could be used for other specific problems of holistic aggregation and projection. However, it is not clear how general such an approach would be nor how well it would work in practice.
 
 Syntactically, the Glossy SQL and CVL languages were developed for selection. While the project has attempted several times to develop a good syntax for specification of holistic aggregation and projection, these efforts have not been successful. Perhaps the problem is structurally rooted. In selection there are only two outcomes for an object: it is either included or it is excluded. In contrast, for holistic aggregation and holistic projection there are sevaral possible outcomes for an object. For example, in land-cover aggregation an object can be merged with any of its neighbors, while in displacement an object can be displaced to several or even infinitely many positions. In this regard, holistic selection is easier to reason about, which might mean that it is easier to express in a language.
 
-\minisec{Graphs and Semi-structured Data}
+\subsection{Graphs and Semi-structured Data}
 The Glossy and CVL systems have focused on processing tabular data. Other interesting data types that can be visualized include graphs, semi-structured, and unstructured data. However, Glossy and CVL are inherently tied to tabular data. As a note, there are many similarities between these different datatypes, when they are rendered as graphics. For example, the effects of scale-reduction -- such as density increase, proximity decrease and size decrease -- apply equally to all types of graphics (see Section~\ref{sec:introduction:map:generalization}).
 
-Graphs can model many important phenomena, such as social networks, communication, and genealogy. Furthermore, it makes sense to visualize big graphs at multiple scales by the same argument that it makes sense to visualize big geographic data at multiple scales. For example, a vast social networks $G$ could meaningfully be visualized at multiple scales by showing communities at lower scales and individuals at higher scales. As a thought, the transition between scales could be constrained by a graph minor~\cite{lovasz2006graph} requirement, i.e. that at scale $i$, the graph $G_i$ is graph minor of $G_j$ for all $i<j$ (similar to recursive selection in Glossy SQL). Furthermore, nodes could be weighed by a node-specific metric such as pagerank~\cite{brin1998anatomy}. However, these thoughts merely point at a direction for future work.
+Graphs can model many important phenomena, such as social networks, communication, and genealogy. Furthermore, it makes sense to visualize big graphs at multiple scales by the same argument that it makes sense to visualize big geographic data at multiple scales. For example, a vast social networks $G$ could meaningfully be visualized at multiple scales by showing communities at lower scales and individuals at higher scales. The transition between scales could be constrained by a graph minor~\cite{lovasz2006graph} requirement, i.e. that at scale $i$, the graph $G_i$ is graph minor of $G_j$ for all $i<j$ (similar to recursive selection in Glossy SQL). Furthermore, nodes could be weighed by a node-specific metric such as pagerank~\cite{brin1998anatomy}. However, these thoughts merely point at a direction for future work.
 
 Semi-structured data, such as XML and JSON, is used in many contexts on the Web. For example, web services typically return data as either XML or JSON. In general, the structure of XML and JSON is nested data and may optionally have a schema. However, by a view mechanism, semi-structured data can be transformed into tabular form. Thus, it can be processed by Glossy or CVL. However, such an approach, which can be categorized as data integration~\cite{halevy2006data}, has not been attempted during this project.
 
-\minisec{Scale-out Processing}
-Scale-out distributed systems offer a system architecture where resources are scaled by adding more nodes rather than by substitution of bigger nodes for smaller nodes. Many scale-out systems, e.g. parallel databases and Hadoop with Hive, support the SQL or an SQL-like query language to process data. In this project, the Glossy SQL extension and CVL domain-specific language have both been implemented by compiling those languages to queries in the PostgreSQL dialect. This limits the systems that can be used to process multi-scale selection to those that accept this SQL dialect. Consequently, Glossy and CVL cannot run on top of Hadoop or most parallel database systems. The PostgreSQL system was chosen as the back-end for Glossy and CVL because it is mature system and because the emphasis in this project was on correctness and intermediate scalability, rather than big scalability. The choice of PostgreSQL over more scalable database systems tailored for analytics has most likely negatively impacted the scalability (data volume) results presented in the Glossy and CVL chapters. 
+\subsection{Scale-out Processing}
+Scale-out distributed systems offer a system architecture where resources are scaled by adding more nodes rather than by substitution of bigger nodes for smaller nodes. Many scale-out systems, e.g. Greenplum~\cite{waas2009beyond}, Dremel~\cite{melnik2011dremel}, and Hive~\cite{thusoo2010hive}, support SQL or an SQL-like query language to process data. In this project, the Glossy SQL extension and CVL domain-specific language have both been implemented by compiling those languages to queries in the PostgreSQL dialect. This limits the systems that can be used to process multi-scale selection to those that accept this SQL dialect. Consequently, Glossy and CVL cannot run on top of Hadoop or most parallel database systems. The PostgreSQL system was chosen as the back-end for Glossy and CVL because it is mature system and because the emphasis in this project was on correctness and intermediate scalability, rather than big scalability. The choice of PostgreSQL over more scalable database systems tailored for analytics has most likely negatively impacted the scalability (data volume) results presented in the Glossy and CVL chapters. 
 
 Greenplum is an example of a parallel database that supports a version of the PostgreSQL dialect. Furthermore, Greenplum is tailored for analytics processing, which would in principle makes it a good fit for Glossy and CVL workloads. Therefore, it would have made sense to implement Glossy and CVL on top of Greenplum. 
 
@@ -2624,20 +2592,21 @@ Hive is a data warehouse system that runs on top of the popular Hadoop cluster c
 
 Pigeon~\cite{eldawy2014pigeon} is a spatial data processing dialect of Pig, which is a non-SQL alternative for writting queries in Hadoop. The Pigeon language was implemented for the Spatial Hadoop~\cite{eldawy2014spatialhadoop} spatial data processing system to allow highly scalable geospatial data processing. While this PhD project has not developed a compiler that targets Pigeon, it would make sense to do so. 
 
-In summary, Glossy and CVL does not run on any Hadoop-based system that we know of. Glossy and CVL might run on Greenplum with some light modification, but this has not been tested.
+In summary, Glossy and CVL will not run on any Hadoop-based SQL engine that we know of, since they do not support the PostgreSQL dialect of SQL. Glossy and CVL might run on Greenplum with some light modification, but this has not been tested.
 
-\minisec{Usability testing}
+\subsection{Usability testing}
 Usability testing can measure the effectiveness with which real humans utilize a system. The Glossy SQL and CVL languages are designed for non-expert visualization designers, who are familiar with writing queries in SQL. A usability test would have strengthened the argument that Glossy SQL and CVL are time-saving technologies for people who want to create multi-scale, selection-based data visualizations. However, because of time and resource limitations, no formal usability tests has been conducted for Glossy SQL and CVL. Instead, informal testing and implementation of a number of realistic use cases have been shown. The lack of formal qualitative verification is a clear limitation of the results presented in this thesis.
 
-\section{Limitations of Tileheat}
+\section{Tileheat: Discussion and Future Work}
 % Tileheat discussion
 Tileheat is a system for predicting the sections of a map that will be most requested by the users in an uncoming time period. It works by processing the access log for the $k$ past time periods and applying a smoothing and trend-detecting algorithm. The assumptions are that hot sets change only gradually over time and that most users will request the same content. There are some limitations that follow from this approach, which will be discussed briefly below.
 
-\minisec{Real-time prediction}
-Real-time prediction of content that will requested next by a user can help improve perceived latency. Ahead of time, the predicted content can be materialized and brought into a fast-access storage layer just before it is needed. The assumptions are that the actions of each user are sufficiently predictable and that the content requested by different users is sufficiently different. Tileheat was not designed for personalized prediction and therefore does not support it. While the actions of users have been shown to be sufficiently predictable, it has also been shown that the map content requested by different users follows common patterns. For this and other reasons, tileheat was designed to process access logs and prepare a common hot set many hours ahead of peak load. If a rapid shift in user behaviour should occur during peak load or a user suddenly behaves in an anomalous manner, Tileheat will be unable to react until the next scheduled access log processing.
+\subsection{Dynamic Workloads}
+Tileheat has been tested with the workload of a background map. Experiments show that the skew that is exhibited by this workload is highly stable over time. That is, the map sections that are most requested coincide to a large degree with densely populated areas (by visual inspection of the heatmaps). Tileheat has not been evaluated for maps that exhibit more dynamic skew, i.e. where the focal point of hot spots changes quickly over time. We expect Tileheat to perform badly in this case, but this would have to be evaluated experimentally to be sure. Since Tileheat uses exponential smoothing with trend detection, there is a possibility that a shift in the area that is most requested on a map could be quickly detected. However, the shift can only be detected if it is present in the log. Thus, experimenting with shorter cycles could be an area for future work.
 
 \section{Conclusion}
-This thesis contributes new knowledge within on two areas of online multi-scale map and data visualization: i.e. (a) declarative and holistic selection for map and data visualization and (b) prediction of map requests. The general approach has been to investigate batch-oriented systems. Specifically, the design goals were to contribute systems that can:
+TODO
+This thesis has developed new theory and performed experimental evaluations for the following subject areas: (a) Selection for maps and data visualizations. (b) Request prediction for maps. The general approach has been to investigate batch-oriented systems. Specifically, the design goals were to contribute systems that can:
 
 \begin{itemize}
 \item Process large amounts of data (millions of objects) for map and data visualizations.
@@ -2646,16 +2615,13 @@ This thesis contributes new knowledge within on two areas of online multi-scale 
 \item Scale map visualizations to large numbers of concurrent consumers (millions).
 \end{itemize}
 
-\minisec{Strategies}
-The main strategy used in the selection study was to move programs to the data instead of vice versa. Today, data for visualizations is often stored in relational database management systems (RDBMS). Therefore, a natural idea is to generate SQL statements that compute holistic selection entirely inside the database. Furthermore, SQL seems to be the lingua franca quey language for the new class of emerging and highly scalable data processing systems, spearheaded by as Apache Hadoop projects such as Hive, Drill, and Spark.
+\subsection{Strategies Used}
+The main strategy used in the selection study was to move programs to the data instead of vice versa. Today, data for visualizations is often stored in relational database management systems (RDBMS). Therefore, a natural idea is to generate SQL statements that compute holistic selection entirely inside the database. Furthermore, SQL seems to be the lingua franca query language for the new class of emerging and highly scalable data processing systems, spearheaded by as Apache Hadoop projects such as Hive, Drill, and Spark.
 
 The main strategy used for the map serving study was to allow map serving systems to learn from their own access log. While an entire map can be materialized and place in fast-access storage, it is costly to do so. By learning the hot data from an access log, caches can be seeded with just the hot set potentially hours ahead of peak load. 
 
 \minisec{Results}
-
-
-
-\minisec{Future Work}
+TODO
 
 
 
