@@ -2615,13 +2615,14 @@ Tileheat has been tested with the workload of a background map. While this is a 
 
 \section{Conclusion}
 
-The background for this thesis has been the impact that the Web and cloud computing has made on the time-honored fields of multi-scale map and data visualization. We have argued that new tools for the design, processing, and distribution of map and data visualizations are necessary. Specifically, we have stated the need for new tools that can handle massive amounts of data, be operated by a new breed of non-expert designers, and ensure low-cost, low-latency, high-availability, and scalable access to data.
+The background for this thesis has been the impact that the Web and cloud computing has made on the time-honored fields of multi-scale map and data visualization. We have argued that new tools are needed, which support the design, processing, and distribution of map and data visualizations in this new situation. The new tools should be able to handle massive amounts of data. Furthermore, a new breed of non-expert designers should be able to operate these new tool. Finally, the new tools should ensure low-cost, low-latency, highly-available, and scalable access to maps and data visualizations -- for large numbers of concurrent users.
 
-On this background, this thesis has made contributions in the following areas: selection of data for geographic maps and data visualizations (Subject A) and algorithms for prediction of geographic map requests (Subject B). In this section, we will review the goals and results of this thesis for each these subject areas.
+An important map generalization technique is selection of data (Subject A). This thesis contributes new declarative tools that enable non-expert designers to select data for multi-scale maps and data visualizations over large quantities of data. Batch-oriented prediction is an important technique for pre-materializing sections of a map ahead of peak load (Subject B). This thesis contributes a new algorithm and framework for prediction of map tile requests, which bases prediction on an analysis of an log of previous requests. Below, we review the goals for these contributions and give the results that were obtained in each case.
+
 
 \subsection{Selection: Goals and Results}
 
-This thesis makes two contributions on the topic of selection (Subject A): The language contribution (Contribution 1) consists of two declarative languages, Glossy SQL and CVL, which allow users to express multi-scale selection for geographic maps and data visualizations. The compiler contribution (Contribution 2) consists of two compilers for these declarative languages. The compilers translate Glossy SQL and CVL into SQL and stored procedures for in-database execution of holistic selection.
+This thesis makes two contributions on the topic of selection (Subject A): The language contribution (Contribution 1) consists of two declarative languages, Glossy SQL and CVL, which allow users to express multi-scale selection for geographic maps and data visualizations. The compiler contribution (Contribution 2) consists of two compilers for these declarative languages. The compilers translate Glossy SQL and CVL into SQL and stored procedures for in-database execution of selection for multi-scale maps and data visualizations.
 
 The goals for the declarative languages (Contribution 1) were to:
 
