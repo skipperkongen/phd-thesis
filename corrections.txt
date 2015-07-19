@@ -1,0 +1,17 @@
+TODO list 
+
+From defense:
+- Lars: add references to label selection/placement literature.
+
+Lars Harrie:
+- 30: Can't read Lars' hand writing
+- 46: Add a few maps that show selections there is space. 
+- 53, 64, 68, 74, more?: Kefaloukos et al., find elegant way to reference chapter instead of paper (or maybe both).
+- 54: Find out what Lars means with the Pia reference ("cluster to noise ratio...".
+- 60: Explain how SCALE LOG works.
+- 61,62: POI + labels. Point out weakness of combining layers, remove placeholder figure.
+  Add to discussion section.
+- 62: Get rid of Australia figure. It sucks
+- 100: Add Noy's comments from FB chat
+- 101: Find out what Lars means by "I"
+- 
